@@ -8,7 +8,7 @@ const EmojiHeader = ({children, position}) => {
   if(position === "left") {
     textPosition = "left"
   }
-  if(position === "center") {
+  if(position === "right") {
     textPosition = "right"
   }
 

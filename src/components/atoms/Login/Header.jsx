@@ -2,10 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
 
-const Header = ({children}) => {
+const Header = ({children, position}) => {
+  let textPosition = "center"
+
+  if(position === "left") {
+    textPosition = "left"
+  }
+  if(position === "right") {
+    textPosition = "right"
+  }
+
   const Header = styled("h1")`
   color: #2B2E72;
-  text-align: center;
+  text-align: ${textPosition};
   font-family: 'Inter', sans-serif;
   font-size: 2.5rem;
   font-style: normal;
@@ -19,7 +28,8 @@ const Header = ({children}) => {
 }
 
 Header.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  position: PropTypes.string
 }
 
 export default Header

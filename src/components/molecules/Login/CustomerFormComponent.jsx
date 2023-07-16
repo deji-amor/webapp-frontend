@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import EmojiHeader from "../../atoms/Login/EmojiHeader";
 import Header from "../../atoms/Login/Header";
@@ -10,10 +10,10 @@ import useBasicInput from "../../../hooks/useBasicInput";
 import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
-import {loginAdminActions} from "../../../state-manager/reducers/login/loginAdmin"
+import { loginCustomerActions } from '../../../state-manager/reducers/login/loginCustomer';
 
-const AdminFormComponent = () => {
-	const loginAdminState = useSelector(state => state.loginAdmin)
+const CustomerFormComponent = () => {
+	const loginCustomerState = useSelector(state => state.loginCustomer)
 	const dispatch = useDispatch()
 
 	const {
@@ -45,7 +45,7 @@ const AdminFormComponent = () => {
 
   const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(loginAdminActions.showToasts({message: "The email you entered is not registered with us.", title: "Username Not Found"}))
+		dispatch(loginCustomerActions.showToasts({message: "The email you entered is not registered with us.", title: "Username Not Found"}))
 	};
 
 
@@ -55,10 +55,10 @@ const AdminFormComponent = () => {
 	return (
 		<form onSubmit={submitHandler} className="">
 			<div className="mb-[1.88rem]">
-				<EmojiHeader>👋</EmojiHeader>
+				<EmojiHeader position={"left"}>👋</EmojiHeader>
 			</div>
-			<Header>Hello!</Header>
-			<Paragraph>Login to access your Dashboard.</Paragraph>
+			<Header position={"left"}>Welcome back!</Header>
+			<Paragraph position={"left"}>Login to your Dashboard</Paragraph>
 			<div className="mt-[3.38rem] space-y-[1.88rem]">
 				<div className="">
 					<InputLabel>Username</InputLabel>
@@ -96,6 +96,6 @@ const AdminFormComponent = () => {
 			</div>
 		</form>
 	);
-};
+}
 
-export default AdminFormComponent;
+export default CustomerFormComponent

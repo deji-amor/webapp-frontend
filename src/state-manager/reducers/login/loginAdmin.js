@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const loginAdmin = createAsyncThunk(
@@ -29,14 +29,25 @@ export const loginAdmin = createAsyncThunk(
 const initialState = {
 	loading: false,
 	token: "",
+	toasts: [{id: "12345", message: "You have exceeded your maximum login attempts, please try again in 20 minutes.", title: "Login Attempts Exceeded"}],
 };
 
 const loginAdminSlice = createSlice({
 	name: "password",
 	initialState,
 	reducers: {
-		// dummy: (state, action) => {
-		// },
+		showToasts: (state, action) => {
+			const toasts = current(state).toasts
+			const message = action.payload.message
+			const title = action.payload.title
+			const newToast = {id: Date.now(), message: message, title: title}
+			state.toasts = [...toasts, newToast]
+		},
+		hideToast: (state, action) => {
+			const id = action.payload
+			const toasts = current(state).toasts.slice()
+			state.toasts = toasts.filter(toast => toast.id !== id)
+		}
 	},
 	extraReducers: builder => {
 		builder
@@ -60,3 +71,4 @@ const loginAdminSlice = createSlice({
 // export const { } = passwordSlice.actions
 
 export default loginAdminSlice.reducer;
+export const loginAdminActions = loginAdminSlice.actions

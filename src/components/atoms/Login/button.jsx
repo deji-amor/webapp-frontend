@@ -26,7 +26,7 @@ const MyButton = styled("button")`
   const text = isLoading ? <>{spinner} {loadingText}</> : {children}
 
   return (
-    <button disabled={isDisabled} type={type || "button"} className='block w-full text-white text-xl not-italic font-semibold leading-[0.875rem] px-6 py-4 rounded-lg bg-[#2B2E72] font-poppins'>{children}</button>
+    <button disabled={isDisabled} type={type || "button"} className={`block w-full text-white text-xl not-italic font-semibold leading-[0.875rem] px-6 py-4 rounded-lg bg-[#2B2E72] font-poppins ${isDisabled ? "cursor-not-allowed opacity-40" : ""}`}>{children}</button>
   )
 }
 
@@ -35,7 +35,7 @@ Button.propTypes = {
   isDisabled: PropTypes.bool,
   children: PropTypes.node,
   isLoading: PropTypes.bool,
-  loadingText: PropTypes
+  loadingText: PropTypes.string
 }
 
 
