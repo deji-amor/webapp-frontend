@@ -26,7 +26,7 @@ export const loginCustomer = createAsyncThunk("loginCustomer", async({email, pas
 const initialState = {
 	loading: false,
 	token: "",
-	toasts: [{id: "12345", message: "You have exceeded your maximum login attempts, please try again in 20 minutes.", title: "Login Attempts Exceeded"}],
+	toasts: [],
 };
 
 

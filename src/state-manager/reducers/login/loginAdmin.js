@@ -29,7 +29,7 @@ export const loginAdmin = createAsyncThunk(
 const initialState = {
 	loading: false,
 	token: "",
-	toasts: [{id: "12345", message: "You have exceeded your maximum login attempts, please try again in 20 minutes.", title: "Login Attempts Exceeded"}],
+	toasts: [],
 };
 
 const loginAdminSlice = createSlice({

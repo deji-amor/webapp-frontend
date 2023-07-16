@@ -53,13 +53,13 @@ const CustomerFormComponent = () => {
   // const isButtonDisabled = false
 
 	return (
-		<form onSubmit={submitHandler} className="">
-			<div className="mb-[1.88rem]">
+		<form onSubmit={submitHandler} className="max-w-[26.56rem]">
+			<div className="mb-[1.2rem]">
 				<EmojiHeader position={"left"}>👋</EmojiHeader>
 			</div>
 			<Header position={"left"}>Welcome back!</Header>
 			<Paragraph position={"left"}>Login to your Dashboard</Paragraph>
-			<div className="mt-[3.38rem] space-y-[1.88rem]">
+			<div className="mt-[1rem] space-y-[1rem]">
 				<div className="">
 					<InputLabel>Username</InputLabel>
 					<Input
@@ -67,11 +67,11 @@ const CustomerFormComponent = () => {
 						type="text"
 						value={usernameValue}
 						onBlur={usernameBlurHandler}
-            onChange={usernameChangeHandler}
-            hasError={usernameHasError}
+						onChange={usernameChangeHandler}
+						hasError={usernameHasError}
 					/>
-          {usernameHasError && <ValidationErrorText errorFromServer={usernameErrFromServer}>{usernameErrorMessage}</ValidationErrorText>}
-          
+					{usernameHasError && <ValidationErrorText errorFromServer={usernameErrFromServer}>{usernameErrorMessage}</ValidationErrorText>}
+					
 				</div>
 				<div className="">
 					<InputLabel>Password</InputLabel>
@@ -80,14 +80,14 @@ const CustomerFormComponent = () => {
 						type="password"
 						value={passwordValue}
 						onBlur={passwordBlurHandler}
-            onChange={passwordChangeHandler}
-            hasError={passwordHasError}
+						onChange={passwordChangeHandler}
+						hasError={passwordHasError}
 					/>
-          {passwordHasError && <ValidationErrorText>{passwordErrorMessage}</ValidationErrorText>}
+					{passwordHasError && <ValidationErrorText>{passwordErrorMessage}</ValidationErrorText>}
 				</div>
-        <div className="">
-          <ForgotPassword>Forgot Password?</ForgotPassword>
-        </div>
+				<div className="">
+					<ForgotPassword>Forgot Password?</ForgotPassword>
+				</div>
 				<div className="w-full">
 					<Button isDisabled={isButtonDisabled}  type="submit" isLoading={false}>
 						Sign in
