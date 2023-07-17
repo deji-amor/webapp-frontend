@@ -45,7 +45,11 @@ const AdminFormComponent = () => {
 
   const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(loginAdminActions.showToasts({message: "The email you entered is not registered with us.", title: "Username Not Found"}))
+		const err = {message: "The email you entered is not registered with us.", title: "Username Not Found"}
+		dispatch(loginAdminActions.showToasts(err))
+		usernameSetErrorMessage(err.title)
+		usernameSetHasError(true)
+		usernameSetErrorFromServer(true)
 	};
 
 

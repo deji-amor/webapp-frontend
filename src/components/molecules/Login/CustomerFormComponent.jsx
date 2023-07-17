@@ -46,6 +46,8 @@ const CustomerFormComponent = () => {
   const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(loginCustomerActions.showToasts({message: "The email you entered is not registered with us.", title: "Username Not Found"}))
+
+		
 	};
 
 
