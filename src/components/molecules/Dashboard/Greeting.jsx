@@ -1,11 +1,11 @@
 import React from 'react'
-import GreetingEmail from '../../atoms/Dashboard/GreetingEmail'
-import GreetingMessage from '../../atoms/Dashboard/GreetingMessage'
+import HeadingEmail from '../../atoms/Dashboard/HeadingEmail'
+import HeadingGreeting from '../../atoms/Dashboard/HeadingGreeting'
 
 const Greeting = () => {
   return (
   <div className="">
-    <GreetingMessage>Hi</GreetingMessage>{" "} <GreetingEmail>attahgbube@gmail.com</GreetingEmail> 
+    <HeadingGreeting>Hi</HeadingGreeting>{" "} <HeadingEmail>attahgbube@gmail.com</HeadingEmail> 
   </div>
   )
 }

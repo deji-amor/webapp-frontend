@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
 
-const GreetingEmail = ({children}) => {
+const HeadingEmail = ({children}) => {
   const Email = styled("span")`
   color: #2B2E72;
   font-size: 1.5rem/* 24px */;
@@ -17,8 +17,8 @@ const GreetingEmail = ({children}) => {
   )
 }
 
-GreetingEmail.propTypes = {
+HeadingEmail.propTypes = {
   children: PropTypes.node
 }
 
-export default GreetingEmail
+export default HeadingEmail

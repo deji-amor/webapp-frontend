@@ -1,11 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { styled } from '@mui/material';
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 const SidebarLink = ({link, icon}) => {
-  const [isActive, setIsActive] = useState(false)
-
   const Link = styled("div")`
     display: flex; 
     align-items: center; 
@@ -16,8 +14,12 @@ const SidebarLink = ({link, icon}) => {
     padding-top: 0.5rem/* 8px */;
     padding-bottom: 0.5rem/* 8px */;
     text-transform: capitalize;
-    background: ${isActive ? "#fff" : "#2B2E72"};
+    background: #2B2E72;
     cursor: pointer;
+
+    .active & {
+      background: #fff;
+    }
 
     .icon-span {
       margin-right: 0.5rem;
@@ -26,7 +28,11 @@ const SidebarLink = ({link, icon}) => {
     .icon {
       width: 1.5rem;
       height: 1.5rem;
-      color:  ${!isActive ? "#fff" : "#2B2E72"};
+      color:  #fff;
+    }
+
+    .active & .icon {
+      color: #2B2E72
     }
 
     .label {
@@ -34,7 +40,11 @@ const SidebarLink = ({link, icon}) => {
       color: 1rem;
       font-weight: 500;
       font-family: "Poppins", sans-serif;
-      color:  ${!isActive ? "#fff" : "#2B2E72"};
+      color: #fff
+    }
+
+    .active & .label {
+      color: #2B2E72;
     }
   `
 
@@ -50,7 +60,7 @@ const SidebarLink = ({link, icon}) => {
   }
 
   return (
-    <NavLink className={({isActive}) => isActive ? setIsActive(true) : setIsActive(false)} to={link} end>
+    <NavLink className={({isActive}) => isActive ? "active" : ""} to={link} end>
       <Link className="">
         <span className="icon-span">
           {icon}

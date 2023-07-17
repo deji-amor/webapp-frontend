@@ -38,6 +38,7 @@ const StatsPieChart = ({data}) => {
           outerRadius="100%"
           fill="#8884d8"
           dataKey="value"
+          activeShape={null}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
