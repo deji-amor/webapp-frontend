@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { styled } from '@mui/material';
 import NotificationsNoneSharpIcon from '@mui/icons-material/NotificationsNoneSharp';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -23,8 +23,17 @@ const NavBarIconList = () => {
     setShowDropdown(previousValue => !previousValue)
   }
 
+  useEffect(() => {
+    const escapeHandler = (e) => {
+      if(!e.target.closest("#drop-down")){
+        setShowDropdown(false)
+      }
+    }
+    document.addEventListener("click", escapeHandler)
+  }, [])
+
   return (
-    <List>
+    <List id='drop-down'>
       <div className="">
         <NotificationsNoneSharpIcon className='icon' style={{ fontSize: 30 }}/>
       </div>

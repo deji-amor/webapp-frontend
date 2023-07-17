@@ -1,34 +1,59 @@
 import React from 'react'
+import { styled } from '@mui/material';
 import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 import RestartAltOutlinedIcon from '@mui/icons-material/RestartAltOutlined';
 import NavigateNextOutlinedIcon from '@mui/icons-material/NavigateNextOutlined';
 
 const NavbarDropdown = () => {
-  const DropDown = <></>
+  const DropDown = styled("div")`
+    z-index: 10;
+    padding-top: 1.125rem/* 18px */;
+    padding-bottom: 1.125rem/* 18px */;
+    padding-left: 1.25rem/* 20px */;
+    padding-right: 1.25rem/* 20px */;
+    background-color: #fff;
+    border-radius: 0.75rem/* 12px */;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.26);
+    width: 19rem/* 304px */;
+    position: absolute;
+    top: 110%;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .action {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+    }
+
+    .action-text {
+      display: flex; 
+      align-items: center; 
+      gap: 8px;
+    }
+  `
 
   return (
-    <div>NavbarDropdown</div>
+    <DropDown>
+      <div className="action">
+        <div className="action-text">
+          <RestartAltOutlinedIcon className='text-black'/>
+          <span className="font-poppins text-[1rem] text-black">Reset Password</span>
+        </div>
+        <div className="">
+          <NavigateNextOutlinedIcon/>
+        </div>
+      </div>
+      <div className="action">
+        <div className="action-text">
+          <LogoutSharpIcon className='text-[#2B2E72]'/>
+          <span className="font-poppins text-[1rem] text-[#2B2E72]">Logout</span>
+        </div>
+      </div>
+    </DropDown>
   )
 }
 
 export default NavbarDropdown
-
-const t = <div className='relative'>
-<div className="z-10 py-[1.125rem] px-[1.25rem] hidde bg-white divide-black rounded-[0.75rem] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.26)] w-[19rem] absolute top-[110%] right-0 space-y-[1.5rem]">
-  <div className="flex items-center justify-between">
-    <div className="flex items-center gap-[8px]">
-      <RestartAltOutlinedIcon className='text-black'/>
-      <span className="font-poppins text-[1rem] text-black">Reset Password</span>
-    </div>
-    <div className="">
-      <NavigateNextOutlinedIcon/>
-    </div>
-  </div>
-  <div className="flex items-center justify-between">
-    <div className="flex items-center gap-[8px]">
-      <LogoutSharpIcon className='text-[#2B2E72]'/>
-      <span className="font-poppins text-[1rem] text-[#2B2E72]">Logout</span>
-    </div>
-  </div>
-</div>
-</div>
