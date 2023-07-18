@@ -27,6 +27,7 @@ const AdminFormComponent = () => {
     valueIsValid: usernameIsValid,
     errorFromServer: usernameErrFromServer,
     setErrorFromServer: usernameSetErrorFromServer,
+		id: usernameId,
 	} = useBasicInput(isValidEmail);
 
 	const {
@@ -40,6 +41,7 @@ const AdminFormComponent = () => {
     valueIsValid: passwordIsValid,
     errorFromServer: passwordErrFromServer,
     setErrorFromServer: passwordSetErrorFromServer,
+		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
 
@@ -65,7 +67,7 @@ const AdminFormComponent = () => {
 			<Paragraph>Login to access your Dashboard.</Paragraph>
 			<div className="mt-[3.38rem] space-y-[1.88rem]">
 				<div className="">
-					<InputLabel>Username</InputLabel>
+					<InputLabel htmlFor={usernameId}>Username</InputLabel>
 					<Input
 						placeholder="Type your registered email"
 						type="text"
@@ -73,12 +75,13 @@ const AdminFormComponent = () => {
 						onBlur={usernameBlurHandler}
             onChange={usernameChangeHandler}
             hasError={usernameHasError}
+						id={usernameId}
 					/>
           {usernameHasError && <ValidationErrorText errorFromServer={usernameErrFromServer}>{usernameErrorMessage}</ValidationErrorText>}
           
 				</div>
 				<div className="">
-					<InputLabel>Password</InputLabel>
+					<InputLabel htmlFor={passwordId}>Password</InputLabel>
 					<Input
 						placeholder="Type your password"
 						type="password"
@@ -86,6 +89,7 @@ const AdminFormComponent = () => {
 						onBlur={passwordBlurHandler}
             onChange={passwordChangeHandler}
             hasError={passwordHasError}
+						id={passwordId}
 					/>
           {passwordHasError && <ValidationErrorText>{passwordErrorMessage}</ValidationErrorText>}
 				</div>

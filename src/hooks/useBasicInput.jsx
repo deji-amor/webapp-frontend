@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useId} from 'react'
 import PropTypes from 'prop-types'
 
 const useBasicInput = (validateValue) => {
+  const id = useId()
   const [enteredValue, setEnteredValue] = useState("")
   const [isTouched, setIsTouched] = useState(false)
   const [hasError, setHasError] = useState(false)
@@ -42,6 +43,7 @@ const useBasicInput = (validateValue) => {
     valueIsValid,
     errorFromServer,
     setErrorFromServer,
+    id,
   }
 }
 

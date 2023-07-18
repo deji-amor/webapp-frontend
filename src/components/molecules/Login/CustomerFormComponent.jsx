@@ -27,6 +27,7 @@ const CustomerFormComponent = () => {
     valueIsValid: usernameIsValid,
     errorFromServer: usernameErrFromServer,
     setErrorFromServer: usernameSetErrorFromServer,
+		id: usernameId,
 	} = useBasicInput(isValidEmail);
 
 	const {
@@ -40,6 +41,7 @@ const CustomerFormComponent = () => {
     valueIsValid: passwordIsValid,
     errorFromServer: passwordErrFromServer,
     setErrorFromServer: passwordSetErrorFromServer,
+		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
 
@@ -63,7 +65,7 @@ const CustomerFormComponent = () => {
 			<Paragraph position={"left"}>Login to your Dashboard</Paragraph>
 			<div className="mt-[1rem] space-y-[1rem]">
 				<div className="">
-					<InputLabel>Username</InputLabel>
+					<InputLabel htmlFor={usernameId}>Username</InputLabel>
 					<Input
 						placeholder="Type your registered email"
 						type="text"
@@ -71,12 +73,13 @@ const CustomerFormComponent = () => {
 						onBlur={usernameBlurHandler}
 						onChange={usernameChangeHandler}
 						hasError={usernameHasError}
+						id={usernameId}
 					/>
 					{usernameHasError && <ValidationErrorText errorFromServer={usernameErrFromServer}>{usernameErrorMessage}</ValidationErrorText>}
 					
 				</div>
 				<div className="">
-					<InputLabel>Password</InputLabel>
+					<InputLabel htmlFor={passwordId}>Password</InputLabel>
 					<Input
 						placeholder="Type your password"
 						type="password"
@@ -84,6 +87,7 @@ const CustomerFormComponent = () => {
 						onBlur={passwordBlurHandler}
 						onChange={passwordChangeHandler}
 						hasError={passwordHasError}
+						id={passwordId}
 					/>
 					{passwordHasError && <ValidationErrorText>{passwordErrorMessage}</ValidationErrorText>}
 				</div>

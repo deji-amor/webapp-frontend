@@ -16,7 +16,7 @@ const NavbarDropdown = () => {
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.26);
     width: 19rem/* 304px */;
     position: absolute;
-    top: 110%;
+    top: 150%;
     right: 0px;
     display: flex;
     flex-direction: column;
@@ -34,22 +34,25 @@ const NavbarDropdown = () => {
       gap: 8px;
     }
   `
+  const resetPasswordHandler = () => {
+    console.log("reset");
+  }
 
   return (
     <DropDown>
-      <div className="action">
-        <div className="action-text">
-          <RestartAltOutlinedIcon className='text-black'/>
-          <span className="font-poppins text-[1rem] text-black">Reset Password</span>
+      <div className="action cursor-pointer group">
+        <div onClick={resetPasswordHandler} className="action-text">
+          <RestartAltOutlinedIcon className='text-black group-hover:text-[#2B2E72]'/>
+          <span className="font-poppins text-[1rem] text-black group-hover:text-[#2B2E72]">Reset Password</span>
         </div>
         <div className="">
-          <NavigateNextOutlinedIcon/>
+          <NavigateNextOutlinedIcon className='text-black group-hover:text-[#2B2E72]'/>
         </div>
       </div>
-      <div className="action">
+      <div className="action cursor-pointer group">
         <div className="action-text">
-          <LogoutSharpIcon className='text-[#2B2E72]'/>
-          <span className="font-poppins text-[1rem] text-[#2B2E72]">Logout</span>
+          <LogoutSharpIcon className='text-black group-hover:text-[#2B2E72]'/>
+          <span className="font-poppins text-[1rem] text-black group-hover:text-[#2B2E72]">Logout</span>
         </div>
       </div>
     </DropDown>

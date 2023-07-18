@@ -13,7 +13,7 @@ const InputLabel = ({children, htmlFor}) => {
   `
 
   return (
-    <Label>{children}</Label>
+    <Label htmlFor={htmlFor || "mmm"}>{children}</Label>
   )
 }
 

@@ -31,6 +31,7 @@ const RecentTicketTable = () => {
           <RecentTicketTableList/>
         </tbody>
       </table>
+      <RecentTicketTablePagination/>
     </Wrapper>
   )
 }
