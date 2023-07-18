@@ -26,8 +26,8 @@ const Sidebar = () => {
       position: absolute;
       bottom: 0.5rem/* 8px */;
     }
+`
 
-  `
   return (
     <Aside>
       <div className='logo'>

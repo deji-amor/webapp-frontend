@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
 
-const PaginationButton = ({children, onClick, isActive, ellipsis}) => {
+const PaginationButton = ({children, onClick, isActive}) => {
   const Button = styled("button")`
     border-radius: 0.25rem/* 4px */;
     padding-top: 0.5rem/* 8px */;
@@ -19,17 +19,6 @@ const PaginationButton = ({children, onClick, isActive, ellipsis}) => {
       color: #fff;
     }
   `
-  const Ellipsis = styled("div")`
-    padding-top: 0.5rem/* 8px */;
-    padding-bottom: 0.5rem/* 8px */;
-    padding-left: 0.75rem/* 12px */;
-    padding-right: 0.75rem/* 12px */;
-    font-family: "Poppins", sans-serif;
-  `
-
-  if (ellipsis) {
-    return <Ellipsis>...</Ellipsis>
-  }
 
   return (
     <Button onClick={() => onClick(children)}>{children}</Button>
@@ -40,7 +29,6 @@ PaginationButton.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func,
   isActive: PropTypes.bool,
-  ellipsis: PropTypes.bool
 }
 
 export default PaginationButton

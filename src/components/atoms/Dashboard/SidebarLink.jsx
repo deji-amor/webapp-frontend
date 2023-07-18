@@ -2,6 +2,8 @@ import React from 'react'
 import { styled } from '@mui/material';
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { logoutActions } from '../../../state-manager/reducers/logout/logout';
 
 const SidebarLink = ({link, icon}) => {
   const Link = styled("div")`
@@ -48,9 +50,14 @@ const SidebarLink = ({link, icon}) => {
     }
   `
 
+  const dispatch = useDispatch()
+  const handleShowLogoutModal = () => {
+    dispatch(logoutActions.toggleLogoutModal())
+  }
+
   if(link === "logout") {
     return (
-      <Link onClick={() => console.log("tuyvib")} className="">
+      <Link onClick={handleShowLogoutModal} className="">
         <span className="icon-span">
           {icon}
         </span>

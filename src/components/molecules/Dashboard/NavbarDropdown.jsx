@@ -3,6 +3,8 @@ import { styled } from '@mui/material';
 import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 import RestartAltOutlinedIcon from '@mui/icons-material/RestartAltOutlined';
 import NavigateNextOutlinedIcon from '@mui/icons-material/NavigateNextOutlined';
+import { useDispatch } from 'react-redux';
+import { logoutActions } from '../../../state-manager/reducers/logout/logout';
 
 const NavbarDropdown = () => {
   const DropDown = styled("div")`
@@ -38,6 +40,11 @@ const NavbarDropdown = () => {
     console.log("reset");
   }
 
+  const dispatch = useDispatch()
+  const handleShowLogoutModal = () => {
+    dispatch(logoutActions.toggleLogoutModal())
+  }
+
   return (
     <DropDown>
       <div className="action cursor-pointer group">
@@ -49,7 +56,7 @@ const NavbarDropdown = () => {
           <NavigateNextOutlinedIcon className='text-black group-hover:text-[#2B2E72]'/>
         </div>
       </div>
-      <div className="action cursor-pointer group">
+      <div onClick={handleShowLogoutModal} className="action cursor-pointer group">
         <div className="action-text">
           <LogoutSharpIcon className='text-black group-hover:text-[#2B2E72]'/>
           <span className="font-poppins text-[1rem] text-black group-hover:text-[#2B2E72]">Logout</span>
