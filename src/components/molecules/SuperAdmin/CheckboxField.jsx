@@ -1,6 +1,5 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { Controller } from "react-hook-form";
-import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
 
 const CheckboxFields = ({ name, errors, control }) => {
 	const checkboxStyle = {
@@ -12,7 +11,6 @@ const CheckboxFields = ({ name, errors, control }) => {
 	};
 
 	const labelStyle = {
-		// Add any additional styles for the label if needed
 		fontWeight: "bold",
 		color: "#4F4F4F",
 	};
