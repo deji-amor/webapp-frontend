@@ -28,7 +28,7 @@ const initialState = {
 
 
 const loginAdminSlice = createSlice({
-    name: "password",
+    name: "superadminonboarding",
     initialState,
     reducers: {
         // dummy: (state, action) => {

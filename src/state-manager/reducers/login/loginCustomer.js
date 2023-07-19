@@ -30,7 +30,7 @@ const initialState = {
 
 
 const loginCustomerSlice = createSlice({
-    name: "password",
+    name: "logincustomer",
     initialState,
     reducers: {
         // dummy: (state, action) => {

@@ -28,7 +28,7 @@ const initialState = {
 
 
 const resetPasswordSlice = createSlice({
-    name: "password",
+    name: "resetpassword",
     initialState,
     reducers: {
         // dummy: (state, action) => {

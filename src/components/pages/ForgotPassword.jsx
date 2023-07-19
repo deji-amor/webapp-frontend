@@ -1,8 +1,12 @@
-import React from 'react'
+import ForgotPasswordEmail from '../organisms/Password/forgotPasswordEmailInput'
+import { ForgotEmailPageWrapper } from '../atoms/Password/wrappers'
 
 const ForgotPassword = () => {
+
   return (
-    <div>ForgotPassword</div>
+    <ForgotEmailPageWrapper>
+      <ForgotPasswordEmail />
+    </ForgotEmailPageWrapper>
   )
 }
 

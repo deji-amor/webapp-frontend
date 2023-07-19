@@ -15,11 +15,11 @@ const persistConfig = {
 }
 
 const rootReducers = combineReducers({
-    forgotPassword: forgotPasswordReducer,
-    resetPassword: resetPasswordReducer,
-    loginAdmin: loginAdminReducer,
-    loginCustomer: loginCustomerReducer,
-    superAdmin: superAdminReducer
+    forgotpassword: forgotPasswordReducer,
+    resetpassword: resetPasswordReducer,
+    loginadmin: loginAdminReducer,
+    logincustomer: loginCustomerReducer,
+    superadmin: superAdminReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducers)
