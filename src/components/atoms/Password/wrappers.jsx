@@ -313,12 +313,12 @@ export const CustomerBannerContainerWrapper = styled("div")(() => ({
 export const ResetPasswordInputWrapper = styled("div")(() => ({
 	display: "flex",
 	flexDirection: "column",
-	gap: "50px",
+	gap: "40px",
 
 	".inputs": {
 		display: "flex",
 		flexDirection: "column",
-		gap: "30px",
+		gap: "15px",
 	},
 }));
 
