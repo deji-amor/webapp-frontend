@@ -1,21 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import ErrorIcon from "@mui/icons-material/Error";
 import { styled } from "@mui/material";
 
-const Toasts = ({ children, onClose, message, title }) => {
+const Toasts = ({ children, onClose, message, title}) => {
 	const Container = styled("div")`
 		display: flex;
-		max-width: 20rem;
+		width: 22.625rem;
 		padding: 0.75rem 1rem;
-		justify-content: center;
+		justify-content: start;
 		align-items: center;
-		gap: 0.2rem;
+		gap: 0.75rem;
 		border-radius: 0.5rem;
 		background: rgba(238, 6, 6, 0.1);
-		position: fixed;
-		top: 1.25rem;
-		right: 1.25rem .error-icon {
+		z-index: 100;
+		.error-icon {
 			width: 1.5rem;
 			height: 1.5rem;
 			flex-shrink: 0;
@@ -49,7 +48,7 @@ const Toasts = ({ children, onClose, message, title }) => {
 	}, [onClose]);
 
 	return (
-		<Container className="fixed flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow top-5 right-5">
+		<Container className="">
 			<ErrorIcon className="error-icon text-[#D73D3D]" />
 			<div className="border-none">
 				<p className="error-title">{title}</p>
