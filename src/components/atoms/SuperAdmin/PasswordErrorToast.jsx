@@ -1,12 +1,9 @@
 import React from "react";
 import {
 	Snackbar,
-	IconButton,
-	ListItem,
 	ListItemIcon,
 	ListItemText,
 	styled,
-	Typography,
 } from "@mui/material";
 import { Error as ErrorIcon } from "@mui/icons-material";
 

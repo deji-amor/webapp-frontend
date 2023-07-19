@@ -10,7 +10,6 @@ import { pawdRegExp, phoneRegExp } from "../../../utilis";
 import PasswordField from "../../atoms/SuperAdmin/PasswordField";
 import ConfirmPasswordField from "../../atoms/SuperAdmin/ConfirmPasswordField";
 
-//schema validation
 const schema = yup.object({
 	firstName: yup.string().required("First Name is required"),
 	lastName: yup.string().required("Last Name is required"),
@@ -85,7 +84,6 @@ const RegisterForm = () => {
 				Create your account
 			</Typography>
 
-			{/* Form */}
 			<Box
 				noValidate
 				component="form"
