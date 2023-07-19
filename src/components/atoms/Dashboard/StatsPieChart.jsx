@@ -31,7 +31,7 @@ const StatsPieChart = ({ data }) => {
 				font: {
 					weight: "bold", // Increase the font weight to "bold"
 					family: "'Poppins', 'sans-serif'",
-					size: 10,
+					size: 11,
 				},
 			},
 			legend: {

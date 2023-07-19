@@ -11,7 +11,7 @@ const Navbar = () => {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		box-shadow: 0 4px 4px rgb(0 0 0 / 0.2);
+		box-shadow: 0 2px 2px rgb(0 0 0 / 0.2);
 		z-index: 10;
 
 		.search {

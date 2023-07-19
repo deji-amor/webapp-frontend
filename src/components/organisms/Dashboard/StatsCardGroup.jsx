@@ -4,6 +4,7 @@ import StatsCard from "../../molecules/Dashboard/StatsCard";
 const StatsCardGroup = () => {
 	const data1 = {
 		labels: ["Service", "Project"],
+
 		datasets: [
 			{
 				label: "Users Gained",
@@ -11,7 +12,7 @@ const StatsCardGroup = () => {
 				backgroundColor: ["#5057E5", "#CED0F0"],
 				borderColor: "transparent", // Set border color to transparent to remove the border
 				borderWidth: 0, // Set borderWidth to 0 to remove the border
-				dataColors: ["#fff", "#000"]
+				dataColors: ["#fff", "#000"],
 			},
 		],
 	};
@@ -24,7 +25,7 @@ const StatsCardGroup = () => {
 				backgroundColor: ["#9265E5", "#E5DCF5"],
 				borderColor: "transparent", // Set border color to transparent to remove the border
 				borderWidth: 0, // Set borderWidth to 0 to remove the border
-				dataColors: ["#fff", "#000"]
+				dataColors: ["#fff", "#000"],
 			},
 		],
 	};
@@ -37,13 +38,13 @@ const StatsCardGroup = () => {
 				backgroundColor: ["#5057E5", "#CED0F0"],
 				borderColor: "transparent", // Set border color to transparent to remove the border
 				borderWidth: 0, // Set borderWidth to 0 to remove the border
-				dataColors: ["#fff", "#000"]
+				dataColors: ["#fff", "#000"],
 			},
 		],
 	};
 
 	return (
-		<div className="flex gap-[1.8rem] justify-between">
+		<div className="flex gap-[1.8rem] justify-between max-w-full overflow-x-auto">
 			<div className="grow">
 				<StatsCard data={data1} backgroundColor={"#B8BAE5"} />
 			</div>
