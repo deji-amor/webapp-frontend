@@ -327,9 +327,15 @@ export const ResetPasswordWrapper = styled("div")(() => ({
 	width: "568px",
 	background: "white",
 	borderRadius: "12px",
+	display: 'flex',
 	flexDirection: "column",
 	gap: "30px",
 	padding: "40px 40px",
+	position: 'fixed',
+	zIndex: '60',
+	left: "50%",
+	top: "50%",
+	transform: 'translate(-50%, -50%)'
 }));
 
 // Dummy style for password reset

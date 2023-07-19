@@ -1,44 +1,46 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const logout = createAsyncThunk(
-	"logout",
-	async ({email, password}, {rejectWithValue}) => {
-		const config = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({email, password}),
-		};
+export const logout = createAsyncThunk("logout", async ({email, password}, {rejectWithValue}) => {
+	const config = {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({email, password}),
+	};
 
-		try {
-			const url = `${import.meta.env.VITE_BASE_URL}/superAdminOnboarding`;
-			const res = await fetch(url, config);
-			return res.json();
-		} catch (err) {
-			if (err.response && err.response.data.message) {
-				return rejectWithValue(err.response.data.message);
-			} else {
-				return rejectWithValue(err.message);
-			}
+	try {
+		const url = `${import.meta.env.VITE_BASE_URL}/superAdminOnboarding`;
+		const res = await fetch(url, config);
+		return res.json();
+	} catch (err) {
+		if (err.response && err.response.data.message) {
+			return rejectWithValue(err.response.data.message);
+		} else {
+			return rejectWithValue(err.message);
 		}
 	}
-);
+});
 
 const initialState = {
 	loading: false,
 	token: "",
-  showModal: false,
+	showModal: false,
+	showResetModal: false,
 };
 
 const logoutSlice = createSlice({
 	name: "password",
 	initialState,
 	reducers: {
-    toggleLogoutModal: (state) => {
-      state.showModal = !state.showModal
-    }
+		toggleLogoutModal: state => {
+			state.showModal = !state.showModal;
+		},
+
+		toggleResetModal: state => {
+			state.showResetModal = !state.showResetModal;
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -62,4 +64,4 @@ const logoutSlice = createSlice({
 // export const { } = passwordSlice.actions
 
 export default logoutSlice.reducer;
-export const logoutActions = logoutSlice.actions
+export const logoutActions = logoutSlice.actions;

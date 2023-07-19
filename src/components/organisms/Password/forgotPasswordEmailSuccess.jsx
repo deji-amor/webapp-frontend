@@ -11,7 +11,7 @@ import CustomButton from "../../atoms/Password/customButton";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
 const ForgotEmailSuccess = () => {
-	const { email } = useSelector((state) => state.forgotpassword);
+	const { email } = useSelector((state) => state.forgotPassword);
 	const dispatch = useDispatch();
 
 	const handleResubmit = (e) => {

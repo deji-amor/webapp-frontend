@@ -19,7 +19,7 @@ const CustomerpasswordBanner = () => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { error } = useSelector((state) => state.forgotpassword);
+	const { error } = useSelector((state) => state.forgotPassword);
 
 	const handleEmailChange = (e) => {
 		setEmail(e.target.value);

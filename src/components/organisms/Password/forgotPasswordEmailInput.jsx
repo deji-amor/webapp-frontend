@@ -17,7 +17,7 @@ const ForgotPasswordEmail = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { error } = useSelector(state => state.forgotpassword)
+  const { error } = useSelector(state => state.forgotPassword)
 
   // handles email input change
   const handleEmailChange = (e) => {
@@ -38,7 +38,7 @@ const ForgotPasswordEmail = () => {
       console.log(err);
     }
 
-    if (error) return setServerError(true);
+    // if (error) return setServerError(true);
     if (!serverError && !forgotPasswordError ) return navigate('/forgot-password-success');
   }
 

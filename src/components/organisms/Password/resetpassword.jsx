@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logoutActions } from "../../../state-manager/reducers/logout/logout";
 import { ResetPasswordWrapper } from "../../atoms/Password/wrappers";
 import { forgotpasswordrecovery } from "../../../state-manager/reducers/password/forgotpassword";
 import { SET_ERROR_FALSE } from "../../../state-manager/reducers/password/forgotpassword";
 import ResetPasswordInputs from "../../molecules/Password/resetpasswordinputs";
 import { validatePassword } from "../../atoms/Password/validators";
+import Overlay from "../../atoms/Logout/Overlay";
 
 const ResetPassword = () => {
 	const [error, setError] = useState(false);
@@ -17,7 +19,7 @@ const ResetPassword = () => {
 	const { current, password, confirmPassword } = passwords;
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const serverRecoveryError = useSelector((state) => state.forgotpassword.error);
+	const serverRecoveryError = useSelector((state) => state.forgotPassword.error);
 
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
@@ -75,6 +77,10 @@ const ResetPassword = () => {
 		current,
 	]);
 
+	const handleShowResetModal = () => {
+		dispatch(logoutActions.toggleResetModal());
+	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -94,32 +100,35 @@ const ResetPassword = () => {
 			console.log(err);
 		}
 
-		// if (serverRecoveryError) return setServerError(true);
+		if (serverRecoveryError) return setServerError(true);
 
 		console.log("Submitting...");
 		navigate("/reset-password-success");
 	};
 
 	return (
-		<ResetPasswordWrapper>
-			<ResetPasswordInputs
-				hasUpper={hasUpper}
-				hasLower={hasLower}
-				hasSymbol={hasSymbol}
-				hasNumber={hasNumber}
-				hasEightChar={hasEightChar}
-				handleFormSubmit={handleSubmit}
-				handleChange={handleChange}
-				forgotPasswordRecoveryError={!match}
-				serverError={serverError}
-				match={match}
-				value={password}
-				current={current}
-				currentError={currentError}
-				validationError={validationError}
-				confirm={confirmPassword}
-			/>
-		</ResetPasswordWrapper>
+		<>
+			<Overlay onClick={handleShowResetModal} />
+			<ResetPasswordWrapper>
+				<ResetPasswordInputs
+					hasUpper={hasUpper}
+					hasLower={hasLower}
+					hasSymbol={hasSymbol}
+					hasNumber={hasNumber}
+					hasEightChar={hasEightChar}
+					handleFormSubmit={handleSubmit}
+					handleChange={handleChange}
+					forgotPasswordRecoveryError={!match}
+					serverError={serverError}
+					match={match}
+					value={password}
+					current={current}
+					currentError={currentError}
+					validationError={validationError}
+					confirm={confirmPassword}
+				/>
+			</ResetPasswordWrapper>
+		</>
 	);
 };
 

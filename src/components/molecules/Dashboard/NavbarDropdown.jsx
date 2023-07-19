@@ -45,10 +45,14 @@ const NavbarDropdown = () => {
 		dispatch(logoutActions.toggleLogoutModal());
 	};
 
+	const handleShowResetModal = () => {
+		dispatch(logoutActions.toggleResetModal());
+	};
+
 	return (
 		<DropDown>
 			<div className="action cursor-pointer group">
-				<div onClick={resetPasswordHandler} className="action-text">
+				<div onClick={handleShowResetModal} className="action-text">
 					<RestartAltOutlinedIcon className="text-black group-hover:text-[#2B2E72]" />
 					<span className="font-poppins text-[1rem] text-black group-hover:text-[#2B2E72]">
 						Reset Password

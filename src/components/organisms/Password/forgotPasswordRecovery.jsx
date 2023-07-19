@@ -20,7 +20,7 @@ const ForgotPasswordRecover = () => {
 	const { password, confirmPassword } = passwords;
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const serverRecoveryError = useSelector((state) => state.forgotpassword.error);
+	const serverRecoveryError = useSelector((state) => state.forgotPassword.error);
 
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
@@ -82,7 +82,7 @@ const ForgotPasswordRecover = () => {
 			console.log(err);
 		}
 
-		// if (serverRecoveryError) return setServerError(true);
+		if (serverRecoveryError) return setServerError(true);
 
 		console.log("Submitting...");
 		navigate("/password-recovery-success");

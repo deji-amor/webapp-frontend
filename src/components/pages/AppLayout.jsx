@@ -5,13 +5,17 @@ import Navbar from '../molecules/Dashboard/Navbar';
 import LogoutOverlay from '../organisms/Logout/LogoutOverlay';
 // import { logoutActions } from '../../state-manager/reducers/logout/logout';
 import { useSelector } from 'react-redux';
+import ResetPassword from "../organisms/Password/resetpassword";
 
 const AppLayout = () => {
-  const showModal = useSelector(state => state.logout.showModal)
+  const showLogoutModal = useSelector(state => state.logout.showModal)
+  const showResetModal = useSelector(state => state.logout.showResetModal)
 
   return (
     <> 
-    {showModal && <LogoutOverlay/>}
+    {showLogoutModal && <LogoutOverlay/>}
+    {showResetModal && <ResetPassword/>}
+
       <div className='flex h-screen max-h-screen'>
           <Sidebar/>
           <div className='basis-[85%] flex flex-col max-w-[85%]'>
