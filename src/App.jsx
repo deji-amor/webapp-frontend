@@ -17,6 +17,8 @@ import Dashboard from './components/pages/app/Dashboard'
 import Tickets from './components/pages/app/Tickets'
 import Users from './components/pages/app/Users'
 import Reports from './components/pages/app/Reports'
+import SuperAdminVerifyEmail from './components/pages/SuperAdminVerifyEmail'
+import SuperAdminOnboardingSuccess from './components/pages/SuperAdminOnboardingSuccess'
 
 function App() {
   const router = createBrowserRouter([
@@ -32,6 +34,8 @@ function App() {
     {path: "/password-recovery-success", element: <PasswordRecoverySuccess/>},
     {path: "/customer-password", element: <CustomerForgotPasswordPage/>},
     {path: "/super-admin-onboarding", element: <SuperAdminOnboarding/>},
+    {path: "/super-admin-verify", element: <SuperAdminVerifyEmail/>},
+    {path: "/super-admin-onboarding-success", element: <SuperAdminOnboardingSuccess/>},
     {path: "/app", element: <AppLayout/>, children: [
       {path: "dashboard", element: <Dashboard/>, index: true},
       {path: "tickets", element: <Tickets/>},
