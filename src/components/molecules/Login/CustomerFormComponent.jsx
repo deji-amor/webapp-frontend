@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import EmojiHeader from "../../atoms/Login/EmojiHeader";
 import Header from "../../atoms/Login/Header";
@@ -10,11 +10,11 @@ import useBasicInput from "../../../hooks/useBasicInput";
 import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
-import { loginCustomerActions } from '../../../state-manager/reducers/login/loginCustomer';
+import { loginCustomerActions } from "../../../state-manager/reducers/login/loginCustomer";
 
 const CustomerFormComponent = () => {
-	const loginCustomerState = useSelector(state => state.loginCustomer)
-	const dispatch = useDispatch()
+	const loginCustomerState = useSelector((state) => state.loginCustomer);
+	const dispatch = useDispatch();
 
 	const {
 		enteredValue: usernameValue,
@@ -24,9 +24,9 @@ const CustomerFormComponent = () => {
 		setHasError: usernameSetHasError,
 		valueChangeHandler: usernameChangeHandler,
 		valueBlurHandler: usernameBlurHandler,
-    valueIsValid: usernameIsValid,
-    errorFromServer: usernameErrFromServer,
-    setErrorFromServer: usernameSetErrorFromServer,
+		valueIsValid: usernameIsValid,
+		errorFromServer: usernameErrFromServer,
+		setErrorFromServer: usernameSetErrorFromServer,
 		id: usernameId,
 	} = useBasicInput(isValidEmail);
 
@@ -38,23 +38,24 @@ const CustomerFormComponent = () => {
 		setHasError: passwordSetHasError,
 		valueChangeHandler: passwordChangeHandler,
 		valueBlurHandler: passwordBlurHandler,
-    valueIsValid: passwordIsValid,
-    errorFromServer: passwordErrFromServer,
-    setErrorFromServer: passwordSetErrorFromServer,
+		valueIsValid: passwordIsValid,
+		errorFromServer: passwordErrFromServer,
+		setErrorFromServer: passwordSetErrorFromServer,
 		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
-
-  const submitHandler = (e) => {
+	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(loginCustomerActions.showToasts({message: "The email you entered is not registered with us.", title: "Username Not Found"}))
-
-		
+		dispatch(
+			loginCustomerActions.showToasts({
+				message: "The email you entered is not registered with us.",
+				title: "Username Not Found",
+			})
+		);
 	};
 
-
-  const isButtonDisabled = !(passwordIsValid && usernameIsValid)
-  // const isButtonDisabled = false
+	const isButtonDisabled = !(passwordIsValid && usernameIsValid);
+	// const isButtonDisabled = false
 
 	return (
 		<form onSubmit={submitHandler} className="max-w-[26.56rem]">
@@ -75,8 +76,11 @@ const CustomerFormComponent = () => {
 						hasError={usernameHasError}
 						id={usernameId}
 					/>
-					{usernameHasError && <ValidationErrorText errorFromServer={usernameErrFromServer}>{usernameErrorMessage}</ValidationErrorText>}
-					
+					{usernameHasError && (
+						<ValidationErrorText errorFromServer={usernameErrFromServer}>
+							{usernameErrorMessage}
+						</ValidationErrorText>
+					)}
 				</div>
 				<div className="">
 					<InputLabel htmlFor={passwordId}>Password</InputLabel>
@@ -95,13 +99,13 @@ const CustomerFormComponent = () => {
 					<ForgotPassword>Forgot Password?</ForgotPassword>
 				</div>
 				<div className="w-full">
-					<Button isDisabled={isButtonDisabled}  type="submit" isLoading={false}>
+					<Button isDisabled={isButtonDisabled} type="submit" isLoading={false}>
 						Sign in
 					</Button>
 				</div>
 			</div>
 		</form>
 	);
-}
+};
 
-export default CustomerFormComponent
+export default CustomerFormComponent;

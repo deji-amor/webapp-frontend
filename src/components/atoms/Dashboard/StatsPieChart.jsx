@@ -1,57 +1,64 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import React from "react";
+import PropTypes from "prop-types";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS } from "chart.js/auto";
+import ChartDataLabel from "chartjs-plugin-datalabels";
 
-const StatsPieChart = ({data}) => {
-  // const data = [
-  //   { name: 'Group A', value: 400 },
-  //   { name: 'Group B', value: 300 },
-  //   { name: 'Group C', value: 300 },
-  //   { name: 'Group D', value: 200 },
-  // ];
+const StatsPieChart = ({ data }) => {
+	const options = {
+		maintainAspectRatio: false,
+		plugins: {
+			tooltips: {
+				enabled: !false,
+			},
+			datalabels: {
+				formatter: (value, ctx) => {
+					const datapoints = ctx.chart.data.datasets[0].data;
+					const total = datapoints.reduce((total, datapoint) => total + datapoint, 0);
+					const percentage = (value / total) * 100;
+					return percentage.toFixed(2) + "%";
+				},
+				color: (context) => {
+					// Define an array of colors for each data label (percentage label)
+					const dataColors = data.datasets[0].dataColors; // Add more colors if you have more data points
 
-  // const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
-  const COLORS = data.map(d => d.color)
+					// Get the data index for the current data label
+					const dataIndex = context.dataIndex;
 
-  const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+					// Return the color based on the data index
+					return dataColors[dataIndex];
+				},
+				font: {
+					weight: "bold", // Increase the font weight to "bold"
+					family: "'Poppins', 'sans-serif'",
+					size: 10,
+				},
+			},
+			legend: {
+				display: true, // Hide the legend
+				position: "bottom",
+				fullSize: false,
+				borderRadius: 20,
+				labels: {
+					boxWidth: 10,
+					boxHeight: 10,
+					font: {
+						size: 10,
+						family: "'Poppins', 'sans-serif'",
+						weight: 600,
+						color: "#252421",
+					},
+					padding: 10,
+				},
+			},
+		},
+	};
 
-    return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
-    );
-  };
-
-  return (
-<ResponsiveContainer width="100%" height="100%">
-      <PieChart>
-        <Pie
-          data={data}
-          cx="50%"
-          cy="50%"
-          labelLine={false}
-          label={renderCustomizedLabel}
-          outerRadius="100%"
-          fill="#8884d8"
-          dataKey="value"
-          activeShape={null}
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip/>
-      </PieChart>
-    </ResponsiveContainer>
-  );
-}
+	return <Pie data={data} options={options} plugins={[ChartDataLabel]} />;
+};
 
 StatsPieChart.propTypes = {
-  data: PropTypes.array
-}
+	data: PropTypes.array,
+};
 
-export default StatsPieChart
+export default StatsPieChart;

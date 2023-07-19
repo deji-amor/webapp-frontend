@@ -22,7 +22,7 @@ const RecentTicketTablePagination = (props) => {
 		newEndingPoint,
 	} = usePagination(totalItems, itemsOnEachPage, maxNumberOfButtons);
 
-	console.log({newStartingPoint, newEndingPoint});
+	console.log({ newStartingPoint, newEndingPoint });
 
 	return (
 		<div className="bg-white p-[0.8rem] rounded-b-[0.75rem] border-t-2 border-b-[#ECECEC] flex items-center justify-between">

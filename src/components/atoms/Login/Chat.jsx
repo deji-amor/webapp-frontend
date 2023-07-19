@@ -1,12 +1,12 @@
-import React from 'react'
-import chat from "../../../assets/login/chat-icon.png"
+import React from "react";
+import chat from "../../../assets/login/chat-icon.png";
 
 const Chat = () => {
-  return (
-    <div>
-      <img src={chat} className=''/>
-    </div>
-  )
-}
+	return (
+		<div>
+			<img src={chat} className="" />
+		</div>
+	);
+};
 
-export default Chat
+export default Chat;

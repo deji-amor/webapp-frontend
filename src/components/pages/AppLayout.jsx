@@ -14,9 +14,9 @@ const AppLayout = () => {
     {showModal && <LogoutOverlay/>}
       <div className='flex h-screen max-h-screen'>
           <Sidebar/>
-          <div className='basis-[85%] flex flex-col'>
+          <div className='basis-[85%] flex flex-col max-w-[85%]'>
             <Navbar/>
-            <div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] overflow-y-auto">
+            <div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] overflow-y-auto overflow-x-auto">
               <Outlet/>
             </div>
           </div>

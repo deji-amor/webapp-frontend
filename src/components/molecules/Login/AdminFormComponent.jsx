@@ -10,11 +10,11 @@ import useBasicInput from "../../../hooks/useBasicInput";
 import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
-import {loginAdminActions} from "../../../state-manager/reducers/login/loginAdmin"
+import { loginAdminActions } from "../../../state-manager/reducers/login/loginAdmin";
 
 const AdminFormComponent = () => {
-	const loginAdminState = useSelector(state => state.loginAdmin)
-	const dispatch = useDispatch()
+	const loginAdminState = useSelector((state) => state.loginAdmin);
+	const dispatch = useDispatch();
 
 	const {
 		enteredValue: usernameValue,
@@ -24,9 +24,9 @@ const AdminFormComponent = () => {
 		setHasError: usernameSetHasError,
 		valueChangeHandler: usernameChangeHandler,
 		valueBlurHandler: usernameBlurHandler,
-    valueIsValid: usernameIsValid,
-    errorFromServer: usernameErrFromServer,
-    setErrorFromServer: usernameSetErrorFromServer,
+		valueIsValid: usernameIsValid,
+		errorFromServer: usernameErrFromServer,
+		setErrorFromServer: usernameSetErrorFromServer,
 		id: usernameId,
 	} = useBasicInput(isValidEmail);
 
@@ -38,25 +38,26 @@ const AdminFormComponent = () => {
 		setHasError: passwordSetHasError,
 		valueChangeHandler: passwordChangeHandler,
 		valueBlurHandler: passwordBlurHandler,
-    valueIsValid: passwordIsValid,
-    errorFromServer: passwordErrFromServer,
-    setErrorFromServer: passwordSetErrorFromServer,
+		valueIsValid: passwordIsValid,
+		errorFromServer: passwordErrFromServer,
+		setErrorFromServer: passwordSetErrorFromServer,
 		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
-
-  const submitHandler = (e) => {
+	const submitHandler = (e) => {
 		e.preventDefault();
-		const err = {message: "The email you entered is not registered with us.", title: "Username Not Found"}
-		dispatch(loginAdminActions.showToasts(err))
-		usernameSetErrorMessage(err.title)
-		usernameSetHasError(true)
-		usernameSetErrorFromServer(true)
+		const err = {
+			message: "The email you entered is not registered with us.",
+			title: "Username Not Found",
+		};
+		dispatch(loginAdminActions.showToasts(err));
+		usernameSetErrorMessage(err.title);
+		usernameSetHasError(true);
+		usernameSetErrorFromServer(true);
 	};
 
-
-  const isButtonDisabled = !(passwordIsValid && usernameIsValid)
-  // const isButtonDisabled = false
+	const isButtonDisabled = !(passwordIsValid && usernameIsValid);
+	// const isButtonDisabled = false
 
 	return (
 		<form onSubmit={submitHandler} className="">
@@ -73,12 +74,15 @@ const AdminFormComponent = () => {
 						type="text"
 						value={usernameValue}
 						onBlur={usernameBlurHandler}
-            onChange={usernameChangeHandler}
-            hasError={usernameHasError}
+						onChange={usernameChangeHandler}
+						hasError={usernameHasError}
 						id={usernameId}
 					/>
-          {usernameHasError && <ValidationErrorText errorFromServer={usernameErrFromServer}>{usernameErrorMessage}</ValidationErrorText>}
-          
+					{usernameHasError && (
+						<ValidationErrorText errorFromServer={usernameErrFromServer}>
+							{usernameErrorMessage}
+						</ValidationErrorText>
+					)}
 				</div>
 				<div className="">
 					<InputLabel htmlFor={passwordId}>Password</InputLabel>
@@ -87,17 +91,17 @@ const AdminFormComponent = () => {
 						type="password"
 						value={passwordValue}
 						onBlur={passwordBlurHandler}
-            onChange={passwordChangeHandler}
-            hasError={passwordHasError}
+						onChange={passwordChangeHandler}
+						hasError={passwordHasError}
 						id={passwordId}
 					/>
-          {passwordHasError && <ValidationErrorText>{passwordErrorMessage}</ValidationErrorText>}
+					{passwordHasError && <ValidationErrorText>{passwordErrorMessage}</ValidationErrorText>}
 				</div>
-        <div className="">
-          <ForgotPassword>Forgot Password?</ForgotPassword>
-        </div>
+				<div className="">
+					<ForgotPassword>Forgot Password?</ForgotPassword>
+				</div>
 				<div className="w-full">
-					<Button isDisabled={isButtonDisabled}  type="submit" isLoading={false}>
+					<Button isDisabled={isButtonDisabled} type="submit" isLoading={false}>
 						Sign in
 					</Button>
 				</div>

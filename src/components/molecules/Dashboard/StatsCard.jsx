@@ -1,43 +1,41 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import StatsCardHeader from '../../atoms/Dashboard/StatsCardHeader'
-import StatsCardValue from '../../atoms/Dashboard/StatsCardValue'
-import StatsCardViewMore from '../../atoms/Dashboard/StatsCardViewMore'
-import StatsPieChart from '../../atoms/Dashboard/StatsPieChart'
-import { styled } from '@mui/material'
+import React from "react";
+import PropTypes from "prop-types";
+import StatsCardHeader from "../../atoms/Dashboard/StatsCardHeader";
+import StatsCardValue from "../../atoms/Dashboard/StatsCardValue";
+import StatsCardViewMore from "../../atoms/Dashboard/StatsCardViewMore";
+import StatsPieChart from "../../atoms/Dashboard/StatsPieChart";
+import { styled } from "@mui/material";
 
-const StatsCard = ({data, backgroundColor}) => {
-  const Card = styled("div")`
-    border-radius: 0.8125rem;
-    background: ${backgroundColor};
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.625rem 2.25rem;
-    height: 100%
+const StatsCard = ({ data, backgroundColor }) => {
+	const Card = styled("div")`
+		border-radius: 0.8125rem;
+		background: ${backgroundColor};
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.625rem 2.25rem;
+		height: 100% .item {
 
-    .item {
+		}
+	`;
 
-    }
-  `
-
-  return (
-    <Card>
-      <div className="h-full">
-        <StatsCardHeader>Total Tickets</StatsCardHeader>
-        <StatsCardValue>280</StatsCardValue>
-        <StatsCardViewMore>View More</StatsCardViewMore>
-      </div>
-      <div className="basis-[55%] h-[7rem]">
-        <StatsPieChart data={data}/>
-      </div>
-    </Card>
-  )
-}
+	return (
+		<Card>
+			<div className="h-full">
+				<StatsCardHeader>Total Tickets</StatsCardHeader>
+				<StatsCardValue>280</StatsCardValue>
+				<StatsCardViewMore>View More</StatsCardViewMore>
+			</div>
+			<div className="w-[9rem] h-[8rem]">
+				<StatsPieChart data={data} />
+			</div>
+		</Card>
+	);
+};
 
 StatsCard.propTypes = {
-  data: PropTypes.array,
-  backgroundColor: PropTypes.string,
-}
+	data: PropTypes.array,
+	backgroundColor: PropTypes.string,
+};
 
-export default StatsCard
+export default StatsCard;
