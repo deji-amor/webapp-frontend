@@ -1,13 +1,12 @@
-import ForgotPasswordEmail from '../organisms/Password/forgotPasswordEmailInput'
-import { ForgotEmailPageWrapper } from '../atoms/Password/wrappers'
+import ForgotPasswordEmail from "../organisms/Password/forgotPasswordEmailInput";
+import { ForgotEmailPageWrapper } from "../atoms/Password/wrappers";
 
 const ForgotPassword = () => {
+	return (
+		<ForgotEmailPageWrapper>
+			<ForgotPasswordEmail />
+		</ForgotEmailPageWrapper>
+	);
+};
 
-  return (
-    <ForgotEmailPageWrapper>
-      <ForgotPasswordEmail />
-    </ForgotEmailPageWrapper>
-  )
-}
-
-export default ForgotPassword
+export default ForgotPassword;
