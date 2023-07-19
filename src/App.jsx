@@ -19,10 +19,11 @@ import Users from './components/pages/app/Users'
 import Reports from './components/pages/app/Reports'
 import SuperAdminVerifyEmail from './components/pages/SuperAdminVerifyEmail'
 import SuperAdminOnboardingSuccess from './components/pages/SuperAdminOnboardingSuccess'
+import ErrorPage from './components/pages/ErrorPage'
 
 function App() {
   const router = createBrowserRouter([
-    {path: "/", element: <Home/>, index: true},
+    {path: "/", element: <Home/>, index: true, errorElement: <ErrorPage/>},
     {path: "/login-admin", element: <LoginAdmin/>},
     {path: "/login-customer", element: <LoginCustomer/>},
     {path: "/forgot-password", element: <ForgotPassword/>},
