@@ -9,6 +9,7 @@ export default {
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
         "inter": ['Inter', 'sans-serif'],
+        "open-sans": ['Open-Sans', 'sans-serif'],
       }
     },
   },

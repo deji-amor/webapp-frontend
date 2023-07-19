@@ -1,8 +1,8 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loginAdmin = createAsyncThunk(
-	"loginAdmin",
+export const logout = createAsyncThunk(
+	"logout",
 	async ({email, password}, {rejectWithValue}) => {
 		const config = {
 			method: "POST",
@@ -29,40 +29,31 @@ export const loginAdmin = createAsyncThunk(
 const initialState = {
 	loading: false,
 	token: "",
-	toasts: [],
+  showModal: false,
 };
 
-const loginAdminSlice = createSlice({
+const logoutSlice = createSlice({
 	name: "password",
 	initialState,
 	reducers: {
-		showToasts: (state, action) => {
-			const toasts = current(state).toasts
-			const message = action.payload.message
-			const title = action.payload.title
-			const newToast = {id: Date.now(), message: message, title: title}
-			state.toasts = [...toasts, newToast]
-		},
-		hideToast: (state, action) => {
-			const id = action.payload
-			const toasts = current(state).toasts.slice()
-			state.toasts = toasts.filter(toast => toast.id !== id)
-		}
+    toggleLogoutModal: (state) => {
+      state.showModal = !state.showModal
+    }
 	},
 	extraReducers: builder => {
 		builder
 
 			//  Reset Password
-			.addCase(loginAdmin.pending, (state, actions) => {
+			.addCase(logout.pending, (state, actions) => {
 				state.loginLoading = true;
 			})
 
-			.addCase(loginAdmin.fulfilled, (state, {payload}) => {
+			.addCase(logout.fulfilled, (state, {payload}) => {
 				state.loginLoading = false;
 				state.token = payload;
 			})
 
-			.addMatcher(loginAdmin.rejected, (state, {payload}) => {
+			.addMatcher(logout.rejected, (state, {payload}) => {
 				state.loginLoading = false;
 			});
 	},
@@ -70,5 +61,5 @@ const loginAdminSlice = createSlice({
 
 // export const { } = passwordSlice.actions
 
-export default loginAdminSlice.reducer;
-export const loginAdminActions = loginAdminSlice.actions
+export default logoutSlice.reducer;
+export const logoutActions = logoutSlice.actions
