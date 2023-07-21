@@ -1,11 +1,15 @@
 import ForgotPasswordEmail from "../organisms/Password/forgotPasswordEmailInput";
 import { ForgotEmailPageWrapper } from "../atoms/Password/wrappers";
+import CustomLogo from "../atoms/Password/customLogo";
 
 const ForgotPassword = () => {
 	return (
-		<ForgotEmailPageWrapper>
-			<ForgotPasswordEmail />
-		</ForgotEmailPageWrapper>
+		<>
+			<CustomLogo /> 
+			<ForgotEmailPageWrapper>
+				<ForgotPasswordEmail />
+			</ForgotEmailPageWrapper>
+		</>
 	);
 };
 

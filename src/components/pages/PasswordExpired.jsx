@@ -1,11 +1,15 @@
 import { ForgotEmailPageWrapper as PasswordExpiredPageWrapper } from "../atoms/Password/wrappers";
 import PasswordExpired from "../organisms/Password/forgotpasswordlinkexp";
+import CustomLogo from "../atoms/Password/customLogo";
 
 const ResetPasswordPageSuccess = () => {
 	return (
-		<PasswordExpiredPageWrapper>
-			<PasswordExpired />
-		</PasswordExpiredPageWrapper>
+		<>
+			<CustomLogo /> 
+			<PasswordExpiredPageWrapper>
+				<PasswordExpired />
+			</PasswordExpiredPageWrapper>
+		</>
 	);
 };
 

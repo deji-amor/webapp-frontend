@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { ResetPasswordInputWrapper } from "../../atoms/Password/wrappers";
 import HeaderContent from "./customHeaderSection";
-import LockIcon from "@mui/icons-material/Lock";
+import lockImage from "../../../assets/password/lock.png";
 import ForgotPasswordRecoveryInput from "./customForgotPasswordRecoveryInput";
 import CustomButton from "../../atoms/Password/customButton";
 import CustomInput from "../../atoms/Password/customInput";
@@ -29,7 +29,7 @@ const ResetPasswordInputs = ({
 	return (
 		<ResetPasswordInputWrapper>
 			<HeaderContent
-				icon={<LockIcon className="icon" />}
+				icon={<img src={lockImage} className="icon" />}
 				iconSize="36px"
 				title="Reset Password"
 				description="Reset your password"
@@ -64,7 +64,7 @@ const ResetPasswordInputs = ({
 					value={value}
 					currentError={currentError}
 					current={current}
-					forgotPasswordRecoveryError={currentError || validationError}
+					forgotPasswordRecoveryError={currentError || validationError }
 					confirm={confirm}
 					validationError={validationError}
 					handleChange={handleChange}
@@ -91,7 +91,10 @@ const ResetPasswordInputs = ({
 					butText="Confirm Password Change"
 					butType="button"
 					onClick={handleFormSubmit}
+					validationError={validationError}
+					currentError={currentError}
 					error={error}
+					defaultCursor={!value || !confirm || !current}
 					serverError={serverError}
 				/>
 			</div>

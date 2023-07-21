@@ -20,6 +20,7 @@ const InputButton = ({
 	handleEmailChange,
 	handleFormSubmit,
 	serverError,
+	defaultCursor,
 	serverErrorMessage,
 }) => {
 	return (
@@ -34,6 +35,7 @@ const InputButton = ({
 					error={forgotPasswordError}
 					errorMessage={errorMessage}
 					serverError={serverError}
+					defaultCursor={forgotPasswordError || defaultCursor}
 					handleChange={handleEmailChange}
 				/>
 
@@ -59,8 +61,9 @@ const InputButton = ({
 				<CustomButton
 					butText={butText}
 					butType={butType}
-					error={forgotPasswordError}
+					error={forgotPasswordError || defaultCursor || forgotPasswordError}
 					onClick={handleFormSubmit}
+					defaultCursor={serverError || forgotPasswordError}
 				/>
 				<TipNote note={note} />
 			</div>
@@ -79,6 +82,7 @@ InputButton.propTypes = {
 	forgotPasswordError: PropTypes.bool,
 	errorMessage: PropTypes.string,
 	serverError: PropTypes.bool,
+	defaultCursor: PropTypes.bool,
 	serverErrorMessage: PropTypes.string,
 	handleEmailChange: PropTypes.func,
 	handleFormSubmit: PropTypes.func,

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { ForgotEmailWrapper, CustomerEmailWrapper } from "../../atoms/Password/wrappers";
 import ErrorCard from "./customErrorCard";
 import HeaderContent from "./customHeaderSection";
-import LockIcon from "@mui/icons-material/Lock";
+import lockImage from "../../../assets/password/lock.png";
 import InputButton from "./customForgotPasswordInputSection";
 
 const CustomerPasswordForm = ({
@@ -10,6 +10,7 @@ const CustomerPasswordForm = ({
 	forgotPasswordError,
 	handleEmailChange,
 	handleFormSubmit,
+	value
 }) => {
 	return (
 		<CustomerEmailWrapper>
@@ -26,7 +27,7 @@ const CustomerPasswordForm = ({
 				/>
 
 				<HeaderContent
-					icon={<LockIcon className="icon" />}
+					icon={<img src={lockImage} className="icon" />}
 					padding={false}
 					width="100%"
 					align="left"
@@ -45,6 +46,7 @@ const CustomerPasswordForm = ({
 					forgotPasswordError={forgotPasswordError}
 					errorMessage="Invalid email format"
 					serverError={serverError}
+					defaultCursor={serverError || forgotPasswordError || !value}
 					serverErrorMessage="Email not found"
 					note="The recovery link will expire after 48 hrs, please use before then."
 					handleFormSubmit={handleFormSubmit}
@@ -59,6 +61,7 @@ CustomerPasswordForm.propTypes = {
 	forgotPasswordError: PropTypes.bool,
 	handleEmailChange: PropTypes.func,
 	handleFormSubmit: PropTypes.func,
+	value: PropTypes.bool,
 };
 
 export default CustomerPasswordForm;

@@ -1,11 +1,17 @@
 import { ForgotEmailPageWrapper as ForgotPasswordRecoverySuccessPageWrapper } from "../atoms/Password/wrappers";
 import ForgotPasswordRecoverySuccess from "../organisms/Password/forgotPasswordRecoverySuccess";
+import CustomLogo from "../atoms/Password/customLogo";
+
 
 const PasswordRecoverySuccess = () => {
 	return (
-		<ForgotPasswordRecoverySuccessPageWrapper>
-			<ForgotPasswordRecoverySuccess />
-		</ForgotPasswordRecoverySuccessPageWrapper>
+		<>
+			<CustomLogo /> 
+			<ForgotPasswordRecoverySuccessPageWrapper>
+				<ForgotPasswordRecoverySuccess />
+			</ForgotPasswordRecoverySuccessPageWrapper>
+		</>
+		
 	);
 };
 

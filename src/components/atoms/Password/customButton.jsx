@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { ButtonWrapper } from "./wrappers";
 
-const CustomButton = ({ butText, butWidth, butType, error, onClick }) => {
+const CustomButton = ({ butText, butWidth, butType, error, serverError, validationError, currentError, onClick, defaultCursor }) => {
 	return (
-		<ButtonWrapper width={butWidth}>
-			<button disabled={error} onClick={onClick} type={butType}>
+		<ButtonWrapper width={butWidth} error={serverError || validationError || currentError || error || defaultCursor}>
+			<button disabled={serverError || validationError || currentError || error || defaultCursor} onClick={onClick} type={butType}>
 				{butText}
 			</button>
 		</ButtonWrapper>
@@ -18,6 +18,10 @@ CustomButton.propTypes = {
 	backgroundColor: PropTypes.string,
 	onClick: PropTypes.func,
 	error: PropTypes.bool,
+	serverError: PropTypes.bool,
+	currentError: PropTypes.bool,
+	defaultCursor: PropTypes.bool,
+	validationError: PropTypes.bool,
 };
 
 export default CustomButton;

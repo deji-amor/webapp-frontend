@@ -61,6 +61,7 @@ const CustomerpasswordBanner = () => {
 				forgotPasswordError={forgotPasswordError}
 				handleEmailChange={handleEmailChange}
 				handleFormSubmit={handleFormSubmit}
+				defaultCursor={forgotPasswordError || serverError || !email}
 			/>
 		</CustomerpasswordWrapper>
 	);
