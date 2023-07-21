@@ -1,28 +1,58 @@
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { Controller } from "react-hook-form";
+import React from "react";
+import { Checkbox, FormControlLabel, FormControl } from "@mui/material";
+import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
 
-const CheckboxFields = ({ name, errors, control }) => {
-	const checkboxStyle = {
-		color: "#7F56D9",
-		background: "#F9F5FF",
-		"&.Mui-checked": {
-			color: "#7F56D9",
-		},
-	};
-
-	const labelStyle = {
-		fontWeight: "bold",
-		color: "#4F4F4F",
-	};
+const CheckboxFields = ({ checked, control, name, onClick }) => {
 	return (
 		<>
-			<Controller
-				name={name}
-				control={control}
-				render={({ field }) => (
-					<FormControlLabel control={<Checkbox {...field} style={checkboxStyle} />} />
-				)}
-			/>
+			<FormControl>
+				<FormControlLabel
+					control={
+						<Checkbox
+							name={name}
+							onClick={onClick}
+							inputProps={{ "aria-label": "checkbox" }}
+							required
+							style={{ color: "#2B2E72" }}
+							checked={checked}
+							{...control}
+						/>
+					}
+					label={
+						<>
+							I agree to the&nbsp;
+							<a
+								href="/terms-and-conditions"
+								target="_blank"
+								rel="noopener noreferrer"
+								style={{
+									color: "#2B2E72",
+									textDecoration: "none",
+									fontWeight: "700",
+									fontStyle: "normal",
+								}}
+							>
+								Terms and Conditions
+							</a>
+							, and our&nbsp;
+							<a
+								href="/privacy-policy"
+								target="_blank"
+								rel="noopener noreferrer"
+								style={{
+									color: "#2B2E72",
+									textDecoration: "none",
+									fontWeight: "700",
+									fontStyle: "normal",
+								}}
+							>
+								Privacy Policy
+							</a>
+						</>
+					}
+				/>
+				{checked ? null : <ErrorMessage message="Field must be checked" />}
+			</FormControl>
 		</>
 	);
 };

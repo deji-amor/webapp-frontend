@@ -1,4 +1,4 @@
-import { FormControl, TextField, styled } from "@mui/material";
+import { FormControl, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { addErrorIntoField } from "../../../utilis";
 import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
@@ -11,8 +11,11 @@ const TextFields = ({ label, inputProps, control, name, errors }) => {
 				mb: "0.5rem",
 				color: "#4F4F4F",
 				fontSize: "14px",
+				fontWeight: "400",
 				"& .MuiOutlinedInput-root": {
 					borderRadius: "6px",
+					fontSize: "16px",
+					fontWeight: "500",
 				},
 				"& .MuiOutlinedInput-notchedOutline": {
 					borderColor: "#EEEEEE",
@@ -24,6 +27,7 @@ const TextFields = ({ label, inputProps, control, name, errors }) => {
 				},
 				"& .MuiOutlinedInput-input": {
 					color: "#828282",
+					background: "#EEE",
 				},
 			}}
 		>
