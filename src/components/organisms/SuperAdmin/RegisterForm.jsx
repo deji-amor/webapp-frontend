@@ -1,36 +1,19 @@
 import { Box, Button, Typography } from "@mui/material";
 import TextFields from "../../molecules/SuperAdmin/TextField";
 import SelectFields from "../../atoms/SuperAdmin/SelectField";
-import CheckboxFields from "../../molecules/SuperAdmin/CheckboxField";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { pawdRegExp, phoneRegExp } from "../../../utilis";
-import PasswordField from "../../atoms/SuperAdmin/PasswordField";
-import ConfirmPasswordField from "../../atoms/SuperAdmin/ConfirmPasswordField";
-
-const schema = yup.object({
-	firstName: yup.string().required("First Name is required"),
-	lastName: yup.string().required("Last Name is required"),
-	workspaceName: yup.string().required("Workspace Name is required"),
-	Email: yup.string().required("Company Email is required").email(),
-	mobile: yup
-		.string()
-		.required("Phone Number is required")
-		.matches(phoneRegExp, "Phone number is not valid"),
-	country: yup.string().required("Country is required"),
-	stateCity: yup.string().required("State is required"),
-	password: yup
-		.string()
-		.required("Password is required")
-		.matches(
-			pawdRegExp,
-			"Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-		),
-	confirmPassword: yup.string().oneOf([yup.ref("password"), null], "Password must match"),
-	privacy: yup.bool().oneOf([true], "Field must be checked"),
-});
+import { useEffect, useState } from "react";
+import CheckboxFields from "../../molecules/SuperAdmin/CheckboxField";
+import ForgotPasswordRecoveryInput from "../../molecules/Password/customForgotPasswordRecoveryInput";
+import { schema } from "../../atoms/SuperAdmin/Schema";
+import { useDispatch, useSelector } from "react-redux";
+import { validatePassword } from "../../atoms/Password/validators";
+import {
+	SET_ERROR_FALSE_ADMIN,
+	superAdminCreate,
+} from "../../../state-manager/reducers/superAdminOnboarding/superadmin";
 
 const RegisterForm = () => {
 	const {
@@ -38,26 +21,117 @@ const RegisterForm = () => {
 		reset,
 		formState: { errors },
 		control,
+		getValues,
+		setValue,
 	} = useForm({
 		defaultValues: {
 			firstName: "",
 			lastName: "",
 			workspaceName: "",
-			companyEmail: "",
+			email: "",
 			country: "",
+			state: "",
 			mobile: "",
 			password: "",
-			confirmPassword: "",
+			confirm_password: "",
 			privacy: false,
 		},
 		resolver: yupResolver(schema),
 	});
 
-	const onSubmit = (data) => {
-		console.log(data);
-		reset();
+	const [checked, setChecked] = useState(false);
+	const [location, setLocation] = useState({ country: "", state: "" });
+	const [countryStates, setCountryStates] = useState([]);
+	const [error, setError] = useState(false);
+	const [validationError, setValidationError] = useState(false);
+	const [serverError, setServerError] = useState(false);
+	const [match, setMatch] = useState(false);
+	const [passwords, setPasswords] = useState({ password: "", confirmPassword: "" });
+	const { password, confirmPassword } = passwords;
+	const [hasUpper, setHasUpper] = useState(false);
+	const [hasLower, setHasLower] = useState(false);
+	const [hasSymbol, setHasSymbol] = useState(false);
+	const [hasNumber, setHasNumber] = useState(false);
+	const [hasEightChar, setHasEightChar] = useState(false);
 
-		return <Link to="/super-admin-onboarding-success" />;
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const serverRecoveryError = useSelector((state) => state.superAdmin.error);
+
+	const validators = [hasUpper, hasLower, hasNumber, hasSymbol, hasEightChar];
+
+	const handlePasswordChange = (e) => {
+		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
+		setServerError(false);
+		setValidationError(false);
+	};
+
+	const handleChange = (event) => {
+		setLocation({ ...location, [event.target.name]: event.target.value });
+	};
+
+	useEffect(() => {
+		validatePassword(
+			password,
+			setHasUpper,
+			setHasLower,
+			setHasSymbol,
+			setHasNumber,
+			setHasEightChar
+		);
+
+		setValue("password", password);
+		setValue("confirm_password", confirmPassword);
+
+		if (password === confirmPassword && password.length === confirmPassword.length) {
+			setMatch(true);
+			setError(false);
+		} else {
+			setMatch(false);
+			setError(true);
+		}
+
+		dispatch(SET_ERROR_FALSE_ADMIN(false));
+	}, [
+		password,
+		confirmPassword,
+		hasUpper,
+		hasLower,
+		hasNumber,
+		hasSymbol,
+		hasEightChar,
+		error,
+		match,
+		dispatch,
+		validationError,
+	]);
+
+	useEffect(() => {
+		setValue("country", location.country);
+		setValue("state", location.state);
+		setValue("privacy", checked);
+	}, [getValues, location.country, location.state, checked]);
+
+	const onSubmit = (data) => {
+		// e.preventDefault();
+		// console.log(getValues());
+
+		if (!password && !confirmPassword) return;
+
+		if (!validators.every((each) => each === true)) return setValidationError(true);
+
+		try {
+			dispatch(superAdminCreate(data));
+		} catch (err) {
+			// console.log(err);
+		}
+
+		// if (serverRecoveryError) return setServerError(true);
+
+		console.log("Submitting...");
+
+		reset();
+		navigate("/super-admin-verify");
 	};
 
 	return (
@@ -86,23 +160,24 @@ const RegisterForm = () => {
 
 			<Box
 				noValidate
+				onSubmit={handleSubmit((data) => onSubmit(data))}
 				component="form"
-				onSubmit={handleSubmit(onSubmit)}
-				sx={{ width: "100%", mt: "1rem" }}
+				sx={{ width: "100%", mt: "2rem" }}
+				style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
 			>
-				<Box sx={{ display: "flex", gap: "20px" }}>
+				<Box sx={{ display: "flex", gap: "30px" }}>
 					<TextFields errors={errors} control={control} name="firstName" label="First Name" />
 
 					<TextFields errors={errors} control={control} name="lastName" label="Last Name" />
 				</Box>
-				<Box sx={{ display: "flex", gap: "20px" }}>
+				<Box sx={{ display: "flex", gap: "30px" }}>
 					<TextFields
 						errors={errors}
 						control={control}
 						name="workspaceName"
 						label="Workspace Name"
 					/>
-					<TextFields errors={errors} control={control} name="Email" label="Company Email" />
+					<TextFields errors={errors} control={control} name="email" label="Company Email" />
 				</Box>
 
 				<TextFields
@@ -114,70 +189,58 @@ const RegisterForm = () => {
 						type: "phone",
 					}}
 				/>
-				<Box sx={{ display: "flex", gap: "20px" }}>
-					<SelectFields label="Select Country" name="country" control={control} errors={errors} />
+				<Box sx={{ display: "flex", gap: "30px" }}>
+					<SelectFields
+						label="Select Country"
+						location={location}
+						countryStates={countryStates}
+						setCountryStates={setCountryStates}
+						handleChange={handleChange}
+						countryProp="country"
+						control={control}
+						errors={errors}
+					/>
 				</Box>
 
-				<PasswordField
-					errors={errors}
-					control={control}
+				<ForgotPasswordRecoveryInput
+					label="Enter Password"
+					placeholder="Password"
 					name="password"
-					label="Enter Your Password"
-				/>
-				<ConfirmPasswordField
-					errors={errors}
-					control={control}
-					name="confirmPassword"
-					label="Confirm Password"
+					type="password"
+					validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
+					match={match}
+					value={password}
+					confirm={confirmPassword}
+					validationError={validationError}
+					handleChange={handlePasswordChange}
 				/>
 
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						alignSelf: "stretch",
-						justifyContent: "center",
-					}}
-				>
-					<CheckboxFields errors={errors} control={control} name="privacy" />
-					<div>
-						{" "}
-						By creating an account means you agree to the&nbsp;
-						<span>
-							<a
-								href="#"
-								target="_blank"
-								rel="noopener noreferrer"
-								style={{
-									color: "#2B2E72",
-									textDecoration: "none",
-									fontWeight: "700",
-									fontStyle: "normal",
-								}}
-							>
-								Terms and Conditions,
-							</a>{" "}
-							and our{" "}
-							<a
-								href="#"
-								target="_blank"
-								rel="noopener noreferrer"
-								style={{
-									color: "#2B2E72",
-									textDecoration: "none",
-									fontWeight: "700",
-									fontStyle: "normal",
-								}}
-							>
-								{" "}
-								Privacy Policy
-							</a>
-						</span>{" "}
-					</div>
-				</div>
+				<ForgotPasswordRecoveryInput
+					type="password"
+					name="confirmPassword"
+					placeholder="Confirm Password"
+					label="Confirm Password"
+					validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
+					single={true}
+					forgotPasswordRecoveryError={error && confirmPassword.length > 0}
+					match={match}
+					value={password}
+					validationError={validationError}
+					confirm={confirmPassword}
+					handleChange={handlePasswordChange}
+				/>
+
+				<CheckboxFields
+					errors={errors}
+					control={control}
+					name="privacy"
+					onClick={() => setChecked((prev) => !prev)}
+					checked={checked}
+				/>
 
 				<Button
 					type="submit"
+					// onClick={onSubmit}
 					fullWidth
 					disableRipple
 					disableTouchRipple

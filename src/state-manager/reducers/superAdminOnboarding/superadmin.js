@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const superAdmin = createAsyncThunk("superAdmin", async(args, {rejectWithValue}) => {
+export const superAdminCreate = createAsyncThunk("superAdmin", async(args, {rejectWithValue}) => {
     const config = {
         method: 'POST',
         headers: {
@@ -8,7 +8,7 @@ export const superAdmin = createAsyncThunk("superAdmin", async(args, {rejectWith
         },
         body: JSON.stringify(args),
     };
-
+    console.log(args)
     try {
         const url = `${import.meta.env.VITE_BASE_URL}/superAdminOnboarding`;
         const res = await fetch(url, config);
@@ -23,6 +23,7 @@ export const superAdmin = createAsyncThunk("superAdmin", async(args, {rejectWith
 })
 
 const initialState = {
+    error: false,
     loading: false,
 }
 
@@ -31,29 +32,29 @@ const loginAdminSlice = createSlice({
     name: "superadminonboarding",
     initialState,
     reducers: {
-        // dummy: (state, action) => {
-            
-        // },
+        SET_ERROR_FALSE_ADMIN: (state, action) => {
+          state.error = false  
+        },
     },
     extraReducers: builder => {
         builder
 
             //  Reset Password
-            .addCase(superAdmin.pending, (state, actions) => {
+            .addCase(superAdminCreate.pending, (state, actions) => {
                 state.loginLoading = true
             })
 
-            .addCase(superAdmin.fulfilled, (state, {payload}) => {
+            .addCase(superAdminCreate.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.token = payload
             })
 
-            .addMatcher(superAdmin.rejected, (state, {payload}) => {
+            .addMatcher(superAdminCreate.rejected, (state, {payload}) => {
+                state.error = true
                 state.loginLoading = false
             })
     }
 })
 
-// export const { } = passwordSlice.actions
+export const { SET_ERROR_FALSE_ADMIN } = loginAdminSlice.actions
 
 export default loginAdminSlice.reducer;
