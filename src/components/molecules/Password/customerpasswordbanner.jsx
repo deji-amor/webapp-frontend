@@ -1,5 +1,5 @@
 import { CustomerBannerContainerWrapper } from "../../atoms/Password/wrappers";
-import chatImage from "../../../assets/chat.png";
+import chatImage from "../../../assets/password/chat.png";
 import PropTypes from "prop-types";
 import CustomCustomerBannerImage from "../../atoms/Password/customCustomerImage";
 import CustomCustomerBannerHeader from "../../atoms/Password/customCustomerHeading";

@@ -1,4 +1,3 @@
-// Validates emails before submitting
 export const validateEmail = (setForgotPasswordError, email) => {
 	const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 	if (!emailRegex.test(email)) {
@@ -54,7 +53,8 @@ export const validateEmail = (setForgotPasswordError, email) => {
 	}
 };
 
-// Validates password before submitting
+
+
 export const validatePassword = (
 	password,
 	setHasUpper,

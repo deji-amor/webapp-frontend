@@ -19,6 +19,7 @@ const HeaderContent = ({
 	width,
 	style,
 	padding,
+	dPadding,
 }) => {
 	return (
 		<HeaderContentWrapper padding={padding} align={align}>
@@ -38,7 +39,7 @@ const HeaderContent = ({
 					align={align}
 					desWidth={desWidth}
 					color={color}
-					padding={padding}
+					dPadding={dPadding}
 				/>
 			</div>
 		</HeaderContentWrapper>
@@ -60,6 +61,7 @@ HeaderContent.propTypes = {
 	description: PropTypes.string,
 	style: PropTypes.object,
 	padding: PropTypes.bool,
+	dPadding: PropTypes.bool,
 };
 
 export default HeaderContent;

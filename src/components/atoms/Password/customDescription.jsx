@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useMediaQuery } from "@mui/material";
 import { DescriptionWrapper } from "./wrappers";
 
-const Description = ({ description, size, desWidth, color, align, padding }) => {
+const Description = ({ description, size, desWidth, color, align, dPadding }) => {
 	const mquery = useMediaQuery("(max-width: 500px)");
 
 	return (
@@ -12,7 +12,7 @@ const Description = ({ description, size, desWidth, color, align, padding }) => 
 			width={desWidth}
 			color={color}
 			align={align}
-			padding={padding}
+			padding={dPadding}
 		>
 			<p>{description}</p>
 		</DescriptionWrapper>
@@ -25,7 +25,7 @@ Description.propTypes = {
 	color: PropTypes.string,
 	desWidth: PropTypes.string,
 	align: PropTypes.string,
-	padding: PropTypes.bool,
+	dPadding: PropTypes.bool,
 };
 
 export default Description;

@@ -1,7 +1,27 @@
 import { styled } from "@mui/material";
 
-// Button style wrapper
-export const ButtonWrapper = styled("div")(({ width }) => ({
+export const LogoWrapper = styled("span")(({color}) => ({
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	position: "absolute",
+	top: "25px",
+	left: "50px",
+	zIndex: "10",
+	gap: "10px",
+
+	span: {
+		color: color ? color : "#000",
+		textAlign: "center",
+		fontFamily: "Inter",
+		fontSize: "20px",
+		fontStyle: "normal",
+		fontWeight: "700",
+		lineHeight: "136.023%",
+	},
+}));
+
+export const ButtonWrapper = styled("div")(({ width, error }) => ({
 	maxWidth: "100%",
 	display: "flex",
 	justifyContent: "center",
@@ -16,6 +36,7 @@ export const ButtonWrapper = styled("div")(({ width }) => ({
 		fontWeight: "600",
 		fontSize: "18px",
 		letterSpacing: "1px",
+		cursor: error ? "not-allowed" : "pointer",
 	},
 
 	"button:hover": {
@@ -23,24 +44,25 @@ export const ButtonWrapper = styled("div")(({ width }) => ({
 	},
 }));
 
-// Description style wrapper
-export const DescriptionWrapper = styled("div")(({ mquery, size, color, align, width }) => ({
-	width: "100%",
-	display: "flex",
-	justifyContent: "center",
+export const DescriptionWrapper = styled("div")(
+	({ mquery, size, color, align, width, padding }) => ({
+		width: "100%",
+		display: "flex",
+		justifyContent: "center",
 
-	p: {
-		width: width,
-		color: color ? color : "#282828",
-		textAlign: align ? align : "center",
-		fontSize: size ? size : "18px",
-		fontStyle: "normal",
-		fontWeight: "400",
-		lineHeight: "162.023%",
-	},
-}));
+		p: {
+			padding: padding ? "0 20px" : "",
+			width: width,
+			color: color ? color : "#282828",
+			textAlign: align ? align : "center",
+			fontSize: size ? size : "18px",
+			fontStyle: "normal",
+			fontWeight: "400",
+			lineHeight: "162.023%",
+		},
+	})
+);
 
-// Icon style wrapper
 export const IconWrapper = styled("div")(({ mquery, style, size, color, align, width }) => ({
 	width: width ? width : "",
 	color: "var(--text-heading-dark, #27272E)",
@@ -58,7 +80,6 @@ export const IconWrapper = styled("div")(({ mquery, style, size, color, align, w
 	},
 }));
 
-// Input wrapper for styling input and other close related elements
 export const InputWrapper = styled("div")(({ mquery, inputWidth, error }) => ({
 	width: "100%",
 	position: "relative",
@@ -69,13 +90,16 @@ export const InputWrapper = styled("div")(({ mquery, inputWidth, error }) => ({
 		borderRadius: "6px",
 		background: "#EEE",
 		padding: "15px",
-		outline: `0.1px solid ${error ? "#D73D3D" : "#2B2E72"}`,
+		outline: `0.1px solid ${error ? "#D73D3D" : "none"}`,
 		color: "#2B2E72",
 		position: "relative",
 	},
+
+	"input:focus": {
+		outline: ".1px solid #2B2E72",
+	},
 }));
 
-// ToolTip wrapper for input
 export const ToolTipWrapper = styled("div")(({ error, color }) => ({
 	width: "100%",
 	display: "flex",
@@ -98,7 +122,6 @@ export const ToolTipWrapper = styled("div")(({ error, color }) => ({
 	},
 }));
 
-// Input wrapper for styling input and other close related elements
 export const LabelWrapper = styled("div")(() => ({
 	width: "100%",
 
@@ -114,7 +137,6 @@ export const LabelWrapper = styled("div")(() => ({
 	},
 }));
 
-// Note style wrapper
 export const TipNoteWrapper = styled("div")(() => ({
 	width: "100%",
 
@@ -130,7 +152,6 @@ export const TipNoteWrapper = styled("div")(() => ({
 	},
 }));
 
-// Title style wrapper
 export const TitleWrapper = styled("div")(({ mquery, size, color, align, padding }) => ({
 	width: "100%",
 	padding: padding ? "0 30px" : "",
@@ -146,7 +167,6 @@ export const TitleWrapper = styled("div")(({ mquery, size, color, align, padding
 	},
 }));
 
-// ErrorCard style wrapper
 export const ErrorCardWrapper = styled("div")(({ error, size, color }) => ({
 	display: error ? "flex" : "none",
 	width: "362px",
@@ -167,7 +187,6 @@ export const ErrorCardWrapper = styled("div")(({ error, size, color }) => ({
 	},
 }));
 
-// Input button style wrapper
 export const InputButtonWrapper = styled("div")(({ width }) => ({
 	width: width ? width : "100%;",
 	display: "flex",
@@ -175,7 +194,6 @@ export const InputButtonWrapper = styled("div")(({ width }) => ({
 	gap: "30px",
 }));
 
-// Header style wrapper
 export const HeaderContentWrapper = styled("div")(({ padding, align }) => ({
 	width: "100%",
 	align: align ? align : "center",
@@ -187,7 +205,6 @@ export const HeaderContentWrapper = styled("div")(({ padding, align }) => ({
 	gap: "30px",
 }));
 
-// Forgot Email style wrapper
 export const ForgotEmailWrapper = styled("form")(({ width }) => ({
 	width: width ? width : "425px",
 	height: "auto",
@@ -196,7 +213,6 @@ export const ForgotEmailWrapper = styled("form")(({ width }) => ({
 	gap: "40px",
 }));
 
-// Forgot email page style wrapper
 export const ForgotEmailPageWrapper = styled("div")(() => ({
 	width: "100%",
 	height: "100vh",
@@ -206,7 +222,6 @@ export const ForgotEmailPageWrapper = styled("div")(() => ({
 	position: "relative",
 }));
 
-// Customer banner wrapper
 export const CustomerBannerWrapper = styled("div")(() => ({
 	width: "100%",
 	height: "100%",
@@ -230,7 +245,6 @@ export const CustomerBannerWrapper = styled("div")(() => ({
 	},
 }));
 
-// Customer heading style wrapper
 export const CustomerHeadingWrapper = styled("div")(() => ({
 	width: "100%",
 	height: "100%",
@@ -243,7 +257,6 @@ export const CustomerHeadingWrapper = styled("div")(() => ({
 	flexDirection: "column",
 	justifyContent: "center",
 	alignItems: "center",
-	// paddingRight: '20px',
 
 	div: {
 		width: "80%",
@@ -271,14 +284,12 @@ export const CustomerHeadingWrapper = styled("div")(() => ({
 	},
 }));
 
-// Customer password wrapper
 export const CustomerpasswordWrapper = styled("div")(() => ({
 	width: "100%",
 	display: "flex",
 	justifyContent: "space-between",
 }));
 
-// Customer Email Wrpper
 export const CustomerEmailWrapper = styled("div")(() => ({
 	width: "65%",
 	display: "flex",
@@ -286,12 +297,11 @@ export const CustomerEmailWrapper = styled("div")(() => ({
 	alignItems: "center",
 }));
 
-// Customer banner container wrapper
 export const CustomerBannerContainerWrapper = styled("div")(() => ({
 	width: "35%",
 	height: "100vh",
 	position: "relative",
-	// paddingRight: '20px',
+	paddingRight: "20px",
 
 	".chat": {
 		width: "70px",
@@ -309,7 +319,6 @@ export const CustomerBannerContainerWrapper = styled("div")(() => ({
 	},
 }));
 
-// Reset password style wrapper
 export const ResetPasswordInputWrapper = styled("div")(() => ({
 	display: "flex",
 	flexDirection: "column",
@@ -322,23 +331,21 @@ export const ResetPasswordInputWrapper = styled("div")(() => ({
 	},
 }));
 
-// Reset password style wrapper
 export const ResetPasswordWrapper = styled("div")(() => ({
 	width: "568px",
 	background: "white",
 	borderRadius: "12px",
-	display: 'flex',
+	display: "flex",
 	flexDirection: "column",
 	gap: "30px",
 	padding: "40px 40px",
-	position: 'fixed',
-	zIndex: '60',
+	position: "fixed",
+	zIndex: "60",
 	left: "50%",
 	top: "50%",
-	transform: 'translate(-50%, -50%)'
+	transform: "translate(-50%, -50%)",
 }));
 
-// Dummy style for password reset
 export const ResetPasswordPageWrapper = styled("div")(() => ({
 	width: "100%",
 	height: "100vh",

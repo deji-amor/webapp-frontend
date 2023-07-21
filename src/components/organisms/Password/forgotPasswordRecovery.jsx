@@ -6,7 +6,7 @@ import { SET_ERROR_FALSE } from "../../../state-manager/reducers/password/forgot
 import HeaderContent from "../../molecules/Password/customHeaderSection";
 import ErrorCard from "../../molecules/Password/customErrorCard";
 import CustomButton from "../../atoms/Password/customButton";
-import LockIcon from "@mui/icons-material/Lock";
+import lockmage from "../../../assets/password/lock.png";
 import { useNavigate } from "react-router-dom";
 import { validatePassword } from "../../atoms/Password/validators";
 import ForgotPasswordRecoveryInput from "../../molecules/Password/customForgotPasswordRecoveryInput";
@@ -102,7 +102,7 @@ const ForgotPasswordRecover = () => {
 			/>
 
 			<HeaderContent
-				icon={<LockIcon className="icon" />}
+				icon={<img src={lockmage} className="icon" />}
 				iconSize="36px"
 				title="Recover Password"
 				description="Enter your new password"
@@ -142,6 +142,7 @@ const ForgotPasswordRecover = () => {
 				onClick={handleSubmit}
 				error={error}
 				serverError={serverError}
+				defaultCursor={serverError || error || validationError || !password || !confirmPassword}
 			/>
 		</ForgotPasswordResetWrapper>
 	);

@@ -5,7 +5,7 @@ import { SET_EMAIL, REMOVE_EMAIL, SET_ERROR_FALSE } from "../../../state-manager
 import { ForgotEmailWrapper } from "../../atoms/Password/wrappers"
 import { useNavigate } from "react-router-dom";
 import ErrorCard from "../../molecules/Password/customErrorCard";
-import LockIcon from '@mui/icons-material/Lock';
+import lockImage from "../../../assets/password/lock.png";
 import HeaderContent from '../../molecules/Password/customHeaderSection';
 import InputButton from '../../molecules/Password/customForgotPasswordInputSection';
 import { validateEmail } from "../../atoms/Password/validators"
@@ -57,9 +57,10 @@ const ForgotPasswordEmail = () => {
                  description="The email you entered is not registered with us." />
 
       <HeaderContent 
-        icon={<LockIcon className="icon" />} 
+        icon={<img src={lockImage} className="icon" />} 
         iconSize="38px"
         title="Forgot Password" 
+        dPadding={true}
         description="Enter your email and we will send you a reset link" />
 
       <InputButton 
@@ -68,6 +69,7 @@ const ForgotPasswordEmail = () => {
         butType="button" 
         placeholder="Type your e-mail" 
         label="E-mail"
+        defaultCursor={!email || forgotPasswordError || serverError}
         handleEmailChange={handleEmailChange}
         forgotPasswordError={forgotPasswordError} 
         errorMessage="Invalid email format"

@@ -32,14 +32,14 @@ const CustomInput = ({
 				type={toggle ? type : "text"}
 				onChange={handleChange}
 				placeholder={placeholder}
-				disabled={currentError}
+				disabled={(name === 'confirmPassword') && currentError}
 			/>
 			{type === "password" && (
 				<Icon
 					onClick={handleToggle}
 					align="right"
 					style={{ position: "absolute", top: "10px", right: "20px", cursor: "pointer" }}
-					icon={toggle ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
+					icon={toggle ? <VisibilityOutlinedIcon style={{color: "#828282"}} /> : <VisibilityOffOutlinedIcon style={{color: "#828282"}} />}
 				/>
 			)}
 		</InputWrapper>

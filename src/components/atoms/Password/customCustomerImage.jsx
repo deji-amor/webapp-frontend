@@ -1,5 +1,5 @@
 import { CustomerBannerWrapper } from "./wrappers";
-import BannerImage from "../../../assets/customer.png";
+import BannerImage from "../../../assets/password/customer.png";
 
 const CustomCustomerBannerImage = () => {
 	return (
