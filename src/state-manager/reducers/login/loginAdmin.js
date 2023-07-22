@@ -13,7 +13,7 @@ export const loginAdmin = createAsyncThunk(
 		};
 
 		try {
-			const url = `${import.meta.env.VITE_BASE_URL}/superAdminOnboarding`;
+			const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`;
 			const res = await fetch(url, config);
 			return res.json();
 		} catch (err) {
