@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const loginCustomer = createAsyncThunk("loginCustomer", async({email, password}, {rejectWithValue}) => {
+    console.log({email, password});
     const config = {
         method: 'POST',
         headers: {
@@ -11,10 +12,11 @@ export const loginCustomer = createAsyncThunk("loginCustomer", async({email, pas
     };
 
     try {
-        const url = `${import.meta.env.VITE_BASE_URL}/loginCustomer`;
+        const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`;
         const res = await fetch(url, config);
         return res.json();
     }catch (err) {
+        console.log({err});
         if (err.response && err.response.data.message) {
             return rejectWithValue(err.response.data.message)
         }else {
@@ -26,6 +28,7 @@ export const loginCustomer = createAsyncThunk("loginCustomer", async({email, pas
 const initialState = {
 	loading: false,
 	token: "",
+    error: null,
 	toasts: [],
 };
 
@@ -51,17 +54,23 @@ const loginCustomerSlice = createSlice({
         builder
 
             //  Reset Password
-            .addCase(loginCustomer.pending, (state, actions) => {
-                state.loginLoading = true
+            .addCase(loginCustomer.pending, (state, payload) => {
+                state.loading = true;
+                state.token = "";
+                state.error = null
             })
 
-            .addCase(loginCustomer.fulfilled, (state, {payload}) => {
-                state.loginLoading = false
-                state.token = payload
+            .addCase(loginCustomer.fulfilled, (state, payload) => {
+                state.loading = false
+                console.log("fulfilled", payload);
+                // state.token = payload
             })
 
-            .addMatcher(loginCustomer.rejected, (state, {payload}) => {
-                state.loginLoading = false
+            .addMatcher(loginCustomer.rejected, (state, payload) => {
+                state.loading = false;
+                state.error = payload;
+                // console.log("rejected", payload);
+                // state.loginLoading = false
             })
     }
 })
