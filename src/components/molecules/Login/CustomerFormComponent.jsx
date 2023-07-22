@@ -10,10 +10,13 @@ import useBasicInput from "../../../hooks/useBasicInput";
 import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
-import { loginCustomerActions } from "../../../state-manager/reducers/login/loginCustomer";
+import { loginCustomerActions, loginCustomer } from "../../../state-manager/reducers/login/loginCustomer";
 
 const CustomerFormComponent = () => {
 	const loginCustomerState = useSelector((state) => state.loginCustomer);
+
+	console.log(loginCustomerState);
+
 	const dispatch = useDispatch();
 
 	const {
@@ -46,12 +49,26 @@ const CustomerFormComponent = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(
-			loginCustomerActions.showToasts({
-				message: "The email you entered is not registered with us.",
-				title: "Username Not Found",
-			})
-		);
+
+		try {
+			dispatch(
+				loginCustomer({
+					email: "⁠a.muhammad@amorservsolutions.com",
+					password: "P@55W0rd",
+					deviceName: "windows 10",
+				})
+			);
+		}catch(err){
+			console.error(err);
+		}
+
+
+		// dispatch(
+		// 	loginCustomerActions.showToasts({
+		// 		message: "The email you entered is not registered with us.",
+		// 		title: "Username Not Found",
+		// 	})
+		// );
 	};
 
 	const isButtonDisabled = !(passwordIsValid && usernameIsValid);
