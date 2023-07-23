@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { validatePassword } from "../../atoms/Password/validators";
 import {
 	SET_ERROR_FALSE_ADMIN,
+	SET_EMAIL_ADMIN,
 	superAdminCreate,
 } from "../../../state-manager/reducers/superAdminOnboarding/superadmin";
 
@@ -28,18 +29,19 @@ const RegisterForm = () => {
 			firstName: "",
 			lastName: "",
 			workspaceName: "",
-			email: "",
+			companyEmail: "",
 			country: "",
-			state: "",
-			mobile: "",
+			city: "",
+			phoneNumber: "",
 			password: "",
-			confirm_password: "",
+			confirmPassword: "",
 			privacy: false,
 		},
 		resolver: yupResolver(schema),
 	});
 
 	const [checked, setChecked] = useState(false);
+	const [checkedError, setCheckedError] = useState(false);
 	const [location, setLocation] = useState({ country: "", state: "" });
 	const [countryStates, setCountryStates] = useState([]);
 	const [error, setError] = useState(false);
@@ -70,7 +72,13 @@ const RegisterForm = () => {
 		setLocation({ ...location, [event.target.name]: event.target.value });
 	};
 
+	const handleCheckChange = () => {
+		setChecked(prev => !prev)
+	}
+
 	useEffect(() => {
+		dispatch(SET_ERROR_FALSE_ADMIN(false));
+
 		validatePassword(
 			password,
 			setHasUpper,
@@ -80,8 +88,13 @@ const RegisterForm = () => {
 			setHasEightChar
 		);
 
+		if (checked) setCheckedError(false);
+
+		setValue("country", location.country);
+		setValue("city", location.state);
+		setValue("privacy", checked);
 		setValue("password", password);
-		setValue("confirm_password", confirmPassword);
+		setValue("confirmPassword", confirmPassword);
 
 		if (password === confirmPassword && password.length === confirmPassword.length) {
 			setMatch(true);
@@ -91,8 +104,15 @@ const RegisterForm = () => {
 			setError(true);
 		}
 
-		dispatch(SET_ERROR_FALSE_ADMIN(false));
+		console.log(validationError)
+
 	}, [
+		getValues,
+		setValue,
+		location.country,
+		location.state,
+		checked,
+		checkedError,
 		password,
 		confirmPassword,
 		hasUpper,
@@ -106,32 +126,29 @@ const RegisterForm = () => {
 		validationError,
 	]);
 
-	useEffect(() => {
-		setValue("country", location.country);
-		setValue("state", location.state);
-		setValue("privacy", checked);
-	}, [getValues, location.country, location.state, checked]);
-
 	const onSubmit = (data) => {
-		// e.preventDefault();
-		// console.log(getValues());
-
 		if (!password && !confirmPassword) return;
 
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
+		if (!checked) return setCheckedError(true)
+
 		try {
 			dispatch(superAdminCreate(data));
 		} catch (err) {
-			// console.log(err);
+			console.log(err);
 		}
 
-		// if (serverRecoveryError) return setServerError(true);
-
-		console.log("Submitting...");
-
-		reset();
-		navigate("/super-admin-verify");
+		if (serverRecoveryError != undefined || serverRecoveryError != null) {
+			const values = getValues();
+			reset(values, { keepDefaultValues: true });
+			return setServerError(true);
+		} else {
+			const email = getValues().companyEmail;
+			dispatch(SET_EMAIL_ADMIN({ email }));
+			reset();
+			return navigate("/super-admin-verify");
+		}
 	};
 
 	return (
@@ -177,13 +194,13 @@ const RegisterForm = () => {
 						name="workspaceName"
 						label="Workspace Name"
 					/>
-					<TextFields errors={errors} control={control} name="email" label="Company Email" />
+					<TextFields errors={errors} control={control} name="companyEmail" label="Company Email" />
 				</Box>
 
 				<TextFields
 					errors={errors}
 					control={control}
-					name="mobile"
+					name="phoneNumber"
 					label="Phone Number"
 					inputProps={{
 						type: "phone",
@@ -234,13 +251,13 @@ const RegisterForm = () => {
 					errors={errors}
 					control={control}
 					name="privacy"
-					onClick={() => setChecked((prev) => !prev)}
+					onClick={handleCheckChange}
 					checked={checked}
+					checkedError={checkedError}
 				/>
 
 				<Button
 					type="submit"
-					// onClick={onSubmit}
 					fullWidth
 					disableRipple
 					disableTouchRipple

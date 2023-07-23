@@ -3,16 +3,42 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const superAdminCreate = createAsyncThunk("superAdmin", async(args, {rejectWithValue}) => {
     const config = {
         method: 'POST',
+
         headers: {
         'Content-Type': 'application/json',
         },
+
         body: JSON.stringify(args),
     };
-    console.log(args)
+
     try {
-        const url = `${import.meta.env.VITE_BASE_URL}/superAdminOnboarding`;
+        const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/super-admin-onboarding/`;
         const res = await fetch(url, config);
-        console.log(res.json())
+
+    }catch (err) {
+        if (err.response && err.response.data.message) {
+            return rejectWithValue(err.response.data.message)
+        }else {
+            return rejectWithValue(err.message)
+        }
+    }
+})
+
+export const superAdminSendEmail = createAsyncThunk("superAdminSendEmail", async(email, {rejectWithValue}) => {
+    const config = {
+        method: 'POST',
+
+        headers: {
+        'Content-Type': 'application/json',
+        },
+
+        body: JSON.stringify({email: email}),
+    };
+
+    try {
+        const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/super-admin-resend-email-verification`;
+        const res = await fetch(url, config);
+
     }catch (err) {
         if (err.response && err.response.data.message) {
             return rejectWithValue(err.response.data.message)
@@ -23,38 +49,61 @@ export const superAdminCreate = createAsyncThunk("superAdmin", async(args, {reje
 })
 
 const initialState = {
-    error: false,
+    error: null,
     loading: false,
+    email: ""
 }
 
 
-const loginAdminSlice = createSlice({
+const superAdminSlice = createSlice({
     name: "superadminonboarding",
     initialState,
     reducers: {
-        SET_ERROR_FALSE_ADMIN: (state, action) => {
-          state.error = false  
+        SET_ERROR_FALSE_ADMIN: (state, {payload}) => {
+          state.error = null 
         },
+
+        SET_EMAIL_ADMIN: (state, {payload: email}) => {
+            state.email = email
+          },
     },
     extraReducers: builder => {
         builder
 
             //  Reset Password
-            .addCase(superAdminCreate.pending, (state, actions) => {
-                state.loginLoading = true
+            .addCase(superAdminCreate.pending, (state, payload) => {
+                state.loading = true
+                state.error = null
             })
 
-            .addCase(superAdminCreate.fulfilled, (state, {payload}) => {
-                state.loginLoading = false
+            .addCase(superAdminCreate.fulfilled, (state, payload) => {
+                state.loading = false
+                state.error = null
             })
 
-            .addMatcher(superAdminCreate.rejected, (state, {payload}) => {
-                state.error = true
-                state.loginLoading = false
+            .addCase(superAdminCreate.rejected, (state, {payload}) => {
+                state.error = payload
+                state.loading = false
+            })
+
+            //  Resend Email
+            .addCase(superAdminSendEmail.pending, (state, payload) => {
+                state.loading = true
+                state.error = null
+            })
+
+            .addCase(superAdminSendEmail.fulfilled, (state, payload) => {
+                state.loading = false
+                state.error = null
+            })
+
+            .addMatcher(superAdminSendEmail.rejected, (state, {payload}) => {
+                state.error = payload
+                state.loading = false
             })
     }
 })
 
-export const { SET_ERROR_FALSE_ADMIN } = loginAdminSlice.actions
+export const { SET_ERROR_FALSE_ADMIN, SET_EMAIL_ADMIN } = superAdminSlice.actions
 
-export default loginAdminSlice.reducer;
+export default superAdminSlice.reducer;

@@ -1,9 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { superAdminSendEmail } from "../../../state-manager/reducers/superAdminOnboarding/superadmin";
+import { useDispatch, useSelector } from "react-redux";
 import EmailIcon from "../../../assets/superAdminOnboading/Vector.png";
 import { Box, Button, Typography, styled } from "@mui/material";
 
 const SuperAdminVerify = () => {
+	const { email } = useSelector(state => state.superAdmin);
+	const dispatch = useDispatch()
+
+	const handleResubmit = (e) => {
+		e.preventDefault();
+
+		try {
+			dispatch(superAdminSendEmail(email.email))
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+
 	const Typography = styled("p")`
 		color: #2b2e72;
 		text-align: center;
@@ -66,11 +83,9 @@ const SuperAdminVerify = () => {
 				<p sx={{ fontSize: "18px", color: "#282828", fontWeight: "400" }}>
 					Didn’t receive an email?
 				</p>
-				<Link to={"#"}>
-					<Button variant="contained" color="primary">
-						Resend Link
-					</Button>
-				</Link>
+				<Button variant="contained" color="primary" onClick={handleResubmit}>
+					Resend Link
+				</Button>
 			</div>
 		</Box>
 	);

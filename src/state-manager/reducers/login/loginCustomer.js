@@ -1,20 +1,20 @@
 import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loginCustomer = createAsyncThunk("loginCustomer", async({email, password}, {rejectWithValue}) => {
-    console.log({email, password});
+export const loginCustomer = createAsyncThunk("loginCustomer", async(args, {rejectWithValue}) => {
     const config = {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
         },
-        body: JSON.stringify({email, password}),
+        body: JSON.stringify(args),
     };
 
     try {
         const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`;
         const res = await fetch(url, config);
         return res.json();
+
     }catch (err) {
         console.log({err});
         if (err.response && err.response.data.message) {
@@ -27,7 +27,7 @@ export const loginCustomer = createAsyncThunk("loginCustomer", async({email, pas
 
 const initialState = {
 	loading: false,
-	token: "",
+	token: null,
     error: null,
 	toasts: [],
 };
@@ -54,23 +54,22 @@ const loginCustomerSlice = createSlice({
         builder
 
             //  Reset Password
-            .addCase(loginCustomer.pending, (state, payload) => {
+            .addCase(loginCustomer.pending, (state, {payload}) => {
                 state.loading = true;
-                state.token = "";
+                state.token = null;
                 state.error = null
             })
 
-            .addCase(loginCustomer.fulfilled, (state, payload) => {
+            .addCase(loginCustomer.fulfilled, (state, {payload: token}) => {
                 state.loading = false
-                console.log("fulfilled", payload);
-                // state.token = payload
+                state.token = token
+                state.error = null
             })
 
-            .addMatcher(loginCustomer.rejected, (state, payload) => {
-                state.loading = false;
-                state.error = payload;
-                // console.log("rejected", payload);
-                // state.loginLoading = false
+            .addMatcher(loginCustomer.rejected, (state, {payload: error}) => {
+                state.loading = false
+                state.error = error
+                state.token = null
             })
     }
 })

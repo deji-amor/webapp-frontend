@@ -1,8 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types"
 import { Checkbox, FormControlLabel, FormControl } from "@mui/material";
 import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
 
-const CheckboxFields = ({ checked, control, name, onClick }) => {
+const CheckboxFields = ({ checkedError, checked, control, name, onClick }) => {
+
 	return (
 		<>
 			<FormControl>
@@ -51,10 +53,18 @@ const CheckboxFields = ({ checked, control, name, onClick }) => {
 						</>
 					}
 				/>
-				{checked ? null : <ErrorMessage message="Field must be checked" />}
+				{checkedError && <ErrorMessage message="Field must be checked" />}
 			</FormControl>
 		</>
 	);
 };
+
+CheckboxFields.propTypes = {
+	checkedError: PropTypes.bool,
+	checked: PropTypes.bool,
+	control: PropTypes.object,
+	name: PropTypes.string,
+	onClick: PropTypes.func
+}
 
 export default CheckboxFields;
