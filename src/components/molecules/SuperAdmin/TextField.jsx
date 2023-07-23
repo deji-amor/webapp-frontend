@@ -2,6 +2,8 @@ import { FormControl, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { addErrorIntoField } from "../../../utilis";
 import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
+import PropTypes from "prop-types";
+
 
 const TextFields = ({ label, inputProps, control, name, errors }) => {
 	return (
@@ -49,5 +51,15 @@ const TextFields = ({ label, inputProps, control, name, errors }) => {
 		</FormControl>
 	);
 };
+
+TextFields.propTypes = {
+	label: PropTypes.string,
+	inputProps: PropTypes.object,
+	control: PropTypes.object,
+	errors: PropTypes.object,
+	name: PropTypes.string,
+
+
+}
 
 export default TextFields;

@@ -10,7 +10,7 @@ import useBasicInput from "../../../hooks/useBasicInput";
 import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
-import { loginAdminActions } from "../../../state-manager/reducers/login/loginAdmin";
+import { loginAdminActions, loginAdmin } from "../../../state-manager/reducers/login/loginAdmin";
 
 const AdminFormComponent = () => {
 	const loginAdminState = useSelector((state) => state.loginAdmin);
@@ -46,14 +46,24 @@ const AdminFormComponent = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const err = {
-			message: "The email you entered is not registered with us.",
-			title: "Username Not Found",
-		};
-		dispatch(loginAdminActions.showToasts(err));
-		usernameSetErrorMessage(err.title);
-		usernameSetHasError(true);
-		usernameSetErrorFromServer(true);
+		
+		try {
+			dispatch(loginAdmin({
+				username: usernameValue,
+				password: passwordValue,
+				deviceName: "Iphone 11"
+			}))
+			
+		}catch (error) {
+			const err = {
+				message: "The email you entered is not registered with us.",
+				title: "Username Not Found",
+			};
+			dispatch(loginAdminActions.showToasts(err));
+			usernameSetErrorMessage(err.title);
+			usernameSetHasError(true);
+			usernameSetErrorFromServer(true);
+		}
 	};
 
 	const isButtonDisabled = !(passwordIsValid && usernameIsValid);

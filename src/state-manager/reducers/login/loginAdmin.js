@@ -3,19 +3,20 @@ import axios from "axios";
 
 export const loginAdmin = createAsyncThunk(
 	"loginAdmin",
-	async ({email, password}, {rejectWithValue}) => {
+	async(args, {rejectWithValue}) => {
 		const config = {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({email, password}),
+			body: JSON.stringify(args),
 		};
 
 		try {
 			const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`;
 			const res = await fetch(url, config);
 			return res.json();
+
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -28,7 +29,8 @@ export const loginAdmin = createAsyncThunk(
 
 const initialState = {
 	loading: false,
-	token: "",
+	token: null,
+	error: null,
 	toasts: [],
 };
 
@@ -55,15 +57,20 @@ const loginAdminSlice = createSlice({
 			//  Reset Password
 			.addCase(loginAdmin.pending, (state, actions) => {
 				state.loginLoading = true;
+				state.token = null
+				state.error = null
 			})
 
 			.addCase(loginAdmin.fulfilled, (state, {payload}) => {
 				state.loginLoading = false;
 				state.token = payload;
+				state.error = null
 			})
 
-			.addMatcher(loginAdmin.rejected, (state, {payload}) => {
+			.addMatcher(loginAdmin.rejected, (state, {payload: error}) => {
 				state.loginLoading = false;
+				state.error = error
+				state.token = null
 			});
 	},
 });

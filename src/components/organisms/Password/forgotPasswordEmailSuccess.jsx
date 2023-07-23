@@ -18,7 +18,7 @@ const ForgotEmailSuccess = () => {
 		e.preventDefault();
 
 		try {
-			// dispatch(forgotpasswordemail(email))
+			dispatch(forgotpasswordemail(email))
 			console.log(email.email);
 		} catch (err) {
 			console.log(err);

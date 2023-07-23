@@ -15,8 +15,6 @@ import { loginCustomerActions, loginCustomer } from "../../../state-manager/redu
 const CustomerFormComponent = () => {
 	const loginCustomerState = useSelector((state) => state.loginCustomer);
 
-	console.log(loginCustomerState);
-
 	const dispatch = useDispatch();
 
 	const {
@@ -53,8 +51,8 @@ const CustomerFormComponent = () => {
 		try {
 			dispatch(
 				loginCustomer({
-					email: "⁠a.muhammad@amorservsolutions.com",
-					password: "P@55W0rd",
+					username: usernameValue,
+					password: passwordValue,
 					deviceName: "windows 10",
 				})
 			);
@@ -62,13 +60,6 @@ const CustomerFormComponent = () => {
 			console.error(err);
 		}
 
-
-		// dispatch(
-		// 	loginCustomerActions.showToasts({
-		// 		message: "The email you entered is not registered with us.",
-		// 		title: "Username Not Found",
-		// 	})
-		// );
 	};
 
 	const isButtonDisabled = !(passwordIsValid && usernameIsValid);
