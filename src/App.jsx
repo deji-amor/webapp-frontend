@@ -33,7 +33,7 @@ function App() {
     {path: "/customer-password", element: <CustomerForgotPasswordPage/>},
     {path: "/super-admin-onboarding", element: <SuperAdminOnboarding/>},
     {path: "/super-admin-verify", element: <SuperAdminVerifyEmail/>},
-    {path: "/super-admin-onboarding-success/:tokenEmail", element: <SuperAdminOnboardingSuccess/>},
+    {path: "/super-admin-onboarding-success/:email/:token", element: <SuperAdminOnboardingSuccess/>},
     {path: "/app", element: <AppLayout/>, children: [
       {path: "dashboard", element: <Dashboard/>, index: true},
       {path: "tickets", element: <Tickets/>},
