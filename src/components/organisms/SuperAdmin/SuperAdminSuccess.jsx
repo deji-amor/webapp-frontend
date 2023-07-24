@@ -48,10 +48,15 @@ const SuperAdminSuccess = () => {
 
 	useEffect(() => {
 
-		console.log(params)
-		dispatch(superAdminVerify({email: "", token: ""}))
+		const {email, token} = params
+
+		try {
+			dispatch(superAdminVerify({email: email, token: token}))
+		}catch (err) {
+			console.log(err)
+		}
 		
-	}, [])
+	}, [dispatch, params])
 
 	return (
 		<Box

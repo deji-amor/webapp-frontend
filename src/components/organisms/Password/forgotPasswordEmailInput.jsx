@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotpasswordemail } from "../../../state-manager/reducers/password/forgotpassword"
-import { SET_EMAIL, SET_ERROR_FALSE } from "../../../state-manager/reducers/password/forgotpassword";
+import { SET_EMAIL, SET_ERROR_NULL } from "../../../state-manager/reducers/password/forgotpassword";
 import { ForgotEmailWrapper } from "../../atoms/Password/wrappers"
 import { useNavigate } from "react-router-dom";
 import ErrorCard from "../../molecules/Password/customErrorCard";
@@ -17,12 +17,13 @@ const ForgotPasswordEmail = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const error = useSelector(state => state.forgotPassword.error)
+  const response = useSelector(state => state.forgotPassword.response)
 
   // handles email input change
   const handleEmailChange = (e) => {
       setEmail(e.target.value);
-      setServerError(false)
+      setServerError(false);
+      dispatch(SET_ERROR_NULL());
   };
 
   // handles form submit for email
@@ -41,16 +42,13 @@ const ForgotPasswordEmail = () => {
 
   useEffect(() => {
       validateEmail(setForgotPasswordError, email);
-      // dispatch(SET_ERROR_FALSE(null))
 
-      console.log(error)
+    if (response === "User with the email address not found!") return setServerError(true);
 
-    if (error === "User with the email address not found!") return setServerError(true);
-
-    if (error === "Password reset link has been sent to your email!" ) return navigate('/forgot-password-success');
+    if (response === "Password reset link has been sent to your email!" ) return navigate('/forgot-password-success');
 
 
-  }, [email, dispatch, error, navigate]);
+  }, [email, dispatch, response, navigate]);
 
   return (
     <ForgotEmailWrapper>

@@ -5,7 +5,7 @@ import { customerforgotpasswordemail } from "../../../state-manager/reducers/pas
 import {
 	SET_EMAIL,
 	REMOVE_EMAIL,
-	SET_ERROR_FALSE,
+	SET_ERROR_NULL,
 } from "../../../state-manager/reducers/password/forgotpassword";
 import CustomerBanner from "../../molecules/Password/customerpasswordbanner";
 import { CustomerpasswordWrapper } from "../../atoms/Password/wrappers";
@@ -46,7 +46,7 @@ const CustomerpasswordBanner = () => {
 
 	useEffect(() => {
 		validateEmail(setForgotPasswordError, email);
-		dispatch(SET_ERROR_FALSE(false));
+		dispatch(SET_ERROR_NULL());
 	}, [email, dispatch]);
 
 	return (

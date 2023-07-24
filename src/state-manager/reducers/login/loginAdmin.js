@@ -58,7 +58,7 @@ const loginAdminSlice = createSlice({
 				console.log("fulfilled", payload);
 			})
 			.addMatcher(loginAdmin.rejected, (state, {payload}) => {
-				console.log(payload?.message)
+				// console.log(payload?.message)
 				// console.log("rejected", payload);
 			});
 	},

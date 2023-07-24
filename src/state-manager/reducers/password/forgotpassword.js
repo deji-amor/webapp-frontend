@@ -73,7 +73,7 @@ export const forgotpasswordrecovery = createAsyncThunk("forgotpasswordrecovery",
 const initialState = {
     loading: false,
     email: null,
-    error: null
+    response: null
 }
 
 const forgotPasswordSlice = createSlice({
@@ -89,8 +89,8 @@ const forgotPasswordSlice = createSlice({
             state.email = null
         },
 
-        SET_ERROR_FALSE: (state, {paload}) => {
-            state.error = null
+        SET_ERROR_NULL: (state, {paload}) => {
+            state.response = null
         }
     },
     extraReducers: builder => {
@@ -99,54 +99,54 @@ const forgotPasswordSlice = createSlice({
             //  Forgot Password Email
             .addCase(forgotpasswordemail.pending, (state, actions) => {
                 state.loginLoading = true
-                state.error = null
+                state.response = null
             })
 
             .addCase(forgotpasswordemail.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = null
+                state.response = null
             })
 
             .addCase(forgotpasswordemail.rejected, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = payload
+                state.response = payload
             })
 
             //  Customer Forgot Password Email
             .addCase(customerforgotpasswordemail.pending, (state, actions) => {
                 state.loginLoading = true
-                state.error = null
+                state.response = null
             })
 
             .addCase(customerforgotpasswordemail.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = null
+                state.response = null
             })
 
             .addCase(customerforgotpasswordemail.rejected, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = payload
+                state.response = payload
             })
 
             //  Forgot Password Recovery
             .addCase(forgotpasswordrecovery.pending, (state, actions) => {
                 state.loginLoading = true
-                state.error = null
+                state.response = null
             })
 
             .addCase(forgotpasswordrecovery.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = null
+                state.response = null
             })
 
             .addMatcher(forgotpasswordrecovery.rejected, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = payload
+                state.response = payload
             })
 
     }
 })
 
-export const { SET_EMAIL, REMOVE_EMAIL, SET_ERROR_FALSE } = forgotPasswordSlice.actions
+export const { SET_EMAIL, REMOVE_EMAIL, SET_ERROR_NULL } = forgotPasswordSlice.actions
 
 export default forgotPasswordSlice.reducer;

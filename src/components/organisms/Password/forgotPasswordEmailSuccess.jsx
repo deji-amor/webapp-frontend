@@ -3,7 +3,7 @@ import { forgotpasswordemail } from "../../../state-manager/reducers/password/fo
 import {
 	SET_EMAIL,
 	REMOVE_EMAIL,
-	SET_ERROR_FALSE,
+	SET_ERROR_NULL,
 } from "../../../state-manager/reducers/password/forgotpassword";
 import { ForgotEmailWrapper as ForgotEmailSuccessWrapper } from "../../atoms/Password/wrappers";
 import PasswordSuccess from "../../molecules/Password/customPasswordEmailSuccess";
