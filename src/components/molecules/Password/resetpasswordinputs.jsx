@@ -48,7 +48,7 @@ const ResetPasswordInputs = ({
 					{serverError && (
 						<ToolTip
 							toolTipIcon={<ErrorOutlineIcon className="icon" />}
-							toolTipText="Invalid Password"
+							toolTipText="Invalid Current Password"
 							toolTipColor="#D73D3D"
 						/>
 					)}

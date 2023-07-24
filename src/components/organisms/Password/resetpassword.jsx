@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutActions } from "../../../state-manager/reducers/logout/logout";
 import { ResetPasswordWrapper } from "../../atoms/Password/wrappers";
-import { forgotpasswordrecovery } from "../../../state-manager/reducers/password/forgotpassword";
-import { SET_ERROR_FALSE } from "../../../state-manager/reducers/password/forgotpassword";
+import { resetPassword, SET_SERVER_RESET_NULL } from "../../../state-manager/reducers/password/resetpassword";
 import ResetPasswordInputs from "../../molecules/Password/resetpasswordinputs";
 import { validatePassword } from "../../atoms/Password/validators";
 import Overlay from "../../atoms/Logout/Overlay";
@@ -19,7 +18,7 @@ const ResetPassword = () => {
 	const { current, password, confirmPassword } = passwords;
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const serverRecoveryError = useSelector((state) => state.forgotPassword.error);
+	const serverResetResponse = useSelector((state) => state.resetPassword.serverResetResponse);
 
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
@@ -33,6 +32,7 @@ const ResetPassword = () => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
 		setServerError(false);
 		setValidationError(false);
+		dispatch(SET_SERVER_RESET_NULL())
 	};
 
 	useEffect(() => {
@@ -61,7 +61,10 @@ const ResetPassword = () => {
 			setError(false);
 		}
 
-		dispatch(SET_ERROR_FALSE(false));
+		if (serverResetResponse === "Invalid current password!") return setServerError(true);
+
+		if (serverResetResponse === "Your password has been changed successfully!") return navigate("/reset-password-success");
+
 	}, [
 		password,
 		confirmPassword,
@@ -75,6 +78,8 @@ const ResetPassword = () => {
 		dispatch,
 		validationError,
 		current,
+		serverResetResponse,
+		navigate
 	]);
 
 	const handleShowResetModal = () => {
@@ -88,22 +93,15 @@ const ResetPassword = () => {
 
 		if (password === current) return setCurrentError(true);
 
-		if (error) return;
-
-		if (currentError) return;
+		if (currentError || error) return;
 
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
 		try {
-			dispatch(forgotpasswordrecovery({ password, confirmPassword }));
+			dispatch(resetPassword({currentPassword: current, newPassword: password, confirmPassword: confirmPassword}));
 		} catch (err) {
 			console.log(err);
 		}
-
-		if (serverRecoveryError) return setServerError(true);
-
-		console.log("Submitting...");
-		navigate("/reset-password-success");
 	};
 
 	return (
