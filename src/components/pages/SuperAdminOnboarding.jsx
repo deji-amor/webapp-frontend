@@ -5,12 +5,12 @@ import Navbar from "../organisms/SuperAdmin/Navbar";
 
 const SuperAdminOnboarding = () => {
 	return (
-		<div>
+		<>
 			<Navbar />
 			<Container maxWidth="md">
 				<RegisterForm />
 			</Container>
-		</div>
+		</>
 	);
 };
 

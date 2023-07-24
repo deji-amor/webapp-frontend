@@ -4,10 +4,10 @@ import Navbar from '../organisms/SuperAdmin/Navbar'
 
 const SuperAdminVerifyEmail = () => {
   return (
-    <div>
+    <>
       <Navbar/>
       <SuperAdminVerify />
-    </div>
+    </>
   )
 }
 

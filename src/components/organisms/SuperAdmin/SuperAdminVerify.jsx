@@ -1,13 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useState } from 'react';
 import { superAdminSendEmail } from "../../../state-manager/reducers/superAdminOnboarding/superadmin";
 import { useDispatch, useSelector } from "react-redux";
 import EmailIcon from "../../../assets/superAdminOnboading/Vector.png";
 import { Box, Button, Typography, styled } from "@mui/material";
+import AutoShowToast from "../../atoms/SuperAdmin/AutoShowToast";
 
 const SuperAdminVerify = () => {
-	const Typography = styled("p")`
+	const Typography = styled("h3")`
 		color: #2b2e72;
 		text-align: center;
 		font-size: 32px;
@@ -23,7 +22,7 @@ const SuperAdminVerify = () => {
 		font-weight: 500;
 		line-height: normal;
 	`;
-	const Button = styled("p")`
+	const Button = styled("button")`
 		display: flex;
 		padding: 16px 24px;
 		flex-direction: column;
@@ -40,10 +39,12 @@ const SuperAdminVerify = () => {
 		width: 425px;
 	`;
 
+	const [showToast, setShowToast] = useState(false);
 	const { email } = useSelector(state => state.superAdmin);
 	const dispatch = useDispatch()
 
 	const handleResubmit = (e) => {
+		setShowToast(true);
 		e.preventDefault();
 
 		try {
@@ -52,6 +53,10 @@ const SuperAdminVerify = () => {
 			console.log(err);
 		}
 	};
+
+	const handleToastClose = () => {
+		setShowToast(false);
+	  };
 
 	return (
 		<Box
@@ -85,6 +90,12 @@ const SuperAdminVerify = () => {
 				<Button variant="contained" color="primary" onClick={handleResubmit}>
 					Resend Link
 				</Button>
+				<AutoShowToast
+				showToast={showToast}
+				message="Verification link sent successfully!"
+				autoHideDuration={5000}
+				onClose={handleToastClose}
+				/>
 			</div>
 		</Box>
 	);

@@ -26,7 +26,7 @@ const SuperAdminSuccess = () => {
 		font-weight: 400;
 		line-height: 162.023%; /* 29.164px */
 	`;
-	const Button = styled("p")`
+	const Button = styled("button")`
 		display: flex;
 		padding: 16px 24px;
 		flex-direction: column;
@@ -77,7 +77,7 @@ const SuperAdminSuccess = () => {
 			</div>
 			<div>
 				<br />
-				<Link to={"#"}>
+				<Link to={"/login-admin"}>
 					<Button variant="contained" color="primary">
 						Proceed to Login
 					</Button>
