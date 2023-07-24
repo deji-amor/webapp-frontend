@@ -50,9 +50,10 @@ const resetPasswordSlice = createSlice({
             .addCase(resetPassword.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
                 state.serverResetResponse = null
+
             })
 
-            .addMatcher(resetPassword.rejected, (state, {payload}) => {
+            .addCase(resetPassword.rejected, (state, {payload}) => {
                 state.loginLoading = false
                 state.serverResetResponse = payload
             })

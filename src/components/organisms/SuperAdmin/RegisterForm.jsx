@@ -73,8 +73,8 @@ const RegisterForm = () => {
 	};
 
 	const handleCheckChange = () => {
-		setChecked(prev => !prev)
-	}
+		setChecked((prev) => !prev);
+	};
 
 	useEffect(() => {
 		dispatch(SET_ERROR_FALSE_ADMIN(false));
@@ -104,8 +104,7 @@ const RegisterForm = () => {
 			setError(true);
 		}
 
-		console.log(validationError)
-
+		console.log(validationError);
 	}, [
 		getValues,
 		setValue,
@@ -131,7 +130,7 @@ const RegisterForm = () => {
 
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
-		if (!checked) return setCheckedError(true)
+		if (!checked) return setCheckedError(true);
 
 		try {
 			dispatch(superAdminCreate(data));
@@ -190,11 +189,18 @@ const RegisterForm = () => {
 				<Box sx={{ display: "flex", gap: "30px" }}>
 					<TextFields
 						errors={errors}
+						serverError=""
 						control={control}
 						name="workspaceName"
 						label="Workspace Name"
 					/>
-					<TextFields errors={errors} control={control} name="companyEmail" label="Company Email" />
+					<TextFields
+						errors={errors}
+						serverError=""
+						control={control}
+						name="companyEmail"
+						label="Company Email"
+					/>
 				</Box>
 
 				<TextFields

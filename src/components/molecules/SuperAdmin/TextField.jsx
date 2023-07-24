@@ -5,7 +5,7 @@ import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
 import PropTypes from "prop-types";
 
 
-const TextFields = ({ label, inputProps, control, name, errors }) => {
+const TextFields = ({ label, inputProps, control, name, errors, serverError }) => {
 	return (
 		<FormControl
 			fullWidth
@@ -47,7 +47,7 @@ const TextFields = ({ label, inputProps, control, name, errors }) => {
 					/>
 				)}
 			/>
-			{errors[name] ? <ErrorMessage message={errors[name].message} /> : null}
+			{errors[name] ? <ErrorMessage message={errors[name].message} /> : serverError ? <ErrorMessage message="already exist" /> : null}
 		</FormControl>
 	);
 };
@@ -57,9 +57,8 @@ TextFields.propTypes = {
 	inputProps: PropTypes.object,
 	control: PropTypes.object,
 	errors: PropTypes.object,
+	serverError: PropTypes.bool,
 	name: PropTypes.string,
-
-
 }
 
 export default TextFields;

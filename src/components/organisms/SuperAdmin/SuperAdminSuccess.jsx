@@ -1,7 +1,11 @@
 import { Box, styled } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import CheckIcon from "../../../assets/superAdminOnboading/Check.png";
-import React from "react";
+import { superAdminVerify } from "../../../state-manager/reducers/superAdminOnboarding/superadmin";
+
 
 const SuperAdminSuccess = () => {
 	const Typography = styled("p")`
@@ -38,6 +42,16 @@ const SuperAdminSuccess = () => {
 		line-height: 14px; /* 70% */
 		width: 425px;
 	`;
+
+	const params = useParams();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+
+		console.log(params)
+		dispatch(superAdminVerify({email: "", token: ""}))
+		
+	}, [])
 
 	return (
 		<Box

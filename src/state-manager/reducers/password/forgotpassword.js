@@ -160,7 +160,7 @@ const forgotPasswordSlice = createSlice({
                 state.error = false
             })
 
-            .addMatcher(forgotpasswordrecovery.rejected, (state, {payload}) => {
+            .addCase(forgotpasswordrecovery.rejected, (state, {payload}) => {
                 state.loginLoading = false
                 state.error = true
             })

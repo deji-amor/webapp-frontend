@@ -33,7 +33,7 @@ function App() {
     {path: "/customer-password", element: <CustomerForgotPasswordPage/>},
     {path: "/super-admin-onboarding", element: <SuperAdminOnboarding/>},
     {path: "/super-admin-verify", element: <SuperAdminVerifyEmail/>},
-    {path: "/super-admin-onboarding-success", element: <SuperAdminOnboardingSuccess/>},
+    {path: "/super-admin-onboarding-success/:tokenEmail", element: <SuperAdminOnboardingSuccess/>},
     {path: "/app", element: <AppLayout/>, children: [
       {path: "dashboard", element: <Dashboard/>, index: true},
       {path: "tickets", element: <Tickets/>},
@@ -48,3 +48,6 @@ function App() {
 }
 
 export default App
+
+
+// /ec77d6b264df9ba9e305e9350887f2c9/adedejiweb@gmail.com

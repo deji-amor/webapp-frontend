@@ -7,20 +7,6 @@ import EmailIcon from "../../../assets/superAdminOnboading/Vector.png";
 import { Box, Button, Typography, styled } from "@mui/material";
 
 const SuperAdminVerify = () => {
-	const { email } = useSelector(state => state.superAdmin);
-	const dispatch = useDispatch()
-
-	const handleResubmit = (e) => {
-		e.preventDefault();
-
-		try {
-			dispatch(superAdminSendEmail(email.email))
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-
 	const Typography = styled("p")`
 		color: #2b2e72;
 		text-align: center;
@@ -53,6 +39,19 @@ const SuperAdminVerify = () => {
 		line-height: 14px; /* 70% */
 		width: 425px;
 	`;
+
+	const { email } = useSelector(state => state.superAdmin);
+	const dispatch = useDispatch()
+
+	const handleResubmit = (e) => {
+		e.preventDefault();
+
+		try {
+			dispatch(superAdminSendEmail(email.email))
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	return (
 		<Box

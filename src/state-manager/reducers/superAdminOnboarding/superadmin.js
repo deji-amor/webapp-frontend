@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const superAdminCreate = createAsyncThunk("superAdmin", async(args, {rejectWithValue}) => {
+export const superAdminCreate = createAsyncThunk("superAdminCreate", async(args, {rejectWithValue}) => {
     const config = {
         method: 'POST',
 
@@ -13,6 +13,30 @@ export const superAdminCreate = createAsyncThunk("superAdmin", async(args, {reje
 
     try {
         const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/super-admin-onboarding/`;
+        const res = await fetch(url, config);
+
+    }catch (err) {
+        if (err.response && err.response.data.message) {
+            return rejectWithValue(err.response.data.message)
+        }else {
+            return rejectWithValue(err.message)
+        }
+    }
+})
+
+export const superAdminVerify = createAsyncThunk("superAdminVerify", async(args, {rejectWithValue}) => {
+    const config = {
+        method: 'POST',
+
+        headers: {
+        'Content-Type': 'application/json',
+        },
+
+        body: JSON.stringify(args),
+    };
+
+    try {
+        const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/super-admin-email-verification`;
         const res = await fetch(url, config);
 
     }catch (err) {
@@ -86,6 +110,22 @@ const superAdminSlice = createSlice({
                 state.loading = false
             })
 
+            //  Reset Password Verification
+            .addCase(superAdminVerify.pending, (state, payload) => {
+                state.loading = true
+                state.error = null
+            })
+
+            .addCase(superAdminVerify.fulfilled, (state, payload) => {
+                state.loading = false
+                state.error = null
+            })
+
+            .addCase(superAdminVerify.rejected, (state, {payload}) => {
+                state.error = payload
+                state.loading = false
+            })
+
             //  Resend Email
             .addCase(superAdminSendEmail.pending, (state, payload) => {
                 state.loading = true
@@ -97,7 +137,7 @@ const superAdminSlice = createSlice({
                 state.error = null
             })
 
-            .addMatcher(superAdminSendEmail.rejected, (state, {payload}) => {
+            .addCase(superAdminSendEmail.rejected, (state, {payload}) => {
                 state.error = payload
                 state.loading = false
             })
