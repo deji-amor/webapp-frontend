@@ -47,19 +47,13 @@ const CustomerFormComponent = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-
-		try {
-			dispatch(
-				loginCustomer({
-					username: usernameValue,
-					password: passwordValue,
-					deviceName: "windows 10",
-				})
-			);
-		}catch(err){
-			console.error(err);
-		}
-
+		dispatch(
+			loginCustomer({
+				username: usernameValue,
+				password: passwordValue,
+				deviceName: "windows 10",
+			})
+		);
 	};
 
 	const isButtonDisabled = !(passwordIsValid && usernameIsValid);

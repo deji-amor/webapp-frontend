@@ -58,7 +58,7 @@ const StatsPieChart = ({ data }) => {
 };
 
 StatsPieChart.propTypes = {
-	data: PropTypes.array,
+	data: PropTypes.any,
 };
 
 export default StatsPieChart;

@@ -34,8 +34,8 @@ const StatsCard = ({ data, backgroundColor }) => {
 };
 
 StatsCard.propTypes = {
-	data: PropTypes.array,
-	backgroundColor: PropTypes.string,
+	data: PropTypes.any,
+	backgroundColor: PropTypes.any,
 };
 
 export default StatsCard;
