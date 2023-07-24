@@ -2,7 +2,7 @@ import { ForgotEmailWrapper as ResetPasswordSuccessWrapper } from "../../atoms/P
 import { useNavigate } from "react-router-dom";
 import PasswordSuccess from "../../molecules/Password/customPasswordEmailSuccess";
 import CustomButton from "../../atoms/Password/customButton";
-import checkImage from "../../../assets/password/check.png";
+import checkImage from "../../../assets/password/success.png";
 
 
 const ResetPasswordSuccess = () => {
