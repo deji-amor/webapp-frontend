@@ -29,7 +29,7 @@ function App() {
     {path: "/reset-password-success", element: <ResetPasswordPageSuccess/>},
     {path: "/recover-password", element: <RecoverPassword/>},
     {path: "/password-expired", element: <PasswordExpired/>},
-    {path: "/password-recovery-success", element: <PasswordRecoverySuccess/>},
+    {path: "/password-recovery-success/:email/:token", element: <PasswordRecoverySuccess/>},
     {path: "/customer-password", element: <CustomerForgotPasswordPage/>},
     {path: "/super-admin-onboarding", element: <SuperAdminOnboarding/>},
     {path: "/super-admin-verify", element: <SuperAdminVerifyEmail/>},
