@@ -59,8 +59,6 @@ const resetPasswordSlice = createSlice({
     }
 })
 
-// deji
-
 export const { SET_SERVER_RESET_NULL } = resetPasswordSlice.actions
 
 export default resetPasswordSlice.reducer;
