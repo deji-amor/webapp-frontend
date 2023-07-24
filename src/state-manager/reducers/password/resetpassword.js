@@ -12,7 +12,7 @@ export const resetPassword = createAsyncThunk("resetpassword", async(args, {reje
     const body = JSON.stringify(args);
 
     try {
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/setting/reset-password`, body, config);
+        const res = await axios.post(`${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/reset-password`, body, config);
         return res.data.message
 
     }catch (err) {

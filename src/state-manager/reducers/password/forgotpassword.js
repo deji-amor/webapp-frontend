@@ -13,8 +13,8 @@ export const forgotpasswordemail = createAsyncThunk("forgotpasswordemail", async
     const body = JSON.stringify({email: email})
 
     try {
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}`, body, config)
-        return res.data
+        const res = await axios.post(`${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/forgot-password`, body, config)
+        return res.data.message
     }catch (err) {
         if (err.response && err.response.data.message) {
             return rejectWithValue(err.response.data.message)
@@ -36,8 +36,8 @@ export const customerforgotpasswordemail = createAsyncThunk("customerforgotpassw
     const body = JSON.stringify({email: email})
 
     try {
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}`, body, config)
-        return res.data
+        const res = await axios.post(`${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/forgot-password`, body, config)
+        return res.data.message
     }catch (err) {
         if (err.response && err.response.data.message) {
             return rejectWithValue(err.response.data.message)
@@ -58,8 +58,8 @@ export const forgotpasswordrecovery = createAsyncThunk("forgotpasswordrecovery",
     const body = JSON.stringify({password: password, confirmPassword: confirmPassword})
 
     try {
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}`, body, config)
-        return res.data
+        const res = await axios.post(`${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/update-password`, body, config)
+        return res.data.message
     }catch (err) {
         if (err.response && err.response.data.message) {
             return rejectWithValue(err.response.data.message)
@@ -70,48 +70,27 @@ export const forgotpasswordrecovery = createAsyncThunk("forgotpasswordrecovery",
 })
 
 
-// // Password Change
-// export const forgotPassword = createAsyncThunk("forgotpassword", async({newPassword, confirmNewPassword}, {rejectWithValue}) => {
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     }
-
-//     const body = JSON.stringify({password: newPassword, password2: confirmNewPassword})
-
-//     try {
-//         const res = await axios.post(`${import.meta.env.VITE_BASE_URL}`, body, config)
-//         return res.data
-//     }catch (err) {
-//         if (err.response && err.response.data.message) {
-//             return rejectWithValue(err.response.data.message)
-//         }else {
-//             return rejectWithValue(err.message)
-//         }
-//     }
-// })
-
 const initialState = {
     loading: false,
-    email: '',
-    error: false
+    email: null,
+    error: null
 }
 
 const forgotPasswordSlice = createSlice({
     name: "forgotpassword",
     initialState,
+
     reducers: {
         SET_EMAIL: (state, {payload: email}) => {
             state.email = email
         },
 
         REMOVE_EMAIL: (state, {payload: email}) => {
-            state.email = ''
+            state.email = null
         },
 
         SET_ERROR_FALSE: (state, {paload}) => {
-            state.error = false
+            state.error = null
         }
     },
     extraReducers: builder => {
@@ -120,66 +99,51 @@ const forgotPasswordSlice = createSlice({
             //  Forgot Password Email
             .addCase(forgotpasswordemail.pending, (state, actions) => {
                 state.loginLoading = true
-                state.error = false
+                state.error = null
             })
 
             .addCase(forgotpasswordemail.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = false
+                state.error = null
             })
 
             .addCase(forgotpasswordemail.rejected, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = true
+                state.error = payload
             })
 
             //  Customer Forgot Password Email
             .addCase(customerforgotpasswordemail.pending, (state, actions) => {
                 state.loginLoading = true
-                state.error = false
+                state.error = null
             })
 
             .addCase(customerforgotpasswordemail.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = false
+                state.error = null
             })
 
             .addCase(customerforgotpasswordemail.rejected, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = true
+                state.error = payload
             })
 
             //  Forgot Password Recovery
             .addCase(forgotpasswordrecovery.pending, (state, actions) => {
                 state.loginLoading = true
-                state.error = false
+                state.error = null
             })
 
             .addCase(forgotpasswordrecovery.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = false
+                state.error = null
             })
 
-            .addCase(forgotpasswordrecovery.rejected, (state, {payload}) => {
+            .addMatcher(forgotpasswordrecovery.rejected, (state, {payload}) => {
                 state.loginLoading = false
-                state.error = true
+                state.error = payload
             })
 
-            // //  Forgot Password
-            // .addCase(forgotPassword.pending, (state, actions) => {
-            //     state.loginLoading = true
-            //     state.error = false
-            // })
-
-            // .addCase(forgotPassword.fulfilled, (state, {payload}) => {
-            //     state.loginLoading = false
-            //     state.error = false
-            // })
-
-            // .addMatcher(forgotPassword.rejected, (state, {payload}) => {
-            //     state.loginLoading = false
-            //     state.error = true
-            // })
     }
 })
 

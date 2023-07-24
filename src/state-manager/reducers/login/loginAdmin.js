@@ -12,11 +12,10 @@ export const loginAdmin = createAsyncThunk("auth/loginAdmin",
 	};
 
 	try {
-		const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`;
+		const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/login`;
 		const res = await fetch(url, config);
 		return res.json();
 	} catch (err) {
-		console.log({err});
 		if (err.response && err.response.data.message) {
 			return rejectWithValue(err.response.data.message);
 		} else {
@@ -43,6 +42,7 @@ const loginAdminSlice = createSlice({
 			const newToast = {id: Date.now(), message: message, title: title};
 			state.toasts = [...toasts, newToast];
 		},
+
 		hideToast: (state, action) => {
 			const id = action.payload;
 			const toasts = current(state).toasts.slice();
@@ -54,11 +54,12 @@ const loginAdminSlice = createSlice({
 			.addCase(loginAdmin.pending, (state, action) => {
 				console.log("pending");
 			})
-			.addCase(loginAdmin.fulfilled, (state, action) => {
-				console.log("fulfilled");
+			.addCase(loginAdmin.fulfilled, (state, {payload}) => {
+				console.log("fulfilled", payload);
 			})
-			.addCase(loginAdmin.rejected, (state, action) => {
-				console.log("rejected");
+			.addMatcher(loginAdmin.rejected, (state, {payload}) => {
+				console.log(payload?.message)
+				// console.log("rejected", payload);
 			});
 	},
 });
