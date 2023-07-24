@@ -4,7 +4,6 @@ import PasswordSuccess from "../../molecules/Password/customPasswordEmailSuccess
 import CustomButton from "../../atoms/Password/customButton";
 import checkImage from "../../../assets/password/check.png";
 
-
 const ForgotPasswordRecoverySuccess = () => {
 	const navigate = useNavigate();
 
