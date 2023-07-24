@@ -5,10 +5,10 @@ import SuperAdminSuccess from '../organisms/SuperAdmin/SuperAdminSuccess'
 
 const SuperAdminOnboardingSuccess = () => {
   return (
-    <div>
+    <>
         <Navbar />
         <SuperAdminSuccess />
-    </div>
+    </>
   )
 }
 
