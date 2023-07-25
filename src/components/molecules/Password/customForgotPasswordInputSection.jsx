@@ -61,7 +61,7 @@ const InputButton = ({
 				<CustomButton
 					butText={butText}
 					butType={butType}
-					error={forgotPasswordError || defaultCursor || forgotPasswordError}
+					error={forgotPasswordError || defaultCursor}
 					onClick={handleFormSubmit}
 					defaultCursor={serverError || forgotPasswordError}
 				/>

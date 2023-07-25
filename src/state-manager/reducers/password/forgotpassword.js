@@ -48,14 +48,14 @@ export const customerforgotpasswordemail = createAsyncThunk("customerforgotpassw
 })
 
 // Password Recovery
-export const forgotpasswordrecovery = createAsyncThunk("forgotpasswordrecovery", async({password, confirmPassword}, {rejectWithValue}) => {
+export const forgotpasswordrecovery = createAsyncThunk("forgotpasswordrecovery", async(args, {rejectWithValue}) => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
         },
     }
 
-    const body = JSON.stringify({password: password, confirmPassword: confirmPassword})
+    const body = JSON.stringify(args)
 
     try {
         const res = await axios.post(`${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/update-password`, body, config)
@@ -104,7 +104,7 @@ const forgotPasswordSlice = createSlice({
 
             .addCase(forgotpasswordemail.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.response = null
+                state.response = payload
             })
 
             .addCase(forgotpasswordemail.rejected, (state, {payload}) => {
@@ -120,7 +120,7 @@ const forgotPasswordSlice = createSlice({
 
             .addCase(customerforgotpasswordemail.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.response = null
+                state.response = payload
             })
 
             .addCase(customerforgotpasswordemail.rejected, (state, {payload}) => {
@@ -136,10 +136,10 @@ const forgotPasswordSlice = createSlice({
 
             .addCase(forgotpasswordrecovery.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.response = null
+                state.response = payload
             })
 
-            .addMatcher(forgotpasswordrecovery.rejected, (state, {payload}) => {
+            .addCase(forgotpasswordrecovery.rejected, (state, {payload}) => {
                 state.loginLoading = false
                 state.response = payload
             })

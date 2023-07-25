@@ -56,9 +56,11 @@ const ForgotPasswordRecover = () => {
 			setError(true);
 		}
 
+		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
+
 		if (response === "") return setServerError(true);
 
-		if (response === "") return navigate("/password-recovery-success");
+		if (response === "Your password has been reset successfully!") return navigate("/password-recovery-success");
 	}, [
 		password,
 		confirmPassword,
@@ -83,7 +85,7 @@ const ForgotPasswordRecover = () => {
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
 		try {
-			dispatch(forgotpasswordrecovery({ email, token, password, confirmPassword }));
+			dispatch(forgotpasswordrecovery({ email, resetToken: token, password, confirmPassword }));
 		} catch (err) {
 			console.log(err);
 		}
