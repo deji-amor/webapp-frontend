@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import EmojiHeader from "../../atoms/Login/EmojiHeader";
 import Header from "../../atoms/Login/Header";
@@ -10,12 +11,18 @@ import useBasicInput from "../../../hooks/useBasicInput";
 import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
-import { loginCustomerActions, loginCustomer } from "../../../state-manager/reducers/login/loginCustomer";
+import {
+	loginCustomerActions,
+	loginCustomer,
+} from "../../../state-manager/reducers/login/loginCustomer";
+import { getAuthToken } from "../../../utilis";
 
 const CustomerFormComponent = () => {
-	const loginCustomerState = useSelector((state) => state.loginCustomer);
-
+	const { loading, token, errorMessage, errorTitle, clickIncrement } = useSelector(
+		(state) => state.loginCustomer
+	);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const {
 		enteredValue: usernameValue,
@@ -45,8 +52,68 @@ const CustomerFormComponent = () => {
 		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
+	useEffect(() => {
+		if (token) navigate("/app/dashboard");
+		if (errorMessage === "Invalid email and/or password!") {
+			console.log("1");
+			dispatch(
+				loginCustomerActions.showToasts({
+					message: "The username/password you entered is incorrect, please check again.",
+					title: errorMessage,
+				})
+			);
+			usernameSetErrorMessage("Username may be invalid");
+			usernameSetHasError(true);
+			usernameSetErrorFromServer(true);
+			passwordSetErrorMessage("Password may be invalid");
+			passwordSetHasError(true);
+			passwordSetErrorFromServer(true);
+			return;
+		}
+		if (errorMessage === "Invalid username!") {
+			console.log("2");
+			dispatch(
+				loginCustomerActions.showToasts({
+					message: "The username you entered is incorrect, please check again.",
+					title: errorMessage,
+				})
+			);
+			usernameSetErrorMessage(errorMessage);
+			usernameSetHasError(true);
+			usernameSetErrorFromServer(true);
+			return;
+		}
+		if (
+			errorMessage ===
+			"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes"
+		) {
+			console.log("3");
+			dispatch(
+				loginCustomerActions.showToasts({
+					message: "The username you entered is incorrect, please check again.",
+					title: "Temporarily been disabled",
+				})
+			);
+			return;
+		}
+	}, [
+		token,
+		errorMessage,
+		errorTitle,
+		navigate,
+		dispatch,
+		usernameSetErrorMessage,
+		usernameSetHasError,
+		usernameSetErrorFromServer,
+		passwordSetErrorMessage,
+		passwordSetHasError,
+		passwordSetErrorFromServer,
+		clickIncrement,
+	]);
+
 	const submitHandler = (e) => {
 		e.preventDefault();
+		console.log("clllllllllllllliqeddddddddd");
 		dispatch(
 			loginCustomer({
 				username: usernameValue,
@@ -95,13 +162,22 @@ const CustomerFormComponent = () => {
 						hasError={passwordHasError}
 						id={passwordId}
 					/>
-					{passwordHasError && <ValidationErrorText>{passwordErrorMessage}</ValidationErrorText>}
+					{passwordHasError && (
+						<ValidationErrorText errorFromServer={passwordErrFromServer}>
+							{passwordErrorMessage}
+						</ValidationErrorText>
+					)}
 				</div>
 				<div className="">
 					<ForgotPassword>Forgot Password?</ForgotPassword>
 				</div>
 				<div className="w-full">
-					<Button isDisabled={isButtonDisabled} type="submit" isLoading={false}>
+					<Button
+						isDisabled={isButtonDisabled}
+						type="submit"
+						isLoading={loading}
+						loadingText="Signing in..."
+					>
 						Sign in
 					</Button>
 				</div>

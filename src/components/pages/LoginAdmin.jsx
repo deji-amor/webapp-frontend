@@ -6,7 +6,7 @@ import Logo from '../atoms/Login/Logo'
 
 const LoginAdmin = () => {
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen h-screen'>
       <AdminLoginToastContainer/>
       <div className="px-[3rem] py-[0.5rem] mb-[1.5rem]">
         <Logo/>

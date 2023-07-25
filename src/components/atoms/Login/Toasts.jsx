@@ -13,7 +13,7 @@ const Toasts = ({ children, onClose, message, title}) => {
 		gap: 0.75rem;
 		border-radius: 0.5rem;
 		background: rgba(238, 6, 6, 0.1);
-		z-index: 100;
+		z-index: 110;
 		.error-icon {
 			width: 1.5rem;
 			height: 1.5rem;
@@ -42,7 +42,7 @@ const Toasts = ({ children, onClose, message, title}) => {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			onClose();
-		}, 5000);
+		}, 10000);
 
 		return () => clearTimeout(timer);
 	}, [onClose]);

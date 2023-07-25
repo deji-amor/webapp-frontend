@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import EmojiHeader from "../../atoms/Login/EmojiHeader";
 import Header from "../../atoms/Login/Header";
@@ -13,8 +14,11 @@ import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
 import { loginAdminActions, loginAdmin } from "../../../state-manager/reducers/login/loginAdmin";
 
 const AdminFormComponent = () => {
-	const loginAdminState = useSelector((state) => state.loginAdmin);
+	const { loading, token, errorMessage, errorTitle, clickIncrement } = useSelector(
+		(state) => state.loginAdmin
+	);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const {
 		enteredValue: usernameValue,
@@ -44,26 +48,72 @@ const AdminFormComponent = () => {
 		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
+	useEffect(() => {
+		if (token) navigate("/app/dashboard");
+		if (errorMessage === "Invalid email and/or password!") {
+			dispatch(
+				loginAdminActions.showToasts({
+					message: "The username/password you entered is incorrect, please check again.",
+					title: errorMessage,
+				})
+			);
+			usernameSetErrorMessage("Username may be invalid");
+			usernameSetHasError(true);
+			usernameSetErrorFromServer(true);
+			passwordSetErrorMessage("Password may be invalid");
+			passwordSetHasError(true);
+			passwordSetErrorFromServer(true);
+		}
+		if (errorMessage === "Invalid username!") {
+			dispatch(
+				loginAdminActions.showToasts({
+					message: "The username you entered is incorrect, please check again.",
+					title: errorMessage,
+				})
+			);
+			usernameSetErrorMessage(errorMessage);
+			usernameSetHasError(true);
+			usernameSetErrorFromServer(true);
+		}
+		if (
+			errorMessage ===
+			"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes"
+		) {
+			dispatch(
+				loginAdminActions.showToasts({
+					message: "The username you entered is incorrect, please check again.",
+					title: "Temporarily been disabled",
+				})
+			);
+		}
+	}, [
+		token,
+		errorMessage,
+		errorTitle,
+		navigate,
+		dispatch,
+		usernameSetErrorMessage,
+		usernameSetHasError,
+		usernameSetErrorFromServer,
+		passwordSetErrorMessage,
+		passwordSetHasError,
+		passwordSetErrorFromServer,
+		clickIncrement,
+	]);
+
 	const submitHandler = (e) => {
 		e.preventDefault();
-		
-		dispatch(loginAdmin({
-			username: usernameValue,
-			password: passwordValue,
-			deviceName: "Iphone 11"
-		}))
-		// const err = {
-		// 	message: "The email you entered is not registered with us.",
-		// 	title: "Username Not Found",
-		// };
-		// dispatch(loginAdminActions.showToasts(err));
-		// usernameSetErrorMessage(err.title);
-		// usernameSetHasError(true);
-		// usernameSetErrorFromServer(true);
+
+		dispatch(
+			loginAdmin({
+				username: usernameValue,
+				password: passwordValue,
+				deviceName: "Iphone 11",
+			})
+		);
 	};
 
 	const isButtonDisabled = !(passwordIsValid && usernameIsValid);
-	// const isButtonDisabled = false
 
 	return (
 		<form onSubmit={submitHandler} className="">
@@ -101,13 +151,22 @@ const AdminFormComponent = () => {
 						hasError={passwordHasError}
 						id={passwordId}
 					/>
-					{passwordHasError && <ValidationErrorText>{passwordErrorMessage}</ValidationErrorText>}
+					{passwordHasError && (
+						<ValidationErrorText errorFromServer={passwordErrFromServer}>
+							{passwordErrorMessage}
+						</ValidationErrorText>
+					)}
 				</div>
 				<div className="">
 					<ForgotPassword>Forgot Password?</ForgotPassword>
 				</div>
 				<div className="w-full">
-					<Button isDisabled={isButtonDisabled} type="submit" isLoading={false}>
+					<Button
+						isDisabled={isButtonDisabled}
+						type="submit"
+						isLoading={loading}
+						loadingText="Signing in..."
+					>
 						Sign in
 					</Button>
 				</div>

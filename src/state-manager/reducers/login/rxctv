@@ -1,0 +1,13 @@
+  {
+    status: 'OK',
+    code: 200,
+    message: 'User login successful',
+    title: 'Success',
+    data: {
+      token: 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkwMjM4NDM4fQ.rmQy79nZ-EU8xGkpSjRxwmh45XjfzQTP4RU13hzaB_Q',
+      tokenType: 'Bearer'
+    }
+  }
+
+{status: 'Bad Request', code: 400, message: 'Invalid email and/or password!', title: 'Error', data: {…}}

@@ -1,5 +1,7 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
+import { redirect } from "react-router-dom";
 import axios from "axios";
+import { removeAuthToken } from "../../../utilis";
 
 export const logout = createAsyncThunk("logout", async ({email, password}, {rejectWithValue}) => {
 	const config = {
@@ -28,6 +30,7 @@ const initialState = {
 	token: "",
 	showModal: false,
 	showResetModal: false,
+	shouldRedirect: false
 };
 
 const logoutSlice = createSlice({
@@ -41,6 +44,10 @@ const logoutSlice = createSlice({
 		toggleResetModal: state => {
 			state.showResetModal = !state.showResetModal;
 		},
+		logout: state => {
+			console.log("entered");
+			removeAuthToken()
+		}
 	},
 	extraReducers: builder => {
 		builder

@@ -45,7 +45,7 @@ const Button = ({ children, isDisabled, type, isLoading, loadingText }) => {
 			{spinner} {loadingText}
 		</>
 	) : (
-		{ children }
+		[ children ]
 	);
 
 	return (
@@ -56,7 +56,7 @@ const Button = ({ children, isDisabled, type, isLoading, loadingText }) => {
 				isDisabled ? "cursor-not-allowed opacity-40" : ""
 			}`}
 		>
-			{children}
+			{text}
 		</button>
 	);
 };

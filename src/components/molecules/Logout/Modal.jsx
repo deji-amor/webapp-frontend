@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import PropTypes from "prop-types";
 import Title from "../../atoms/Logout/Title";
 import Message from "../../atoms/Logout/Message";
 import ButtonUnHighlighted from "../../atoms/Logout/ButtonUnHighlighted";
@@ -6,7 +7,7 @@ import ButtonHighlighted from "../../atoms/Logout/ButtonHighlighted";
 import ModalWrapper from "../../atoms/Logout/ModalWrapper";
 import logOut from "../../atoms/Logout/Logout.svg";
 import { useDispatch } from "react-redux";
-import { logoutActions } from "../../../state-manager/reducers/logout/logout";
+import { logoutActions, logout } from "../../../state-manager/reducers/logout/logout";
 
 const Modal = () => {
 	const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Modal = () => {
 
 	const handleLogout = () => {
 		console.log("logout here");
+		dispatch(logoutActions.logout())
 	};
 
 	return (
@@ -34,5 +36,6 @@ const Modal = () => {
 		</ModalWrapper>
 	);
 };
+
 
 export default Modal;
