@@ -61,6 +61,8 @@ const ResetPassword = () => {
 			setError(false);
 		}
 
+		if (!current) dispatch(SET_SERVER_RESET_NULL())
+
 		if (serverResetResponse === "Invalid current password!") return setServerError(true);
 
 		if (serverResetResponse === "Your password has been changed successfully!") return navigate("/reset-password-success");

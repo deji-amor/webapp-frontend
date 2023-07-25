@@ -5,7 +5,7 @@ export const resetPassword = createAsyncThunk("resetpassword", async(args, {reje
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg5NzU5OTk3fQ.QTj-ZrPMZ87JaTMBOcElnvVgSJ-CekzmQNkkEDOk7kA'
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjkwMjgyMjk2fQ.u5JMu_U-E3b2bXrYks-Z3pa47W91jBXb97GGTEcCTRU'
         },
     }
 
@@ -49,11 +49,10 @@ const resetPasswordSlice = createSlice({
 
             .addCase(resetPassword.fulfilled, (state, {payload}) => {
                 state.loginLoading = false
-                state.serverResetResponse = null
-
+                state.serverResetResponse = payload
             })
 
-            .addCase(resetPassword.rejected, (state, {payload}) => {
+            .addMatcher(resetPassword.rejected, (state, {payload}) => {
                 state.loginLoading = false
                 state.serverResetResponse = payload
             })

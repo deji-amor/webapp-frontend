@@ -12,8 +12,9 @@ export const superAdminCreate = createAsyncThunk("superAdminCreate", async(args,
     };
 
     try {
-        const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/super-admin-onboarding/`;
+        const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-onboarding/`;
         const res = await fetch(url, config);
+        return res.data;
 
     }catch (err) {
         if (err.response && err.response.data.message) {
@@ -36,8 +37,9 @@ export const superAdminVerify = createAsyncThunk("superAdminVerify", async(args,
     };
 
     try {
-        const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/super-admin-email-verification`;
+        const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-email-verification`;
         const res = await fetch(url, config);
+        return res.data;
 
     }catch (err) {
         if (err.response && err.response.data.message) {
@@ -60,7 +62,7 @@ export const superAdminSendEmail = createAsyncThunk("superAdminSendEmail", async
     };
 
     try {
-        const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/super-admin-resend-email-verification`;
+        const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-resend-email-verification`;
         const res = await fetch(url, config);
 
     }catch (err) {

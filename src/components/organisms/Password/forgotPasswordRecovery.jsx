@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ForgotEmailWrapper as ForgotPasswordResetWrapper } from "../../atoms/Password/wrappers";
 import { forgotpasswordrecovery } from "../../../state-manager/reducers/password/forgotpassword";
-import { SET_ERROR_FALSE } from "../../../state-manager/reducers/password/forgotpassword";
+import { SET_ERROR_NULL } from "../../../state-manager/reducers/password/forgotpassword";
 import HeaderContent from "../../molecules/Password/customHeaderSection";
 import ErrorCard from "../../molecules/Password/customErrorCard";
 import CustomButton from "../../atoms/Password/customButton";
 import lockmage from "../../../assets/password/lock.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../atoms/Password/validators";
 import ForgotPasswordRecoveryInput from "../../molecules/Password/customForgotPasswordRecoveryInput";
 
@@ -20,7 +20,8 @@ const ForgotPasswordRecover = () => {
 	const { password, confirmPassword } = passwords;
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const serverRecoveryError = useSelector((state) => state.forgotPassword.error);
+	const { email, token } = useParams();
+	const response = useSelector((state) => state.forgotPassword.response);
 
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
@@ -34,6 +35,7 @@ const ForgotPasswordRecover = () => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
 		setServerError(false);
 		setValidationError(false);
+		dispatch(SET_ERROR_NULL());
 	};
 
 	useEffect(() => {
@@ -54,7 +56,11 @@ const ForgotPasswordRecover = () => {
 			setError(true);
 		}
 
-		dispatch(SET_ERROR_FALSE(false));
+		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
+
+		if (response === "") return setServerError(true);
+
+		if (response === "Your password has been reset successfully!") return navigate("/password-recovery-success");
 	}, [
 		password,
 		confirmPassword,
@@ -66,6 +72,8 @@ const ForgotPasswordRecover = () => {
 		error,
 		match,
 		dispatch,
+		navigate,
+		response,
 		validationError,
 	]);
 
@@ -77,15 +85,10 @@ const ForgotPasswordRecover = () => {
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
 		try {
-			dispatch(forgotpasswordrecovery({ password, confirmPassword }));
+			dispatch(forgotpasswordrecovery({ email, resetToken: token, password, confirmPassword }));
 		} catch (err) {
 			console.log(err);
 		}
-
-		if (serverRecoveryError) return setServerError(true);
-
-		console.log("Submitting...");
-		navigate("/password-recovery-success");
 	};
 
 	return (

@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { customerforgotpasswordemail } from "../../../state-manager/reducers/password/forgotpassword";
 import {
 	SET_EMAIL,
-	REMOVE_EMAIL,
-	SET_ERROR_FALSE,
+	SET_ERROR_NULL,
 } from "../../../state-manager/reducers/password/forgotpassword";
 import CustomerBanner from "../../molecules/Password/customerpasswordbanner";
 import { CustomerpasswordWrapper } from "../../atoms/Password/wrappers";
@@ -13,17 +12,18 @@ import CustomerPasswordForm from "../../molecules/Password/customerpasswordform"
 import { validateEmail } from "../../atoms/Password/validators";
 
 const CustomerpasswordBanner = () => {
+	const [forgotPasswordError, setForgotPasswordError] = useState();
 	const [serverError, setServerError] = useState(false);
-	const [forgotPasswordError, setForgotPasswordError] = useState(false);
 	const [email, setEmail] = useState("");
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { error } = useSelector((state) => state.forgotPassword);
+	const response = useSelector(state => state.forgotPassword.response);
 
 	const handleEmailChange = (e) => {
 		setEmail(e.target.value);
 		setServerError(false);
+		dispatch(SET_ERROR_NULL());
 	};
 
 	const handleFormSubmit = (e) => {
@@ -37,17 +37,18 @@ const CustomerpasswordBanner = () => {
 		} catch (err) {
 			console.log(err);
 		}
-
-		// if (error) return setServerError(true);
-		if (!serverError && !forgotPasswordError) return navigate("/forgot-password-success");
-
-		console.log("Submitting");
 	};
 
 	useEffect(() => {
-		validateEmail(setForgotPasswordError, email);
-		dispatch(SET_ERROR_FALSE(false));
-	}, [email, dispatch]);
+
+		if (email) validateEmail(setForgotPasswordError, email);
+
+
+		if (response === "User with the email address not found!") return setServerError(true);
+
+		if (response === "Password reset link has been sent to your email!") return navigate("/forgot-password-success");
+
+	}, [email, dispatch, response, navigate]);
 
 	return (
 		<CustomerpasswordWrapper>
