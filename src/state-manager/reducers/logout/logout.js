@@ -1,21 +1,27 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
-import { redirect } from "react-router-dom";
 import axios from "axios";
-import { removeAuthToken } from "../../../utilis";
+import { removeAuthToken, getAuthToken } from "../../../utilis";
 
-export const logout = createAsyncThunk("logout", async ({email, password}, {rejectWithValue}) => {
-	const config = {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({email, password}),
-	};
-
+export const logout = createAsyncThunk("logout", async (args, {rejectWithValue}) => {
 	try {
-		const url = `${import.meta.env.VITE_BASE_URL}/superAdminOnboarding`;
-		const res = await fetch(url, config);
-		return res.json();
+		const token = await getAuthToken()
+		if(token){
+			console.log({token});
+			const config = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(args),
+			};
+			const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/logout`;
+			const response = await fetch(url, config);
+			const result = await response.json()
+			return result;
+		}else{
+			throw new Error("Token not found");
+		}
 	} catch (err) {
 		if (err.response && err.response.data.message) {
 			return rejectWithValue(err.response.data.message);
@@ -27,7 +33,7 @@ export const logout = createAsyncThunk("logout", async ({email, password}, {reje
 
 const initialState = {
 	loading: false,
-	token: "",
+	errorMessage: null,
 	showModal: false,
 	showResetModal: false,
 	shouldRedirect: false
@@ -53,17 +59,29 @@ const logoutSlice = createSlice({
 		builder
 
 			//  Reset Password
-			.addCase(logout.pending, (state, actions) => {
-				state.loginLoading = true;
+			.addCase(logout.pending, (state, action) => {
+				console.log("pending");
+				state.loading = true;
 			})
 
 			.addCase(logout.fulfilled, (state, {payload}) => {
-				state.loginLoading = false;
+				console.log("fulfilled", payload);
+				state.loading = false;
 				state.token = payload;
+				const code = payload.code; 
+				if(code === 200){
+					removeAuthToken().then(res => {
+						console.log("entered", {res});
+					}).catch(err => {
+						console.error("could not remove", {err});
+					})
+				}
 			})
 
-			.addMatcher(logout.rejected, (state, {payload}) => {
-				state.loginLoading = false;
+			.addCase(logout.rejected, (state, {payload}) => {
+				console.log("rejected", payload);
+				state.loading = false;
+				// state.errorMessage = payload
 			});
 	},
 });

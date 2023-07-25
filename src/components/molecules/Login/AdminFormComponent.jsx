@@ -6,12 +6,13 @@ import Header from "../../atoms/Login/Header";
 import Paragraph from "../../atoms/Login/Paragraph";
 import InputLabel from "../../atoms/Login/InputLabel";
 import Input from "../../atoms/Login/Input";
-import Button from "../../atoms/Login/button";
+import Button from "../../atoms/Login/Button";
 import useBasicInput from "../../../hooks/useBasicInput";
 import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
 import { loginAdminActions, loginAdmin } from "../../../state-manager/reducers/login/loginAdmin";
+import { getDeviceName } from "../../../utilis";
 
 const AdminFormComponent = () => {
 	const { loading, token, errorMessage, errorTitle, clickIncrement } = useSelector(
@@ -108,7 +109,7 @@ const AdminFormComponent = () => {
 			loginAdmin({
 				username: usernameValue,
 				password: passwordValue,
-				deviceName: "Iphone 11",
+				deviceName: getDeviceName(),
 			})
 		);
 	};
