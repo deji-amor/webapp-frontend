@@ -178,6 +178,7 @@ export const ErrorCardWrapper = styled("div")(({ error, size, color }) => ({
 	position: "absolute",
 	top: "20px",
 	right: "20px",
+	zIndex: "100",
 	background: "rgba(238, 6, 6, 0.10)",
 	transition: "all 3s ease",
 

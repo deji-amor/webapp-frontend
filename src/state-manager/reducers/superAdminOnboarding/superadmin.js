@@ -1,20 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const superAdminCreate = createAsyncThunk("superAdminCreate", async(args, {rejectWithValue}) => {
     const config = {
-        method: 'POST',
-
         headers: {
         'Content-Type': 'application/json',
-        },
-
-        body: JSON.stringify(args),
+        }
     };
+
+    const body = JSON.stringify(args)
 
     try {
         const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-onboarding/`;
-        const res = await fetch(url, config);
-        return res.data;
+        const res = await axios.post(url, body, config);
+        return res.data.message;
 
     }catch (err) {
         if (err.response && err.response.data.message) {
@@ -75,9 +74,10 @@ export const superAdminSendEmail = createAsyncThunk("superAdminSendEmail", async
 })
 
 const initialState = {
-    error: null,
     loading: false,
-    email: ""
+    email: null,
+    response: null,
+
 }
 
 
@@ -85,8 +85,8 @@ const superAdminSlice = createSlice({
     name: "superadminonboarding",
     initialState,
     reducers: {
-        SET_ERROR_FALSE_ADMIN: (state, {payload}) => {
-          state.error = null 
+        SET_RESPONSE_NULL_ADMIN: (state, {payload}) => {
+          state.response = null 
         },
 
         SET_EMAIL_ADMIN: (state, {payload: email}) => {
@@ -99,53 +99,53 @@ const superAdminSlice = createSlice({
             //  Reset Password
             .addCase(superAdminCreate.pending, (state, payload) => {
                 state.loading = true
-                state.error = null
+                state.response = null
             })
 
             .addCase(superAdminCreate.fulfilled, (state, payload) => {
                 state.loading = false
-                state.error = null
+                state.response = payload
             })
 
             .addCase(superAdminCreate.rejected, (state, {payload}) => {
-                state.error = payload
                 state.loading = false
+                state.response = payload
             })
 
             //  Reset Password Verification
             .addCase(superAdminVerify.pending, (state, payload) => {
                 state.loading = true
-                state.error = null
+                state.response = null
             })
 
             .addCase(superAdminVerify.fulfilled, (state, payload) => {
                 state.loading = false
-                state.error = null
+                state.response = payload
             })
 
             .addCase(superAdminVerify.rejected, (state, {payload}) => {
-                state.error = payload
+                state.response = payload
                 state.loading = false
             })
 
             //  Resend Email
             .addCase(superAdminSendEmail.pending, (state, payload) => {
                 state.loading = true
-                state.error = null
+                state.response = null
             })
 
             .addCase(superAdminSendEmail.fulfilled, (state, payload) => {
                 state.loading = false
-                state.error = null
+                state.response = payload
             })
 
-            .addCase(superAdminSendEmail.rejected, (state, {payload}) => {
-                state.error = payload
+            .addMatcher(superAdminSendEmail.rejected, (state, {payload}) => {
                 state.loading = false
+                state.response = payload
             })
     }
 })
 
-export const { SET_ERROR_FALSE_ADMIN, SET_EMAIL_ADMIN } = superAdminSlice.actions
+export const { SET_RESPONSE_NULL_ADMIN, SET_EMAIL_ADMIN } = superAdminSlice.actions
 
 export default superAdminSlice.reducer;

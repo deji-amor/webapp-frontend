@@ -58,7 +58,7 @@ const ForgotPasswordRecover = () => {
 
 		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
 
-		if (response === "") return setServerError(true);
+		if (response === "You can not use your previous password!") return setServerError(true);
 
 		if (response === "Your password has been reset successfully!") return navigate("/password-recovery-success");
 	}, [
