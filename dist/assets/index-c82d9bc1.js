@@ -542,7 +542,7 @@ attempted value: ${s}
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-	`;return m.jsx(t,{className:"",children:e})};aR.propTypes={children:R.node};const bW="/assets/Logout-50217ea8.svg",wW=()=>{const e=fn(),t=()=>{e(ya.toggleLogoutModal())},n=()=>{console.log("logout here")};return m.jsxs(aR,{children:[m.jsx("div",{className:"w-[3rem] h-[3rem] rounded-full bg-[#ccc] flex items-center justify-center",children:m.jsx("img",{src:bW})}),m.jsxs("div",{className:"space-y-[0.5rem]",children:[m.jsx(rR,{children:"Logout"}),m.jsx(iR,{children:"Are you sure you want o logout?"})]}),m.jsxs("div",{className:"flex items-center justify-between gap-[0.75rem]",children:[m.jsx(oR,{onClick:t,children:"Discard"}),m.jsx(sR,{onClick:n,children:"Logout"})]})]})},hx=({onClick:e})=>{const t=$("div")`
+	`;return m.jsx(t,{className:"",children:e})};aR.propTypes={children:R.node};const bW="/assets/Logout-7faa89fd.svg",wW=()=>{const e=fn(),t=()=>{e(ya.toggleLogoutModal())},n=()=>{console.log("logout here")};return m.jsxs(aR,{children:[m.jsx("div",{className:"w-[3rem] h-[3rem] rounded-full bg-[#ccc] flex items-center justify-center",children:m.jsx("img",{src:bW})}),m.jsxs("div",{className:"space-y-[0.5rem]",children:[m.jsx(rR,{children:"Logout"}),m.jsx(iR,{children:"Are you sure you want o logout?"})]}),m.jsxs("div",{className:"flex items-center justify-between gap-[0.75rem]",children:[m.jsx(oR,{onClick:t,children:"Discard"}),m.jsx(sR,{onClick:n,children:"Logout"})]})]})},hx=({onClick:e})=>{const t=$("div")`
 		opacity: 0.800000011920929;
 		background: #4f4f4f;
 		backdrop-filter: blur(13.5px);
