@@ -139,7 +139,7 @@ const forgotPasswordSlice = createSlice({
                 state.response = payload
             })
 
-            .addCase(forgotpasswordrecovery.rejected, (state, {payload}) => {
+            .addMatcher(forgotpasswordrecovery.rejected, (state, {payload}) => {
                 state.loginLoading = false
                 state.response = payload
             })

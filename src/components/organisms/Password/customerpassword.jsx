@@ -43,7 +43,6 @@ const CustomerpasswordBanner = () => {
 
 		if (email) validateEmail(setForgotPasswordError, email);
 
-
 		if (response === "User with the email address not found!") return setServerError(true);
 
 		if (response === "Password reset link has been sent to your email!") return navigate("/forgot-password-success");
