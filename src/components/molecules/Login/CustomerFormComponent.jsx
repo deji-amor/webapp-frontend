@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import EmojiHeader from "../../atoms/Login/EmojiHeader";
@@ -23,6 +23,7 @@ const CustomerFormComponent = () => {
 	);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [wasSubmitted, setWasSubmitted] = useState(false);
 
 	const {
 		enteredValue: usernameValue,
@@ -53,9 +54,14 @@ const CustomerFormComponent = () => {
 	} = useBasicInput(isNotEmpty);
 
 	useEffect(() => {
-		if (token) navigate("/app/dashboard");
+		const getAuthTokenHandler = async () => {
+			const to = await getAuthToken(); // toKen
+			if (to && wasSubmitted) {
+				navigate("/app/dashboard");
+			}
+		};
+		getAuthTokenHandler();
 		if (errorMessage === "Invalid email and/or password!") {
-			console.log("1");
 			dispatch(
 				loginCustomerActions.showToasts({
 					message: "The username/password you entered is incorrect, please check again.",
@@ -71,7 +77,6 @@ const CustomerFormComponent = () => {
 			return;
 		}
 		if (errorMessage === "Invalid username!") {
-			console.log("2");
 			dispatch(
 				loginCustomerActions.showToasts({
 					message: "The username you entered is incorrect, please check again.",
@@ -87,7 +92,6 @@ const CustomerFormComponent = () => {
 			errorMessage ===
 			"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes"
 		) {
-			console.log("3");
 			dispatch(
 				loginCustomerActions.showToasts({
 					message: "The username you entered is incorrect, please check again.",
@@ -96,6 +100,14 @@ const CustomerFormComponent = () => {
 			);
 			return;
 		}
+			if (errorMessage && errorTitle) {
+				dispatch(
+					loginCustomerActions.showToasts({
+						message: errorMessage,
+						title: errorTitle,
+					})
+				);
+			}
 	}, [
 		token,
 		errorMessage,
@@ -113,7 +125,7 @@ const CustomerFormComponent = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		console.log("clllllllllllllliqeddddddddd");
+		setWasSubmitted(true);
 		dispatch(
 			loginCustomer({
 				username: usernameValue,
@@ -124,7 +136,6 @@ const CustomerFormComponent = () => {
 	};
 
 	const isButtonDisabled = !(passwordIsValid && usernameIsValid);
-	// const isButtonDisabled = false
 
 	return (
 		<form onSubmit={submitHandler} className="max-w-[26.56rem]">
@@ -173,7 +184,7 @@ const CustomerFormComponent = () => {
 				</div>
 				<div className="w-full">
 					<Button
-						isDisabled={isButtonDisabled}
+						isDisabled={isButtonDisabled || loading}
 						type="submit"
 						isLoading={loading}
 						loadingText="Signing in..."

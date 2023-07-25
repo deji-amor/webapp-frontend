@@ -18,6 +18,7 @@ export const logout = createAsyncThunk("logout", async (args, {rejectWithValue})
 			const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/logout`;
 			const response = await fetch(url, config);
 			const result = await response.json()
+			console.log({result});
 			return result;
 		}else{
 			throw new Error("Token not found");
@@ -34,38 +35,34 @@ export const logout = createAsyncThunk("logout", async (args, {rejectWithValue})
 const initialState = {
 	loading: false,
 	errorMessage: null,
+	successful: null,
 	showModal: false,
 	showResetModal: false,
-	shouldRedirect: false
+	shouldRedirect: false,
 };
 
 const logoutSlice = createSlice({
-	name: "password",
+	name: "logout",
 	initialState,
 	reducers: {
 		toggleLogoutModal: state => {
 			state.showModal = !state.showModal;
 		},
-
 		toggleResetModal: state => {
 			state.showResetModal = !state.showResetModal;
 		},
-		logout: state => {
-			console.log("entered");
-			removeAuthToken()
-		}
 	},
 	extraReducers: builder => {
 		builder
 
 			//  Reset Password
 			.addCase(logout.pending, (state, action) => {
-				console.log("pending");
+				// console.log("pending");
 				state.loading = true;
 			})
 
 			.addCase(logout.fulfilled, (state, {payload}) => {
-				console.log("fulfilled", payload);
+				// console.log("fulfilled", payload);
 				state.loading = false;
 				state.token = payload;
 				const code = payload.code; 
@@ -76,12 +73,14 @@ const logoutSlice = createSlice({
 						console.error("could not remove", {err});
 					})
 				}
+				state.successful = true
 			})
 
 			.addCase(logout.rejected, (state, {payload}) => {
-				console.log("rejected", payload);
+				// console.log("rejected", payload);
 				state.loading = false;
-				// state.errorMessage = payload
+				state.errorMessage = "Logout failed!"
+				state.clickIncrement = state.clickIncrement + 1;
 			});
 	},
 });

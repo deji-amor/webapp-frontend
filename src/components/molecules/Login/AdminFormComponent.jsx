@@ -12,7 +12,7 @@ import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
 import { loginAdminActions, loginAdmin } from "../../../state-manager/reducers/login/loginAdmin";
-import { getDeviceName } from "../../../utilis";
+import { getDeviceName, getAuthToken } from "../../../utilis";
 
 const AdminFormComponent = () => {
 	const { loading, token, errorMessage, errorTitle, clickIncrement } = useSelector(
@@ -20,6 +20,7 @@ const AdminFormComponent = () => {
 	);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [wasSubmitted, setWasSubmitted] = useState(false)
 
 	const {
 		enteredValue: usernameValue,
@@ -49,8 +50,15 @@ const AdminFormComponent = () => {
 		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
+
 	useEffect(() => {
-		if (token) navigate("/app/dashboard");
+		const getAuthTokenHandler = async () => {
+			const to = await getAuthToken(); // auth toKen
+			if (to && wasSubmitted) {
+				navigate("/app/dashboard");
+			}
+		}
+		getAuthTokenHandler()
 		if (errorMessage === "Invalid email and/or password!") {
 			dispatch(
 				loginAdminActions.showToasts({
@@ -64,6 +72,7 @@ const AdminFormComponent = () => {
 			passwordSetErrorMessage("Password may be invalid");
 			passwordSetHasError(true);
 			passwordSetErrorFromServer(true);
+			return
 		}
 		if (errorMessage === "Invalid username!") {
 			dispatch(
@@ -75,6 +84,7 @@ const AdminFormComponent = () => {
 			usernameSetErrorMessage(errorMessage);
 			usernameSetHasError(true);
 			usernameSetErrorFromServer(true);
+			return
 		}
 		if (
 			errorMessage ===
@@ -86,6 +96,16 @@ const AdminFormComponent = () => {
 					title: "Temporarily been disabled",
 				})
 			);
+			return
+		}
+		if(errorMessage && errorTitle){
+			dispatch(
+				loginAdminActions.showToasts({
+					message: errorMessage,
+					title: errorTitle,
+				})
+			);
+			return
 		}
 	}, [
 		token,
@@ -104,7 +124,7 @@ const AdminFormComponent = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-
+		setWasSubmitted(true)
 		dispatch(
 			loginAdmin({
 				username: usernameValue,
@@ -163,7 +183,7 @@ const AdminFormComponent = () => {
 				</div>
 				<div className="w-full">
 					<Button
-						isDisabled={isButtonDisabled}
+						isDisabled={isButtonDisabled || loading}
 						type="submit"
 						isLoading={loading}
 						loadingText="Signing in..."
