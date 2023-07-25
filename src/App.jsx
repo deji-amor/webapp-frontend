@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import Home from "./components/pages/Home";
 import LoginAdmin from "./components/pages/LoginAdmin";
 import LoginCustomer from "./components/pages/LoginCustomer";
@@ -17,10 +17,11 @@ import Users from "./components/pages/app/Users";
 import Reports from "./components/pages/app/Reports";
 import SuperAdminVerifyEmail from "./components/pages/SuperAdminVerifyEmail";
 import SuperAdminOnboardingSuccess from "./components/pages/SuperAdminOnboardingSuccess";
-import ErrorPage from "./components/pages/ErrorPage";
+import ErrorPage from "./components/pages/ErrorPage"
 
 function App() {
-	const router = createBrowserRouter([
+	const router = createBrowserRouter(
+		[
 		{ path: "/", element: <Home />, index: true, errorElement: <ErrorPage /> },
 		{ path: "/login-admin", element: <LoginAdmin /> },
 		{ path: "/login-customer", element: <LoginCustomer /> },
@@ -47,9 +48,27 @@ function App() {
 				{ path: "reports", element: <Reports /> },
 			],
 		},
-	]);
+		]
+	);
 
 	return <RouterProvider router={router} />;
 }
 
 export default App;
+
+
+// createRoutesFromElements(
+// 	<Route path="/" errorElement={<ErrorPage />} >
+// 		<Route index element={<Home />} />
+// 		<Route path="login-admin" element={<LoginAdmin />} />
+// 		<Route path="login-customer" element={<LoginCustomer />} /> 
+// 		<Route path="forgot-password" element={<ForgotPassword />} /> 
+// 		<Route path="forgot-password-success" element={<ForgotPasswordEmailSuccess />} /> 
+// 		<Route path="reset-password-success" element={<ResetPasswordPageSuccess />} /> 
+// 		<Route path="recover-password/:email/:token" element={<RecoverPassword />} /> 
+// 		<Route path="password-expired" element={<PasswordExpired />} /> 
+// 		<Route path="password-recovery-success" element={<PasswordRecoverySuccess />} /> 
+// 		<Route path="customer-password" element={<CustomerForgotPasswordPage />} /> 
+// 		<Route path="super-admin-onboarding" element={<SuperAdminVerifyEmail />} /> 
+// 	</Route>
+// )
