@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
+import PropTypes from "prop-types";
+// import Button
 import Title from "../../atoms/Logout/Title";
 import Message from "../../atoms/Logout/Message";
 import ButtonUnHighlighted from "../../atoms/Logout/ButtonUnHighlighted";
 import ButtonHighlighted from "../../atoms/Logout/ButtonHighlighted";
 import ModalWrapper from "../../atoms/Logout/ModalWrapper";
 import logOut from "../../atoms/Logout/Logout.svg";
-import { useDispatch } from "react-redux";
-import { logoutActions } from "../../../state-manager/reducers/logout/logout";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutActions, logout } from "../../../state-manager/reducers/logout/logout";
+import { getDeviceName } from "../../../utilis";
 
 const Modal = () => {
+	const {loading} = useSelector(state => state.logout)
 	const dispatch = useDispatch();
 	const handleHideLogoutModal = () => {
 		dispatch(logoutActions.toggleLogoutModal());
@@ -16,6 +20,8 @@ const Modal = () => {
 
 	const handleLogout = () => {
 		console.log("logout here");
+		const deviceName = getDeviceName()
+		dispatch(logout({deviceName: deviceName}))
 	};
 
 	return (
@@ -29,10 +35,11 @@ const Modal = () => {
 			</div>
 			<div className="flex items-center justify-between gap-[0.75rem]">
 				<ButtonUnHighlighted onClick={handleHideLogoutModal}>Discard</ButtonUnHighlighted>
-				<ButtonHighlighted onClick={handleLogout}>Logout</ButtonHighlighted>
+				<ButtonHighlighted onClick={handleLogout} loading={loading} >Logout</ButtonHighlighted>
 			</div>
 		</ModalWrapper>
 	);
 };
+
 
 export default Modal;

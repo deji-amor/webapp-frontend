@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
+import localforage from "localforage";
 import axios from "axios";
 
 export const loginCustomer = createAsyncThunk(
@@ -13,9 +14,10 @@ export const loginCustomer = createAsyncThunk(
 		};
 
 		try {
-			const url = `${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`;
-			const res = await fetch(url, config);
-			return res.json();
+			const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/login`;
+			const response = await fetch(url, config);
+			const result = await response.json();
+			return result;
 		} catch (err) {
 			console.log({err});
 			if (err.response && err.response.data.message) {
@@ -30,8 +32,10 @@ export const loginCustomer = createAsyncThunk(
 const initialState = {
 	loading: false,
 	token: null,
-	error: null,
+	errorMessage: null,
+	errorTitle: null,
 	toasts: [],
+	clickIncrement: 0
 };
 
 const loginCustomerSlice = createSlice({
@@ -53,14 +57,34 @@ const loginCustomerSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder
-			.addCase(loginCustomer.pending, () => {
+			.addCase(loginCustomer.pending, (state) => {
 				console.log("pending");
+				state.loading = true;
 			})
-			.addCase(loginCustomer.fulfilled, () => {
-				console.log("fulfilled");
+			.addCase(loginCustomer.fulfilled, (state, {payload}) => {
+				console.log("fulfilled", payload);
+				state.loading = false;
+				const status = payload.status;
+				if (status === "OK") {
+					const token = payload.data.token;
+					localforage
+						.setItem("authToken", token)
+						.then(() => {})
+						.catch(error => {
+							console.error("Error saving token:", error);
+						});
+					state.token = token;
+				} else {
+					state.errorMessage = payload.message;
+					state.errorTitle = payload.title;
+				}
+				state.clickIncrement = state.clickIncrement + 1;
 			})
-			.addCase(loginCustomer.rejected, () => {
-				console.log("rejected");
+			.addCase(loginCustomer.rejected, (state, {payload, error}) => {
+				console.log("rejected", {payload, error});
+				state.clickIncrement = state.clickIncrement + 1;
+				// console.log(payload?.message)
+				// console.log("rejected", payload);
 			});
 	},
 });

@@ -19,6 +19,7 @@ const EmojiHeader = ({ children, position }) => {
 		font-style: normal;
 		font-weight: 700;
 		line-height: 136.023%; /* 3.0605rem */
+		z-index: -1;
 	`;
 
 	return <Header>{children}</Header>;
