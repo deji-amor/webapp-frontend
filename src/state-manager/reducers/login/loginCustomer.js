@@ -82,9 +82,10 @@ const loginCustomerSlice = createSlice({
 			})
 			.addCase(loginCustomer.rejected, (state, {payload, error}) => {
 				console.log("rejected", {payload, error});
+				state.loading = false
 				state.clickIncrement = state.clickIncrement + 1;
-				// console.log(payload?.message)
-				// console.log("rejected", payload);
+				state.errorMessage = "An error has occurred";
+				state.errorTitle = "Error!";
 			});
 	},
 });
