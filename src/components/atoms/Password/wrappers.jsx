@@ -188,7 +188,7 @@ export const ErrorCardWrapper = styled("div")(({ error, size, color }) => ({
 	},
 }));
 
-export const InputButtonWrapper = styled("div")(({ width }) => ({
+export const InputButtonWrapper = styled("form")(({ width }) => ({
 	width: width ? width : "100%;",
 	display: "flex",
 	flexDirection: "column",
