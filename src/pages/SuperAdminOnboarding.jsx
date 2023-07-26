@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "@mui/material";
-import RegisterForm from "../organisms/SuperAdmin/RegisterForm";
-import Navbar from "../organisms/SuperAdmin/Navbar";
-import CustomLogo from "../atoms/Password/customLogo";
+import RegisterForm from "../components/organisms/SuperAdmin/RegisterForm";
+import Navbar from "../components/organisms/SuperAdmin/Navbar";
+import CustomLogo from "../components/atoms/Password/customLogo";
 
 const SuperAdminOnboarding = () => {
 	return (

@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react'
 import { Outlet } from 'react-router-dom'
-import Sidebar from '../molecules/Dashboard/Sidebar';
-import Navbar from '../molecules/Dashboard/Navbar';
-import LogoutOverlay from '../organisms/Logout/LogoutOverlay';
+import Sidebar from '../components/molecules/Dashboard/Sidebar';
+import Navbar from '../components/molecules/Dashboard/Navbar';
+import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay';
 // import { logoutActions } from '../../state-manager/reducers/logout/logout';
 import { useSelector } from 'react-redux';
-import ResetPassword from "../organisms/Password/resetpassword";
-import { getAuthToken } from '../../utilis';
+import ResetPassword from "../components/organisms/Password/resetpassword";
+import { getAuthToken } from '../utilis';
 
 const AppLayout = () => {
   const showLogoutModal = useSelector(state => state.logout.showModal)

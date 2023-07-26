@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../organisms/SuperAdmin/Navbar'
-import SuperAdminSuccess from '../organisms/SuperAdmin/SuperAdminSuccess'
+import Navbar from '../components/organisms/SuperAdmin/Navbar'
+import SuperAdminSuccess from '../components/organisms/SuperAdmin/SuperAdminSuccess'
 
 
 const SuperAdminOnboardingSuccess = () => {

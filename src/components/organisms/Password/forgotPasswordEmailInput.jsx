@@ -36,7 +36,7 @@ const ForgotPasswordEmail = () => {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(forgotpasswordemail({ email }));
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	};
 

@@ -102,7 +102,7 @@ const ResetPassword = () => {
 		try {
 			dispatch(resetPassword({currentPassword: current, newPassword: password, confirmPassword: confirmPassword}));
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	};
 

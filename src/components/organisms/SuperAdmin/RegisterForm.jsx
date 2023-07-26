@@ -75,8 +75,6 @@ const RegisterForm = () => {
 		dispatch(SET_RESPONSE_NULL_ADMIN());
 	};
 
-	// Email has already been used!
-
 	const handleCheckChange = () => {
 		setChecked((prev) => !prev);
 		dispatch(SET_RESPONSE_NULL_ADMIN());
@@ -156,7 +154,7 @@ const RegisterForm = () => {
 		try {
 			dispatch(superAdminCreate(data));
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	};
 

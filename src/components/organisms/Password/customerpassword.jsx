@@ -35,7 +35,7 @@ const CustomerpasswordBanner = () => {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(customerforgotpasswordemail({ email }));
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	};
 
@@ -61,6 +61,7 @@ const CustomerpasswordBanner = () => {
 				forgotPasswordError={forgotPasswordError}
 				handleEmailChange={handleEmailChange}
 				handleFormSubmit={handleFormSubmit}
+				email={email}
 				defaultCursor={forgotPasswordError || serverError || !email}
 			/>
 		</CustomerpasswordWrapper>
