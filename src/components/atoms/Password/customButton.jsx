@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { ButtonWrapper } from "./wrappers";
+import { useSelector } from "react-redux";
 
 const CustomButton = ({
 	butText,
@@ -19,7 +20,7 @@ const CustomButton = ({
 			error={serverError || validationError || currentError || error || defaultCursor}
 		>
 			<button
-				disabled={serverError || validationError || currentError || error || defaultCursor}
+				// disabled={serverError || validationError || currentError || error || defaultCursor}
 				onClick={onClick}
 				type={butType}
 			>

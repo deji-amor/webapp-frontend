@@ -14,6 +14,7 @@ const ForgotPasswordRecoveryInput = ({
 	placeholder,
 	label,
 	validators,
+	empty,
 	single,
 	validationError,
 	forgotPasswordRecoveryError,
@@ -186,7 +187,13 @@ const ForgotPasswordRecoveryInput = ({
 						toolTipText="New Password is the same as current password "
 						toolTipColor={"#D73D3D"}
 					/>
-				) : (
+				) : empty ? (
+					<ToolTip
+						toolTipIcon={<ErrorOutlineIcon className="icon" />}
+						toolTipText={`${name} field cannot be empty`}
+						toolTipColor={"#D73D3D"}
+					/>
+				) :	(
 					""
 				)}
 			</div>
@@ -202,6 +209,7 @@ ForgotPasswordRecoveryInput.propTypes = {
 	butType: PropTypes.string,
 	single: PropTypes.bool,
 	match: PropTypes.bool,
+	empty: PropTypes.bool,
 	validationError: PropTypes.bool,
 	note: PropTypes.string,
 	confirm: PropTypes.string,

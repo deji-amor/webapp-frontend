@@ -15,6 +15,7 @@ const CustomerpasswordBanner = () => {
 	const [forgotPasswordError, setForgotPasswordError] = useState();
 	const [serverError, setServerError] = useState(false);
 	const [email, setEmail] = useState("");
+	const [empty, setEmpty] = useState(false);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -24,12 +25,13 @@ const CustomerpasswordBanner = () => {
 		setEmail(e.target.value);
 		setServerError(false);
 		dispatch(SET_ERROR_NULL());
+		setEmpty(false)
 	};
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 
-		if (!email) return;
+		if (!email) return setEmpty(true);
 
 		try {
 			dispatch(SET_EMAIL({ email }));
@@ -40,14 +42,14 @@ const CustomerpasswordBanner = () => {
 	};
 
 	useEffect(() => {
-
+		console.log(empty)
 		if (email) validateEmail(setForgotPasswordError, email);
 
 		if (response === "User with the email address not found!") return setServerError(true);
 
 		if (response === "Password reset link has been sent to your email!") return navigate("/forgot-password-success");
 
-	}, [email, dispatch, response, navigate]);
+	}, [email, dispatch, response, navigate, empty]);
 
 	return (
 		<CustomerpasswordWrapper>
@@ -55,13 +57,14 @@ const CustomerpasswordBanner = () => {
 				title="Streamlined IT Service Management."
 				description="Our robust solution is built and optimized specifically for IT teams and workflows, influenced by feedback, and centred around end-user and endpoint support.. "
 			/>
-
+			
 			<CustomerPasswordForm
 				serverError={serverError}
 				forgotPasswordError={forgotPasswordError}
 				handleEmailChange={handleEmailChange}
 				handleFormSubmit={handleFormSubmit}
 				email={email}
+				empty={empty}
 				defaultCursor={forgotPasswordError || serverError || !email}
 			/>
 		</CustomerpasswordWrapper>

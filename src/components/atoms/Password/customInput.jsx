@@ -12,6 +12,7 @@ const CustomInput = ({
 	width,
 	placeholder,
 	label,
+	empty,
 	error,
 	handleChange,
 	serverError,
@@ -25,7 +26,7 @@ const CustomInput = ({
 	};
 
 	return (
-		<InputWrapper mquery={mquery} error={error || serverError} inputWidth={width}>
+		<InputWrapper mquery={mquery} error={error || serverError} empty={empty} inputWidth={width}>
 			<input
 				id={label}
 				name={name}
@@ -33,14 +34,14 @@ const CustomInput = ({
 				onChange={handleChange}
 				placeholder={placeholder}
 				required
-				disabled={(name === 'confirmPassword') && currentError}
+				disabled={(type === 'password' && name === 'confirmPassword') && currentError}
 			/>
 			{type === "password" && (
 				<Icon
 					onClick={handleToggle}
 					align="right"
 					style={{ position: "absolute", top: "10px", right: "20px", cursor: "pointer" }}
-					icon={toggle ? <VisibilityOutlinedIcon style={{color: "#828282"}} /> : <VisibilityOffOutlinedIcon style={{color: "#828282"}} />}
+					icon={toggle ? <VisibilityOffOutlinedIcon style={{color: "#828282"}} /> :  <VisibilityOutlinedIcon style={{color: "#828282"}} />}
 				/>
 			)}
 		</InputWrapper>
@@ -54,6 +55,7 @@ CustomInput.propTypes = {
 	type: PropTypes.string,
 	placeholder: PropTypes.string,
 	error: PropTypes.bool,
+	empty: PropTypes.bool,
 	errorMessage: PropTypes.string,
 	handleChange: PropTypes.func,
 	serverError: PropTypes.bool,
