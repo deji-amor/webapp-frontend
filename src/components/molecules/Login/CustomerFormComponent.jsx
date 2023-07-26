@@ -94,7 +94,8 @@ const CustomerFormComponent = () => {
 		) {
 			dispatch(
 				loginCustomerActions.showToasts({
-					message: "The username you entered is incorrect, please check again.",
+					message:
+						"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes.",
 					title: "Temporarily been disabled",
 				})
 			);

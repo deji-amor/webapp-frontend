@@ -74,6 +74,7 @@ const logoutSlice = createSlice({
 					})
 				}
 				state.successful = true
+				state.showModal = false
 			})
 
 			.addCase(logout.rejected, (state, {payload}) => {
@@ -81,6 +82,7 @@ const logoutSlice = createSlice({
 				state.loading = false;
 				state.errorMessage = "Logout failed!"
 				state.clickIncrement = state.clickIncrement + 1;
+				state.showModal = false
 			});
 	},
 });

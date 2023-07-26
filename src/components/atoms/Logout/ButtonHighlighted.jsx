@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
 
-const ButtonHighlighted = ({ children, onClick }) => {
+const ButtonHighlighted = ({ children, onClick, disabled }) => {
 	const Button = styled("button")`
 		display: flex;
 		padding: 0.625rem 1.125rem;
@@ -20,6 +20,8 @@ const ButtonHighlighted = ({ children, onClick }) => {
 		font-style: normal;
 		font-weight: 600;
 		line-height: 1.5rem; /* 150% */
+		cursor: ${disabled ? "not-allowed" : "pointer"};
+		opacity: ${disabled ? "0.4" : "1"};
 	`;
 
 	return <Button onClick={onClick}>{children}</Button>;
@@ -28,6 +30,7 @@ const ButtonHighlighted = ({ children, onClick }) => {
 ButtonHighlighted.propTypes = {
 	children: PropTypes.node,
 	onClick: PropTypes.func,
+	disabled: PropTypes.bool
 };
 
 export default ButtonHighlighted;

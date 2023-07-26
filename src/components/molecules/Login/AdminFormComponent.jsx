@@ -50,6 +50,11 @@ const AdminFormComponent = () => {
 		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
+	useEffect(() => {
+		window.addEventListener("locationchange", function (e) {
+			console.log("location changed!", e);
+		});
+	}, [])
 
 	useEffect(() => {
 		const getAuthTokenHandler = async () => {
@@ -92,7 +97,8 @@ const AdminFormComponent = () => {
 		) {
 			dispatch(
 				loginAdminActions.showToasts({
-					message: "The username you entered is incorrect, please check again.",
+					message:
+						"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes",
 					title: "Temporarily been disabled",
 				})
 			);
