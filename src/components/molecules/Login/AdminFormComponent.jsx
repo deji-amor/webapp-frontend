@@ -20,7 +20,7 @@ const AdminFormComponent = () => {
 	);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [wasSubmitted, setWasSubmitted] = useState(false)
+	const [wasSubmitted, setWasSubmitted] = useState(false);
 
 	const {
 		enteredValue: usernameValue,
@@ -50,15 +50,15 @@ const AdminFormComponent = () => {
 		id: passwordId,
 	} = useBasicInput(isNotEmpty);
 
-
 	useEffect(() => {
 		const getAuthTokenHandler = async () => {
 			const to = await getAuthToken(); // auth toKen
 			if (to && wasSubmitted) {
 				navigate("/app/dashboard");
 			}
-		}
-		getAuthTokenHandler()
+		};
+
+		getAuthTokenHandler();
 		if (errorMessage === "Invalid email and/or password!") {
 			dispatch(
 				loginAdminActions.showToasts({
@@ -66,14 +66,16 @@ const AdminFormComponent = () => {
 					title: errorMessage,
 				})
 			);
+
 			usernameSetErrorMessage("Username may be invalid");
 			usernameSetHasError(true);
 			usernameSetErrorFromServer(true);
 			passwordSetErrorMessage("Password may be invalid");
 			passwordSetHasError(true);
 			passwordSetErrorFromServer(true);
-			return
+			return;
 		}
+
 		if (errorMessage === "Invalid username!") {
 			dispatch(
 				loginAdminActions.showToasts({
@@ -84,8 +86,9 @@ const AdminFormComponent = () => {
 			usernameSetErrorMessage(errorMessage);
 			usernameSetHasError(true);
 			usernameSetErrorFromServer(true);
-			return
+			return;
 		}
+
 		if (
 			errorMessage ===
 			"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes"
@@ -96,16 +99,17 @@ const AdminFormComponent = () => {
 					title: "Temporarily been disabled",
 				})
 			);
-			return
+			return;
 		}
-		if(errorMessage && errorTitle){
+
+		if (errorMessage && errorTitle) {
 			dispatch(
 				loginAdminActions.showToasts({
 					message: errorMessage,
 					title: errorTitle,
 				})
 			);
-			return
+			return;
 		}
 	}, [
 		token,
@@ -124,7 +128,7 @@ const AdminFormComponent = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		setWasSubmitted(true)
+		setWasSubmitted(true);
 		dispatch(
 			loginAdmin({
 				username: usernameValue,
