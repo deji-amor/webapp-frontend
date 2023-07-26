@@ -5,7 +5,7 @@ import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
 import PropTypes from "prop-types";
 
 
-const TextFields = ({ label, inputProps, control, name, errors, serverError }) => {
+const TextFields = ({ label, inputProps, control, name, errors, serverError, type }) => {
 	return (
 		<FormControl
 			fullWidth
@@ -41,6 +41,7 @@ const TextFields = ({ label, inputProps, control, name, errors, serverError }) =
 					<TextField
 						{...field}
 						{...addErrorIntoField(errors[name])}
+						type={type}
 						required
 						placeholder={label}
 						InputProps={inputProps}
@@ -54,6 +55,7 @@ const TextFields = ({ label, inputProps, control, name, errors, serverError }) =
 
 TextFields.propTypes = {
 	label: PropTypes.string,
+	type: PropTypes.string,
 	inputProps: PropTypes.object,
 	control: PropTypes.object,
 	errors: PropTypes.object,

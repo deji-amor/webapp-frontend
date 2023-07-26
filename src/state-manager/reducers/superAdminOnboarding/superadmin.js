@@ -2,6 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const superAdminCreate = createAsyncThunk("superAdminCreate", async(args, {rejectWithValue}) => {
+
+    // console.table({firstName, lastName, workspaceName, companyEmail, country, city, phoneNumber, password, confirmPassword, privacy})
+
     const config = {
         headers: {
         'Content-Type': 'application/json',

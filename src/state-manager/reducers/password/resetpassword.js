@@ -2,9 +2,9 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {getAuthToken} from "../../../utilis";
 
-const token = await getAuthToken();
-
 export const resetPassword = createAsyncThunk("resetpassword", async (args, {rejectWithValue}) => {
+	const token = await getAuthToken();
+
 	const config = {
 		headers: {
 			"Content-Type": "application/json",

@@ -32,6 +32,7 @@ const CustomInput = ({
 				type={toggle ? type : "text"}
 				onChange={handleChange}
 				placeholder={placeholder}
+				required
 				disabled={(name === 'confirmPassword') && currentError}
 			/>
 			{type === "password" && (
