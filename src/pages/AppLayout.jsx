@@ -9,57 +9,60 @@ import ResetPassword from "../components/organisms/Password/resetpassword";
 import { getAuthToken, getDeviceName } from '../utilis';
 
 const AppLayout = () => {
-  const showLogoutModal = useSelector(state => state.logout.showModal)
-  const showResetModal = useSelector(state => state.logout.showResetModal)
-  const allowedTimeOfInactivityInSeconds = useSelector(state => state.logout.allowedTimeOfInactivityInSeconds)
+	const showLogoutModal = useSelector((state) => state.logout.showModal);
+	const showResetModal = useSelector((state) => state.logout.showResetModal);
+	const allowedTimeOfInactivityInSeconds = useSelector(
+		(state) => state.logout.allowedTimeOfInactivityInSeconds
+	);
+	const logoutProcessLoading = useSelector((state) => state.logout.loading);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-  useEffect(() => {
-    const eventsThatShowActivity = ["mousemove", "keydown", "click", "scroll", "input"];
-    eventsThatShowActivity.forEach((event) => {
-      window.addEventListener(event, () => {
-        dispatch(logoutActions.resetAllowedTimeOfInactivityInSeconds())
-      })
-    })
-  }, [dispatch])
-  
-  console.log(allowedTimeOfInactivityInSeconds);
-  
-  useEffect(() => {
-    const checkIfTokenExistsAndIsValid = async () => {
-      dispatch(logoutActions.countDownSeconds());
-      const token = await getAuthToken()
-      if(allowedTimeOfInactivityInSeconds <= 0 && token){
-        const deviceName = getDeviceName();
-        dispatch(logout({ deviceName: deviceName }));
-      }
-      if(!token){
-        navigate("/")
-      }
-    }
+	// add the activity events and reset inactivity timer
+	useEffect(() => {
+		const eventsThatShowActivity = ["mousemove", "keydown", "click", "scroll", "input"];
+		eventsThatShowActivity.forEach((event) => {
+			window.addEventListener(event, () => {
+				dispatch(logoutActions.resetAllowedTimeOfInactivityInSeconds());
+			});
+		});
+	}, [dispatch]);
 
-    const id = setInterval(checkIfTokenExistsAndIsValid, 1000)
-    return () => clearInterval(id)
-  }, [navigate, dispatch, allowedTimeOfInactivityInSeconds])
+	// checks if token doesnt exit and logs out else and logouts out on timer expiry
+	useEffect(() => {
+		const checkIfTokenExistsAndIsValid = async () => {
+			dispatch(logoutActions.countDownSeconds());
+			const token = await getAuthToken();
+			if (allowedTimeOfInactivityInSeconds <= 0 && token && !logoutProcessLoading) {
+				const deviceName = getDeviceName();
+				dispatch(logout({ deviceName: deviceName }));
+			}
+			if (!token) {
+				navigate("/");
+			}
+		};
 
-  return (
-    <> 
-    {showLogoutModal && <LogoutOverlay/>}
-    {showResetModal && <ResetPassword/>}
+		const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
+		return () => clearInterval(id);
+	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
 
-      <div className='flex h-screen max-h-screen'>
-          <Sidebar/>
-          <div className='basis-[85%] flex flex-col max-w-[85%]'>
-            <Navbar/>
-            <div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] overflow-y-auto overflow-x-auto">
-              <Outlet/>
-            </div>
-          </div>
-      </div>
-    </>
-  )
+	return (
+		<>
+			{showLogoutModal && <LogoutOverlay />}
+			{showResetModal && <ResetPassword />}
+
+			<div className="flex h-screen max-h-screen">
+				<Sidebar />
+				<div className="basis-[85%] flex flex-col max-w-[85%]">
+					<Navbar />
+					<div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] overflow-y-auto overflow-x-auto">
+						<Outlet />
+					</div>
+				</div>
+			</div>
+		</>
+	);
 }
 
 export default AppLayout;
