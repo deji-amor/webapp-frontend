@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import EmojiHeader from "../../atoms/Login/EmojiHeader";
 import Header from "../../atoms/Login/Header";
@@ -34,6 +34,7 @@ const AdminFormComponent = () => {
 		errorFromServer: usernameErrFromServer,
 		setErrorFromServer: usernameSetErrorFromServer,
 		id: usernameId,
+		reset: usernameReset,
 	} = useBasicInput(isValidEmail);
 
 	const {
@@ -48,19 +49,17 @@ const AdminFormComponent = () => {
 		errorFromServer: passwordErrFromServer,
 		setErrorFromServer: passwordSetErrorFromServer,
 		id: passwordId,
+		reset: passwordReset,
 	} = useBasicInput(isNotEmpty);
-
-	useEffect(() => {
-		window.addEventListener("locationchange", function (e) {
-			console.log("location changed!", e);
-		});
-	}, [])
 
 	useEffect(() => {
 		const getAuthTokenHandler = async () => {
 			const to = await getAuthToken(); // auth toKen
 			if (to && wasSubmitted) {
+				usernameReset()
+				dispatch(loginAdminActions.resetLoginAdmin());
 				navigate("/app/dashboard");
+				return 
 			}
 		};
 
@@ -131,6 +130,7 @@ const AdminFormComponent = () => {
 		passwordSetHasError,
 		passwordSetErrorFromServer,
 		clickIncrement,
+		wasSubmitted,
 	]);
 
 	const submitHandler = (e) => {

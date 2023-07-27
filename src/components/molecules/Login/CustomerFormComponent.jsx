@@ -58,6 +58,7 @@ const CustomerFormComponent = () => {
 			const to = await getAuthToken(); // toKen
 			if (to && wasSubmitted) {
 				navigate("/app/dashboard");
+				return dispatch(loginCustomerActions.resetLoginCustomer())
 			}
 		};
 		getAuthTokenHandler();
@@ -122,6 +123,7 @@ const CustomerFormComponent = () => {
 		passwordSetHasError,
 		passwordSetErrorFromServer,
 		clickIncrement,
+		wasSubmitted
 	]);
 
 	const submitHandler = (e) => {

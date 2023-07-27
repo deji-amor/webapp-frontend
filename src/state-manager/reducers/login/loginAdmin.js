@@ -52,6 +52,9 @@ const loginAdminSlice = createSlice({
 			const toasts = current(state).toasts.slice();
 			state.toasts = toasts.filter(toast => toast.id !== id);
 		},
+		resetLoginAdmin: () => {
+			return initialState
+		}
 	},
 	extraReducers: builder => {
 		builder
