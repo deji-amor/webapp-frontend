@@ -8,8 +8,10 @@ import { useEffect, useState } from "react";
 import CheckboxFields from "../../molecules/SuperAdmin/CheckboxField";
 import ForgotPasswordRecoveryInput from "../../molecules/Password/customForgotPasswordRecoveryInput";
 import { schema } from "../../atoms/SuperAdmin/Schema";
+import ToolTip from "../../atoms/Password/customInputToolTip";
 import { useDispatch, useSelector } from "react-redux";
 import { validatePassword } from "../../atoms/Password/validators";
+import CustomButton from "../../atoms/Password/customButton";
 import {
 	SET_RESPONSE_NULL_ADMIN,
 	SET_EMAIL_ADMIN,
@@ -46,6 +48,7 @@ const RegisterForm = () => {
 	const [location, setLocation] = useState({ country: "", state: "" });
 	const [countryStates, setCountryStates] = useState([]);
 	const [error, setError] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [validationError, setValidationError] = useState(false);
 	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
@@ -106,6 +109,8 @@ const RegisterForm = () => {
 			setError(true);
 		}
 
+		if (response) setLoading(false)
+
 		if (
 			response === "Email has already been used!" ||
 			response === "Workspace name has been used!"
@@ -150,7 +155,9 @@ const RegisterForm = () => {
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
 		if (!checked) return setCheckedError(true);
-		
+
+		setLoading(true);
+
 		try {
 			dispatch(superAdminCreate(data));
 		} catch (err) {
@@ -159,7 +166,7 @@ const RegisterForm = () => {
 	};
 
 	return (
-		<div style={{marginTop: '100px'}}>
+		<div style={{ marginTop: "100px" }}>
 			{response === "Email has already been used!" ? (
 				<ErrorCard
 					align="left"
@@ -169,7 +176,8 @@ const RegisterForm = () => {
 					titleColor="#D73D3D"
 					color="rgba(215, 61, 61, 0.50);"
 					title="Email has already been used"
-					description="The email you entered already exist."
+					style={{position: "absolute", top: "200px", width: "330px"}}
+					description="The company email you entered already exist."
 				/>
 			) : response === "Workspace name has been used!" ? (
 				<ErrorCard
@@ -180,6 +188,7 @@ const RegisterForm = () => {
 					titleColor="#D73D3D"
 					color="rgba(215, 61, 61, 0.50);"
 					title="Workspace already exist"
+					style={{position: "absolute", top: "200px", width: "330px"}}
 					description="Workspace name has been used."
 				/>
 			) : (
@@ -211,15 +220,27 @@ const RegisterForm = () => {
 
 				<Box
 					noValidate
-					onSubmit={handleSubmit((data) => onSubmit({...data}))}
+					onSubmit={handleSubmit((data) => onSubmit({ ...data }))}
 					component="form"
 					sx={{ width: "100%", mt: "2rem" }}
 					style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
 				>
 					<Box sx={{ display: "flex", gap: "30px" }}>
-						<TextFields errors={errors} control={control} type="text" name="firstName" label="First Name" />
+						<TextFields
+							errors={errors}
+							control={control}
+							type="text"
+							name="firstName"
+							label="First Name"
+						/>
 
-						<TextFields errors={errors} control={control} type="text" name="lastName" label="Last Name" />
+						<TextFields
+							errors={errors}
+							control={control}
+							type="text"
+							name="lastName"
+							label="Last Name"
+						/>
 					</Box>
 					<Box sx={{ display: "flex", gap: "30px" }}>
 						<TextFields
@@ -268,6 +289,7 @@ const RegisterForm = () => {
 						placeholder="Password"
 						name="password"
 						type="password"
+						height="55px"
 						validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
 						match={match}
 						value={password}
@@ -281,6 +303,7 @@ const RegisterForm = () => {
 						name="confirmPassword"
 						placeholder="Confirm Password"
 						label="Confirm Password"
+						height="55px"
 						validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
 						single={true}
 						forgotPasswordRecoveryError={error && confirmPassword.length > 0}
@@ -300,7 +323,10 @@ const RegisterForm = () => {
 						checkedError={checkedError}
 					/>
 
-					<Button
+					<CustomButton butText="Register" butWidth="100%" butHeight="60px" loading={loading} />
+					<br />
+
+					{/* <Button
 						type="submit"
 						fullWidth
 						disableRipple
@@ -318,7 +344,7 @@ const RegisterForm = () => {
 						}}
 					>
 						Register
-					</Button>
+					</Button> */}
 				</Box>
 			</Box>
 		</div>

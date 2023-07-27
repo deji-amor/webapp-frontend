@@ -26,7 +26,7 @@ const Modal = () => {
 	const navigate = useNavigate()
 	useEffect(() => {
 		if(successful) {
-			navigate("/login-admin");
+			navigate("/");
 		}
 	}, [navigate, successful])
 

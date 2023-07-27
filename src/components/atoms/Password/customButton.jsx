@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 const CustomButton = ({
 	butText,
 	butWidth,
+	butHeight,
 	butType,
 	error,
 	loading,
@@ -19,6 +20,7 @@ const CustomButton = ({
 	return (
 		<ButtonWrapper
 			width={butWidth}
+			height={butHeight}
 			error={serverError || validationError || currentError || error || defaultCursor}
 		>
 			<button
@@ -44,6 +46,7 @@ CustomButton.propTypes = {
 	butText: PropTypes.string,
 	butType: PropTypes.string,
 	butWidth: PropTypes.string,
+	butHeight: PropTypes.string,
 	name: PropTypes.string,
 	backgroundColor: PropTypes.string,
 	onClick: PropTypes.func,

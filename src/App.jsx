@@ -13,6 +13,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ForgotPasswordEmailSuccess from "./pages/ForgotPasswordEmailSuccess";
 import CustomerForgotPasswordPage from "./pages/CustomerForgotPassword";
 import SuperAdminOnboarding from "./pages/SuperAdminOnboarding";
+import { ProtectedRoute } from "./utilis";
 import AppLayout from "./pages/AppLayout";
 import Dashboard from "./pages/app/Dashboard";
 import Tickets from "./pages/app/Tickets";
@@ -42,16 +43,15 @@ function App() {
 		},
 		{
 			path: "/app",
-			element: <AppLayout />,
+			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
 			children: [
-				{ path: "dashboard", element: <Dashboard />, index: true },
-				{ path: "tickets", element: <Tickets /> },
-				{ path: "users", element: <Users /> },
-				{ path: "reports", element: <Reports /> },
+				{ path: "dashboard", element:<ProtectedRoute><Dashboard /></ProtectedRoute>, index: true },
+				{ path: "tickets", element: <ProtectedRoute><Tickets /></ProtectedRoute> },
+				{ path: "users", element: <ProtectedRoute><Users /></ProtectedRoute> },
+				{ path: "reports", element: <ProtectedRoute><Reports /></ProtectedRoute> },
 			],
 		},
 	]);
-
 	return <RouterProvider router={router} />;
 }
 

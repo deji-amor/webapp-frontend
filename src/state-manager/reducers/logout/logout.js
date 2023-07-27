@@ -48,7 +48,7 @@ const logoutSlice = createSlice({
 		toggleLogoutModal: state => {
 			state.showModal = !state.showModal;
 		},
-		toggleResetModal: state => {
+		toggleResetModal: (state, {payload}) => {
 			state.showResetModal = !state.showResetModal;
 		},
 	},

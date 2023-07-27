@@ -5,9 +5,9 @@ import Description from "../../atoms/Password/customDescription";
 import ErrorIcon from "@mui/icons-material/Error";
 import Icon from "../../atoms/Password/customIcon";
 
-const ErrorCard = ({ title, error, titleSize, size, titleColor, color, description, align }) => {
+const ErrorCard = ({ title, error, titleSize, size, titleColor, color, description, align, style }) => {
 	return (
-		<ErrorCardWrapper error={error}>
+		<ErrorCardWrapper error={error} style={style}>
 			<Icon icon={<ErrorIcon className="icon" />} iconSize="24px" iconColor="#D73D3D" />
 			<div>
 				<Title title={title} titleSize={titleSize} titleColor={titleColor} align={align} />
@@ -23,6 +23,7 @@ ErrorCard.propTypes = {
 	titleSize: PropTypes.string,
 	titleColor: PropTypes.string,
 	color: PropTypes.string,
+	style: PropTypes.object,
 	size: PropTypes.string,
 	align: PropTypes.string,
 	description: PropTypes.string,

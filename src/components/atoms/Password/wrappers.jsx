@@ -21,7 +21,7 @@ export const LogoWrapper = styled("span")(({color}) => ({
 	},
 }));
 
-export const ButtonWrapper = styled("div")(({ width, error }) => ({
+export const ButtonWrapper = styled("div")(({ width, height, error }) => ({
 	maxWidth: "100%",
 	display: "flex",
 	justifyContent: "center",
@@ -30,7 +30,7 @@ export const ButtonWrapper = styled("div")(({ width, error }) => ({
 	button: {
 		background: "#2B2E72",
 		width: width ? width : "100%",
-		height: "46px",
+		height: height ? height : "46px",
 		color: "white",
 		position: 'relative',
 		zIndex: "10",
@@ -107,13 +107,13 @@ export const IconWrapper = styled("div")(({ mquery, style, size, color, align, w
 	},
 }));
 
-export const InputWrapper = styled("div")(({ mquery, inputWidth, error, empty, value, confirm }) => ({
+export const InputWrapper = styled("div")(({ mquery, inputWidth, inputHeight, error, empty, value, confirm }) => ({
 	width: "100%",
 	position: "relative",
 
 	input: {
 		width: inputWidth ? inputWidth : "100%",
-		height: "46px",
+		height: inputHeight ? inputHeight : "46px",
 		borderRadius: "6px",
 		background: "#EEE",
 		padding: "15px",
@@ -196,7 +196,7 @@ export const TitleWrapper = styled("div")(({ mquery, size, color, align, padding
 	},
 }));
 
-export const ErrorCardWrapper = styled("div")(({ error, size, color }) => ({
+export const ErrorCardWrapper = styled("div")(({ error, style, size, color }) => ({
 	display: error ? "flex" : "none",
 	width: "362px",
 	padding: "12px 16px",
@@ -210,6 +210,8 @@ export const ErrorCardWrapper = styled("div")(({ error, size, color }) => ({
 	zIndex: "100",
 	background: "rgba(238, 6, 6, 0.10)",
 	transition: "all 3s ease",
+	
+	style,
 
 	div: {
 		display: "flex",

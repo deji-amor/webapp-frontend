@@ -73,8 +73,10 @@ const ResetPassword = () => {
 
 		if (serverResetResponse === "Invalid current password!") return setServerError(true);
 
-		if (serverResetResponse === "Your password has been changed successfully!")
+		if (serverResetResponse === "Your password has been changed successfully!") {
+			dispatch(logoutActions.toggleResetModal());
 			return navigate("/reset-password-success");
+		}
 	}, [
 		password,
 		confirmPassword,

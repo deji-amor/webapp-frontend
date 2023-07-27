@@ -63,6 +63,8 @@ const ForgotPasswordRecover = () => {
 
 		if (response) setLoading(false)
 
+		if (response === "Invalid request!") return navigate("/password-expired")
+
 		if (response === "You can not use your previous password!") return setServerError(true);
 
 		if (response === "Your password has been reset successfully!") return navigate("/password-recovery-success");

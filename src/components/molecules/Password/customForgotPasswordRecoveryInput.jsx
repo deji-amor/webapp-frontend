@@ -10,6 +10,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 const ForgotPasswordRecoveryInput = ({
 	type,
 	width,
+	height,
 	name,
 	placeholder,
 	label,
@@ -36,6 +37,7 @@ const ForgotPasswordRecoveryInput = ({
 				<CustomInput
 					type={type}
 					width={width}
+					height={height}
 					placeholder={placeholder}
 					label={label}
 					empty={empty}
@@ -223,6 +225,7 @@ ForgotPasswordRecoveryInput.propTypes = {
 	note: PropTypes.string,
 	confirm: PropTypes.string,
 	width: PropTypes.string,
+	height: PropTypes.string,
 	label: PropTypes.string,
 	validators: PropTypes.object,
 	placeholder: PropTypes.string,
