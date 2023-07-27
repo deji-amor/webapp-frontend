@@ -1,4 +1,5 @@
 import { ForgotEmailWrapper as ResetPasswordSuccessWrapper } from "../../atoms/Password/wrappers";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PasswordSuccess from "../../molecules/Password/customPasswordEmailSuccess";
 import CustomButton from "../../atoms/Password/customButton";
@@ -7,10 +8,13 @@ import checkImage from "../../../assets/password/success.png";
 
 const ResetPasswordSuccess = () => {
 	const navigate = useNavigate();
+	const showResetModal = useSelector(state => state.logout.showResetModal)
+	const dispatch = useDispatch()
 
 	const navigateToLoginAdmin = (e) => {
 		e.preventDefault();
-		navigate("/login-admin");
+		navigate("/");
+		dispatch(showResetModal())
 	};
 
 	return (

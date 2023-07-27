@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutActions } from "../../../state-manager/reducers/logout/logout";
 import { ResetPasswordWrapper } from "../../atoms/Password/wrappers";
-import { resetPassword, SET_SERVER_RESET_NULL } from "../../../state-manager/reducers/password/resetpassword";
+import {
+	resetPassword,
+	SET_SERVER_RESET_NULL,
+} from "../../../state-manager/reducers/password/resetpassword";
 import ResetPasswordInputs from "../../molecules/Password/resetpasswordinputs";
 import { validatePassword } from "../../atoms/Password/validators";
 import Overlay from "../../atoms/Logout/Overlay";
@@ -15,6 +18,7 @@ const ResetPassword = () => {
 	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
 	const [empty, setEmpty] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [passwords, setPasswords] = useState({ current: "", password: "", confirmPassword: "" });
 	const { current, password, confirmPassword } = passwords;
 	const navigate = useNavigate();
@@ -33,8 +37,8 @@ const ResetPassword = () => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
 		setServerError(false);
 		setValidationError(false);
-		dispatch(SET_SERVER_RESET_NULL())
-		setEmpty(false)
+		dispatch(SET_SERVER_RESET_NULL());
+		setEmpty(false);
 	};
 
 	useEffect(() => {
@@ -63,12 +67,14 @@ const ResetPassword = () => {
 			setError(false);
 		}
 
-		if (!current) dispatch(SET_SERVER_RESET_NULL())
+		if (!current) dispatch(SET_SERVER_RESET_NULL());
+
+		if (serverResetResponse) setLoading(false);
 
 		if (serverResetResponse === "Invalid current password!") return setServerError(true);
 
-		if (serverResetResponse === "Your password has been changed successfully!") return navigate("/reset-password-success");
-
+		if (serverResetResponse === "Your password has been changed successfully!")
+			return navigate("/reset-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -83,7 +89,7 @@ const ResetPassword = () => {
 		validationError,
 		current,
 		serverResetResponse,
-		navigate
+		navigate,
 	]);
 
 	const handleShowResetModal = () => {
@@ -93,7 +99,7 @@ const ResetPassword = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if ((!password && !confirmPassword) || (!password || !confirmPassword)) return setEmpty(true);
+		if ((!password && !confirmPassword) || !password || !confirmPassword) return setEmpty(true);
 
 		if (password === current) return setCurrentError(true);
 
@@ -101,8 +107,16 @@ const ResetPassword = () => {
 
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
+		setLoading(true)
+
 		try {
-			dispatch(resetPassword({currentPassword: current, newPassword: password, confirmPassword: confirmPassword}));
+			dispatch(
+				resetPassword({
+					currentPassword: current,
+					newPassword: password,
+					confirmPassword: confirmPassword,
+				})
+			);
 		} catch (err) {
 			// console.log(err);
 		}
@@ -126,6 +140,7 @@ const ResetPassword = () => {
 					match={match}
 					value={password}
 					current={current}
+					loading={loading}
 					currentError={currentError}
 					validationError={validationError}
 					confirm={confirmPassword}

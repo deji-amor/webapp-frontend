@@ -82,7 +82,7 @@ const SuperAdminSuccess = () => {
 			</div>
 			<div>
 				<br />
-				<Link to={"/login-admin"}>
+				<Link to="/" >
 					<Button variant="contained" color="primary">
 						Proceed to Login
 					</Button>

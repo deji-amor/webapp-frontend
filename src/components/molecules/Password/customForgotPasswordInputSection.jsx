@@ -15,6 +15,7 @@ const InputButton = ({
 	width,
 	placeholder,
 	label,
+	loading,
 	empty,
 	forgotPasswordError,
 	errorMessage,
@@ -60,7 +61,7 @@ const InputButton = ({
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipColor="#D73D3D"
 						error={serverError}
-						toolTipText="Input field cannot be empty!"
+						toolTipText={`${label} input field cannot be empty!`}
 					/>
 				) : (
 					""
@@ -70,9 +71,10 @@ const InputButton = ({
 				<CustomButton
 					butText={butText}
 					butType={butType}
+					loading={loading}
 					error={forgotPasswordError || defaultCursor}
 					onClick={handleFormSubmit}
-					defaultCursor={serverError || forgotPasswordError}
+					// defaultCursor={serverError || forgotPasswordError}
 				/>
 				<TipNote note={note} />
 			</div>
@@ -88,6 +90,7 @@ InputButton.propTypes = {
 	width: PropTypes.string,
 	label: PropTypes.string,
 	empty: PropTypes.bool,
+	loading: PropTypes.bool,
 	placeholder: PropTypes.string,
 	forgotPasswordError: PropTypes.bool,
 	errorMessage: PropTypes.string,

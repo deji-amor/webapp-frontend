@@ -1,4 +1,3 @@
-import React from 'react'
 import Greeting from '../../components/molecules/Dashboard/Greeting'
 import StatsCardGroup from '../../components/organisms/Dashboard/StatsCardGroup'
 import RecentTickets from '../../components/organisms/Dashboard/RecentTickets'
@@ -7,12 +6,12 @@ import RecentTicketTable from '../../components/organisms/Dashboard/RecentTicket
 const Dashboard = () => {
   return (
     <div className='space-y-[1.25rem]'>
-      <Greeting/>
-      <StatsCardGroup/>
-      <RecentTickets/>
-      <RecentTicketTable/>
+      <Greeting />
+      <StatsCardGroup />
+      <RecentTickets />
+      <RecentTicketTable />
     </div>
   )
 }
 
-export default Dashboard
+export default Dashboard;

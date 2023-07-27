@@ -24,8 +24,8 @@ import ErrorPage from "./pages/ErrorPage";
 
 function App() {
 	const router = createBrowserRouter([
-		{ path: "/", element: <Home />, index: true, errorElement: <ErrorPage /> },
-		{ path: "/login-admin", element: <LoginAdmin /> },
+		{ path: "/", element: <LoginAdmin />, index: true, errorElement: <ErrorPage /> },
+		// { path: "/login-admin", element: <LoginAdmin /> },
 		{ path: "/login-customer", element: <LoginCustomer /> },
 		{ path: "/forgot-password", element: <ForgotPassword /> },
 		{ path: "/forgot-password-success", element: <ForgotPasswordEmailSuccess /> },

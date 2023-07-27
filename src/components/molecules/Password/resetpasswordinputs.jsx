@@ -21,6 +21,7 @@ const ResetPasswordInputs = ({
 	hasEightChar,
 	match,
 	value,
+	loading,
 	validationError,
 	currentError,
 	current,
@@ -43,16 +44,27 @@ const ResetPasswordInputs = ({
 						placeholder="Password"
 						name="current"
 						type="password"
+						empty={empty && !current}
 						error={serverError}
 						handleChange={handleChange}
 					/>
-					{serverError && (
+					{serverError ? (
 						<ToolTip
 							toolTipIcon={<ErrorOutlineIcon className="icon" />}
 							toolTipText="Invalid Current Password"
 							toolTipColor="#D73D3D"
 						/>
-					)}
+					)
+						: empty && !current ? (
+							<ToolTip
+								toolTipIcon={<ErrorOutlineIcon className="icon" />}
+								toolTipText="Current password input field cannot be empty!"
+								toolTipColor={"#D73D3D"}
+							/>
+						)
+						:
+						""
+					}
 				</div>
 
 				<ForgotPasswordRecoveryInput
@@ -62,6 +74,7 @@ const ResetPasswordInputs = ({
 					type="password"
 					validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
 					match={match}
+					empty={empty && !value}
 					value={value}
 					currentError={currentError}
 					current={current}
@@ -78,6 +91,7 @@ const ResetPasswordInputs = ({
 					label="Confirm New Password"
 					validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
 					single={true}
+					empty={empty && !confirm}
 					match={match}
 					value={value}
 					currentError={currentError}
@@ -95,7 +109,8 @@ const ResetPasswordInputs = ({
 					validationError={validationError}
 					currentError={currentError}
 					error={error}
-					defaultCursor={!value || !confirm || !current}
+					loading={loading}
+					// defaultCursor={!value || !confirm || !current}
 					serverError={serverError}
 				/>
 			</div>
@@ -112,6 +127,7 @@ ResetPasswordInputs.propTypes = {
 	single: PropTypes.bool,
 	match: PropTypes.bool,
 	empty: PropTypes.bool,
+	loading: PropTypes.bool,
 	hasSymbol: PropTypes.bool,
 	hasUpper: PropTypes.bool,
 	hasLower: PropTypes.bool,

@@ -11,7 +11,8 @@ const CustomerPasswordForm = ({
 	handleEmailChange,
 	handleFormSubmit,
 	email,
-	empty
+	empty,
+	loading
 }) => {
 	return (
 		<CustomerEmailWrapper>
@@ -44,6 +45,7 @@ const CustomerPasswordForm = ({
 					placeholder="Type your e-mail"
 					label="E-mail"
 					empty={empty}
+					loading={loading}
 					handleEmailChange={handleEmailChange}
 					forgotPasswordError={forgotPasswordError}
 					errorMessage="Invalid email format"
@@ -61,6 +63,7 @@ const CustomerPasswordForm = ({
 CustomerPasswordForm.propTypes = {
 	serverError: PropTypes.bool,
 	empty: PropTypes.bool,
+	loading: PropTypes.bool,
 	forgotPasswordError: PropTypes.bool,
 	handleEmailChange: PropTypes.func,
 	handleFormSubmit: PropTypes.func,

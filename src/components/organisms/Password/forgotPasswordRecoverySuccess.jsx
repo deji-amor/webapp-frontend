@@ -9,7 +9,7 @@ const ForgotPasswordRecoverySuccess = () => {
 
 	const navigateToLoginAdmin = (e) => {
 		e.preventDefault();
-		navigate("/login-admin");
+		navigate("/");
 	};
 
 	return (

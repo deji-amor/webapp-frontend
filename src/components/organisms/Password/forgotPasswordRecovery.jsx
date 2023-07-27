@@ -16,6 +16,8 @@ const ForgotPasswordRecover = () => {
 	const [validationError, setValidationError] = useState(false);
 	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
+	const [empty, setEmpty] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [passwords, setPasswords] = useState({ password: "", confirmPassword: "" });
 	const { password, confirmPassword } = passwords;
 	const navigate = useNavigate();
@@ -36,6 +38,7 @@ const ForgotPasswordRecover = () => {
 		setServerError(false);
 		setValidationError(false);
 		dispatch(SET_ERROR_NULL());
+		setEmpty(false)
 	};
 
 	useEffect(() => {
@@ -57,6 +60,8 @@ const ForgotPasswordRecover = () => {
 		}
 
 		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
+
+		if (response) setLoading(false)
 
 		if (response === "You can not use your previous password!") return setServerError(true);
 
@@ -80,9 +85,11 @@ const ForgotPasswordRecover = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (!password && !confirmPassword) return;
+		if ((!password && !confirmPassword) || (!password || !confirmPassword)) return setEmpty(true);
 
 		if (!validators.every((each) => each === true)) return setValidationError(true);
+
+		setLoading(true)
 
 		try {
 			dispatch(forgotpasswordrecovery({ email, resetToken: token, password, confirmPassword }));
@@ -116,6 +123,7 @@ const ForgotPasswordRecover = () => {
 				placeholder="Password"
 				name="password"
 				type="password"
+				empty={empty}
 				validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
 				match={match}
 				value={password}
@@ -126,6 +134,7 @@ const ForgotPasswordRecover = () => {
 
 			<ForgotPasswordRecoveryInput
 				type="password"
+				empty={empty}
 				name="confirmPassword"
 				placeholder="Confirm Password"
 				label="Enter Password Again"
@@ -143,9 +152,10 @@ const ForgotPasswordRecover = () => {
 				butText="Confirm Password Change"
 				butType="button"
 				onClick={handleSubmit}
+				loading={loading}
 				error={error}
 				serverError={serverError}
-				defaultCursor={serverError || error || validationError || !password || !confirmPassword}
+				// defaultCursor={serverError || error || validationError || !password || !confirmPassword}
 			/>
 		</ForgotPasswordResetWrapper>
 	);

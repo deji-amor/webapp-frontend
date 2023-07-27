@@ -16,6 +16,7 @@ const CustomerpasswordBanner = () => {
 	const [serverError, setServerError] = useState(false);
 	const [email, setEmail] = useState("");
 	const [empty, setEmpty] = useState(false);
+	const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -33,6 +34,8 @@ const CustomerpasswordBanner = () => {
 
 		if (!email) return setEmpty(true);
 
+		setLoading(true)
+
 		try {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(customerforgotpasswordemail({ email }));
@@ -42,8 +45,9 @@ const CustomerpasswordBanner = () => {
 	};
 
 	useEffect(() => {
-		console.log(empty)
 		if (email) validateEmail(setForgotPasswordError, email);
+
+		if (response) setLoading(false)
 
 		if (response === "User with the email address not found!") return setServerError(true);
 
@@ -65,6 +69,7 @@ const CustomerpasswordBanner = () => {
 				handleFormSubmit={handleFormSubmit}
 				email={email}
 				empty={empty}
+				loading={loading}
 				defaultCursor={forgotPasswordError || serverError || !email}
 			/>
 		</CustomerpasswordWrapper>

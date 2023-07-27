@@ -38,7 +38,10 @@ const ForgotPasswordRecoveryInput = ({
 					width={width}
 					placeholder={placeholder}
 					label={label}
+					empty={empty}
 					name={name}
+					value={value}
+					confirm={confirm}
 					currentError={currentError}
 					error={forgotPasswordRecoveryError}
 					errorMessage={errorMessage}
@@ -49,7 +52,13 @@ const ForgotPasswordRecoveryInput = ({
 					!match && confirm.length >= 1 ? (
 						<ToolTip
 							toolTipIcon={<ErrorOutlineIcon className="icon" />}
-							toolTipText="Password does not match new password entered "
+							toolTipText="Password does not match new password entered!"
+							toolTipColor={"#D73D3D"}
+						/>
+					) : empty && name === 'confirmPassword' && !confirm ? (
+						<ToolTip
+							toolTipIcon={<ErrorOutlineIcon className="icon" />}
+							toolTipText="Confirm password input field cannot be empty!"
 							toolTipColor={"#D73D3D"}
 						/>
 					) : (
@@ -187,10 +196,10 @@ const ForgotPasswordRecoveryInput = ({
 						toolTipText="New Password is the same as current password "
 						toolTipColor={"#D73D3D"}
 					/>
-				) : empty ? (
+				) : empty && !value ? (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
-						toolTipText={`${name} field cannot be empty`}
+						toolTipText="Password input field cannot be empty"
 						toolTipColor={"#D73D3D"}
 					/>
 				) :	(

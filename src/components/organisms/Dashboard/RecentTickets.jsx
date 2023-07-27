@@ -1,6 +1,6 @@
 import React from "react";
 import HeadingEmail from "../../atoms/Dashboard/HeadingEmail";
-import Button from "../../atoms/Dashboard/button";
+import Button from "../../atoms/Dashboard/Button";
 import Tab from "../../atoms/Dashboard/Tab";
 import FilterButton from "../../atoms/Dashboard/FilterButton";
 import { styled } from "@mui/material";
