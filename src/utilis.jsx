@@ -54,7 +54,6 @@ export const ProtectedRoute = ({ children }) => {
 
 		getToken();
 
-
 	}, [navigate]);
 
 	
