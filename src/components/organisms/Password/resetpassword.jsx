@@ -78,7 +78,7 @@ const ResetPassword = () => {
 		if (serverResetResponse === "Your password has been changed successfully!") {
 			const device = getDeviceName();
 			dispatch(logoutActions.toggleResetModal());
-			dispatch(logout({ deviceName: device }));
+			// dispatch(logout({deviceName: device}));
 			return navigate("/reset-password-success");
 		}
 	}, [
