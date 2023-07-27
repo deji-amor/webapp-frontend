@@ -12,6 +12,8 @@ const CustomInput = ({
 	width,
 	placeholder,
 	label,
+	value,
+	confirm,
 	empty,
 	error,
 	handleChange,
@@ -26,7 +28,7 @@ const CustomInput = ({
 	};
 
 	return (
-		<InputWrapper mquery={mquery} error={error || serverError} empty={empty} inputWidth={width}>
+		<InputWrapper mquery={mquery} error={error || serverError} empty={empty} value={value} confirm={confirm} inputWidth={width}>
 			<input
 				id={label}
 				name={name}
@@ -53,6 +55,8 @@ CustomInput.propTypes = {
 	label: PropTypes.string,
 	width: PropTypes.string,
 	type: PropTypes.string,
+	value: PropTypes.string,
+	confirm: PropTypes.string,
 	placeholder: PropTypes.string,
 	error: PropTypes.bool,
 	empty: PropTypes.bool,

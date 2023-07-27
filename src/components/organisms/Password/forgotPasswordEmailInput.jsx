@@ -14,6 +14,7 @@ const ForgotPasswordEmail = () => {
 	const [forgotPasswordError, setForgotPasswordError] = useState(false);
 	const [serverError, setServerError] = useState(false);
 	const [email, setEmail] = useState("");
+	const [empty, setEmpty] = useState(false);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -24,13 +25,14 @@ const ForgotPasswordEmail = () => {
 		setEmail(e.target.value);
 		setServerError(false);
 		dispatch(SET_ERROR_NULL());
+		setEmpty(false)
 	};
 
 	// handles form submit for email
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 
-		if (!email) return;
+		if (!email) return setEmpty(true);
 
 		try {
 			dispatch(SET_EMAIL({ email }));
@@ -45,8 +47,8 @@ const ForgotPasswordEmail = () => {
 
 		if (response === "User with the email address not found!") return setServerError(true);
 
-		if (response === "Password reset link has been sent to your email!")
-			return navigate("/forgot-password-success");
+		if (response === "Password reset link has been sent to your email!") return navigate("/forgot-password-success");
+
 	}, [email, dispatch, response, navigate]);
 
 	return (
@@ -76,6 +78,7 @@ const ForgotPasswordEmail = () => {
 				butType="button"
 				placeholder="Type your e-mail"
 				label="E-mail"
+				empty={empty}
 				// defaultCursor={!email || forgotPasswordError || serverError}
 				handleEmailChange={handleEmailChange}
 				forgotPasswordError={forgotPasswordError}

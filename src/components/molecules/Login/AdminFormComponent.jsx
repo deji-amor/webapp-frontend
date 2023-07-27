@@ -6,7 +6,7 @@ import Header from "../../atoms/Login/Header";
 import Paragraph from "../../atoms/Login/Paragraph";
 import InputLabel from "../../atoms/Login/InputLabel";
 import Input from "../../atoms/Login/Input";
-import Button from "../../atoms/Login/Button";
+import Button from "../../atoms/Login/button"
 import useBasicInput from "../../../hooks/useBasicInput";
 import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";

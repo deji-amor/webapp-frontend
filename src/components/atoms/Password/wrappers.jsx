@@ -81,7 +81,7 @@ export const IconWrapper = styled("div")(({ mquery, style, size, color, align, w
 	},
 }));
 
-export const InputWrapper = styled("div")(({ mquery, inputWidth, error, empty }) => ({
+export const InputWrapper = styled("div")(({ mquery, inputWidth, error, empty, value, confirm }) => ({
 	width: "100%",
 	position: "relative",
 
@@ -91,7 +91,9 @@ export const InputWrapper = styled("div")(({ mquery, inputWidth, error, empty })
 		borderRadius: "6px",
 		background: "#EEE",
 		padding: "15px",
-		outline: `0.1px solid ${(error || empty) ? "#D73D3D" : "none"}`,
+		outline: empty && !value ? `0.1px solid ${(empty && !value) ? "#D73D3D" : "none"}`
+				: empty && !confirm ? `0.1px solid ${(empty && !confirm) ? "#D73D3D" : "none"}` 
+				:`0.1px solid ${(error || empty) ? "#D73D3D" : "none"}`,
 		color: "#2B2E72",
 		position: "relative",
 	},

@@ -60,7 +60,7 @@ const InputButton = ({
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipColor="#D73D3D"
 						error={serverError}
-						toolTipText="Input field cannot be empty!"
+						toolTipText={`${label} input field cannot be empty!`}
 					/>
 				) : (
 					""
@@ -72,7 +72,7 @@ const InputButton = ({
 					butType={butType}
 					error={forgotPasswordError || defaultCursor}
 					onClick={handleFormSubmit}
-					defaultCursor={serverError || forgotPasswordError}
+					// defaultCursor={serverError || forgotPasswordError}
 				/>
 				<TipNote note={note} />
 			</div>
