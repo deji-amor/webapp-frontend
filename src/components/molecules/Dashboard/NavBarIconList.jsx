@@ -23,6 +23,7 @@ const NavBarIconList = () => {
 		setShowDropdown((previousValue) => !previousValue);
 	};
 
+
 	useEffect(() => {
 		const escapeHandler = (e) => {
 			if (!e.target.closest("#drop-down")) {
