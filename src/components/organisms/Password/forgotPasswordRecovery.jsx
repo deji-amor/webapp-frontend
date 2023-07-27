@@ -17,6 +17,7 @@ const ForgotPasswordRecover = () => {
 	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
 	const [empty, setEmpty] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [passwords, setPasswords] = useState({ password: "", confirmPassword: "" });
 	const { password, confirmPassword } = passwords;
 	const navigate = useNavigate();
@@ -60,6 +61,8 @@ const ForgotPasswordRecover = () => {
 
 		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
 
+		if (response) setLoading(false)
+
 		if (response === "You can not use your previous password!") return setServerError(true);
 
 		if (response === "Your password has been reset successfully!") return navigate("/password-recovery-success");
@@ -85,6 +88,8 @@ const ForgotPasswordRecover = () => {
 		if ((!password && !confirmPassword) || (!password || !confirmPassword)) return setEmpty(true);
 
 		if (!validators.every((each) => each === true)) return setValidationError(true);
+
+		setLoading(true)
 
 		try {
 			dispatch(forgotpasswordrecovery({ email, resetToken: token, password, confirmPassword }));
@@ -147,6 +152,7 @@ const ForgotPasswordRecover = () => {
 				butText="Confirm Password Change"
 				butType="button"
 				onClick={handleSubmit}
+				loading={loading}
 				error={error}
 				serverError={serverError}
 				// defaultCursor={serverError || error || validationError || !password || !confirmPassword}

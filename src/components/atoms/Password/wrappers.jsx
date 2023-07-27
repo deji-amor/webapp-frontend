@@ -25,12 +25,15 @@ export const ButtonWrapper = styled("div")(({ width, error }) => ({
 	maxWidth: "100%",
 	display: "flex",
 	justifyContent: "center",
+	position: 'relative',
 
 	button: {
 		background: "#2B2E72",
 		width: width ? width : "100%",
 		height: "46px",
 		color: "white",
+		position: 'relative',
+		zIndex: "10",
 		textAlign: "center",
 		borderRadius: "6px",
 		fontWeight: "600",
@@ -38,6 +41,29 @@ export const ButtonWrapper = styled("div")(({ width, error }) => ({
 		letterSpacing: "1px",
 		cursor: 'pointer',
 		// cursor: error ? "not-allowed" : "pointer",
+	},
+
+	span: {
+		position: 'absolute',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		gap: '10px',
+		top: "0",
+		left: '0',
+		width: '100%',
+		height: '100%',
+	},
+
+	".icon": {
+		position: 'relative',
+		zIndex: "200",
+	},
+
+	".icon.two": {
+		top: '5px',
+		left: '-10px',
+		display: 'none'
 	},
 
 	"button:hover": {

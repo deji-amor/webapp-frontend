@@ -15,6 +15,7 @@ const InputButton = ({
 	width,
 	placeholder,
 	label,
+	loading,
 	empty,
 	forgotPasswordError,
 	errorMessage,
@@ -70,6 +71,7 @@ const InputButton = ({
 				<CustomButton
 					butText={butText}
 					butType={butType}
+					loading={loading}
 					error={forgotPasswordError || defaultCursor}
 					onClick={handleFormSubmit}
 					// defaultCursor={serverError || forgotPasswordError}
@@ -88,6 +90,7 @@ InputButton.propTypes = {
 	width: PropTypes.string,
 	label: PropTypes.string,
 	empty: PropTypes.bool,
+	loading: PropTypes.bool,
 	placeholder: PropTypes.string,
 	forgotPasswordError: PropTypes.bool,
 	errorMessage: PropTypes.string,

@@ -1,28 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { forgotpasswordemail } from "../../../state-manager/reducers/password/forgotpassword";
 import { ForgotEmailWrapper as ForgotEmailSuccessWrapper } from "../../atoms/Password/wrappers";
 import PasswordSuccess from "../../molecules/Password/customPasswordEmailSuccess";
 import CustomButton from "../../atoms/Password/customButton";
-import AutoShowToast from "../../atoms/SuperAdmin/AutoShowToast"
+import AutoShowToast from "../../atoms/SuperAdmin/AutoShowToast";
 
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
 const ForgotEmailSuccess = () => {
 	const [showToast, setShowToast] = useState(false);
-	const { email } = useSelector((state) => state.forgotPassword);
+	const [loading, setLoading] = useState(false);
+	const { email, response } = useSelector((state) => state.forgotPassword);
 	const dispatch = useDispatch();
 
 	const handleResubmit = (e) => {
 		e.preventDefault();
 		setShowToast(true);
 
+		setLoading(true);
 		try {
-			dispatch(forgotpasswordemail(email))
+			dispatch(forgotpasswordemail(email));
 		} catch (err) {
 			// console.log(err);
 		}
 	};
+
+	useEffect(() => {
+		if (response) setLoading(false);
+	}, [loading, response]);
 
 	const handleToastClose = () => {
 		setShowToast(false);
@@ -35,7 +41,7 @@ const ForgotEmailSuccess = () => {
 				message="Recovery link sent successfully!"
 				autoHideDuration={5000}
 				onClose={handleToastClose}
-				/>
+			/>
 			<ForgotEmailSuccessWrapper width="550px">
 				<PasswordSuccess
 					icon={<MailOutlineIcon className="icon" />}
@@ -53,7 +59,13 @@ const ForgotEmailSuccess = () => {
 					Didn’t receive an email?
 				</p>
 
-				<CustomButton butText="Resend Link" butWidth="70%" onClick={handleResubmit} />
+				<CustomButton
+					butText="Resend Link"
+					loading={loading}
+					name="button"
+					butWidth="70%"
+					onClick={handleResubmit}
+				/>
 			</ForgotEmailSuccessWrapper>
 		</div>
 	);

@@ -16,6 +16,7 @@ const CustomerpasswordBanner = () => {
 	const [serverError, setServerError] = useState(false);
 	const [email, setEmail] = useState("");
 	const [empty, setEmpty] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -33,6 +34,7 @@ const CustomerpasswordBanner = () => {
 
 		if (!email) return setEmpty(true);
 
+		setLoading(true)
 		try {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(customerforgotpasswordemail({ email }));
@@ -42,14 +44,15 @@ const CustomerpasswordBanner = () => {
 	};
 
 	useEffect(() => {
-		console.log(empty)
 		if (email) validateEmail(setForgotPasswordError, email);
+
+		if (loading) setLoading(false)
 
 		if (response === "User with the email address not found!") return setServerError(true);
 
 		if (response === "Password reset link has been sent to your email!") return navigate("/forgot-password-success");
 
-	}, [email, dispatch, response, navigate, empty]);
+	}, [email, dispatch, response, navigate, empty, loading]);
 
 	return (
 		<CustomerpasswordWrapper>
@@ -65,6 +68,7 @@ const CustomerpasswordBanner = () => {
 				handleFormSubmit={handleFormSubmit}
 				email={email}
 				empty={empty}
+				loading={loading}
 				defaultCursor={forgotPasswordError || serverError || !email}
 			/>
 		</CustomerpasswordWrapper>

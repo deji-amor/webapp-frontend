@@ -21,6 +21,7 @@ const ResetPasswordInputs = ({
 	hasEightChar,
 	match,
 	value,
+	loading,
 	validationError,
 	currentError,
 	current,
@@ -108,6 +109,7 @@ const ResetPasswordInputs = ({
 					validationError={validationError}
 					currentError={currentError}
 					error={error}
+					loading={loading}
 					// defaultCursor={!value || !confirm || !current}
 					serverError={serverError}
 				/>
@@ -125,6 +127,7 @@ ResetPasswordInputs.propTypes = {
 	single: PropTypes.bool,
 	match: PropTypes.bool,
 	empty: PropTypes.bool,
+	loading: PropTypes.bool,
 	hasSymbol: PropTypes.bool,
 	hasUpper: PropTypes.bool,
 	hasLower: PropTypes.bool,

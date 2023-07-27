@@ -15,6 +15,7 @@ const ForgotPasswordEmail = () => {
 	const [serverError, setServerError] = useState(false);
 	const [email, setEmail] = useState("");
 	const [empty, setEmpty] = useState(false);
+	const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -34,6 +35,7 @@ const ForgotPasswordEmail = () => {
 
 		if (!email) return setEmpty(true);
 
+		setLoading(true)
 		try {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(forgotpasswordemail({ email }));
@@ -45,11 +47,13 @@ const ForgotPasswordEmail = () => {
 	useEffect(() => {
 		validateEmail(setForgotPasswordError, email);
 
+		if (response) setLoading(false)
+
 		if (response === "User with the email address not found!") return setServerError(true);
 
 		if (response === "Password reset link has been sent to your email!") return navigate("/forgot-password-success");
 
-	}, [email, dispatch, response, navigate]);
+	}, [email, dispatch, response, navigate, loading]);
 
 	return (
 		<ForgotEmailWrapper>
@@ -79,6 +83,7 @@ const ForgotPasswordEmail = () => {
 				placeholder="Type your e-mail"
 				label="E-mail"
 				empty={empty}
+				loading={loading}
 				// defaultCursor={!email || forgotPasswordError || serverError}
 				handleEmailChange={handleEmailChange}
 				forgotPasswordError={forgotPasswordError}
