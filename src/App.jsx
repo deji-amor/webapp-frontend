@@ -24,13 +24,13 @@ import ErrorPage from "./pages/ErrorPage";
 
 function App() {
 	const router = createBrowserRouter([
-		{ path: "/", element: <Home />, index: true, errorElement: <ErrorPage /> },
-		{ path: "/login-admin", element: <LoginAdmin /> },
+		{ path: "/", element: <LoginAdmin />, index: true, errorElement: <ErrorPage /> },
+		// { path: "/login-admin", element: <LoginAdmin /> },
 		{ path: "/login-customer", element: <LoginCustomer /> },
 		{ path: "/forgot-password", element: <ForgotPassword /> },
 		{ path: "/forgot-password-success", element: <ForgotPasswordEmailSuccess /> },
 		{ path: "/reset-password-success", element: <ResetPasswordPageSuccess /> },
-		{ path: "/recover-password", element: <RecoverPassword /> },
+		{ path: "/recover-password/:email/:token", element: <RecoverPassword /> },
 		{ path: "/password-expired", element: <PasswordExpired /> },
 		{ path: "/password-recovery-success", element: <PasswordRecoverySuccess /> },
 		{ path: "/customer-password", element: <CustomerForgotPasswordPage /> },
