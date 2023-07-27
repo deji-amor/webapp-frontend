@@ -20,20 +20,18 @@ const NavBarIconList = () => {
 	const [showDropdown, setShowDropdown] = useState(false);
 
 	const toggleHandler = () => {
-		console.log("vvyvy");
 		setShowDropdown((previousValue) => !previousValue);
 	};
 
-	console.log({showDropdown});
 
-	// useEffect(() => {
-	// 	const escapeHandler = (e) => {
-	// 		if (!e.target.closest("#drop-down")) {
-	// 			setShowDropdown(false);
-	// 		}
-	// 	};
-	// 	document.addEventListener("click", escapeHandler);
-	// }, []);
+	useEffect(() => {
+		const escapeHandler = (e) => {
+			if (!e.target.closest("#drop-down")) {
+				setShowDropdown(false);
+			}
+		};
+		document.addEventListener("click", escapeHandler);
+	}, []);
 
 	return (
 		<List id="drop-down">
