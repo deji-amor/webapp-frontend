@@ -262,7 +262,7 @@ export const CustomerBannerWrapper = styled("div")(() => ({
 		height: "100%",
 		position: "absolute",
 		top: "0",
-		objectFit: "cover",
+		objectFit: "contain",
 	},
 
 	div: {

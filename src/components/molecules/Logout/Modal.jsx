@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
 import Title from "../../atoms/Logout/Title";
 import Message from "../../atoms/Logout/Message";
 import ButtonUnHighlighted from "../../atoms/Logout/ButtonUnHighlighted";
@@ -12,27 +11,16 @@ import { logoutActions, logout } from "../../../state-manager/reducers/logout/lo
 import { getDeviceName } from "../../../utilis";
 
 const Modal = () => {
-	const { loading, successful} = useSelector((state) => state.logout);
+	const { loading } = useSelector((state) => state.logout);
 	const dispatch = useDispatch();
 	const handleHideLogoutModal = () => {
 		dispatch(logoutActions.toggleLogoutModal());
 	};
-	const [wasSubmitted, setWasSubmitted] = useState(false)
 
 	const handleLogout = () => {
 		const deviceName = getDeviceName()
-		setWasSubmitted(true)
 		dispatch(logout({deviceName: deviceName}))
 	};
-
-
-	const navigate = useNavigate()
-	useEffect(() => {
-		if(successful && wasSubmitted) {
-			console.log("ehnnn ehnn gotcha");
-			navigate("/login-admin");
-		}
-	}, [navigate, successful])
 
 		const spinner = (
 			<svg
@@ -73,7 +61,7 @@ const Modal = () => {
 			</div>
 			<div className="flex items-center justify-between gap-[0.75rem]">
 				<ButtonUnHighlighted onClick={handleHideLogoutModal}>Discard</ButtonUnHighlighted>
-				<ButtonHighlighted setWasSubmitted={setWasSubmitted} onClick={handleLogout} loading={loading} disabled={loading}>{logoutText}</ButtonHighlighted>
+				<ButtonHighlighted onClick={handleLogout} loading={loading} disabled={loading}>{logoutText}</ButtonHighlighted>
 			</div>
 		</ModalWrapper>
 	);

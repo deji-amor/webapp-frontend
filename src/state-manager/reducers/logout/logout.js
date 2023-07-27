@@ -5,6 +5,7 @@ import { removeAuthToken, getAuthToken } from "../../../utilis";
 export const logout = createAsyncThunk("logout", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken()
+		console.log("process started");
 		if(token){
 			console.log({token});
 			const config = {
@@ -32,6 +33,8 @@ export const logout = createAsyncThunk("logout", async (args, {rejectWithValue})
 	}
 });
 
+const allowedTimeOfInactivityInSeconds = 30
+
 const initialState = {
 	loading: false,
 	errorMessage: null,
@@ -39,6 +42,7 @@ const initialState = {
 	showModal: false,
 	showResetModal: false,
 	shouldRedirect: false,
+	allowedTimeOfInactivityInSeconds: allowedTimeOfInactivityInSeconds,
 };
 
 const logoutSlice = createSlice({
@@ -51,6 +55,12 @@ const logoutSlice = createSlice({
 		toggleResetModal: state => {
 			state.showResetModal = !state.showResetModal;
 		},
+		resetAllowedTimeOfInactivityInSeconds: state => {
+			state.allowedTimeOfInactivityInSeconds = allowedTimeOfInactivityInSeconds
+		},
+		countDownSeconds: state => {
+			state.allowedTimeOfInactivityInSeconds = state.allowedTimeOfInactivityInSeconds - 1
+		}
 	},
 	extraReducers: builder => {
 		builder
@@ -65,24 +75,26 @@ const logoutSlice = createSlice({
 				// console.log("fulfilled", payload);
 				state.loading = false;
 				state.token = payload;
-				const code = payload.code; 
-				if(code === 200){
-					removeAuthToken().then(res => {
-						console.log("entered", {res});
-					}).catch(err => {
-						console.error("could not remove", {err});
-					})
+				const code = payload.code;
+				if (code === 200) {
+					removeAuthToken()
+						.then(res => {
+							console.log("entered", {res});
+						})
+						.catch(err => {
+							console.error("could not remove", {err});
+						});
 				}
-				state.successful = true
-				state.showModal = false
+				state.successful = true;
+				state.showModal = false;
 			})
 
 			.addCase(logout.rejected, (state, {payload}) => {
 				// console.log("rejected", payload);
 				state.loading = false;
-				state.errorMessage = "Logout failed!"
+				state.errorMessage = "Logout failed!";
 				state.clickIncrement = state.clickIncrement + 1;
-				state.showModal = false
+				state.showModal = false;
 			});
 	},
 });

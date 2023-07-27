@@ -57,6 +57,7 @@ const AdminFormComponent = () => {
 			const to = await getAuthToken(); // auth toKen
 			if (to && wasSubmitted) {
 				usernameReset()
+				passwordReset()
 				dispatch(loginAdminActions.resetLoginAdmin());
 				navigate("/app/dashboard");
 				return 

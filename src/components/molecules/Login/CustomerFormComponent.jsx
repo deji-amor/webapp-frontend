@@ -37,6 +37,7 @@ const CustomerFormComponent = () => {
 		errorFromServer: usernameErrFromServer,
 		setErrorFromServer: usernameSetErrorFromServer,
 		id: usernameId,
+		reset: usernameReset,
 	} = useBasicInput(isValidEmail);
 
 	const {
@@ -51,14 +52,18 @@ const CustomerFormComponent = () => {
 		errorFromServer: passwordErrFromServer,
 		setErrorFromServer: passwordSetErrorFromServer,
 		id: passwordId,
+		reset: passwordReset,
 	} = useBasicInput(isNotEmpty);
 
 	useEffect(() => {
 		const getAuthTokenHandler = async () => {
 			const to = await getAuthToken(); // toKen
 			if (to && wasSubmitted) {
+				usernameReset();
+				passwordReset();
+				dispatch(loginCustomerActions.resetLoginCustomer());
 				navigate("/app/dashboard");
-				return dispatch(loginCustomerActions.resetLoginCustomer())
+				return 
 			}
 		};
 		getAuthTokenHandler();
