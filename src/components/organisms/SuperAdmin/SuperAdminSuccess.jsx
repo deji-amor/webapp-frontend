@@ -53,7 +53,7 @@ const SuperAdminSuccess = () => {
 		try {
 			dispatch(superAdminVerify({email: email, token: token}))
 		}catch (err) {
-			console.log(err)
+			// console.log(err)
 		}
 		
 	}, [dispatch, params])

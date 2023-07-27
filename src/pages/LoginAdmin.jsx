@@ -1,8 +1,7 @@
-import React from 'react'
-import Wrapper from '../atoms/Login/Wrapper'
-import AdminFormComponent from '../molecules/Login/AdminFormComponent'
-import AdminLoginToastContainer from '../molecules/Login/AdminLoginToastContainer'
-import Logo from '../atoms/Login/Logo'
+import Wrapper from '../components/atoms/Login/Wrapper'
+import AdminFormComponent from '../components/molecules/Login/AdminFormComponent'
+import AdminLoginToastContainer from '../components/molecules/Login/AdminLoginToastContainer'
+import Logo from '../components/atoms/Login/Logo'
 
 const LoginAdmin = () => {
   return (

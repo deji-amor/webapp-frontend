@@ -1,12 +1,29 @@
 import PropTypes from "prop-types";
 import { ButtonWrapper } from "./wrappers";
+import { useSelector } from "react-redux";
 
-const CustomButton = ({ butText, butWidth, butType, error, serverError, validationError, currentError, onClick, defaultCursor }) => {
-	console.table({serverError, validationError, currentError, error, defaultCursor})
-	
+const CustomButton = ({
+	butText,
+	butWidth,
+	butType,
+	error,
+	serverError,
+	validationError,
+	currentError,
+	onClick,
+	defaultCursor,
+}) => {
+
 	return (
-		<ButtonWrapper width={butWidth} error={serverError || validationError || currentError || error || defaultCursor}>
-			<button disabled={serverError || validationError || currentError || error || defaultCursor} onClick={onClick} type={butType}>
+		<ButtonWrapper
+			width={butWidth}
+			error={serverError || validationError || currentError || error || defaultCursor}
+		>
+			<button
+				// disabled={serverError || validationError || currentError || error || defaultCursor}
+				onClick={onClick}
+				type={butType}
+			>
 				{butText}
 			</button>
 		</ButtonWrapper>

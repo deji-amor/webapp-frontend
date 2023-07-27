@@ -10,7 +10,8 @@ const CustomerPasswordForm = ({
 	forgotPasswordError,
 	handleEmailChange,
 	handleFormSubmit,
-	value
+	email,
+	empty
 }) => {
 	return (
 		<CustomerEmailWrapper>
@@ -42,11 +43,12 @@ const CustomerPasswordForm = ({
 					butType="button"
 					placeholder="Type your e-mail"
 					label="E-mail"
+					empty={empty}
 					handleEmailChange={handleEmailChange}
 					forgotPasswordError={forgotPasswordError}
 					errorMessage="Invalid email format"
 					serverError={serverError}
-					defaultCursor={serverError || forgotPasswordError || !value}
+					defaultCursor={!email || forgotPasswordError || serverError}
 					serverErrorMessage="Email not found"
 					note="The recovery link will expire after 48 hrs, please use before then."
 					handleFormSubmit={handleFormSubmit}
@@ -58,10 +60,11 @@ const CustomerPasswordForm = ({
 
 CustomerPasswordForm.propTypes = {
 	serverError: PropTypes.bool,
+	empty: PropTypes.bool,
 	forgotPasswordError: PropTypes.bool,
 	handleEmailChange: PropTypes.func,
 	handleFormSubmit: PropTypes.func,
-	value: PropTypes.bool,
+	email: PropTypes.string,
 };
 
 export default CustomerPasswordForm;

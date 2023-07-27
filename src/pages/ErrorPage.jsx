@@ -1,8 +1,8 @@
 import React from 'react'
-import EmojiHeader from '../atoms/Login/EmojiHeader'
-import Header from '../atoms/Login/Header'
+import EmojiHeader from '../components/atoms/Login/EmojiHeader'
+import Header from '../components/atoms/Login/Header'
 import { NavLink } from 'react-router-dom'
-import Paragraph from '../atoms/Login/Paragraph'
+import Paragraph from '../components/atoms/Login/Paragraph'
 import { styled } from '@mui/material'
 
 const ErrorPage = () => {

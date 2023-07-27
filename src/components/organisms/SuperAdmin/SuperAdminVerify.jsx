@@ -50,13 +50,13 @@ const SuperAdminVerify = () => {
 		try {
 			dispatch(superAdminSendEmail(email.email))
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	};
 
 	const handleToastClose = () => {
 		setShowToast(false);
-	  };
+	};
 
 	return (
 		<Box

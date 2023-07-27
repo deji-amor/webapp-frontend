@@ -15,6 +15,7 @@ const InputButton = ({
 	width,
 	placeholder,
 	label,
+	empty,
 	forgotPasswordError,
 	errorMessage,
 	handleEmailChange,
@@ -32,6 +33,7 @@ const InputButton = ({
 					width={width}
 					placeholder={placeholder}
 					label={label}
+					empty={empty}
 					error={forgotPasswordError}
 					errorMessage={errorMessage}
 					serverError={serverError}
@@ -39,7 +41,7 @@ const InputButton = ({
 					handleChange={handleEmailChange}
 				/>
 
-				{forgotPasswordError ? (
+				{	forgotPasswordError ? (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipColor="#D73D3D"
@@ -52,6 +54,13 @@ const InputButton = ({
 						toolTipColor="#D73D3D"
 						error={serverError}
 						toolTipText={serverErrorMessage}
+					/>
+				) : empty ? (
+					<ToolTip
+						toolTipIcon={<ErrorOutlineIcon className="icon" />}
+						toolTipColor="#D73D3D"
+						error={serverError}
+						toolTipText="Input field cannot be empty!"
 					/>
 				) : (
 					""
@@ -78,6 +87,7 @@ InputButton.propTypes = {
 	note: PropTypes.string,
 	width: PropTypes.string,
 	label: PropTypes.string,
+	empty: PropTypes.bool,
 	placeholder: PropTypes.string,
 	forgotPasswordError: PropTypes.bool,
 	errorMessage: PropTypes.string,

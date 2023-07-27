@@ -75,8 +75,6 @@ const RegisterForm = () => {
 		dispatch(SET_RESPONSE_NULL_ADMIN());
 	};
 
-	// Email has already been used!
-
 	const handleCheckChange = () => {
 		setChecked((prev) => !prev);
 		dispatch(SET_RESPONSE_NULL_ADMIN());
@@ -152,11 +150,11 @@ const RegisterForm = () => {
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
 		if (!checked) return setCheckedError(true);
-
+		
 		try {
 			dispatch(superAdminCreate(data));
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	};
 
@@ -213,15 +211,15 @@ const RegisterForm = () => {
 
 				<Box
 					noValidate
-					onSubmit={handleSubmit((data) => onSubmit(data))}
+					onSubmit={handleSubmit((data) => onSubmit({...data}))}
 					component="form"
 					sx={{ width: "100%", mt: "2rem" }}
 					style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
 				>
 					<Box sx={{ display: "flex", gap: "30px" }}>
-						<TextFields errors={errors} control={control} name="firstName" label="First Name" />
+						<TextFields errors={errors} control={control} type="text" name="firstName" label="First Name" />
 
-						<TextFields errors={errors} control={control} name="lastName" label="Last Name" />
+						<TextFields errors={errors} control={control} type="text" name="lastName" label="Last Name" />
 					</Box>
 					<Box sx={{ display: "flex", gap: "30px" }}>
 						<TextFields
@@ -230,6 +228,7 @@ const RegisterForm = () => {
 							control={control}
 							name="workspaceName"
 							label="Workspace Name"
+							type="text"
 						/>
 						<TextFields
 							errors={errors}
@@ -237,6 +236,7 @@ const RegisterForm = () => {
 							control={control}
 							name="companyEmail"
 							label="Company Email"
+							type="text"
 						/>
 					</Box>
 
@@ -245,6 +245,7 @@ const RegisterForm = () => {
 						control={control}
 						name="phoneNumber"
 						label="Phone Number"
+						type="tel"
 						inputProps={{
 							type: "phone",
 						}}

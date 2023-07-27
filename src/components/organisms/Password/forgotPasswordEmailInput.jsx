@@ -36,7 +36,7 @@ const ForgotPasswordEmail = () => {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(forgotpasswordemail({ email }));
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	};
 
@@ -76,7 +76,7 @@ const ForgotPasswordEmail = () => {
 				butType="button"
 				placeholder="Type your e-mail"
 				label="E-mail"
-				defaultCursor={!email || forgotPasswordError || serverError}
+				// defaultCursor={!email || forgotPasswordError || serverError}
 				handleEmailChange={handleEmailChange}
 				forgotPasswordError={forgotPasswordError}
 				errorMessage="Invalid email format"

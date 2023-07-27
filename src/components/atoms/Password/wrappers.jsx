@@ -36,7 +36,8 @@ export const ButtonWrapper = styled("div")(({ width, error }) => ({
 		fontWeight: "600",
 		fontSize: "18px",
 		letterSpacing: "1px",
-		cursor: error ? "not-allowed" : "pointer",
+		cursor: 'pointer',
+		// cursor: error ? "not-allowed" : "pointer",
 	},
 
 	"button:hover": {
@@ -80,7 +81,7 @@ export const IconWrapper = styled("div")(({ mquery, style, size, color, align, w
 	},
 }));
 
-export const InputWrapper = styled("div")(({ mquery, inputWidth, error }) => ({
+export const InputWrapper = styled("div")(({ mquery, inputWidth, error, empty }) => ({
 	width: "100%",
 	position: "relative",
 
@@ -90,7 +91,7 @@ export const InputWrapper = styled("div")(({ mquery, inputWidth, error }) => ({
 		borderRadius: "6px",
 		background: "#EEE",
 		padding: "15px",
-		outline: `0.1px solid ${error ? "#D73D3D" : "none"}`,
+		outline: `0.1px solid ${(error || empty) ? "#D73D3D" : "none"}`,
 		color: "#2B2E72",
 		position: "relative",
 	},

@@ -1,8 +1,8 @@
 import React from 'react'
-import CustomerSide from '../molecules/Login/CustomerSide'
-import CustomerFormComponent from '../molecules/Login/CustomerFormComponent'
-import CustomerLoginToastContainer from '../molecules/Login/CustomerLoginToastContainer'
-import Logo from '../atoms/Login/Logo'
+import CustomerSide from '../components/molecules/Login/CustomerSide'
+import CustomerFormComponent from '../components/molecules/Login/CustomerFormComponent'
+import CustomerLoginToastContainer from '../components/molecules/Login/CustomerLoginToastContainer'
+import Logo from '../components/atoms/Login/Logo'
 
 const LoginCustomer = () => {
   return (

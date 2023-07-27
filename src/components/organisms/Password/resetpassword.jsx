@@ -14,6 +14,7 @@ const ResetPassword = () => {
 	const [validationError, setValidationError] = useState(false);
 	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
+	const [empty, setEmpty] = useState(false);
 	const [passwords, setPasswords] = useState({ current: "", password: "", confirmPassword: "" });
 	const { current, password, confirmPassword } = passwords;
 	const navigate = useNavigate();
@@ -33,6 +34,7 @@ const ResetPassword = () => {
 		setServerError(false);
 		setValidationError(false);
 		dispatch(SET_SERVER_RESET_NULL())
+		setEmpty(false)
 	};
 
 	useEffect(() => {
@@ -91,7 +93,7 @@ const ResetPassword = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (!password && !confirmPassword) return;
+		if ((!password && !confirmPassword) || (!password || !confirmPassword)) return setEmpty(true);
 
 		if (password === current) return setCurrentError(true);
 
@@ -102,7 +104,7 @@ const ResetPassword = () => {
 		try {
 			dispatch(resetPassword({currentPassword: current, newPassword: password, confirmPassword: confirmPassword}));
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	};
 
@@ -120,6 +122,7 @@ const ResetPassword = () => {
 					handleChange={handleChange}
 					forgotPasswordRecoveryError={!match}
 					serverError={serverError}
+					empty={empty}
 					match={match}
 					value={password}
 					current={current}

@@ -1,23 +1,26 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from "./components/pages/Home";
-import LoginAdmin from "./components/pages/LoginAdmin";
-import LoginCustomer from "./components/pages/LoginCustomer";
-import ResetPasswordPageSuccess from "./components/pages/ResetPasswordSuccess";
-import RecoverPassword from "./components/pages/RecoverPassword";
-import PasswordExpired from "./components/pages/PasswordExpired";
-import PasswordRecoverySuccess from "./components/pages/PasswordRecoverySuccess";
-import ForgotPassword from "./components/pages/ForgotPassword";
-import ForgotPasswordEmailSuccess from "./components/pages/ForgotPasswordEmailSuccess";
-import CustomerForgotPasswordPage from "./components/pages/CustomerForgotPassword";
-import SuperAdminOnboarding from "./components/pages/SuperAdminOnboarding";
-import AppLayout from "./components/pages/AppLayout";
-import Dashboard from "./components/pages/app/Dashboard";
-import Tickets from "./components/pages/app/Tickets";
-import Users from "./components/pages/app/Users";
-import Reports from "./components/pages/app/Reports";
-import SuperAdminVerifyEmail from "./components/pages/SuperAdminVerifyEmail";
-import SuperAdminOnboardingSuccess from "./components/pages/SuperAdminOnboardingSuccess";
-import ErrorPage from "./components/pages/ErrorPage";
+import {
+	RouterProvider,
+	createBrowserRouter,
+} from "react-router-dom";
+import Home from "./pages/Home";
+import LoginAdmin from "./pages/LoginAdmin";
+import LoginCustomer from "./pages/LoginCustomer";
+import ResetPasswordPageSuccess from "./pages/ResetPasswordSuccess";
+import RecoverPassword from "./pages/RecoverPassword";
+import PasswordExpired from "./pages/PasswordExpired";
+import PasswordRecoverySuccess from "./pages/PasswordRecoverySuccess";
+import ForgotPassword from "./pages/ForgotPassword";
+import ForgotPasswordEmailSuccess from "./pages/ForgotPasswordEmailSuccess";
+import CustomerForgotPasswordPage from "./pages/CustomerForgotPassword";
+import SuperAdminOnboarding from "./pages/SuperAdminOnboarding";
+import AppLayout from "./pages/AppLayout";
+import Dashboard from "./pages/app/Dashboard";
+import Tickets from "./pages/app/Tickets";
+import Users from "./pages/app/Users";
+import Reports from "./pages/app/Reports";
+import SuperAdminVerifyEmail from "./pages/SuperAdminVerifyEmail";
+import SuperAdminOnboardingSuccess from "./pages/SuperAdminOnboardingSuccess";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
 	const router = createBrowserRouter([
