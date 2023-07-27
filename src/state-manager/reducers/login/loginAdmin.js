@@ -3,6 +3,7 @@ import localforage from "localforage";
 import axios from "axios";
 
 export const loginAdmin = createAsyncThunk("auth/loginAdmin", async (args, {rejectWithValue}) => {
+	
 	const config = {
 		method: "POST",
 		headers: {
@@ -51,6 +52,9 @@ const loginAdminSlice = createSlice({
 			const toasts = current(state).toasts.slice();
 			state.toasts = toasts.filter(toast => toast.id !== id);
 		},
+		resetLoginAdmin: () => {
+			return initialState
+		}
 	},
 	extraReducers: builder => {
 		builder

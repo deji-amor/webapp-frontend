@@ -54,10 +54,13 @@ const loginCustomerSlice = createSlice({
 			const toasts = current(state).toasts.slice();
 			state.toasts = toasts.filter(toast => toast.id !== id);
 		},
+		resetLoginCustomer: () => {
+			return initialState;
+		},
 	},
 	extraReducers: builder => {
 		builder
-			.addCase(loginCustomer.pending, (state) => {
+			.addCase(loginCustomer.pending, state => {
 				console.log("pending");
 				state.loading = true;
 			})
@@ -82,7 +85,7 @@ const loginCustomerSlice = createSlice({
 			})
 			.addCase(loginCustomer.rejected, (state, {payload, error}) => {
 				console.log("rejected", {payload, error});
-				state.loading = false
+				state.loading = false;
 				state.clickIncrement = state.clickIncrement + 1;
 				state.errorMessage = "An error has occurred";
 				state.errorTitle = "Error!";

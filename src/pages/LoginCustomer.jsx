@@ -12,10 +12,10 @@ const LoginCustomer = () => {
 				<Logo />
 			</div>
 			<div className="flex h-full">
-				<div className="h-full hidden lg:block lg:basis-[40%]">
+				<div className="h-full hidden lg:block lg:basis-[35%]">
 					<CustomerSide />
 				</div>
-				<div className="basis-[100%] lg:basis-[60%] w-full h-full flex items-center justify-center">
+				<div className="basis-[100%] lg:basis-[65%] w-full h-full flex items-center justify-center">
 					<CustomerFormComponent />
 				</div>
 			</div>

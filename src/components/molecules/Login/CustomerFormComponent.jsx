@@ -37,6 +37,7 @@ const CustomerFormComponent = () => {
 		errorFromServer: usernameErrFromServer,
 		setErrorFromServer: usernameSetErrorFromServer,
 		id: usernameId,
+		reset: usernameReset,
 	} = useBasicInput(isValidEmail);
 
 	const {
@@ -51,13 +52,18 @@ const CustomerFormComponent = () => {
 		errorFromServer: passwordErrFromServer,
 		setErrorFromServer: passwordSetErrorFromServer,
 		id: passwordId,
+		reset: passwordReset,
 	} = useBasicInput(isNotEmpty);
 
 	useEffect(() => {
 		const getAuthTokenHandler = async () => {
 			const to = await getAuthToken(); // toKen
 			if (to && wasSubmitted) {
+				usernameReset();
+				passwordReset();
+				dispatch(loginCustomerActions.resetLoginCustomer());
 				navigate("/app/dashboard");
+				return 
 			}
 		};
 		getAuthTokenHandler();
@@ -94,7 +100,8 @@ const CustomerFormComponent = () => {
 		) {
 			dispatch(
 				loginCustomerActions.showToasts({
-					message: "The username you entered is incorrect, please check again.",
+					message:
+						"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes.",
 					title: "Temporarily been disabled",
 				})
 			);
@@ -121,6 +128,7 @@ const CustomerFormComponent = () => {
 		passwordSetHasError,
 		passwordSetErrorFromServer,
 		clickIncrement,
+		wasSubmitted
 	]);
 
 	const submitHandler = (e) => {
