@@ -4,6 +4,8 @@ import RecentTickets from '../../components/organisms/Dashboard/RecentTickets'
 import RecentTicketTable from '../../components/organisms/Dashboard/RecentTicketTable'
 
 const Dashboard = () => {
+  console.log("rerendered");
+
   return (
     <div className='space-y-[1.25rem]'>
       <Greeting />

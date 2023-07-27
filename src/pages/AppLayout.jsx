@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, memo} from 'react'
 import { Outlet, Navigate, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/molecules/Dashboard/Sidebar';
 import Navbar from '../components/molecules/Dashboard/Navbar';
@@ -7,6 +7,10 @@ import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
 import { getAuthToken, getDeviceName } from '../utilis';
+
+// Memoized Sidebar and Navbar components to prevent unnecessary re-renders
+const MemoizedSidebar = memo(Sidebar);
+const MemoizedNavbar = memo(Navbar);
 
 const AppLayout = () => {
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
@@ -53,9 +57,13 @@ const AppLayout = () => {
 			{showResetModal && <ResetPassword />}
 
 			<div className="flex h-screen max-h-screen">
-				<Sidebar />
+				{/* <Sidebar /> */}
+				{/* Memoized Sidebar */}
+				<MemoizedSidebar />
 				<div className="basis-[85%] flex flex-col max-w-[85%]">
-					<Navbar />
+					{/* <Navbar /> */}
+					{/* Memoized Navbar */}
+					<MemoizedNavbar />
 					<div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] overflow-y-auto overflow-x-auto">
 						<Outlet />
 					</div>

@@ -33,7 +33,7 @@ export const logout = createAsyncThunk("logout", async (args, {rejectWithValue})
 	}
 });
 
-const allowedTimeOfInactivityInSeconds = 30
+const allowedTimeOfInactivityInSeconds = 200
 
 const initialState = {
 	loading: false,
