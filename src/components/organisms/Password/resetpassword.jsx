@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logoutActions } from "../../../state-manager/reducers/logout/logout";
+import { logoutActions, logout } from "../../../state-manager/reducers/logout/logout";
 import { ResetPasswordWrapper } from "../../atoms/Password/wrappers";
 import {
 	resetPassword,
@@ -10,6 +10,7 @@ import {
 import ResetPasswordInputs from "../../molecules/Password/resetpasswordinputs";
 import { validatePassword } from "../../atoms/Password/validators";
 import Overlay from "../../atoms/Logout/Overlay";
+import { getDeviceName } from "../../../utilis";
 
 const ResetPassword = () => {
 	const [error, setError] = useState(false);
@@ -75,6 +76,8 @@ const ResetPassword = () => {
 
 		if (serverResetResponse === "Your password has been changed successfully!") {
 			dispatch(logoutActions.toggleResetModal());
+			const deviceName = getDeviceName();
+			dispatch(logout({ deviceName: deviceName }));
 			return navigate("/reset-password-success");
 		}
 	}, [
