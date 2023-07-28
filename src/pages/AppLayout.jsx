@@ -38,6 +38,7 @@ const AppLayout = () => {
 		const checkIfTokenExistsAndIsValid = async () => {
 			dispatch(logoutActions.countDownSeconds());
 			const token = await getAuthToken();
+			console.log({token});
 			if (allowedTimeOfInactivityInSeconds <= 0 && token && !logoutProcessLoading) {
 				const deviceName = getDeviceName();
 				dispatch(logout({ deviceName: deviceName }));

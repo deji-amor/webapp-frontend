@@ -5,7 +5,7 @@ import { removeAuthToken, getAuthToken } from "../../../utilis";
 export const logout = createAsyncThunk("logout", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken()
-		console.log("process started");
+		console.log("logout process started");
 		if(token){
 			console.log({token});
 			const config = {
@@ -33,7 +33,7 @@ export const logout = createAsyncThunk("logout", async (args, {rejectWithValue})
 	}
 });
 
-const allowedTimeOfInactivityInSeconds = 180
+const allowedTimeOfInactivityInSeconds = 60
 
 const initialState = {
 	loading: false,
