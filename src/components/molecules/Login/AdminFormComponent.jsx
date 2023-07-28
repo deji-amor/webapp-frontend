@@ -65,6 +65,7 @@ const AdminFormComponent = () => {
 		};
 
 		getAuthTokenHandler();
+		
 		if (errorMessage === "Invalid email and/or password!") {
 			dispatch(
 				loginAdminActions.showToasts({
