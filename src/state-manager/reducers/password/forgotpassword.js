@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { encrypt } from "n-krypta"
 import axios from "axios";
 
 
@@ -24,19 +23,17 @@ export const forgotpasswordemail = createAsyncThunk("forgotpasswordemail", async
         }
     }
 })
-// 
+
 
 // Customer Password Email Link
 export const customerforgotpasswordemail = createAsyncThunk("customerforgotpasswordemail", async({email}, {rejectWithValue}) => {
-	const encryptedData = encrypt({email: email}, "b777930b6ae64a9b7ce2b9cffc96e20a");
-
     const config = {
         headers: {
             'Content-Type': 'application/json',
         },
     }
 
-    const body = JSON.stringify({encryptedData: encryptedData})
+    const body = JSON.stringify({email: email})
 
     try {
         const res = await axios.post(`${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/forgot-password`, body, config)
