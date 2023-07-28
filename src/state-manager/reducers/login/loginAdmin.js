@@ -33,6 +33,8 @@ const initialState = {
 	errorTitle: null,
 	toasts: [],
 	clickIncrement: 0,
+	successful: null,
+	error: null,
 };
 
 const loginAdminSlice = createSlice({
@@ -52,6 +54,9 @@ const loginAdminSlice = createSlice({
 			const toasts = current(state).toasts.slice();
 			state.toasts = toasts.filter(toast => toast.id !== id);
 		},
+		resetToasts: (state, action) => {
+			state.toasts = []
+		},
 		resetLoginAdmin: () => {
 			return initialState
 		}
@@ -61,6 +66,8 @@ const loginAdminSlice = createSlice({
 			.addCase(loginAdmin.pending, (state, action) => {
 				console.log("pending");
 				state.loading = true;
+				state.successful = null;
+				state.error = null;
 			})
 			.addCase(loginAdmin.fulfilled, (state, {payload}) => {
 				console.log("fulfilled", payload);
@@ -75,11 +82,16 @@ const loginAdminSlice = createSlice({
 							console.error("Error saving token:", error);
 						});
 					state.token = token;
+					state.successful = true;
+					state.error = false;
 				}else{
 					state.errorMessage = payload.message
 					state.errorTitle = payload.title
+					state.successful = false;
+					state.error = true;
 				}
 				state.clickIncrement = state.clickIncrement + 1;
+
 			})
 			.addCase(loginAdmin.rejected, (state, {payload, error}) => {
 				console.log("rejected", {payload, error});
@@ -87,6 +99,8 @@ const loginAdminSlice = createSlice({
 				state.clickIncrement = state.clickIncrement + 1;
 				state.errorMessage = "An error has occurred";
 				state.errorTitle = "Error!"
+				state.successful = false;
+				state.error = true;
 			});
 	},
 });
