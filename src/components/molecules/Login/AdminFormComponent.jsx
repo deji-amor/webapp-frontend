@@ -14,10 +14,8 @@ import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
 import { loginAdminActions, loginAdmin } from "../../../state-manager/reducers/login/loginAdmin";
 import { getDeviceName, getAuthToken } from "../../../utilis";
 
-let counter = 0
-
 const AdminFormComponent = () => {
-	const { loading, token, errorMessage, errorTitle, clickIncrement } = useSelector(
+	const { loading, token, errorMessage, errorTitle, clickIncrement, error, successful } = useSelector(
 		(state) => state.loginAdmin
 	);
 	const dispatch = useDispatch();
@@ -54,14 +52,13 @@ const AdminFormComponent = () => {
 		reset: passwordReset,
 	} = useBasicInput(isNotEmpty);
 
+	console.log({successful, error, errorMessage});
+
 	useEffect(() => {
-		if(counter === 0){
-			counter = counter + 1
-		}
-		getAuthToken().then(t => console.log({t}))
+
 		const getAuthTokenHandler = async () => {
 			const to = await getAuthToken(); // auth toKen
-			if (to && wasSubmitted && counter) {
+			if (successful && to && wasSubmitted) {
 				usernameReset()
 				passwordReset()
 				dispatch(loginAdminActions.resetLoginAdmin());
@@ -71,8 +68,7 @@ const AdminFormComponent = () => {
 		};
 
 		getAuthTokenHandler();
-		
-		if (errorMessage === "Invalid email and/or password!") {
+		if (error && errorMessage === "Invalid email and/or password!") {
 			dispatch(
 				loginAdminActions.showToasts({
 					message: "The username/password you entered is incorrect, please check again.",
@@ -89,7 +85,7 @@ const AdminFormComponent = () => {
 			return navigate("/");
 		}
 
-		if (errorMessage === "Invalid username!") {
+		if (error && errorMessage === "Invalid username!") {
 			dispatch(
 				loginAdminActions.showToasts({
 					message: "The username you entered is incorrect, please check again.",
@@ -102,7 +98,7 @@ const AdminFormComponent = () => {
 			return;
 		}
 
-		if (
+		if (error && 
 			errorMessage ===
 			"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes"
 		) {
@@ -116,7 +112,7 @@ const AdminFormComponent = () => {
 			return;
 		}
 
-		if (errorMessage && errorTitle) {
+		if (error && errorMessage && errorTitle) {
 			dispatch(
 				loginAdminActions.showToasts({
 					message: errorMessage,
@@ -144,6 +140,9 @@ const AdminFormComponent = () => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		setWasSubmitted(true);
+		usernameSetHasError(false);
+		passwordSetHasError(false)
+		dispatch(loginAdminActions.resetToasts())
 		dispatch(
 			loginAdmin({
 				username: usernameValue,
