@@ -14,6 +14,8 @@ import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
 import { loginAdminActions, loginAdmin } from "../../../state-manager/reducers/login/loginAdmin";
 import { getDeviceName, getAuthToken } from "../../../utilis";
 
+let counter = 0
+
 const AdminFormComponent = () => {
 	const { loading, token, errorMessage, errorTitle, clickIncrement } = useSelector(
 		(state) => state.loginAdmin
@@ -53,9 +55,13 @@ const AdminFormComponent = () => {
 	} = useBasicInput(isNotEmpty);
 
 	useEffect(() => {
+		if(counter === 0){
+			counter = counter + 1
+		}
+		getAuthToken().then(t => console.log({t}))
 		const getAuthTokenHandler = async () => {
 			const to = await getAuthToken(); // auth toKen
-			if (to && wasSubmitted) {
+			if (to && wasSubmitted && counter) {
 				usernameReset()
 				passwordReset()
 				dispatch(loginAdminActions.resetLoginAdmin());
@@ -79,7 +85,7 @@ const AdminFormComponent = () => {
 			passwordSetErrorMessage("Password may be invalid");
 			passwordSetHasError(true);
 			passwordSetErrorFromServer(true);
-			return;
+			return navigate("/");
 		}
 
 		if (errorMessage === "Invalid username!") {

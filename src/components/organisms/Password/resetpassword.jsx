@@ -7,7 +7,7 @@ import {
 	resetPassword,
 	SET_SERVER_RESET_NULL,
 } from "../../../state-manager/reducers/password/resetpassword";
-import logout from "../../../state-manager/reducers/logout/logout";
+import { logout } from "../../../state-manager/reducers/logout/logout";
 import { getDeviceName } from "../../../utilis";
 import ResetPasswordInputs from "../../molecules/Password/resetpasswordinputs";
 import { validatePassword } from "../../atoms/Password/validators";
@@ -77,8 +77,9 @@ const ResetPassword = () => {
 
 		if (serverResetResponse === "Your password has been changed successfully!") {
 			const device = getDeviceName();
+			console.log({device});
 			dispatch(logoutActions.toggleResetModal());
-			// dispatch(logout({deviceName: device}));
+			dispatch(logout({deviceName: device}));
 			return navigate("/reset-password-success");
 		}
 	}, [
