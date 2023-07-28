@@ -28,7 +28,7 @@ export const forgotpasswordemail = createAsyncThunk("forgotpasswordemail", async
 
 // Customer Password Email Link
 export const customerforgotpasswordemail = createAsyncThunk("customerforgotpasswordemail", async({email}, {rejectWithValue}) => {
-	const encryptedData = encrypt({email: email}, import.meta.env.VITE_ENCRYPT_KEY);
+	const encryptedData = encrypt({email: email}, "b777930b6ae64a9b7ce2b9cffc96e20a");
 
     const config = {
         headers: {
