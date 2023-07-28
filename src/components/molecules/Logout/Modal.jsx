@@ -59,7 +59,7 @@ const Modal = () => {
 				<Title>Logout</Title>
 				<Message>Are you sure you want to logout?</Message>
 			</div>
-			<div className="flex items-center justify-between gap-[0.75rem]">
+			<div className="flex items-center justify-between gap-[0.75rem] w-full">
 				<ButtonUnHighlighted onClick={handleHideLogoutModal}>Discard</ButtonUnHighlighted>
 				<ButtonHighlighted onClick={handleLogout} loading={loading} disabled={loading}>{logoutText}</ButtonHighlighted>
 			</div>

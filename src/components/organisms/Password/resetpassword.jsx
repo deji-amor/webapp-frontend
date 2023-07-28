@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logoutActions } from "../../../state-manager/reducers/logout/logout";
+import { logoutActions, logout } from "../../../state-manager/reducers/logout/logout";
 import { ResetPasswordWrapper } from "../../atoms/Password/wrappers";
 import {
 	resetPassword,
 	SET_SERVER_RESET_NULL,
 } from "../../../state-manager/reducers/password/resetpassword";
-import { logout } from "../../../state-manager/reducers/logout/logout";
 import { getDeviceName } from "../../../utilis";
 import ResetPasswordInputs from "../../molecules/Password/resetpasswordinputs";
 import { validatePassword } from "../../atoms/Password/validators";

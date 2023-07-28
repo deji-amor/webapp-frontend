@@ -195,9 +195,9 @@ const AdminFormComponent = () => {
 							{passwordErrorMessage}
 						</ValidationErrorText>
 					)}
-				</div>
-				<div className="">
-					<ForgotPassword>Forgot Password?</ForgotPassword>
+					<div className="mt-2">
+						<ForgotPassword>Forgot Password?</ForgotPassword>
+					</div>
 				</div>
 				<div className="w-full">
 					<Button
