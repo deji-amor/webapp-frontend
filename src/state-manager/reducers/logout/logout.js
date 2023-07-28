@@ -3,8 +3,6 @@ import axios from "axios";
 import { removeAuthToken, getAuthToken } from "../../../utilis";
 
 export const logout = createAsyncThunk("logout", async (args, {rejectWithValue}) => {
-		const encryptedData = encrypt(args, import.meta.env.VITE_ENCRYPT_KEY);
-
 	try {
 		const token = await getAuthToken()
 		console.log("logout process started");
@@ -35,7 +33,7 @@ export const logout = createAsyncThunk("logout", async (args, {rejectWithValue})
 	}
 });
 
-const allowedTimeOfInactivityInSeconds = 60
+const allowedTimeOfInactivityInSeconds = 6000
 
 const initialState = {
 	loading: false,
