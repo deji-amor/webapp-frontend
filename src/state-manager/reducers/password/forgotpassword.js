@@ -24,7 +24,7 @@ export const forgotpasswordemail = createAsyncThunk("forgotpasswordemail", async
         }
     }
 })
-
+// 
 
 // Customer Password Email Link
 export const customerforgotpasswordemail = createAsyncThunk("customerforgotpasswordemail", async({email}, {rejectWithValue}) => {
