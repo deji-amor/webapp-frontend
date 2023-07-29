@@ -53,8 +53,8 @@ const SelectFields = ({
         "& .MuiOutlinedInput-root": {
           borderRadius: "6px",
           background: "#FFFFFF",
-          color: "#898989",
-          fontSize: "14px",
+          color: "#2B2E72",
+          fontSize: "15px",
           fontWeight: "400",
         },
         "& .MuiOutlinedInput-notchedOutline": {
