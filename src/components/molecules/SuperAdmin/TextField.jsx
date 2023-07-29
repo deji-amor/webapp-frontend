@@ -17,7 +17,7 @@ const TextFields = ({ label, inputProps, control, name, errors, serverError, typ
 				"& .MuiOutlinedInput-root": {
 					borderRadius: "6px",
 					fontSize: "16px",
-					fontWeight: "500",
+					fontWeight: "400",
 				},
 				"& .MuiOutlinedInput-notchedOutline": {
 					borderColor: "#EEEEEE",
@@ -28,7 +28,8 @@ const TextFields = ({ label, inputProps, control, name, errors, serverError, typ
 					borderColor: "#2B2E72",
 				},
 				"& .MuiOutlinedInput-input": {
-					color: "#828282",
+					borderRadius: "6px",
+					color: "#2B2E72",
 					background: "#EEE",
 				},
 			}}
