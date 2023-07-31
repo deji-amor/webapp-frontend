@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import axios from "axios";
+import {encrypt} from "n-krypta";
 import { removeAuthToken, getAuthToken } from "../../../utilis";
 
 export const logout = createAsyncThunk("logout", async (args, {rejectWithValue}) => {

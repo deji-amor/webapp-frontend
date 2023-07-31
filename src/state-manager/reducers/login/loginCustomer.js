@@ -19,7 +19,7 @@ export const loginCustomer = createAsyncThunk(
 		};
 
 		try {
-			const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/login2`;
+			const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/login`;
 			const response = await fetch(url, config);
 			const result = await response.json();
 			return result;
