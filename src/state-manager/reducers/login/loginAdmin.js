@@ -3,7 +3,6 @@ import localforage from "localforage";
 import axios from "axios";
 
 export const loginAdmin = createAsyncThunk("auth/loginAdmin", async (args, {rejectWithValue}) => {
-	
 	const config = {
 		method: "POST",
 		headers: {
@@ -35,6 +34,7 @@ const initialState = {
 	clickIncrement: 0,
 	successful: null,
 	error: null,
+	authUserData: {},
 };
 
 const loginAdminSlice = createSlice({
@@ -81,9 +81,14 @@ const loginAdminSlice = createSlice({
 						.catch(error => {
 							console.error("Error saving token:", error);
 						});
+
+					const authUserData = {...payload.data}
+					delete authUserData.token
+					state.authUserData = authUserData
 					state.token = token;
 					state.successful = true;
 					state.error = false;
+
 				}else{
 					state.errorMessage = payload.message
 					state.errorTitle = payload.title

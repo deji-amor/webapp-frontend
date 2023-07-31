@@ -1,4 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
+import authUserReducer from "./reducers/users/authUser"
+import usersReducer from "./reducers/users/users"
 import logoutReducer from "./reducers/logout/logout"
 import loginAdminReducer from "./reducers/login/loginAdmin"
 import loginCustomerReducer from "./reducers/login/loginCustomer"
@@ -22,6 +24,8 @@ const rootReducers = combineReducers({
     loginCustomer: loginCustomerReducer,
     superAdmin: superAdminReducer,
     logout: logoutReducer,
+    authUser: authUserReducer,
+    users: usersReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducers)

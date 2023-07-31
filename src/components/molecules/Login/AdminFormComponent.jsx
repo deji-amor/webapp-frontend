@@ -12,12 +12,20 @@ import ValidationErrorText from "../../atoms/Login/ValidationErrorText";
 import ForgotPassword from "../../atoms/Login/ForgotPassword";
 import { isValidEmail, isNotEmpty } from "../../../helpers/validation";
 import { loginAdminActions, loginAdmin } from "../../../state-manager/reducers/login/loginAdmin";
+import { authUserActions } from "../../../state-manager/reducers/users/authUser";
 import { getDeviceName, getAuthToken } from "../../../utilis";
 
 const AdminFormComponent = () => {
-	const { loading, token, errorMessage, errorTitle, clickIncrement, error, successful } = useSelector(
-		(state) => state.loginAdmin
-	);
+	const {
+		loading,
+		token,
+		errorMessage,
+		errorTitle,
+		clickIncrement,
+		error,
+		successful,
+		authUserData,
+	} = useSelector((state) => state.loginAdmin);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [wasSubmitted, setWasSubmitted] = useState(false);
@@ -52,10 +60,13 @@ const AdminFormComponent = () => {
 		reset: passwordReset,
 	} = useBasicInput(isNotEmpty);
 
-	console.log({successful, error, errorMessage});
+	useEffect(() => {
+		if (Object.entries(authUserData).length !== 0) {
+			dispatch(authUserActions.setData(authUserData))
+		}
+	}, [authUserData, dispatch])
 
 	useEffect(() => {
-
 		const getAuthTokenHandler = async () => {
 			const to = await getAuthToken(); // auth toKen
 			if (successful && to && wasSubmitted) {
