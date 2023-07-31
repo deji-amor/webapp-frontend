@@ -43,6 +43,7 @@ const initialState = {
 	clickIncrement: 0,
 	successful: null,
 	error: null,
+	authUserData: {},
 };
 
 const loginAdminSlice = createSlice({
@@ -89,12 +90,17 @@ const loginAdminSlice = createSlice({
 						.catch(error => {
 							console.error("Error saving token:", error);
 						});
+
+					const authUserData = {...payload.data}
+					delete authUserData.token
+					state.authUserData = authUserData
 					state.token = token;
 					state.successful = true;
 					state.error = false;
-				} else {
-					state.errorMessage = payload.message;
-					state.errorTitle = payload.title;
+
+				}else{
+					state.errorMessage = payload.message
+					state.errorTitle = payload.title
 					state.successful = false;
 					state.error = true;
 				}

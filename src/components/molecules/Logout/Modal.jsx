@@ -9,6 +9,7 @@ import logOut from "../../atoms/Logout/Logout.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutActions, logout } from "../../../state-manager/reducers/logout/logout";
 import { getDeviceName } from "../../../utilis";
+import { authUserActions } from "../../../state-manager/reducers/users/authUser";
 
 const Modal = () => {
 	const { loading } = useSelector((state) => state.logout);
@@ -19,6 +20,7 @@ const Modal = () => {
 
 	const handleLogout = () => {
 		const deviceName = getDeviceName()
+		dispatch(authUserActions.clearData());
 		dispatch(logout({deviceName: deviceName}))
 	};
 

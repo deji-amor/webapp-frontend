@@ -3,10 +3,12 @@ import { Outlet, Navigate, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/molecules/Dashboard/Sidebar';
 import Navbar from '../components/molecules/Dashboard/Navbar';
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay';
+import { fetchUsers } from '../state-manager/reducers/users/users';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
 import { getAuthToken, getDeviceName } from '../utilis';
+import authUser, { authUserActions } from '../state-manager/reducers/users/authUser';
 
 // Memoized Sidebar and Navbar components to prevent unnecessary re-renders
 const MemoizedSidebar = memo(Sidebar);
@@ -41,6 +43,7 @@ const AppLayout = () => {
 			// console.log({token});
 			if (allowedTimeOfInactivityInSeconds <= 0 && token && !logoutProcessLoading) {
 				const deviceName = getDeviceName();
+				dispatch(authUserActions.clearData())
 				dispatch(logout({ deviceName: deviceName }));
 			}
 			if (!token) {
@@ -51,6 +54,12 @@ const AppLayout = () => {
 		const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
 		return () => clearInterval(id);
 	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
+
+	const {loading: usersLoading, users} = useSelector((state) => state.users);
+
+	useEffect(() => {
+		dispatch(fetchUsers())
+	}, [])
 
 	return (
 		<>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { authUserActions } from "../../../state-manager/reducers/users/authUser";
 import { logoutActions, logout } from "../../../state-manager/reducers/logout/logout";
 import { ResetPasswordWrapper } from "../../atoms/Password/wrappers";
 import {
@@ -79,6 +80,7 @@ const ResetPassword = () => {
 			console.log({device});
 			dispatch(logoutActions.toggleResetModal());
 			dispatch(logout({deviceName: device}));
+			dispatch(authUserActions.clearData());
 			return navigate("/reset-password-success");
 		}
 	}, [
