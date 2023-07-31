@@ -18,9 +18,8 @@ import {
 import { getAuthToken, getDeviceName } from "../../../utilis";
 
 const CustomerFormComponent = () => {
-	const { loading, token, errorMessage, errorTitle, clickIncrement } = useSelector(
-		(state) => state.loginCustomer
-	);
+	const { loading, token, errorMessage, errorTitle, clickIncrement, error, successful } =
+		useSelector((state) => state.loginCustomer);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [wasSubmitted, setWasSubmitted] = useState(false);
@@ -57,17 +56,17 @@ const CustomerFormComponent = () => {
 
 	useEffect(() => {
 		const getAuthTokenHandler = async () => {
-			const to = await getAuthToken(); // toKen
-			if (to && wasSubmitted) {
+			const to = await getAuthToken(); // auth toKen
+			if (successful && to && wasSubmitted) {
 				usernameReset();
 				passwordReset();
-				dispatch(loginCustomerActions.resetLoginCustomer());
+				dispatch(loginCustomerActions.resetLoginAdmin());
 				navigate("/app/dashboard");
-				return 
+				return;
 			}
 		};
 		getAuthTokenHandler();
-		if (errorMessage === "Invalid email and/or password!") {
+		if (error && errorMessage === "Invalid email and/or password!") {
 			dispatch(
 				loginCustomerActions.showToasts({
 					message: "The username/password you entered is incorrect, please check again.",
@@ -82,7 +81,7 @@ const CustomerFormComponent = () => {
 			passwordSetErrorFromServer(true);
 			return;
 		}
-		if (errorMessage === "Invalid username!") {
+		if (error && errorMessage === "Invalid username!") {
 			dispatch(
 				loginCustomerActions.showToasts({
 					message: "The username you entered is incorrect, please check again.",
@@ -95,6 +94,7 @@ const CustomerFormComponent = () => {
 			return;
 		}
 		if (
+			error &&
 			errorMessage ===
 			"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes"
 		) {
@@ -107,7 +107,7 @@ const CustomerFormComponent = () => {
 			);
 			return;
 		}
-			if (errorMessage && errorTitle) {
+			if (error && errorMessage && errorTitle) {
 				dispatch(
 					loginCustomerActions.showToasts({
 						message: errorMessage,
@@ -134,6 +134,9 @@ const CustomerFormComponent = () => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		setWasSubmitted(true);
+		usernameSetHasError(false);
+		passwordSetHasError(false);
+		dispatch(loginCustomer.resetToasts());
 		dispatch(
 			loginCustomer({
 				username: usernameValue,
