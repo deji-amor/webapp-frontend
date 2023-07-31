@@ -1,20 +1,25 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import localforage from "localforage";
+import {encrypt} from "n-krypta";
 import axios from "axios";
 
 export const loginCustomer = createAsyncThunk(
 	"auth/loginCustomer",
 	async (args, {rejectWithValue}) => {
+		const {deviceName, username, password} = args;
+
+		const encryptedPassword = encrypt(password, `${import.meta.env.VITE_ENCRYPT_KEY}`);
+
 		const config = {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(args),
+			body: JSON.stringify({deviceName, username, password: encryptedPassword}),
 		};
 
 		try {
-			const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/login`;
+			const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/login2`;
 			const response = await fetch(url, config);
 			const result = await response.json();
 			return result;
@@ -35,7 +40,7 @@ const initialState = {
 	errorMessage: null,
 	errorTitle: null,
 	toasts: [],
-	clickIncrement: 0
+	clickIncrement: 0,
 };
 
 const loginCustomerSlice = createSlice({
