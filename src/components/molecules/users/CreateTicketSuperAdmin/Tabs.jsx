@@ -37,6 +37,7 @@ const Tabs = () => {
 
 	const startFlow = () => {
 		setShowTopLevel(pv => !pv)
+		dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: [] }));
 	}
 
 	useEffect(() => {

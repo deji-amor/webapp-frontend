@@ -21,8 +21,6 @@ import { createTicketActions } from '../../../../state-manager/reducers/users/ti
 		z-index: 1000;
 	`;
 
-  // r6tfyui
-
 const MultipleDropdown = ({options, level: currentLevel}) => {
 	const dispatch = useDispatch()
 	const { level, pathToTemplate } = useSelector((state) => state.ticketCreation);
@@ -48,41 +46,50 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 	`;
 
   const handleOptionClick = (option) => {
-    if(!tree[option]){
+		console.log(tree[option]);
+    if(!tree[option]?.options){
+			const newpath = [...pathToTemplate].slice(0, currentLevel);
+			newpath[currentLevel] = option;
+			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
       console.log("chosen template");
-			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: [...pathToTemplate, option] }))
       return
     }
 
     if(selectedOption === option) {
 			setSelectedOption(null);
 			dispatch(createTicketActions.changeAnyState({ key: "level", value: currentLevel }));
-			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: pathToTemplate.slice(0, -1) }));
+			const newPath = [...pathToTemplate].slice(0, currentLevel);
+			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newPath }));
 		}
     else {
 			setSelectedOption(option);
 			dispatch(createTicketActions.changeAnyState({ key: "level", value: level+1}));
-			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: [...pathToTemplate, option] }));
+			const newpath = [...pathToTemplate].slice(0, currentLevel)
+			newpath[currentLevel] = option
+			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
 		}
   }
 
+	// if(!options) return <></>
+	// console.log({options});
+
   return (
 		<div className="w-full h-full">
-			{(selectedOption && currentLevel < level) && (
+			{(selectedOption) && (
 				<div className="absolute w-full -left-[101%] top-0">
 					<Wrapper>
 						<MultipleDropdown level={currentLevel+1} options={tree[selectedOption].options} />
 					</Wrapper>
 				</div>
 			)}
-			{options.map((option) => (
+			{options && options.map((option) => (
 				<Dropdown
 					key={option}
 					onClick={() => handleOptionClick(option)}
 					className={`${selectedOption === option ? "bg-[rgba(80,87,229,0.08)]" : ""}`}
 				>
           <div className='w-full flex justify-between'>
-            <div className='truncat'>
+            <div className='truncate'>
               {option}
             </div>
             <ArrowBackIosIcon width={20} height={20}/>
