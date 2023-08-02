@@ -17,7 +17,7 @@ const Tab = ({ children, isActive, onClick }) => {
 		cursor: pointer;
 	`;
 
-	return <Tablet>{children}</Tablet>;
+	return <Tablet onClick={onClick}>{children}</Tablet>;
 };
 
 Tab.propTypes = {
