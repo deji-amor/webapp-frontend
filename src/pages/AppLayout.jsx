@@ -3,6 +3,7 @@ import { Outlet, Navigate, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/molecules/Dashboard/Sidebar';
 import Navbar from '../components/molecules/Dashboard/Navbar';
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay';
+import InitialAdminCreationFormAndModal from '../components/organisms/users/CreateTicketSuperAdmin/InitialAdminCreationFormAndModal';
 import { fetchUsers } from '../state-manager/reducers/users/users';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +14,7 @@ import authUser, { authUserActions } from '../state-manager/reducers/users/authU
 // Memoized Sidebar and Navbar components to prevent unnecessary re-renders
 const MemoizedSidebar = memo(Sidebar);
 const MemoizedNavbar = memo(Navbar);
+const MemoizedInitialAdminCreationFormAndModal = memo(InitialAdminCreationFormAndModal);
 
 const AppLayout = () => {
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
@@ -65,6 +67,7 @@ const AppLayout = () => {
 		<>
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
+			{ <MemoizedInitialAdminCreationFormAndModal/> }
 
 			<div className="flex h-screen max-h-screen">
 				{/* <Sidebar /> */}
