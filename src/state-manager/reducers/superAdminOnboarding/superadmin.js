@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {encrypt} from "n-krypta";
 import axios from "axios";
 
 export const superAdminCreate = createAsyncThunk("superAdminCreate", async(args, {rejectWithValue}) => {
 
-    // console.table({firstName, lastName, workspaceName, companyEmail, country, city, phoneNumber, password, confirmPassword, privacy})
+    const {firstName, lastName, workspaceName, companyEmail, country, city, phoneNumber, password, confirmPassword, privacy} = args
 
     const config = {
         headers: {
@@ -11,7 +12,18 @@ export const superAdminCreate = createAsyncThunk("superAdminCreate", async(args,
         }
     };
 
-    const body = JSON.stringify(args)
+    const body = JSON.stringify({
+        firstName,
+        lastName,
+        workspaceName,
+        companyEmail,
+        country,
+        city,
+        phoneNumber,
+        password: encrypt(password, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+        confirmPassword: encrypt(confirmPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+        privacy
+    })
 
     try {
         const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-onboarding/`;

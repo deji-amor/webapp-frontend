@@ -1,14 +1,23 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import localforage from "localforage";
+import {encrypt} from "n-krypta";
 import axios from "axios";
 
 export const loginAdmin = createAsyncThunk("auth/loginAdmin", async (args, {rejectWithValue}) => {
+	const {deviceName, username, password} = args;
+
+	const encryptedPassword = encrypt(password, `${import.meta.env.VITE_ENCRYPT_KEY}`)
+
 	const config = {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(args),
+		body: JSON.stringify({
+			deviceName,
+			username,
+			password: encryptedPassword
+		}),
 	};
 
 	try {
@@ -55,11 +64,11 @@ const loginAdminSlice = createSlice({
 			state.toasts = toasts.filter(toast => toast.id !== id);
 		},
 		resetToasts: (state, action) => {
-			state.toasts = []
+			state.toasts = [];
 		},
 		resetLoginAdmin: () => {
-			return initialState
-		}
+			return initialState;
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -72,9 +81,9 @@ const loginAdminSlice = createSlice({
 			.addCase(loginAdmin.fulfilled, (state, {payload}) => {
 				console.log("fulfilled", payload);
 				state.loading = false;
-				const status = payload.status
-				if(status === "OK"){
-					const token = payload.data.token
+				const status = payload.status;
+				if (status === "OK") {
+					const token = payload.data.token;
 					localforage
 						.setItem("authToken", token)
 						.then(() => {})
@@ -96,14 +105,13 @@ const loginAdminSlice = createSlice({
 					state.error = true;
 				}
 				state.clickIncrement = state.clickIncrement + 1;
-
 			})
 			.addCase(loginAdmin.rejected, (state, {payload, error}) => {
 				console.log("rejected", {payload, error});
-				state.loading = false
+				state.loading = false;
 				state.clickIncrement = state.clickIncrement + 1;
 				state.errorMessage = "An error has occurred";
-				state.errorTitle = "Error!"
+				state.errorTitle = "Error!";
 				state.successful = false;
 				state.error = true;
 			});

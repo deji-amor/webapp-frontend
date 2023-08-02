@@ -1,8 +1,11 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import {encrypt} from "n-krypta";
 import {getAuthToken} from "../../../utilis";
 
 export const resetPassword = createAsyncThunk("resetpassword", async (args, {rejectWithValue}) => {
+	const {currentPassword, newPassword, confirmPassword} = args;
+	
 	const token = await getAuthToken();
 
 	const config = {
@@ -12,7 +15,11 @@ export const resetPassword = createAsyncThunk("resetpassword", async (args, {rej
 		},
 	};
 
-	const body = JSON.stringify(args);
+	const body = JSON.stringify({
+		currentPassword: encrypt(currentPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+		newPassword: encrypt(newPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+		confirmPassword: encrypt(confirmPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`)
+	});
 
 	try {
 		const res = await axios.post(
