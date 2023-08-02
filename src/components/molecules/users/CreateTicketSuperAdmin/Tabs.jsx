@@ -67,7 +67,7 @@ const Tabs = () => {
 					<AddIcon /> Add Ticket{" "}
 				</MultiplePathButton>
 				{showTopLevel && (
-					<div className="absolute top-[115%] right-0 bg-white z-[100] w-full">
+					<div className="absolute top-[115%] right-0 bg-white z-[100]">
 						<TopLevel pathOptions={tree} />
 					</div>
 				)}

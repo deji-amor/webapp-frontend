@@ -30,8 +30,11 @@ const initialState = {
 	errorMessage: "",
 	successful: null,
 	users: [],
+	// show
+	pathToTemplate: [],
   showServiceRequestsTab: true,
   showProjectsTab: false,
+	level: 0,
 };
 
 const createTicketSlice = createSlice({

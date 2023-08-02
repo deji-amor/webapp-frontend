@@ -2,10 +2,14 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {styled} from "@mui/material"
 import tree from '../../../../state-manager/reducers/users/ticketCreationMultiplePath'
+// import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useDispatch, useSelector } from 'react-redux';
+import { createTicketActions } from '../../../../state-manager/reducers/users/ticketCreation';
 
   const Wrapper = styled("div")`
 		display: flex;
-		width: 12.9375rem;
+		width: 17rem;
 		padding: 0.5rem;
 		flex-direction: column;
 		justify-content: center;
@@ -17,8 +21,13 @@ import tree from '../../../../state-manager/reducers/users/ticketCreationMultipl
 		z-index: 1000;
 	`;
 
-const MultipleDropdown = ({options}) => {
+  // r6tfyui
+
+const MultipleDropdown = ({options, level: currentLevel}) => {
+	const dispatch = useDispatch()
+	const { level, pathToTemplate } = useSelector((state) => state.ticketCreation);
   const [selectedOption, setSelectedOption] = useState(null)
+
   const Dropdown = styled("div")`
     position: relative;
 		display: flex;
@@ -39,23 +48,30 @@ const MultipleDropdown = ({options}) => {
 	`;
 
   const handleOptionClick = (option) => {
-    console.log({selectedOption, option});
     if(!tree[option]){
       console.log("chosen template");
+			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: [...pathToTemplate, option] }))
       return
     }
 
-    if(selectedOption === option) setSelectedOption(null)
-    else setSelectedOption(option)
+    if(selectedOption === option) {
+			setSelectedOption(null);
+			dispatch(createTicketActions.changeAnyState({ key: "level", value: currentLevel }));
+			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: pathToTemplate.slice(0, -1) }));
+		}
+    else {
+			setSelectedOption(option);
+			dispatch(createTicketActions.changeAnyState({ key: "level", value: level+1}));
+			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: [...pathToTemplate, option] }));
+		}
   }
 
   return (
-		<div className="relative w-full h-full">
-      {/* THIS IS FOR SAME LINE DROPDOWN */}
-			{selectedOption && (
-				<div className="absolute w-full -left-[120%] top-0">
+		<div className="w-full h-full">
+			{(selectedOption && currentLevel < level) && (
+				<div className="absolute w-full -left-[101%] top-0">
 					<Wrapper>
-						<MultipleDropdown options={tree[selectedOption].options} />
+						<MultipleDropdown level={currentLevel+1} options={tree[selectedOption].options} />
 					</Wrapper>
 				</div>
 			)}
@@ -65,16 +81,12 @@ const MultipleDropdown = ({options}) => {
 					onClick={() => handleOptionClick(option)}
 					className={`${selectedOption === option ? "bg-[rgba(80,87,229,0.08)]" : ""}`}
 				>
-					{option}
-          {/* THIS IS FOR ONE STEP DOWN DROP DOWN */}
-					{/* {
-            (selectedOption && selectedOption === option) &&
-            <div className="absolute w-full -left-[120%] top-0">
-              <Wrapper>
-                <MultipleDropdown options={tree[selectedOption].options} />
-              </Wrapper>
+          <div className='w-full flex justify-between'>
+            <div className='truncat'>
+              {option}
             </div>
-          } */}
+            <ArrowBackIosIcon width={20} height={20}/>
+          </div>
 				</Dropdown>
 			))}
 		</div>
@@ -83,8 +95,8 @@ const MultipleDropdown = ({options}) => {
 
 const TopLevel = ({pathOptions}) => {
   return (
-    <Wrapper className=''>
-      <MultipleDropdown options={Object.keys(pathOptions).filter(path => path === "Service Tickets" || path === "Project Tickets")}/>
+    <Wrapper className='relative border-2 border-red-500'>
+      <MultipleDropdown level={0} options={Object.keys(pathOptions).filter(path => path === "Service Tickets" || path === "Project Tickets")}/>
     </Wrapper>
   )
 }
@@ -94,7 +106,8 @@ TopLevel.propTypes = {
 }
 
 MultipleDropdown.propTypes = {
-  options: PropTypes.array
+  options: PropTypes.array,
+	level: PropTypes.number,
 }
 
 export default TopLevel

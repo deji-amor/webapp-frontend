@@ -7,9 +7,11 @@ const InitialAdminCreationFormAndModal = () => {
 	return (
 		<>
 			<Overlay />
-			<Modal>
-        <ModalContent/>
-			</Modal>
+			<div className="max-w-[74rem] w-full">
+				<Modal>
+					<ModalContent/>
+				</Modal>
+			</div>
 		</>
 	);
 };
