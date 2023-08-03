@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
 
-export const LogoWrapper = styled("span")(({color}) => ({
+export const LogoWrapper = styled("span")(({color, style}) => ({
 	display: "flex",
 	justifyContent: "center",
 	alignItems: "center",
@@ -9,6 +9,8 @@ export const LogoWrapper = styled("span")(({color}) => ({
 	left: "50px",
 	zIndex: "10",
 	gap: "10px",
+
+	style,
 
 	span: {
 		color: color ? color : "#000",
@@ -21,7 +23,7 @@ export const LogoWrapper = styled("span")(({color}) => ({
 	},
 }));
 
-export const ButtonWrapper = styled("div")(({ width, height, error }) => ({
+export const ButtonWrapper = styled("div")(({ width, height, error, style }) => ({
 	maxWidth: "100%",
 	display: "flex",
 	justifyContent: "center",

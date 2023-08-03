@@ -14,6 +14,7 @@ const CustomButton = ({
 	serverError,
 	validationError,
 	currentError,
+	style,
 	onClick,
 	defaultCursor,
 }) => {
@@ -21,6 +22,7 @@ const CustomButton = ({
 		<ButtonWrapper
 			width={butWidth}
 			height={butHeight}
+			style={style}
 			error={serverError || validationError || currentError || error || defaultCursor}
 		>
 			<button
@@ -48,6 +50,7 @@ CustomButton.propTypes = {
 	butWidth: PropTypes.string,
 	butHeight: PropTypes.string,
 	name: PropTypes.string,
+	style: PropTypes.object,
 	backgroundColor: PropTypes.string,
 	onClick: PropTypes.func,
 	loading: PropTypes.bool,
