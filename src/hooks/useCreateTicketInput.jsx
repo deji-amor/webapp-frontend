@@ -1,11 +1,31 @@
 import React, { useState, useEffect, useId } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { createTicketActions } from "../state-manager/reducers/users/ticketCreation";
 import PropTypes from "prop-types";
 
-const useCreateTicketInput = (validateValue) => {
+const useCreateTicketInput = (pointer, validateValue) => {
+	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+	const dispatch = useDispatch()
+	const enteredValue = allPossibleFields[pointer]
+	const isTouched = allPossibleFields[`${pointer}IsTouched`];
+	const hasError = allPossibleFields[`${pointer}HasError`];
+
+	const setEnteredValue = (value) => {
+		dispatch(createTicketActions.updateField({ key: pointer, value:  value}));
+	}
+
+	const setIsTouched = (bool) => {
+		dispatch(createTicketActions.updateField({ key: `${pointer}IsTouched`, value: bool }));
+	}
+
+	const setHasError = (bool) => {
+		dispatch(createTicketActions.updateField({ key: `${pointer}HasError`, value: bool }));
+	}
+
 	const id = useId();
-	const [enteredValue, setEnteredValue] = useState("");
-	const [isTouched, setIsTouched] = useState(false);
-	const [hasError, setHasError] = useState(false);
+	// const [enteredValue, setEnteredValue] = useState("");
+	// const [isTouched, setIsTouched] = useState(false);
+	// const [hasError, setHasError] = useState(false);
 	const [valueIsValid, errMsg] = validateValue(enteredValue);
 	const [errorMessage, setErrorMessage] = useState(errMsg);
 	const [errorFromServer, setErrorFromServer] = useState(false);

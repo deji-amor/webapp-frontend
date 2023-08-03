@@ -24,6 +24,43 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 	}
 });
 
+const allPossibleFields = {
+		// POINT OF CONTACT NAME
+		"pointOfContactName": "",
+		"pointOfContactNameIsTouched": "",
+		"pointOfContactNameIsValid": "",
+		"pointOfContactNameHasError": "",
+		// POINT OF CONTACT PHONE NUMBER
+		"pointOfContactPhoneNumber": "",
+		"pointOfContactPhoneNumberIsTouched": "",
+		"pointOfContactPhoneNumberIsValid": "",
+		"pointOfContactPhoneNumberHasError": "",
+		// POINT OF CONTACT ADDRESS
+		"pointOfContactAddress": "",
+		"pointOfContactAddressIsTouched": "",
+		"pointOfContactAddressIsValid": "",
+		"pointOfContactAddressHasError": "",
+		"numberOfTechnicians": "",
+		// SCOPE OF WOR
+		"scopeOfWorkDescription": "",
+		"scopeOfWorkDescriptionIsTouched": "",
+		"scopeOfWorkDescriptionIsValid": "",
+		"scopeOfWorkDescriptionHasError": "",
+		"scopeOfWorkDocument": null,
+		"startDateTime": "",
+		"endDateTime": "",
+		"hardwareQuantity": "",
+		"hardwareList": [],
+		"numberOfLocation": "",
+		"addresses": [],
+		"buildingType": "",
+		// MATERIALS PROCUREMENT
+		"materialsDescription": "",
+		"materialsDescriptionIsTouched": "",
+		"materialsDescriptionIsValid": "",
+		"materialsDescriptionHasError": "",
+	}
+
 const initialState = {
 	loading: false,
 	error: null,
@@ -37,6 +74,7 @@ const initialState = {
 	level: 0,
 	mode: "creation",
 	chosenTemplate: [],
+	allPossibleFields: allPossibleFields
 };
 
 const createTicketSlice = createSlice({
@@ -64,6 +102,19 @@ const createTicketSlice = createSlice({
 			state.showTemplateModal = false;
 			state.pathToTemplate = []
 		},
+		updateField: (state, action) => {
+			const payload = action.payload
+
+			if(Array.isArray(payload)){
+				payload.forEach(({key, value}) => {
+					state.allPossibleFields[key] = value
+				});
+			}else {
+				const {key, value} = payload
+				state.allPossibleFields[key] = value
+			}
+
+		}
 	},
 	extraReducers: builder => {
 		builder

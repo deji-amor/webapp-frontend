@@ -1,31 +1,31 @@
 const allFields = {
 	"Point of contact": {
-		"Point of contact name": {type: "text"},
-		"Point of contact phone number": {type: "text"},
-		"Point of contact address": {type: "text"},
+		"pointOfContactName": {type: "text"},
+		"pointOfContactPhoneNumber": {type: "text"},
+		"pointOfContactAddress": {type: "text"},
 	},
 	"Number of technicians needed": {
-		"Number of technicians": {type: "number"},
+		"numberOfTechnicians": {type: "number"},
 	},
 	"Scope of work": {
-		description: {type: "text"},
-		document: {type: "file"},
+		"scopeOfWorkDescription": {type: "text"},
+		"scopeOfWorkDocument": {type: "file"},
 	},
 	duration: {
-		"Start date-time": {type: "date-time"},
-		"End date-time": {type: "date-time"},
+		"startDateTime": {type: "date-time"},
+		"endDateTime": {type: "date-time"},
 	},
 	"Hardware component": {
-		Quantity: {type: "number"},
-		"Hardware list": {type: "list", min: 1, max: 5}
+		"hardwareQuantity": {type: "number"},
+		"hardwareList": {type: "list", min: 1, max: 5}
 	},
 	Location: {
-		"Number of location": {type: "number"},
-		Location: {type: "list"},
-		"building type": {type: "text"},
+		"numberOfLocation": {type: "number"},
+		"addresses": {type: "list"},
+		"buildingType": {type: "text"},
 	},
 	"Materials procurement": {
-		description: {type: "text"},
+		"materialsDescription": {type: "text"},
 	},
 	"Number of work system": {},
 	"software application": {},

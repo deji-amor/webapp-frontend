@@ -1,76 +1,124 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import GrayThemedLightText from '../../GrayThemedLightText'
-import useBasicInput from '../../../../../../hooks/useBasicInput'
-import useCreateTicketInput from '../../../../../../hooks/useCreateTicketInput'
-import GrayThemedLighterText from '../../GrayThemedLighterText'
-import GrayThemedLightestText from '../../GrayThemedLightestText'
-import Input from '../general/Input'
-import TextArea from '../general/TextArea'
-import { useSelector } from 'react-redux'
+import React from "react";
+import PropTypes from "prop-types";
+import GrayThemedLightText from "../../GrayThemedLightText";
+import ValidationErrorText from "../../../../Login/ValidationErrorText";
+import { isNameEmpty, isPhoneNumber, isAddressEmpty } from "../../../../../../helpers/validation";
+import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
+import GrayThemedLighterText from "../../GrayThemedLighterText";
+import GrayThemedLightestText from "../../GrayThemedLightestText";
+import Input from "../general/Input";
+import TextArea from "../general/TextArea";
+import { useSelector } from "react-redux";
 
-const PointOfContact = props => {
-    // const {
-		// 	enteredValue: passwordValue,
-		// 	errorMessage: passwordErrorMessage,
-		// 	setErrorMessage: passwordSetErrorMessage,
-		// 	hasError: passwordHasError,
-		// 	setHasError: passwordSetHasError,
-		// 	valueChangeHandler: passwordChangeHandler,
-		// 	valueBlurHandler: passwordBlurHandler,
-		// 	valueIsValid: passwordIsValid,
-		// 	errorFromServer: passwordErrFromServer,
-		// 	setErrorFromServer: passwordSetErrorFromServer,
-		// 	id: passwordId,
-		// 	reset: passwordReset,
-		// } = useBasicInput(isNotEmpty);
+const PointOfContact = (props) => {
+	const {
+		enteredValue: nameValue,
+		errorMessage: nameErrorMessage,
+		setErrorMessage: nameSetErrorMessage,
+		hasError: nameHasError,
+		setHasError: nameSetHasError,
+		valueChangeHandler: nameChangeHandler,
+		valueBlurHandler: nameBlurHandler,
+		valueIsValid: nameIsValid,
+		errorFromServer: nameErrFromServer,
+		setErrorFromServer: nameSetErrorFromServer,
+		id: nameId,
+		reset: nameReset,
+	} = useCreateTicketInput("pointOfContactName", isNameEmpty);
 
-  //  <div className="">
-	// 						<InputLabel htmlFor={usernameId}>Username</InputLabel>
-	// 						<Input
-	// 							placeholder="Type your registered email"
-	// 							type="text"
-	// 							value={usernameValue}
-	// 							onBlur={usernameBlurHandler}
-	// 							onChange={usernameChangeHandler}
-	// 							hasError={usernameHasError}
-	// 							id={usernameId}
-	// 						/>
-	// 						{usernameHasError && (
-	// 							<ValidationErrorText errorFromServer={usernameErrFromServer}>
-	// 								{usernameErrorMessage}
-	// 							</ValidationErrorText>
-	// 						)}
-	// 					</div>;
+	const {
+		enteredValue: numberValue,
+		errorMessage: numberErrorMessage,
+		setErrorMessage: numberSetErrorMessage,
+		hasError: numberHasError,
+		setHasError: numberSetHasError,
+		valueChangeHandler: numberChangeHandler,
+		valueBlurHandler: numberBlurHandler,
+		valueIsValid: numberIsValid,
+		errorFromServer: numberErrFromServer,
+		setErrorFromServer: numberSetErrorFromServer,
+		id: numberId,
+		reset: numberReset,
+	} = useCreateTicketInput("pointOfContactPhoneNumber", isPhoneNumber);
 
-	const t = useSelector(state => state.ticketCreation)
+	const {
+		enteredValue: addressValue,
+		errorMessage: addressErrorMessage,
+		setErrorMessage: addressSetErrorMessage,
+		hasError: addressHasError,
+		setHasError: addressSetHasError,
+		valueChangeHandler: addressChangeHandler,
+		valueBlurHandler: addressBlurHandler,
+		valueIsValid: addressIsValid,
+		errorFromServer: addressErrFromServer,
+		setErrorFromServer: addressSetErrorFromServer,
+		id: addressId,
+		reset: addressReset,
+	} = useCreateTicketInput("pointOfContactAddress", isAddressEmpty);
+
+	const t = useSelector((state) => state.ticketCreation);
 	console.log(t);
 
-  return (
-		<div className='space-y-[0.75rem]'>
+	return (
+		<div className="space-y-[0.75rem]">
 			<div className="">
 				<GrayThemedLightestText>Point of contact</GrayThemedLightestText>
 			</div>
 			<div className="flex items-start justify-start gap-[0.75rem]">
 				<div className="basis-[21rem]">
 					<GrayThemedLighterText>Name*</GrayThemedLighterText>
-          <Input id={"yvvvu"} type={"text"} onBlur={() => {}} onChange={() => {}} placeholder={"Enter contact name"} value={""}/>
+					<Input
+						id={nameId}
+						type={"text"}
+						onBlur={nameBlurHandler}
+						onChange={nameChangeHandler}
+						placeholder={"Enter contact name"}
+						value={nameValue}
+					/>
+					{nameHasError && (
+						<ValidationErrorText errorFromServer={nameErrFromServer}>
+							{nameErrorMessage}
+						</ValidationErrorText>
+					)}
 				</div>
 				<div className="basis-[21rem]">
 					<GrayThemedLighterText>Phone Number*</GrayThemedLighterText>
-          <Input id={"yvvvu"} type={"text"} onBlur={() => {}} onChange={() => {}} placeholder={"Enter contact phone number"} value={""}/>
+					<Input
+						id={numberId}
+						type={"text"}
+						onBlur={numberBlurHandler}
+						onChange={numberChangeHandler}
+						placeholder={"Enter contact phone number"}
+						value={numberValue}
+					/>
+					{numberHasError && (
+						<ValidationErrorText errorFromServer={numberErrFromServer}>
+							{numberErrorMessage}
+						</ValidationErrorText>
+					)}
 				</div>
 			</div>
-      <div className=''>
-        <GrayThemedLighterText>Address of contact*</GrayThemedLighterText>
-        <div className='w-[30rem] h-[6.25rem]'>
-          <TextArea placeholder={"Enter address"}/>
-        </div>
-      </div>
+			<div className="">
+				<GrayThemedLighterText>Address of contact*</GrayThemedLighterText>
+				<div className="w-[30rem] h-[6.25rem]">
+					<TextArea
+						id={addressId}
+						onBlur={addressBlurHandler}
+						onChange={addressChangeHandler}
+						value={addressValue}
+						placeholder={"Enter address..."}
+					/>
+				</div>
+				{addressHasError && (
+					<ValidationErrorText errorFromServer={addressErrFromServer}>
+						{addressErrorMessage}
+					</ValidationErrorText>
+				)}
+			</div>
 		</div>
 	);
-}
+};
 
-PointOfContact.propTypes = {}
+PointOfContact.propTypes = {};
 
-export default PointOfContact
+export default PointOfContact;

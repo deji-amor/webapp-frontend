@@ -14,7 +14,7 @@ const ValidationErrorText = ({ children, errorFromServer }) => {
 	`;
 
 	return (
-		<Paragraph>
+		<Paragraph className="truncate">
 			{!errorFromServer && <ErrorOutlineIcon className="w-[0.7rem] h-[0.7rem] mr-1" />}
 			{children}
 		</Paragraph>
