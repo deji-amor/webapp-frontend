@@ -75,6 +75,7 @@ const TableWrapper = styled("div")(() => ({
     position: "absolute",
     top: "0",
     right: "0",
+	boxShadow: "0px 1.495449423789978px 2.990898847579956px -1.495449423789978px rgba(16, 24, 40, 0.06), 0px 2.990898847579956px 5.981797695159912px -1.495449423789978px rgba(16, 24, 40, 0.10)",
 
 	table: {
 		width: "100%",

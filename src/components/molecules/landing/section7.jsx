@@ -1,6 +1,8 @@
 import { styled } from "@mui/material";
 import Header from "../../atoms/landing/headings";
 import Question from "../../atoms/landing/faq";
+import DecorCircle from "../../atoms/landing/decorCircle";
+
 
 const FaqWrapper = styled("div")(() => ({
 	width: "80%",
@@ -37,6 +39,7 @@ const Faq = () => {
 				<Question />
 				<Question />
 				<Question />
+				<DecorCircle top="100px" right="-150px" color="rgba(76, 111, 255, 0.12)" filter="blur(120.32733917236328px)" />
 			</div>
 		</FaqWrapper>
 	);

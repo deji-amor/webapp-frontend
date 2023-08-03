@@ -12,6 +12,8 @@ const QuestionWrapper = styled("div")(() => ({
 	alignItems: "center",
 	padding: "20px",
 	cursor: "Pointer",
+	position: "relative",
+	zIndex: "55",
 
 	p: {
 		color: "#2B2E72",
@@ -26,7 +28,6 @@ const QuestionWrapper = styled("div")(() => ({
 }));
 
 const Question = () => {
-
 	return (
 		<QuestionWrapper>
 			<p>
