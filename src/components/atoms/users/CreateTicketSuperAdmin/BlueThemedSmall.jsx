@@ -10,6 +10,7 @@ const BlueThemeSmall = ({ children }) => {
 		font-style: normal;
 		font-weight: 600;
 		line-height: 1.875rem; /* 187.5% */
+		display: inline-block;
 	`;
 
 	return <Text>{children}</Text>;

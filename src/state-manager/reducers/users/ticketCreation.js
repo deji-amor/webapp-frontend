@@ -29,29 +29,42 @@ const initialState = {
 	error: null,
 	errorMessage: "",
 	successful: null,
-	users: [],
-	// show
+	showAddTicketModal: !false,
+	showTemplateModal: false,
 	pathToTemplate: [],
   showServiceRequestsTab: true,
   showProjectsTab: false,
 	level: 0,
+	mode: "creation",
+	chosenTemplate: [],
 };
 
 const createTicketSlice = createSlice({
 	name: "createTicket",
 	initialState: initialState,
 	reducers: {
-    changeAnyState: (state, action) => {
-      const {key, value} = action.payload;
-      state[key] = value
-    },
-    changeMultipleState: (state, action) => {
-      const array = action.payload
-      array.forEach(({key, value}) => {
-        state[key] = value;
-      });
-    }
-  },
+		changeAnyState: (state, action) => {
+			const {key, value} = action.payload;
+			state[key] = value;
+		},
+		changeMultipleState: (state, action) => {
+			const array = action.payload;
+			array.forEach(({key, value}) => {
+				state[key] = value;
+			});
+		},
+		goToTicketTemplateForm: (state, action) => {
+			state.chosenTemplate = action.payload;
+			state.showAddTicketModal = false;
+			state.showTemplateModal = true;
+		},
+		goBackToAddTicketModal: (state, action) => {
+			state.chosenTemplate = [];
+			state.showAddTicketModal = true;
+			state.showTemplateModal = false;
+			state.pathToTemplate = []
+		},
+	},
 	extraReducers: builder => {
 		builder
 			.addCase(createTicket.pending, (state, action) => {})

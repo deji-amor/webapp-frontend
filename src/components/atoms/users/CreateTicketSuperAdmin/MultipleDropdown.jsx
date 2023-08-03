@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {styled} from "@mui/material"
 import tree from '../../../../state-manager/reducers/users/ticketCreationMultiplePath'
-// import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+// import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTicketActions } from '../../../../state-manager/reducers/users/ticketCreation';
 
@@ -45,71 +45,80 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 		}
 	`;
 
-  const handleOptionClick = (option) => {
-		console.log(tree[option]);
-    if(!tree[option]?.options){
+
+  const handleOptionClick = (event, option) => {
+		event.stopPropagation();
+		// WHEN WE HAVE REACHED THE END AND TO REDIRECT TO THE FORM
+		if (!tree[option]?.options) {
 			const newpath = [...pathToTemplate].slice(0, currentLevel);
 			newpath[currentLevel] = option;
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
-      console.log("chosen template");
-      return
-    }
+			// REDIRECT TO Ticket TEMPLATE FORM
+			// console.log(tree[option]);
+			dispatch(createTicketActions.goToTicketTemplateForm(tree[option]?.fields));
+			// console.log("chosen template");
+			return;
+		}
 
-    if(selectedOption === option) {
+		// WHEN THERE WAS ALREADY ONE SELECTED SO WE REMOVE ALL SELECTED ONES FROM HERE TO FIX
+		if (selectedOption) {
+			console.log("new condition");
+			setSelectedOption(null);
+			dispatch(createTicketActions.changeAnyState({ key: "level", value: currentLevel }));
+			const newPath = [...pathToTemplate].slice(0, currentLevel);
+			console.log(newPath);
+			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newPath }));
+			return;
+		}
+
+		// WHEN THERE WAS nONE NONE SELECTED SO WE SELECT ONE
+		if (selectedOption === option) {
 			setSelectedOption(null);
 			dispatch(createTicketActions.changeAnyState({ key: "level", value: currentLevel }));
 			const newPath = [...pathToTemplate].slice(0, currentLevel);
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newPath }));
-		}
-    else {
+		} else {
 			setSelectedOption(option);
-			dispatch(createTicketActions.changeAnyState({ key: "level", value: level+1}));
-			const newpath = [...pathToTemplate].slice(0, currentLevel)
-			newpath[currentLevel] = option
+			dispatch(createTicketActions.changeAnyState({ key: "level", value: level + 1 }));
+			const newpath = [...pathToTemplate].slice(0, currentLevel);
+			newpath[currentLevel] = option;
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
 		}
-  }
-
-	// if(!options) return <></>
-	// console.log({options});
+	}
+	console.log(pathToTemplate);
 
   return (
 		<div className="w-full h-full">
-			{(selectedOption) && (
+			{selectedOption && (
 				<div className="absolute w-full -left-[101%] top-0">
 					<Wrapper>
-						<MultipleDropdown level={currentLevel+1} options={tree[selectedOption].options} />
+						<MultipleDropdown level={currentLevel + 1} options={tree[selectedOption].options} />
 					</Wrapper>
 				</div>
 			)}
-			{options && options.map((option) => (
-				<Dropdown
-					key={option}
-					onClick={() => handleOptionClick(option)}
-					className={`${selectedOption === option ? "bg-[rgba(80,87,229,0.08)]" : ""}`}
-				>
-          <div className='w-full flex justify-between'>
-            <div className='truncate'>
-              {option}
-            </div>
-            <ArrowBackIosIcon width={20} height={20}/>
-          </div>
-				</Dropdown>
-			))}
+			{options &&
+				options.map((option) => (
+					<Dropdown
+						key={option}
+						onClick={(e) => handleOptionClick(e, option)}
+						className={`${selectedOption === option ? "bg-[rgba(80,87,229,0.08)]" : ""}`}
+					>
+						<div className="w-full flex justify-between">
+							<div className="truncate">{option}</div>
+							{tree[option]?.options && <ArrowForwardIosIcon width={20} height={20} className='text-[0.5rem]'/>}
+						</div>
+					</Dropdown>
+				))}
 		</div>
 	);
 }
 
-const TopLevel = ({pathOptions}) => {
+const TopLevel = () => {
   return (
     <Wrapper className='relative border-2 border-red-500'>
-      <MultipleDropdown level={0} options={Object.keys(pathOptions).filter(path => path === "Service Tickets" || path === "Project Tickets")}/>
+      <MultipleDropdown level={0} options={Object.keys(tree).filter(path => path === "Service Tickets" || path === "Project Tickets")}/>
     </Wrapper>
   )
-}
-
-TopLevel.propTypes = {
-  pathOptions: PropTypes.object
 }
 
 MultipleDropdown.propTypes = {

@@ -10,6 +10,7 @@ const BlueThemedMediumText = ({children}) => {
 		font-style: normal;
 		font-weight: 600;
 		line-height: 2.5rem; /* 200% */
+		display: inline-block;
 	`;
 
 	return <Text>{children}</Text>;

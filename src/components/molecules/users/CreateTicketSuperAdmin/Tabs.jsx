@@ -35,18 +35,23 @@ const Tabs = () => {
 
 	const [showTopLevel, setShowTopLevel] = useState(false)
 
-	const startFlow = () => {
+	const startFlow = (e) => {
+		e.stopPropagation();
 		setShowTopLevel(pv => !pv)
 		dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: [] }));
 	}
 
-	useEffect(() => {
-		document.addEventListener("click", (e) => {
-			// if(!e.target.closest("#top-level-dropdown")){
-			// 	setShowTopLevel(false)
-			// }
-		})
-	}, [])
+  useEffect(() => {
+		const handleClickOutside = (e) => {
+			if (!e.target.closest("#top-level-dropdown")) {
+				setShowTopLevel(false);
+			}
+		};
+		document.addEventListener("click", handleClickOutside);
+		return () => {
+			document.removeEventListener("click", handleClickOutside);
+		};
+	}, []);
 
 	return (
 		<div className="flex items-center justify-between">
@@ -69,7 +74,7 @@ const Tabs = () => {
 				</MultiplePathButton>
 				{showTopLevel && (
 					<div className="absolute top-[115%] right-0 bg-white z-[100]">
-						<TopLevel pathOptions={tree} />
+						<TopLevel />
 					</div>
 				)}
 			</div>

@@ -4,7 +4,7 @@ import Sidebar from '../components/molecules/Dashboard/Sidebar';
 import Navbar from '../components/molecules/Dashboard/Navbar';
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay';
 import InitialAdminCreationFormAndModal from '../components/organisms/users/CreateTicketSuperAdmin/InitialAdminCreationFormAndModal';
-import TicketTemplateCreationForm from '../components/organisms/users/CreateTicketSuperAdmin/TicketCreationTemplateForm';
+import TicketTemplateCreationOrEditionForm from '../components/organisms/users/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm';
 import { fetchUsers } from '../state-manager/reducers/users/users';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,11 +16,10 @@ import authUser, { authUserActions } from '../state-manager/reducers/users/authU
 const MemoizedSidebar = memo(Sidebar);
 const MemoizedNavbar = memo(Navbar);
 const MemoizedInitialAdminCreationFormAndModal = memo(InitialAdminCreationFormAndModal);
-const MemoizedNavbarTicketTemplateCreationForm = memo(TicketTemplateCreationForm)
+const MemoizedTicketTemplateCreationOrEditionForm = memo(TicketTemplateCreationOrEditionForm)
 
 const AppLayout = () => {
-	const showLogoutModal = useSelector((state) => state.logout.showModal);
-	const showResetModal = useSelector((state) => state.logout.showResetModal);
+	/////////// AUTHENTICATION LOGIC STARTS HERE
 	const allowedTimeOfInactivityInSeconds = useSelector(
 		(state) => state.logout.allowedTimeOfInactivityInSeconds
 	);
@@ -47,7 +46,7 @@ const AppLayout = () => {
 			// console.log({token});
 			if (allowedTimeOfInactivityInSeconds <= 0 && token && !logoutProcessLoading) {
 				const deviceName = getDeviceName();
-				dispatch(authUserActions.clearData())
+				dispatch(authUserActions.clearData());
 				dispatch(logout({ deviceName: deviceName }));
 			}
 			if (!token) {
@@ -58,19 +57,23 @@ const AppLayout = () => {
 		const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
 		return () => clearInterval(id);
 	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
+	/////////// AUTHENTICATION LOGIC ENDS HERE
 
-	const {loading: usersLoading, users} = useSelector((state) => state.users);
+	const { loading: usersLoading, users } = useSelector((state) => state.users);
 
-	useEffect(() => {
-		dispatch(fetchUsers())
-	}, [])
+	const showLogoutModal = useSelector((state) => state.logout.showModal);
+	const showResetModal = useSelector((state) => state.logout.showResetModal);
+	const { showAddTicketModal, showTemplateModal } = useSelector((state) => state.ticketCreation);
+	// useEffect(() => {
+	// 	dispatch(fetchUsers())
+	// }, [])
 
 	return (
 		<>
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
-			{ <MemoizedInitialAdminCreationFormAndModal/> }
-			{/* { <TicketTemplateCreationForm/> } */}
+			{showAddTicketModal && <MemoizedInitialAdminCreationFormAndModal />}
+			{showTemplateModal && <MemoizedTicketTemplateCreationOrEditionForm />}
 
 			<div className="flex h-screen max-h-screen">
 				{/* <Sidebar /> */}

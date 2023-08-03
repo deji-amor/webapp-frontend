@@ -1,3 +1,36 @@
+const allFields = {
+	"Point of contact": {
+		"Point of contact name": {type: "text"},
+		"Point of contact phone number": {type: "text"},
+		"Point of contact address": {type: "text"},
+	},
+	"Number of technicians needed": {
+		"Number of technicians": {type: "number"},
+	},
+	"Scope of work": {
+		description: {type: "text"},
+		document: {type: "file"},
+	},
+	duration: {
+		"Start date-time": {type: "date-time"},
+		"End date-time": {type: "date-time"},
+	},
+	"Hardware component": {
+		Quantity: {type: "number"},
+		"Hardware list": {type: "list", min: 1, max: 5}
+	},
+	Location: {
+		"Number of location": {type: "number"},
+		Location: {type: "list"},
+		"building type": {type: "text"},
+	},
+	"Materials procurement": {
+		description: {type: "text"},
+	},
+	"Number of work system": {},
+	"software application": {},
+};
+
 const tree = {
 	// PROJECT TICkETS START >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	"Project Tickets": {
@@ -61,7 +94,7 @@ const tree = {
 	},
 	"Switch to a different workstation system": {
 		isTemplate: true,
-		fields: {},
+		fields: ["Point of contact", ""],
 	},
 	"alter the end": {
 		isTemplate: true,
@@ -102,15 +135,6 @@ const tree = {
 		isTemplate: true,
 		fields: {},
 	},
-	"IT Project Management*": {
-		options: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work (attach document)",
-			"Duration",
-			"no. location",
-		],
-	},
 	"Onsite Support": {
 		//DOWN
 		options: ["Project Work", "Special Project", "Asset Inventory"],
@@ -146,11 +170,25 @@ const tree = {
 	},
 	Troubleshooting: {
 		isTemplate: true,
-		fields: {},
+		fields: [
+			"Point of contact",
+			"Number of technicians needed",
+			"Materials procurement",
+			"Scope of work",
+			"duration",
+			"Location",
+		],
 	},
 	"Hardware maintenance": {
 		isTemplate: true,
-		fields: {},
+		fields: [
+			"Point of contact",
+			"Number of technicians needed",
+			"Hardware component",
+			"Scope of work",
+			"duration",
+			"Location",
+		],
 	},
 	"Onsite Support/IT Emergencies": {
 		// DOWN
@@ -161,15 +199,33 @@ const tree = {
 	},
 	"Staff Augmentation": {
 		isTemplate: true,
-		fields: {},
+		fields: [
+			"Point of contact",
+			"Number of technicians needed",
+			"Scope of work",
+			"duration",
+			"Location",
+		],
 	},
 	"Skill Transfer": {
 		isTemplate: true,
-		fields: {},
+		fields: [
+			"Point of contact",
+			"Number of technicians needed",
+			"Scope of work",
+			"duration",
+			"Location",
+		],
 	},
 	"Vacation coverage": {
 		isTemplate: true,
-		fields: {},
+		fields: [
+			"Point of contact",
+			"Number of technicians needed",
+			"Scope of work",
+			"duration",
+			"Location",
+		],
 	},
 
 	"Desktop Support": {
@@ -192,15 +248,33 @@ const tree = {
 	},
 	"Usage-based preventive maintenance": {
 		isTemplate: true,
-		fields: {},
+		fields: [
+			"Point of contact",
+			"Number of technicians needed",
+			"Scope of work",
+			"duration",
+			"Location",
+		],
 	},
 	"Predictive maintenance": {
 		isTemplate: true,
-		fields: {},
+		fields: [
+			"Point of contact",
+			"Number of technicians needed",
+			"Scope of work",
+			"duration",
+			"Location",
+		],
 	},
 	"Prescriptive maintenance": {
 		isTemplate: true,
-		fields: {},
+		fields: [
+			"Point of contact",
+			"Number of technicians needed",
+			"Scope of work",
+			"duration",
+			"Location",
+		],
 	},
 	// SERVICE TICkETS END >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 };

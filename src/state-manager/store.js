@@ -15,7 +15,7 @@ import thunk from "redux-thunk"
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['loginAdmin', 'loginCustomer', 'forgotpassword', 'resetpassword', "logout", "ticketCreation"]
+    blacklist: ['loginAdmin', 'loginCustomer', 'forgotpassword', 'resetpassword', "logout"]
 }
 
 const rootReducers = combineReducers({
