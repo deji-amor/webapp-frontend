@@ -31,3 +31,13 @@ export const solutions = [
 		des: "Connect with your Audience",
 	},
 ];
+
+export const features = ["Team Management", "Tasks Schedule", "File Manager"]
+
+export const resources = ["Blog", "Support", "NewsLetter"]
+
+export const community = ["Twitter", "Instagram", "Facebook", "Youtube"]
+
+export const support = ["My Account", "Help & Support", "Contact Us"]
+
+export const company = ["Privacy Policy", "Terms of Service", "Code of Conduct"]

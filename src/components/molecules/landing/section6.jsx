@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import Banner from "../../../assets/password/butbanner.png";
 import Female from "../../../assets/password/female.png";
-
+import Analysis from "../../../assets/password/analysis.png"
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 
 const PremiumWrapper = styled("div")(() => ({
@@ -44,9 +44,18 @@ const PremiumWrapper = styled("div")(() => ({
 		right: "170px",
 	},
 
-	".female img": {
+	".female .femaleImage": {
 		width: "100%",
 		height: "100%",
+		objectFit: "cover",
+	},
+
+	".female .icon": {
+		width: "100px",
+		height: "100px",
+		position: "relative",
+		top: "150px",
+		left: "310px",
 		objectFit: "cover",
 	},
 
@@ -99,7 +108,8 @@ const Premium = () => {
 	return (
 		<PremiumWrapper>
 			<div className="female">
-				<img src={Female} alt="banner" />
+				<img className="icon" src={Analysis} alt="banner" />
+				<img className="femaleImage" src={Female} alt="banner" />
 			</div>
 			<img src={Banner} alt="banner" />
 			<div className="layer"></div>
