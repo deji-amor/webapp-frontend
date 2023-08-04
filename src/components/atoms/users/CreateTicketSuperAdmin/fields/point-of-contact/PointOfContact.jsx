@@ -107,6 +107,7 @@ const PointOfContact = (props) => {
 						onChange={addressChangeHandler}
 						value={addressValue}
 						placeholder={"Enter address..."}
+						resizable={false}
 					/>
 				</div>
 				{addressHasError && (

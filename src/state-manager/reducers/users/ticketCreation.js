@@ -24,6 +24,26 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 	}
 });
 
+function getTodayAndTomorrow() {
+	const today = new Date();
+	const tomorrow = new Date(today);
+	tomorrow.setDate(tomorrow.getDate() + 1);
+
+	function formatDate(date) {
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, "0");
+		const day = String(date.getDate()).padStart(2, "0");
+		const hours = String(date.getHours()).padStart(2, "0");
+		const minutes = String(date.getMinutes()).padStart(2, "0");
+		return `${year}-${month}-${day}T${hours}:${minutes}`;
+	}
+
+	return {
+		today: formatDate(today),
+		tomorrow: formatDate(tomorrow),
+	};
+}
+
 const allPossibleFields = {
 		// POINT OF CONTACT NAME
 		"pointOfContactName": "",
@@ -40,6 +60,7 @@ const allPossibleFields = {
 		"pointOfContactAddressIsTouched": "",
 		"pointOfContactAddressIsValid": "",
 		"pointOfContactAddressHasError": "",
+		// NUMBER OF TECHNICIANS
 		"numberOfTechnicians": "",
 		// SCOPE OF WOR
 		"scopeOfWorkDescription": "",
@@ -47,8 +68,9 @@ const allPossibleFields = {
 		"scopeOfWorkDescriptionIsValid": "",
 		"scopeOfWorkDescriptionHasError": "",
 		"scopeOfWorkDocument": null,
-		"startDateTime": "",
-		"endDateTime": "",
+		"scopeOfWorkDocumentIsValid": false,
+		"startDateTime": getTodayAndTomorrow().today,
+		"endDateTime": getTodayAndTomorrow().tomorrow,
 		"hardwareQuantity": "",
 		"hardwareList": [],
 		"numberOfLocation": "",

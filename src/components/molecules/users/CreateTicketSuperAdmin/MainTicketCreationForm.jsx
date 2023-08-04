@@ -6,6 +6,7 @@ import GrayThemedLightestText from '../../../atoms/users/CreateTicketSuperAdmin/
 import PointOfContact from '../../../atoms/users/CreateTicketSuperAdmin/fields/point-of-contact/PointOfContact'
 import MaterialsProcurement from '../../../atoms/users/CreateTicketSuperAdmin/fields/materials-procurement/MaterialsProcurement'
 import ScopeOfWork from '../../../atoms/users/CreateTicketSuperAdmin/fields/scope-of-work/ScopeOfWork'
+import Duration from '../../../atoms/users/CreateTicketSuperAdmin/fields/duration/Duration'
 import HorizontalRule from '../../../atoms/users/CreateTicketSuperAdmin/HorizontalRule'
 
 const MainTicketCreationForm = () => {
@@ -17,7 +18,7 @@ const MainTicketCreationForm = () => {
 
   return (
 		<form onSubmit={submitHandler}>
-			<div className="min-h-[20rem] overflow-y-auto space-y-[0.75rem]">
+			<div className="max-h-[25rem] overflow-y-auto space-y-[0.75rem]">
 				<div className="">
 					<GrayThemedLightText>Ticket Details:</GrayThemedLightText>
 				</div>
@@ -30,6 +31,9 @@ const MainTicketCreationForm = () => {
 					<div className="flex items-start justify-start gap-[2rem]">
 						<MaterialsProcurement />
 						<ScopeOfWork />
+					</div>
+					<div className=''>
+						<Duration/>
 					</div>
 				</div>
 			</div>

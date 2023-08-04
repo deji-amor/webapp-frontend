@@ -23,7 +23,9 @@ const MaterialsProcurement = () => {
 
   return (
 		<div className="">
-			<GrayThemedLighterText>Materials Procurement*</GrayThemedLighterText>
+			<div className="mb-[0.5rem]">
+				<GrayThemedLighterText>Materials Procurement*</GrayThemedLighterText>
+			</div>
 			<div className="w-[30rem] h-[6.25rem]">
 				<TextArea
 					id={materialId}
@@ -31,6 +33,7 @@ const MaterialsProcurement = () => {
 					onChange={materialChangeHandler}
 					value={materialValue}
 					placeholder={"Enter description..."}
+					resizable={false}
 				/>
 			</div>
 			{materialHasError && (

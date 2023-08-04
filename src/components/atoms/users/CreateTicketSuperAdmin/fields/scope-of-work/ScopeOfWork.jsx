@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createTicketActions } from '../../../../../../state-manager/reducers/users/ticketCreation';
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
 import { isScopeOfWorkEmpty } from "../../../../../../helpers/validation";
+import { isValidFile } from '../../../../../../helpers/validation';
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import GrayThemedLighterText from "../../GrayThemedLighterText";
 import TextArea from "../general/TextArea";
 import BlueThemeSmall from '../../BlueThemedSmall';
+import BlueThemedLightText from '../../BlueThemedLightText';
+import BlueThemedMediumText from '../../BlueThemedMediumText';
+import BlueThemedXtraSm from '../../BlueThemedXtraSm';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useSelector, useDispatch } from 'react-redux';
-
-function isValidDocumentObject(variable) {
-	return typeof variable === "object" && variable !== null && Object.keys(variable).length !== 0;
-}
 
 const ScopeOfWork = () => {
     const {
@@ -47,27 +47,32 @@ const ScopeOfWork = () => {
       }
     }
 
-    let validDocument = isValidDocumentObject(scopeOfWorkDocument)
-    console.log(validDocument);
+		let validDocument = isValidFile(scopeOfWorkDocument)
+
+		useEffect(() => {
+			dispatch(createTicketActions.updateField({ key: "scopeOfWorkDocumentIsValid", value: validDocument }));
+		}, [validDocument, dispatch])
 
 		return (
 			<div className="">
-				<div className="flex items-center justify-start gap-[1rem]">
+				<div className="flex items-center justify-start gap-[1rem] mb-[0.5rem]">
 					<GrayThemedLighterText>Scope of work*</GrayThemedLighterText>
 					<label className="cursor-pointer" htmlFor="scope-of-work-document">
-            {
-              (validDocument) ? <BlueThemeSmall>{scopeOfWorkDocument.name}</BlueThemeSmall> : 
-              <BlueThemeSmall>
-                Attach Document <AttachFileIcon className="rotate-45" />{" "}
-              </BlueThemeSmall>
-            }
+						{validDocument ? (
+							<BlueThemedXtraSm>{scopeOfWorkDocument.name}</BlueThemedXtraSm>
+						) : (
+							<BlueThemedXtraSm>
+								Attach Document (5mb max) <AttachFileIcon className="rotate-45" fontSize="small" />{" "}
+							</BlueThemedXtraSm>
+						)}
 					</label>
 					<input
-            onChange={onDocumentChange}
+						onChange={onDocumentChange}
 						type="file"
 						className="hidden"
 						id="scope-of-work-document"
 						accept=".pdf, .doc, .docx, .xls, .xlsx"
+						max="5242880" // 5mb in size
 					/>
 				</div>
 				<div className="w-[30rem] h-[6.25rem]">
@@ -77,6 +82,7 @@ const ScopeOfWork = () => {
 						onChange={scopeOfWorkChangeHandler}
 						value={scopeOfWorkValue}
 						placeholder={"Enter description..."}
+						resizable={false}
 					/>
 				</div>
 				{scopeOfWorkHasError && (
