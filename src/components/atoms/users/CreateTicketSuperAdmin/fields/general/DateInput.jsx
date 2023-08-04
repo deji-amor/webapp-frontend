@@ -16,7 +16,7 @@ const DateInput = ({ placeholder, min, max, value, onChange, onBlur, hasError, i
 				onBlur={blurHandler}
 				type={type}
 				value={value}
-				className={`w-full accent-[#2b2e72] h-[46px] pl-4 pr-[50px] pt-3.5 text-[0.875rem] pb-4 rounded-md bg-[#eee] outline-none focus:border focus:border-[#2B2E72] ${
+				className={`w-full accent-[#2b2e72] h-[46px] pl-4 pr-2 pt-3.5 text-[0.875rem] pb-4 rounded-md bg-[#eee] outline-none focus:border focus:border-[#2B2E72] ${
 					hasError ? "border border-[#D73D3D]" : ""
 				}`}
 			/>

@@ -1,16 +1,27 @@
 import React from 'react'
-import ValidationErrorText from "../../../../Login/ValidationErrorText";
-import { isMaterialEmpty } from "../../../../../../helpers/validation";
-import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import GrayThemedLighterText from "../../GrayThemedLighterText";
-import TextArea from "../general/TextArea";
+import NumberDropDown from '../general/NumberDropDown';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTicketActions } from '../../../../../../state-manager/reducers/users/ticketCreation';
 
 const NumberOfTechnicians = () => {
+    const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+    const numberOfTechnicians = allPossibleFields.numberOfTechnicians;
+    const dispatch = useDispatch()
+
+  const technicianNumberChangeHandler = (value) => {
+    console.log(value);
+    dispatch(
+			createTicketActions.updateField({ key: "numberOfTechnicians", value: value })
+		);
+  }
+
   return (
     <div className=''>
-      <div className='flex items-center'>
+      <div className='flex items-center gap-[0.75rem]'>
         <GrayThemedLighterText>Number of Technicians</GrayThemedLighterText>
-        <input className=''/>
+        <NumberDropDown min={1} max={100} onChange={technicianNumberChangeHandler} value={numberOfTechnicians}/>
+        {/* <input className=''/> */}
       </div>
     </div>
   )

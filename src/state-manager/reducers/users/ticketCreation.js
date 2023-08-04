@@ -61,18 +61,25 @@ const allPossibleFields = {
 		"pointOfContactAddressIsValid": "",
 		"pointOfContactAddressHasError": "",
 		// NUMBER OF TECHNICIANS
-		"numberOfTechnicians": "",
-		// SCOPE OF WOR
+		"numberOfTechnicians": "1",
+		// SCOPE OF WORK
 		"scopeOfWorkDescription": "",
 		"scopeOfWorkDescriptionIsTouched": "",
 		"scopeOfWorkDescriptionIsValid": "",
 		"scopeOfWorkDescriptionHasError": "",
 		"scopeOfWorkDocument": null,
-		"scopeOfWorkDocumentIsValid": false,
+		"scopeOfWorkDocumentIsValid": false, // might not be need for this
+		// DURATION
 		"startDateTime": getTodayAndTomorrow().today,
 		"endDateTime": getTodayAndTomorrow().tomorrow,
-		"hardwareQuantity": "",
-		"hardwareList": [],
+		//HARDWARE COMPONENT TYPE
+		"hardwareComponentTypeQuantity": "1",
+		"hardwareInputTypeCurrentValue": "",
+		"hardwareInputTypeCurrentValueIsValid": "",
+		"hardwareInputTypeCurrentValueIsTouched": "",
+		"hardwareInputTypeCurrentValueIsHasError": "",
+		"hardwareComponentTypeList": ["one", "two", "three"],
+		"hardwareComponentTypeListIsValid": "",
 		"numberOfLocation": "",
 		"addresses": [],
 		"buildingType": "",

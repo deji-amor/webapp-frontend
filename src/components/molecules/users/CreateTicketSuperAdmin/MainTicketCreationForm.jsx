@@ -7,6 +7,8 @@ import PointOfContact from '../../../atoms/users/CreateTicketSuperAdmin/fields/p
 import MaterialsProcurement from '../../../atoms/users/CreateTicketSuperAdmin/fields/materials-procurement/MaterialsProcurement'
 import ScopeOfWork from '../../../atoms/users/CreateTicketSuperAdmin/fields/scope-of-work/ScopeOfWork'
 import Duration from '../../../atoms/users/CreateTicketSuperAdmin/fields/duration/Duration'
+import NumberOfTechnicians from '../../../atoms/users/CreateTicketSuperAdmin/fields/number-of-techinicians/NumberOfTechnicians'
+import HardWareComponentType from '../../../atoms/users/CreateTicketSuperAdmin/fields/hardware-component-quantity/HardWareComponentType'
 import HorizontalRule from '../../../atoms/users/CreateTicketSuperAdmin/HorizontalRule'
 
 const MainTicketCreationForm = () => {
@@ -32,8 +34,12 @@ const MainTicketCreationForm = () => {
 						<MaterialsProcurement />
 						<ScopeOfWork />
 					</div>
-					<div className=''>
+					<div className='flex items-center justify-start gap-[8.75rem]'>
+						<NumberOfTechnicians/>
 						<Duration/>
+					</div>
+					<div className=''>
+						<HardWareComponentType/>
 					</div>
 				</div>
 			</div>

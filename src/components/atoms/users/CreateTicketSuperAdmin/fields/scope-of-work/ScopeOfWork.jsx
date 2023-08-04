@@ -62,7 +62,7 @@ const ScopeOfWork = () => {
 							<BlueThemedXtraSm>{scopeOfWorkDocument.name}</BlueThemedXtraSm>
 						) : (
 							<BlueThemedXtraSm>
-								Attach Document (5mb max) <AttachFileIcon className="rotate-45" fontSize="small" />{" "}
+								Attach Document (10mb max) <AttachFileIcon className="rotate-45" fontSize="small" />{" "}
 							</BlueThemedXtraSm>
 						)}
 					</label>
@@ -72,7 +72,7 @@ const ScopeOfWork = () => {
 						className="hidden"
 						id="scope-of-work-document"
 						accept=".pdf, .doc, .docx, .xls, .xlsx"
-						max="5242880" // 5mb in size
+						max="10485760" // 5mb in size
 					/>
 				</div>
 				<div className="w-[30rem] h-[6.25rem]">
