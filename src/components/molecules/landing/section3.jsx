@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import "./board.css";
 import DecorCircle from "../../atoms/landing/decorCircle";
 import Avatar1 from "../../../assets/password/avatar1.png";
 import Range1 from "../../../assets/password/range1.png";
@@ -16,22 +17,23 @@ import Avatar7 from "../../../assets/password/avatar7.png";
 import Range7 from "../../../assets/password/range7.png";
 
 const ManagementWrapper = styled("div")(() => ({
-    width: "80%",
+    width: "90%",
     height: "auto",
 	position: "relative",
-	top: "570px",
 	margin: "0 auto",
     display: "flex",
+	justifyContent: "space-around",
     alignItems: "center",
+	gap: "80px",
+	flexWrap: "wrap",
+	padding: "10px",
     
     ".content": {
         width: "416px",
+		height: "100%",
         display: "flex",
         flexDirection: "column",
         gap: "40px",
-        position: "absolute",
-        top: "50%",
-        transform: "translate(0, 30%)",
         zIndex: "10",
         margin: "auto 0",
     },
@@ -64,18 +66,14 @@ const ManagementWrapper = styled("div")(() => ({
         zIndex: "20",
         width: "142px",
         background: "linear-gradient(180deg, #9265E5 0%, #412D66 100%)",
-    }
-}));
+    },
 
-const TableWrapper = styled("div")(() => ({
-	width: "650px",
-	margin: "auto",
-	borderRadius: "10px",
-	border: "1px solid #EAECF0",
-    position: "absolute",
-    top: "0",
-    right: "0",
-	boxShadow: "0px 1.495449423789978px 2.990898847579956px -1.495449423789978px rgba(16, 24, 40, 0.06), 0px 2.990898847579956px 5.981797695159912px -1.495449423789978px rgba(16, 24, 40, 0.10)",
+	".tableWrapper": {
+		width: "650px",
+		borderRadius: "10px",
+		border: "1px solid #EAECF0",
+		boxShadow: "0px 1.495449423789978px 2.990898847579956px -1.495449423789978px rgba(16, 24, 40, 0.06), 0px 2.990898847579956px 5.981797695159912px -1.495449423789978px rgba(16, 24, 40, 0.10)",
+	},
 
 	table: {
 		width: "100%",
@@ -139,6 +137,11 @@ const TableWrapper = styled("div")(() => ({
 	},
 }));
 
+// const TableWrapper = styled("div")(() => ({
+
+	
+// }));
+
 const Management = () => {
 	return (
 		<ManagementWrapper>
@@ -153,7 +156,7 @@ const Management = () => {
 				</p>
                 <button type="button">Try For Free</button>
 			</div>
-			<TableWrapper>
+			<div className="tableWrapper">
 				<table>
 					<thead>
 						<tr>
@@ -352,12 +355,7 @@ const Management = () => {
 						</tr>
 					</tbody>
 				</table>
-			</TableWrapper>
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
+			</div>
 		</ManagementWrapper>
 	);
 };

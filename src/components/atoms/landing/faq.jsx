@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const QuestionWrapper = styled("div")(() => ({
-	width: "504px",
+	width: "500px",
 	height: "86px",
 	borderRadius: "8px",
 	border: "1px solid #89D6FB",

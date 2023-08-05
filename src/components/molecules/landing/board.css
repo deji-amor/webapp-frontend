@@ -1,0 +1,101 @@
+@media screen and (max-width: 1800px) {
+	.placeholder {
+        padding: 250px;
+	}
+}
+
+@media screen and (max-width: 1750px) {
+	.placeholder {
+        padding: 240px;
+	}
+}
+
+@media screen and (max-width: 1700px) {
+	.placeholder {
+        padding: 230px;
+	}
+}
+
+@media screen and (max-width: 1650px) {
+	.placeholder {
+        padding: 220px;
+	}
+}
+
+@media screen and (max-width: 1600px) {
+	.placeholder {
+        padding: 215px;
+	}
+}
+
+@media screen and (max-width: 1550px) {
+	.placeholder {
+        padding: 210px;
+	}
+}
+
+@media screen and (max-width: 1500px) {
+	.placeholder {
+        padding: 190px;
+	}
+}
+
+@media screen and (max-width: 1450px) {
+	.placeholder {
+        padding: 180px;
+	}
+}
+
+@media screen and (max-width: 1400px) {
+	.placeholder {
+        padding: 160px;
+    }
+}
+
+@media screen and (max-width: 1350px) {
+	.placeholder {
+        padding: 150px;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+	.placeholder {
+		padding: 140px;
+	}
+}
+
+@media screen and (max-width: 1250px) {
+	.placeholder {
+		padding: 125px;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.placeholder {
+		padding: 115px;
+	}
+}
+
+@media screen and (max-width: 1160px) {
+	.placeholder {
+		padding: 105px;
+	}
+}
+
+@media screen and (max-width: 1130px) {
+	.placeholder {
+		padding: 100px;
+	}
+}
+
+@media screen and (max-width: 1080px) {
+	.placeholder {
+		padding: 90px;
+	}
+}
+
+@media screen and (max-width: 1050px) {
+	.placeholder {
+		padding: 80px;
+	}
+}

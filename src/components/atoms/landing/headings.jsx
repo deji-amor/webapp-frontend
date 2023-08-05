@@ -2,11 +2,13 @@ import { styled } from "@mui/material";
 import PropTypes from "prop-types";
 
 
-const HeadingWrapper = styled("div")(({width}) => ({
-    width: "80%",
+const HeadingWrapper = styled("div")(({width, containerWidth}) => ({
+    width: containerWidth ? containerWidth : "80%",
     margin: "0 auto",
+    position: "relative",
     display: "flex",
     justifyContent: "space-between",
+    // border: "1px solid orange",
 
     h2: {
         width: width ? width : "312px",
@@ -30,13 +32,12 @@ const HeadingWrapper = styled("div")(({width}) => ({
         letterSpacing: ".08px",
         position: "relative",
         top: "30px",
-        right: "100px"
     }
 }))
 
-const Header = ({title, description, width}) => {
+const Header = ({title, description, width, containerWidth}) => {
   return (
-    <HeadingWrapper width={width}>
+    <HeadingWrapper width={width} containerWidth={containerWidth}>
         <h2>{title}</h2>
         <p>{description}</p>
     </HeadingWrapper>
@@ -47,6 +48,7 @@ Header.propTypes = {
     width: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
+    containerWidth: PropTypes.string,
 }
 
 export default Header

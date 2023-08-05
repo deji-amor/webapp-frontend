@@ -12,17 +12,15 @@ import CustomLogo from "../../atoms/Password/customLogo";
 const FooterWrapper = styled("div")(() => ({
 	width: "90%",
 	position: "relative",
-	margin: "auto",
-	marginBottom: "200px",
+	margin: "0 auto",
 	display: "flex",
 	flexWrap: "wrap",
 	justifyContent: "space-evenly",
-	top: "1350px",
 }));
 
 const Footer = () => {
 	return (
-		<>
+		<div style={{width: "100%"}}>
 			<FooterWrapper>
 				<FooterItem title="features" items={features} />
 				<FooterItem title="resources" items={resources} />
@@ -34,7 +32,6 @@ const Footer = () => {
 				style={{
 					width: "80%",
 					position: "relative",
-					top: "1200px",
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
@@ -44,8 +41,8 @@ const Footer = () => {
 				<CustomLogo color="#2B2E72" style={{ position: "relative", top: "0" }} />
 				<span>Copyright 2023</span>
 			</div>
-			<div style={{ width: "100%", height: "50px", position: "relative", top: "1200px" }}></div>
-		</>
+			<div style={{ width: "100%", height: "50px", position: "relative" }}></div>
+		</div>
 	);
 };
 

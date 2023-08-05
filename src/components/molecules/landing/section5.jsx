@@ -9,13 +9,12 @@ import CEO5 from "../../../assets/password/ceo5.png";
 import CEO6 from "../../../assets/password/ceo6.png";
 
 const HearWrapper = styled("div")(({ width }) => ({
-	width: "1448px",
+	width: "100%",
 	position: "relative",
 	margin: "auto",
 	display: "flex",
 	flexDirection: "column",
 	gap: "64px",
-	top: "1600px",
 
     ".users": {
         width: "90%",

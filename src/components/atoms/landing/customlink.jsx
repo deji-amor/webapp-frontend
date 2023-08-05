@@ -1,16 +1,16 @@
-import { styled } from "@mui/material";
+import { styled, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const LinkWrapper = styled("li")(() => ({
+const LinkWrapper = styled("li")(({matches}) => ({
 	position: 'relative',
 	zIndex: "10",
 
 	".title": {
 		fontFamily: "Poppins",
-		fontSize: "16px",
+		fontSize: matches ? "14px" : "16px",
 		fontStyle: "normal",
 		lineHeight: "120%",
 		letterSpacing: "1px",
@@ -56,9 +56,11 @@ const LinkWrapper = styled("li")(() => ({
 
 const CustomLink = ({ text, type, link, onClickValue, name, dropDownValues }) => {
 	const [isToggle, setIsToggle] = useState(false);
+	const matches = useMediaQuery('(max-width: 1250px)');
+
 
 	return (
-		<LinkWrapper>
+		<LinkWrapper matches={matches}>
 			{type != "dropdown" ? (
 				<NavLink to={link} className="title" style={({isActive}) => ({
                     color: isActive ? '#fff' : '#FEFEFE',

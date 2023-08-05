@@ -1,10 +1,16 @@
-import { styled } from "@mui/material";
+import { styled, useMediaQuery } from "@mui/material";
+import "./board.css";
 import NavLinks from "./navlinks";
 import Circle from "../../atoms/landing/circle";
 import HeroMessage from "./hero-message";
-import HeroImage from "../../../assets/password/heroImage.png";
-import OrnamentImage from "../../../assets/password/Ornament.png";
+import HeroImage from "../../../assets/password/ticket.png";
 import DecorCircle from "../../atoms/landing/decorCircle";
+
+const BoardParentWrapper = styled("div")(() => ({
+	maxWidth: "100%",
+	height: "auto",
+	position: "relative",
+}));
 
 const BoardWrapper = styled("div")(() => ({
 	width: "100%",
@@ -22,43 +28,39 @@ const BoardWrapper = styled("div")(() => ({
 	},
 }));
 
-const HeroImageWrapper = styled("div")(() => ({
-	width: "1224px",
-	height: "749px",
-	margin: "auto",
+const HeroImageWrapper = styled("div")(({ query}) => ({
+	width: "100%",
+	height: "670px",
 	position: "absolute",
-	top: "510px",
+	zIndex: "10",
+	top: "490px",
 	left: "50%",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "start",
 	transform: "translate(-50%, 0%)",
+
+	".ticketImage": {
+		width: query ? "90%" : "80%",
+		position: "relative",
+		display: "flex",
+	},
 
 	".heroImage": {
 		width: "100%",
 		height: "100%",
 		objectFit: "cover",
-		position: "absolute",
+		position: "relative",
 		zIndex: "20",
-		filter: "drop-shadow(4px 8px 20px rgba(76, 111, 255, 0.16))"
-	},
-
-	".one, .two": {
-		position: "absolute",
-		zIndex: "1",
-	},
-
-	".one": {
-		bottom: "340px",
-		left: "18px",
-	},
-
-	".two": {
-		top: "-25px",
-		right: "50px",
+		filter: "drop-shadow(4px 8px 20px rgba(76, 111, 255, 0.16))",
 	},
 }));
 
 const HeroBoard = () => {
+	let query = useMediaQuery("(max-width: 1200px)");
+
 	return (
-		<>
+		<BoardParentWrapper>
 			<BoardWrapper>
 				<NavLinks />
 				<Circle></Circle>
@@ -71,12 +73,12 @@ const HeroBoard = () => {
 					<HeroMessage />
 				</div>
 			</BoardWrapper>
-			<HeroImageWrapper className="hero-image">
-				<img className="one" src={OrnamentImage} alt="dots" />
-				<img className="heroImage" src={HeroImage} alt="Hero-Banner-Image" />
-				<img className="two" src={OrnamentImage} alt="dots" />
+			<HeroImageWrapper query2={query}>
+				<div className="ticketImage">
+					<img className="heroImage" src={HeroImage} alt="Hero-Banner-Image" />
+				</div>
 			</HeroImageWrapper>
-		</>
+		</BoardParentWrapper>
 	);
 };
 

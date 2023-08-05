@@ -6,6 +6,7 @@ import CommentImage from "../../../assets/password/comment.png"
 const FeatureWrapper = styled("div")(({color, background, color2, shadow}) => ({
     width: "296px",
     height: "317px",
+    margin: "auto",
     border: "1px solid #4C6FFF",
     background: background ? background : "#ffffff",
     borderRadius: "8px",

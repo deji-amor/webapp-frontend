@@ -3,19 +3,20 @@ import Header from "../../atoms/landing/headings";
 import Feature from "../../atoms/landing/feature";
 
 const FeaturesWrapper = styled("div")(() => ({
-    width: "1448px",
+    width: "100%",
     position: "relative",
-    margin: "auto",
+    margin: "0 auto",
     display: "flex",
     flexDirection: "column",
     gap: "64px",
-    top: "1500px",
 
     ".features": {
         width: "90%",
         margin: "0 auto",
         display: "flex",
-        justifyContent: "space-evenly"
+		gap: "20px",
+		flexWrap: "wrap",
+
     }
 }))
 
@@ -25,7 +26,7 @@ const Features = () => {
 			<Header
 				title="Core Features"
 				description="We will also facilitate the business marketing of these products with our SEO experts so that they become a ready-to-use website and help sell a product from the company"
-				width=""
+				// width=""
 			/>
 			<div className="features">
 				<Feature
