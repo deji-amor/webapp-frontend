@@ -29,8 +29,8 @@ const Faq = () => {
 			<Header
 				title="Frequently Asked Questions"
 				description="We will also facilitate the business marketing of these products with our SEO experts so that they become a ready-to-use website and help sell a product from the company"
-				width="467px"
-				containerWidth="65%"
+				width="450px"
+				containerWidth="80%"
 			/>
 			<div className="questions">
 				<Question />
