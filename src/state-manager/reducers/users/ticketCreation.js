@@ -85,6 +85,18 @@ const allPossibleFields = {
 		"hardwareComponentTypeQuantityNameIsValid": "",
 		"hardwareComponentTypeQuantityNameIsTouched": "",
 		"hardwareComponentTypeQuantityNameHasError": "",
+		//SOFTWARE INSTALLATION
+		"softwareInstallationQuantity": "1",
+		"softwareInstallationName": "",
+		"softwareInstallationNameIsValid": "",
+		"softwareInstallationNameIsTouched": "",
+		"softwareInstallationNameHasError": "",
+		//SOFTWARE CUSTOMIZATION
+		"softwareCustomizationQuantity": "1",
+		"softwareCustomizationName": "",
+		"softwareCustomizationNameIsValid": "",
+		"softwareCustomizationNameIsTouched": "",
+		"softwareCustomizationNameHasError": "",
 		// WORKSTATION
 		"numberOfWorkstation": "1",
 		// WORK SYSTEM

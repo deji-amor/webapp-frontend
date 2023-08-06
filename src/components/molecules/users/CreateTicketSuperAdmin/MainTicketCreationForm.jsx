@@ -12,6 +12,8 @@ import HardWareComponentType from '../../../atoms/users/CreateTicketSuperAdmin/f
 import HardwareComponentQuantity from '../../../atoms/users/CreateTicketSuperAdmin/fields/hardware-component-quantity/HardwareComponentQuantity'
 import NumberOfWorkstation from '../../../atoms/users/CreateTicketSuperAdmin/fields/number-of-workstation/NumberOfWorkstation'
 import NumberOfWorkSystem from '../../../atoms/users/CreateTicketSuperAdmin/fields/number-of-worksystem/NumberOfWorksystem'
+import SoftwareApplicationCustomization from '../../../atoms/users/CreateTicketSuperAdmin/fields/software-application-customization/SoftwareApplicationCustomization'
+import SoftwareApplicationInstallation from '../../../atoms/users/CreateTicketSuperAdmin/fields/software-application-installation/SoftwareApplicationInstallation'
 import HorizontalRule from '../../../atoms/users/CreateTicketSuperAdmin/HorizontalRule'
 
 const MainTicketCreationForm = () => {
@@ -52,6 +54,12 @@ const MainTicketCreationForm = () => {
 					</div>
 					<div className=''>
 						<HardwareComponentQuantity/>
+					</div>
+					<div className=''>
+						<SoftwareApplicationCustomization/>
+					</div>
+					<div className=''>
+						<SoftwareApplicationInstallation/>
 					</div>
 				</div>
 			</div>
