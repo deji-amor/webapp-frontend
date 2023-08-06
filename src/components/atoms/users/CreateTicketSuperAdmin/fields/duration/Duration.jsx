@@ -42,7 +42,7 @@ const Duration = () => {
 			reset: startDateReset,
 		} = useCreateTicketInput("startDateTime", isValidDateTimeLocal);
 
-    console.log(startDateValue);
+    // console.log(startDateValue);
 
     const {
 			enteredValue: endDateValue,

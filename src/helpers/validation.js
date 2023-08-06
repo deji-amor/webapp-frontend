@@ -93,6 +93,16 @@ export function isValidDateTimeLocal(inputString) {
   return [true, null];
 }
 
+export function isHardwareTypeValid(value) {
+	if (value.trim().length === 0) return [false, "Hardware type can not be empty"];
+	else return [true, ""];
+}
+
+export function isHardwareQuantityValid(value) {
+	if (value.trim().length === 0) return [false, "Hardware quantity can not be empty"];
+	else return [true, ""];
+}
+
 // // Example usage:
 // const dateString1 = "2023-08-04T12:00";
 // const dateString2 = "2023-13-04T25:00"; // Invalid date or time values

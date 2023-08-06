@@ -9,6 +9,7 @@ const useCreateTicketInput = (pointer, validateValue) => {
 	const enteredValue = allPossibleFields[pointer]
 	const isTouched = allPossibleFields[`${pointer}IsTouched`];
 	const hasError = allPossibleFields[`${pointer}HasError`];
+	const valueIsValid = allPossibleFields[`${pointer}IsValid`]
 
 	const setEnteredValue = (value) => {
 		dispatch(createTicketActions.updateField({ key: pointer, value:  value}));
@@ -22,11 +23,15 @@ const useCreateTicketInput = (pointer, validateValue) => {
 		dispatch(createTicketActions.updateField({ key: `${pointer}HasError`, value: bool }));
 	}
 
+	useEffect(() => {
+		dispatch(createTicketActions.updateField({ key: `${pointer}IsValid`, value: validateValue(enteredValue)[0] }));
+	}, [enteredValue, dispatch, pointer, validateValue])
+
 	const id = useId();
 	// const [enteredValue, setEnteredValue] = useState("");
 	// const [isTouched, setIsTouched] = useState(false);
 	// const [hasError, setHasError] = useState(false);
-	const [valueIsValid, errMsg] = validateValue(enteredValue);
+	const [_, errMsg] = validateValue(enteredValue);
 	const [errorMessage, setErrorMessage] = useState(errMsg);
 	const [errorFromServer, setErrorFromServer] = useState(false);
 

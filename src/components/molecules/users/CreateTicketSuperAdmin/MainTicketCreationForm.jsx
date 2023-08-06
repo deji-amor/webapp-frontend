@@ -8,7 +8,10 @@ import MaterialsProcurement from '../../../atoms/users/CreateTicketSuperAdmin/fi
 import ScopeOfWork from '../../../atoms/users/CreateTicketSuperAdmin/fields/scope-of-work/ScopeOfWork'
 import Duration from '../../../atoms/users/CreateTicketSuperAdmin/fields/duration/Duration'
 import NumberOfTechnicians from '../../../atoms/users/CreateTicketSuperAdmin/fields/number-of-techinicians/NumberOfTechnicians'
-import HardWareComponentType from '../../../atoms/users/CreateTicketSuperAdmin/fields/hardware-component-quantity/HardWareComponentType'
+import HardWareComponentType from '../../../atoms/users/CreateTicketSuperAdmin/fields/hardware-component-type/HardWareComponentType'
+import HardwareComponentQuantity from '../../../atoms/users/CreateTicketSuperAdmin/fields/hardware-component-quantity/HardwareComponentQuantity'
+import NumberOfWorkstation from '../../../atoms/users/CreateTicketSuperAdmin/fields/number-of-workstation/NumberOfWorkstation'
+import NumberOfWorkSystem from '../../../atoms/users/CreateTicketSuperAdmin/fields/number-of-worksystem/NumberOfWorksystem'
 import HorizontalRule from '../../../atoms/users/CreateTicketSuperAdmin/HorizontalRule'
 
 const MainTicketCreationForm = () => {
@@ -20,7 +23,7 @@ const MainTicketCreationForm = () => {
 
   return (
 		<form onSubmit={submitHandler}>
-			<div className="max-h-[25rem] overflow-y-auto space-y-[0.75rem]">
+			<div className="max-h-[25rem] max-w-[65rem] overflow-y-auto space-y-[0.75rem]">
 				<div className="">
 					<GrayThemedLightText>Ticket Details:</GrayThemedLightText>
 				</div>
@@ -34,12 +37,21 @@ const MainTicketCreationForm = () => {
 						<MaterialsProcurement />
 						<ScopeOfWork />
 					</div>
+					<div className=''>
+						<NumberOfWorkSystem/>
+					</div>
+					<div className=''>
+						<NumberOfWorkstation/>
+					</div>
 					<div className='flex items-center justify-start gap-[8.75rem]'>
 						<NumberOfTechnicians/>
 						<Duration/>
 					</div>
 					<div className=''>
 						<HardWareComponentType/>
+					</div>
+					<div className=''>
+						<HardwareComponentQuantity/>
 					</div>
 				</div>
 			</div>

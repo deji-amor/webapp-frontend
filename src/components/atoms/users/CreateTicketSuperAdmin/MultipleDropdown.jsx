@@ -66,7 +66,7 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 			setSelectedOption(null);
 			dispatch(createTicketActions.changeAnyState({ key: "level", value: currentLevel }));
 			const newPath = [...pathToTemplate].slice(0, currentLevel);
-			console.log(newPath);
+			// console.log(newPath);
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newPath }));
 			return;
 		}
@@ -85,7 +85,7 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
 		}
 	}
-	console.log(pathToTemplate);
+	// console.log(pathToTemplate);
 
   return (
 		<div className="w-full h-full">

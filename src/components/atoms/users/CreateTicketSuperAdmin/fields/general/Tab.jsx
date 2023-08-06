@@ -20,10 +20,14 @@ const Tab = ({children, onRemove}) => {
 		line-height: normal;
 	`;
 
+	const clickHandler = () => {
+		onRemove(children)
+	}
+
   return (
     <Tablet>
       {children}
-      <CloseIcon onClick={onRemove} fontSize='15' className='cursor-pointer'/>
+      <CloseIcon onClick={clickHandler} fontSize='15' className='cursor-pointer'/>
     </Tablet>
   )
 }

@@ -56,9 +56,6 @@ const PointOfContact = (props) => {
 		reset: addressReset,
 	} = useCreateTicketInput("pointOfContactAddress", isAddressEmpty);
 
-	const t = useSelector((state) => state.ticketCreation);
-	console.log(t);
-
 	return (
 		<div className="space-y-[0.75rem]">
 			<div className="">

@@ -73,13 +73,22 @@ const allPossibleFields = {
 		"startDateTime": getTodayAndTomorrow().today,
 		"endDateTime": getTodayAndTomorrow().tomorrow,
 		//HARDWARE COMPONENT TYPE
-		"hardwareComponentTypeQuantity": "1",
 		"hardwareInputTypeCurrentValue": "",
 		"hardwareInputTypeCurrentValueIsValid": "",
 		"hardwareInputTypeCurrentValueIsTouched": "",
 		"hardwareInputTypeCurrentValueIsHasError": "",
-		"hardwareComponentTypeList": ["one", "two", "three"],
+		"hardwareComponentTypeList": [],
 		"hardwareComponentTypeListIsValid": "",
+		//HARDWARE COMPONENT QUANTITY
+		"hardwareComponentTypeQuantityValue": "1",
+		"hardwareComponentTypeQuantityName": "",
+		"hardwareComponentTypeQuantityNameIsValid": "",
+		"hardwareComponentTypeQuantityNameIsTouched": "",
+		"hardwareComponentTypeQuantityNameHasError": "",
+		// WORKSTATION
+		"numberOfWorkstation": "1",
+		// WORK SYSTEM
+		"numberOfWorkSystem": "1",
 		"numberOfLocation": "",
 		"addresses": [],
 		"buildingType": "",
