@@ -4,7 +4,7 @@ import { styled } from '@mui/material'
 import CloseIcon from "@mui/icons-material/Close";
 
 const Tab = ({children, onRemove}) => {
-  const Tablet = styled("div")`
+  const Tablet = styled("button")`
 		display: flex;
 		padding: 0.375rem 0.75rem;
 		align-items: center;
@@ -25,11 +25,11 @@ const Tab = ({children, onRemove}) => {
 	}
 
   return (
-    <Tablet>
-      {children}
-      <CloseIcon onClick={clickHandler} fontSize='15' className='cursor-pointer'/>
-    </Tablet>
-  )
+		<button className="inline-flex py-[0.375rem] px-[0.75rem] items-center gap-[0.25rem] bg-[#2b2e72] text-white font-poppins text-[0.875rem] font-[500]">
+			{children}
+			<CloseIcon onClick={clickHandler} fontSize="15" className="cursor-pointer" />
+		</button>
+	);
 }
 
 Tab.propTypes = {

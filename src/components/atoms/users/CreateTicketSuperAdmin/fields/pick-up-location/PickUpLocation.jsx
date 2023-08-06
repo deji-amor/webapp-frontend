@@ -25,7 +25,7 @@ const PickUpLocation = () => {
 
 	// for the location tabs
 	const changeActiveLocationHandler = (location) => {
-		dispatch(createTicketActions.updateField({ key: "activeLocation", value: location }));
+		dispatch(createTicketActions.updateField({ key: "activePickLocation", value: location }));
 	};
 
 	// for current location
@@ -64,6 +64,11 @@ const PickUpLocation = () => {
 		const newLocations = pickLocations.slice();
 		newLocations.splice(activePickLocation, 1, locationValue);
 		dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
+		if (pickLocations.every((loc) => isAddressEmpty(loc)[0])) {
+			dispatch(createTicketActions.updateField({ key: "pickLocationsIsValid", value: true }));
+		} else {
+			dispatch(createTicketActions.updateField({ key: "pickLocationsIsValid", value: false }));
+		}
 	}, [locationValue, dispatch]);
 
 	const tablet = (
@@ -85,7 +90,7 @@ const PickUpLocation = () => {
 	return (
 		<div>
 			<div className="mb-[0.75rem]">
-				<GrayThemedLightText>Locations Details:</GrayThemedLightText>
+				<GrayThemedLightText>Pick Up Locations Details:</GrayThemedLightText>
 			</div>
 			<div className="px-[1.5rem] py-[0.75rem] border-[0.5px] border-[#000]">
 				<div className="flex items-center gap-[0.75rem] mb-[1.38rem]">

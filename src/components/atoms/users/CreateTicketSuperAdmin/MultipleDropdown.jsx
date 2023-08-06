@@ -52,7 +52,7 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 		if (!tree[option]?.options) {
 			const newpath = [...pathToTemplate].slice(0, currentLevel);
 			newpath[currentLevel] = option;
-			console.log({oldPath: pathToTemplate, newpath});
+			// console.log({oldPath: pathToTemplate, newpath});
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
 			// REDIRECT TO Ticket TEMPLATE FORM
 			// console.log(tree[option]);

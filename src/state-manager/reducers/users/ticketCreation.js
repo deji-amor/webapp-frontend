@@ -103,15 +103,19 @@ const allPossibleFields = {
 		"numberOfWorkSystem": "1",
 		//LOCATION
 		"numberOfLocation": "3",
-		"locations": ["one", "two", "three"],
-		"activeLocation": 0, // ZERO INDEX BASED
-		"location": "",
-		"locationIsValid": "",
-		"locationIsTouched": "",
-		"locationHasError": "",
+		"locations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		"locationsAddressIsValid": false,
+		"activeLocationAddress": 0, // ZERO INDEX BASED
+		"activeLocationType": 0, // ZERO INDEX BASED
+		"locationAddress": "",
+		"locationType": "government",
+		"locationAddressIsValid": "",
+		"locationAddressIsTouched": "",
+		"locationAddressHasError": "",
 		//PICk UP LOCATION
 		"numberOfPickLocation": "3",
-		"pickLocations": ["one", "two", "three"],
+		"pickLocations": [{address: "", type: "government"}, {address: "", type: "commercial"}, {address: "", type: "residential"}],
+		"pickLocationsIsValid": false,
 		"activePickLocation": 0, // ZERO INDEX BASED
 		"pickLocation": "",
 		"pickLocationIsValid": "",
@@ -119,7 +123,8 @@ const allPossibleFields = {
 		"pickLocationHasError": "",
 		//DROP OFF LOCATION
 		"numberOfDropLocation": "3",
-		"dropLocations": ["one", "two", "three"],
+		"dropLocations":[{address: "", type: "government"}, {address: "", type: "commercial"}, {address: "", type: "residential"}],
+		"dropLocationsIsValid": false,
 		"activeDropLocation": 0, // ZERO INDEX BASED
 		"dropLocation": "",
 		"dropLocationIsValid": "",
@@ -174,6 +179,7 @@ const createTicketSlice = createSlice({
 			state.showAddTicketModal = true;
 			state.showTemplateModal = false;
 			state.pathToTemplate = []
+			state.allPossibleFields = allPossibleFields
 		},
 		updateField: (state, action) => {
 			const payload = action.payload

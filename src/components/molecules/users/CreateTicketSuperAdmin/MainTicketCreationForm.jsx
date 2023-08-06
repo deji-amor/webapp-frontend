@@ -34,52 +34,62 @@ const MainTicketCreationForm = () => {
 		dispatch(createTicketActions.goBackToAddTicketModal());
 	}
 
+	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
+	const pointOfContact = chosenTemplate.includes("pointOfContact")
+	const numberOfTechniciansNeeded = chosenTemplate.includes("numberOfTechniciansNeeded")
+	const scopeOfWork = chosenTemplate.includes("scopeOfWork")
+	const duration = chosenTemplate.includes("duration")
+	const hardwareComponentQuantity = chosenTemplate.includes("hardwareComponentQuantity")
+	const hardwareComponentType = chosenTemplate.includes("hardwareComponentType")
+	const location = chosenTemplate.includes("location")
+	const materialsProcurement = chosenTemplate.includes("materialsProcurement")
+	const numberOfWorkStation = chosenTemplate.includes("numberOfWorkStation")
+	const numberOfWorkSystems = chosenTemplate.includes("numberOfWorkSystems")
+	const softwareApplicationInstallation = chosenTemplate.includes("softwareApplicationInstallation")
+	const softwareApplicationCustomization = chosenTemplate.includes("softwareApplicationCustomization")
+	const pickUpLocation = chosenTemplate.includes("pickUpLocation")
+	const dropOffLocation = chosenTemplate.includes("dropOffLocation")
+
+	// console.log({chosenTemplate});
+
   return (
 		<form onSubmit={submitHandler}>
-			<div className="max-h-[25rem] max-w-[65rem] overflow-y-auto space-y-[0.75rem]">
+			<div className="max-h-[25rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem]">
 				<div className="">
 					<GrayThemedLightText>Ticket Details:</GrayThemedLightText>
 				</div>
-				<div className="space-y-[1.25rem]">
+				<div className="space-y-[1.25rem] p-[2px]">
 					{/* POINT OF CONTACT */}
-					<PointOfContact />
+					{pointOfContact && <PointOfContact />}
 					<div className="max-w-[48rem]">
 						<HorizontalRule />
 					</div>
 					<div className="flex items-start justify-start gap-[2rem]">
-						<MaterialsProcurement />
-						<ScopeOfWork />
+						{materialsProcurement && <MaterialsProcurement />}
+						{scopeOfWork && <ScopeOfWork />}
 					</div>
-					<div className=''>
-						<NumberOfWorkSystem/>
+					<div className="">{numberOfWorkSystems && <NumberOfWorkSystem />}</div>
+					<div className="">{numberOfWorkStation && <NumberOfWorkstation />}</div>
+					<div className="flex items-center justify-start gap-[8.75rem]">
+						{numberOfTechniciansNeeded && <NumberOfTechnicians />}
+						{duration && <Duration />}
 					</div>
-					<div className=''>
-						<NumberOfWorkstation/>
+					<div className="">{hardwareComponentType && <HardWareComponentType />}</div>
+					<div className="">{hardwareComponentQuantity && <HardwareComponentQuantity />}</div>
+					<div className="">
+						{softwareApplicationCustomization && <SoftwareApplicationCustomization />}
 					</div>
-					<div className='flex items-center justify-start gap-[8.75rem]'>
-						<NumberOfTechnicians/>
-						<Duration/>
+					<div className="">
+						{softwareApplicationInstallation && <SoftwareApplicationInstallation />}
 					</div>
-					<div className=''>
-						<HardWareComponentType/>
+					<div className="">
+						{pickUpLocation && <PickUpLocation />}
 					</div>
-					<div className=''>
-						<HardwareComponentQuantity/>
+					<div className="">
+						{dropOffLocation && <DropOffLocation />}
 					</div>
-					<div className=''>
-						<SoftwareApplicationCustomization/>
-					</div>
-					<div className=''>
-						<SoftwareApplicationInstallation/>
-					</div>
-					<div className=''>
-						<PickUpLocation/>
-					</div>
-					<div className=''>
-						<DropOffLocation/>
-					</div>
-					<div className=''>
-						<Location/>
+					<div className="">
+						{location && <Location />}
 					</div>
 				</div>
 			</div>

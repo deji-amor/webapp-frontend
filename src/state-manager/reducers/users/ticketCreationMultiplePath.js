@@ -1,13 +1,13 @@
 export const allFields = {
-	"Point of contact": {
+	"pointOfContact": {
 		pointOfContactName: {type: "text"},
 		pointOfContactPhoneNumber: {type: "text"},
 		pointOfContactAddress: {type: "text"},
 	},
-	"Number of technicians needed": {
+	"numberOfTechniciansNeeded": {
 		numberOfTechnicians: {type: "number"},
 	},
-	"Scope of work": {
+	"scopeOfWork": {
 		scopeOfWorkDescription: {type: "text"},
 		scopeOfWorkDocument: {type: "file"},
 	},
@@ -15,42 +15,42 @@ export const allFields = {
 		startDateTime: {type: "date-time"},
 		endDateTime: {type: "date-time"},
 	},
-	"Hardware component quantity": {
+	"hardwareComponentQuantity": {
 		hardwareQuantity: {type: "number"},
 		hardwareName: {type: "text"},
 	},
-	"Hardware component type": {
+	"hardwareComponentType": {
 		hardwareComponentTypeQuantity: {type: "number"},
 		hardwareComponentTypeList: {type: "list", min: 1, max: 5},
 	},
-	Location: {
+	location: {
 		numberOfLocation: {type: "number"},
 		addresses: {type: "list"},
 		buildingType: {type: "text"},
 	},
-	"Materials procurement": {
+	"materialsProcurement": {
 		materialsDescription: {type: "text"},
 	},
-	"Number of work station": {
+	"numberOfWorkStation": {
 		numberOfWorkStation: {type: "number"},
 	},
-	"Number of work systems": {
+	"numberOfWorkSystems": {
 		numberOfWorkSystems: {type: "number"},
 	},
-	"Software application installation": {
+	"softwareApplicationInstallation": {
 		softwareQuantity: {type: "number"},
 		softwareName: {type: "text"},
 	},
-	"Software application customization": {
+	"softwareApplicationCustomization": {
 		softwareQuantity: {type: "number"},
 		softwareName: {type: "text"},
 	},
-	"Pick up location": {
+	"pickUpLocation": {
 		numberOfLocation: {type: "number"},
 		addresses: {type: "list"},
 		buildingType: {type: "text"},
 	},
-	"Drop off location": {
+	"dropOffLocation": {
 		numberOfLocation: {type: "number"},
 		addresses: {type: "list"},
 		buildingType: {type: "text"},
@@ -70,42 +70,42 @@ const tree = {
 	"Active Survey": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Passive Survey": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"APOC (AP on a stick)": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"IT Project Management": {
 		// DOWN
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	IMAC: {
@@ -122,34 +122,34 @@ const tree = {
 	"Install and deploy hardware components": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Hardware component quantity",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"hardwareComponentQuantity",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Install and deploy software components": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Software application installation",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"softwareApplicationInstallation",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Structure user workstations": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Number of work station",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"numberOfWorkStation",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	Move: {
@@ -162,32 +162,32 @@ const tree = {
 	"Transport a work system to a new location": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
-			"Pick up location",
-			"Drop off location",
+			"pickUpLocation",
+			"dropOffLocation",
 		],
 	},
 	"Switch to a different workstation system": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"alter the end": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	Add: {
@@ -196,21 +196,21 @@ const tree = {
 	"Install additional software": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Software application installation",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"softwareApplicationInstallation",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Install additional hardware": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Hardware component quantity",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"hardwareComponentQuantity",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	Change: {
@@ -224,45 +224,45 @@ const tree = {
 	"Alter the existing hardware configuration": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Hardware component type",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"hardwareComponentType",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Update installed software": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Software application installation",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"softwareApplicationInstallation",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Customize software settings": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Software application customization",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"softwareApplicationCustomization",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Uninstall unused software": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Software application customization",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"softwareApplicationCustomization",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Onsite Support": {
@@ -272,32 +272,32 @@ const tree = {
 	"Project Work": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Special Project": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Asset Inventory": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Materials procurement",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"materialsProcurement",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	// PROJECT TICkETS END >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -320,23 +320,23 @@ const tree = {
 	Troubleshooting: {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Materials procurement",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"materialsProcurement",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Hardware maintenance": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
 			"Hardware component",
-			"Scope of work",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Onsite Support/IT Emergencies": {
@@ -349,31 +349,31 @@ const tree = {
 	"Staff Augmentation": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Skill Transfer": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Vacation coverage": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 
@@ -398,31 +398,31 @@ const tree = {
 	"Usage-based preventive maintenance": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Predictive maintenance": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	"Prescriptive maintenance": {
 		isTemplate: true,
 		fields: [
-			"Point of contact",
-			"Number of technicians needed",
-			"Scope of work",
+			"pointOfContact",
+			"numberOfTechniciansNeeded",
+			"scopeOfWork",
 			"duration",
-			"Location",
+			"location",
 		],
 	},
 	// SERVICE TICkETS END >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

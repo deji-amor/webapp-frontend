@@ -64,6 +64,11 @@ const DropOffLocation = () => {
 		const newLocations = dropLocations.slice();
 		newLocations.splice(activeDropLocation, 1, locationValue);
 		dispatch(createTicketActions.updateField({ key: "dropLocations", value: newLocations }));
+		if (dropLocations.every((loc) => isAddressEmpty(loc)[0])) {
+			dispatch(createTicketActions.updateField({ key: "dropLocationsIsValid", value: true }));
+		} else {
+			dispatch(createTicketActions.updateField({ key: "dropLocationsIsValid", value: false }));
+		}
 	}, [locationValue, dispatch]);
 
 	const tablet = (
