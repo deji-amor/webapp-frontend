@@ -26,8 +26,6 @@ const HardWareComponentType = () => {
 	const hardwareInputTypeCurrentValueIsValid = allPossibleFields.hardwareInputTypeCurrentValueIsValid
   const dispatch = useDispatch();
 
-	console.log(allPossibleFields);
-
 	const [showInput, setShowInput] = useState(false)
 
 		const {
@@ -82,7 +80,6 @@ const HardWareComponentType = () => {
 	}, [hardwareInputTypeCurrentValue, hardwareComponentTypeList, typeSetHasError, typeSetErrorMessage, dispatch]);
 
 	const isAddButtonDisabled = !typeIsValid || !hardwareInputTypeCurrentValueIsValid;
-	console.log(isAddButtonDisabled);
 
 	const tablets = <div className='inline-flex gap-1'>{hardwareComponentTypeList.map((item) => <Tab key={item} onRemove={removeTabHandler}>{item}</Tab>)}</div>;
 

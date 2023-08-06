@@ -19,7 +19,7 @@ const NumberDropDown = ({min, max, value, onChange}) => {
   return (
 		<Dropdown onChange={(e) => onChange(e.target.value)} value={value} className="outline-none focus:border focus:border-[#2B2E72] max-h-[10rem]">
 			{options.map((option) => (
-				<option className="text-[rgb(43,46,114)] bg-white accent-[rgb(43,46,114)]" key={option}>
+				<option className="text-[rgb(43,46,114)] bg-white accent-[rgb(43,46,114)] " key={option}>
 					{option}
 				</option>
 			))}

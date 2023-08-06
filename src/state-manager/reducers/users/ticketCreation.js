@@ -5,7 +5,7 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 	try {
 		const token = await getAuthToken();
 		const config = {
-			method: "GET",
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
@@ -101,7 +101,30 @@ const allPossibleFields = {
 		"numberOfWorkstation": "1",
 		// WORK SYSTEM
 		"numberOfWorkSystem": "1",
-		"numberOfLocation": "",
+		//LOCATION
+		"numberOfLocation": "3",
+		"locations": ["one", "two", "three"],
+		"activeLocation": 0, // ZERO INDEX BASED
+		"location": "",
+		"locationIsValid": "",
+		"locationIsTouched": "",
+		"locationHasError": "",
+		//PICk UP LOCATION
+		"numberOfPickLocation": "3",
+		"pickLocations": ["one", "two", "three"],
+		"activePickLocation": 0, // ZERO INDEX BASED
+		"pickLocation": "",
+		"pickLocationIsValid": "",
+		"pickLocationIsTouched": "",
+		"pickLocationHasError": "",
+		//DROP OFF LOCATION
+		"numberOfDropLocation": "3",
+		"dropLocations": ["one", "two", "three"],
+		"activeDropLocation": 0, // ZERO INDEX BASED
+		"dropLocation": "",
+		"dropLocationIsValid": "",
+		"dropLocationIsTouched": "",
+		"dropLocationHasError": "",
 		"addresses": [],
 		"buildingType": "",
 		// MATERIALS PROCUREMENT

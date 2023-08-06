@@ -66,7 +66,7 @@ const SidebarLink = ({ link, icon }) => {
 
 	return (
 		<div className="w-[10rem]">
-			<NavLink className={({ isActive }) => (isActive ? "active" : "")} to={link} end>
+			<NavLink className={({ isActive }) => (isActive ? "active" : "")} to={link} end={link === "dashboard" ? true : false}>
 				<Link className="">
 					<span className="icon-span">{icon}</span>
 					<span className="label">{link}</span>

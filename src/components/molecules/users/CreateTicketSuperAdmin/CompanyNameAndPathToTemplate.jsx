@@ -10,7 +10,7 @@ const CompanyNameAndPathToTemplate = () => {
   const {data} = useSelector((state) => state.authUser);
   const { workspaceName } = data;
 
-  const path = pathToTemplate.slice(1).map((p, ind, arr) => {
+  const path = pathToTemplate.slice().map((p, ind, arr) => {
     return ind === arr.length - 1 ? (
 			<BlueThemeSmall key={p}>{p}</BlueThemeSmall>
 		) : (
