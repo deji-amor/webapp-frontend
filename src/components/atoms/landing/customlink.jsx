@@ -58,7 +58,6 @@ const CustomLink = ({ text, type, link, onClickValue, name, dropDownValues }) =>
 	const [isToggle, setIsToggle] = useState(false);
 	const matches = useMediaQuery('(max-width: 1250px)');
 
-
 	return (
 		<LinkWrapper matches={matches}>
 			{type != "dropdown" ? (

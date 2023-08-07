@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { styled, useMediaQuery } from "@mui/material";
 import CustomLogo from "../../atoms/Password/customLogo";
+import MobileLink from "../../atoms/landing/mobileLink";
 import MenuIcon from "@mui/icons-material/Menu";
 import Links from "./links";
 import NavigateButtons from "./buttons";
@@ -33,6 +34,7 @@ const NavWrapper = styled("div")(() => ({
 	},
 
 	".menu": {
+		width: "230px",
 		borderRadius: "10px",
 		position: "relative",
 		top: "50px",
@@ -58,15 +60,7 @@ const NavLinks = () => {
 						<MenuIcon onClick={() => setIsOpen((prev) => !prev)} className="ham" />
 						{isOpen ? (
 							<div className="menu">
-								<Links
-									style={{
-										display: "flex",
-										flexDirection: "column",
-										justifyContent: "start",
-										color: "#2B2E72",
-									}}
-								/>
-								<NavigateButtons />
+								<MobileLink />
 							</div>
 						) : (
 							""
