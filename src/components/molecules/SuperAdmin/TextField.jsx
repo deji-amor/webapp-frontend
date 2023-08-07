@@ -43,7 +43,6 @@ const TextFields = ({ label, inputProps, control, name, errors, serverError, typ
 						{...field}
 						{...addErrorIntoField(errors[name])}
 						type={type}
-						required
 						placeholder={label}
 						InputProps={inputProps}
 					/>
