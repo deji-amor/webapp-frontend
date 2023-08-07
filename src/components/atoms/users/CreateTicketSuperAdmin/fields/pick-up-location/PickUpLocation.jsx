@@ -8,87 +8,117 @@ import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
 import TextArea from "../general/TextArea";
 import LocationTab from "../general/LocationTab";
+import Checkbox from "../general/Checkbox";
 import { isAddressEmpty } from "../../../../../../helpers/validation";
 
 const PickUpLocation = () => {
-  const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const numberOfPickLocation = allPossibleFields.numberOfPickLocation;
+	const pickLocations = allPossibleFields.pickLocations;
+	const activePickLocationAddress = allPossibleFields.activePickLocationAddress;
+	const activePickLocationType = allPossibleFields.activePickLocationType;
 	const dispatch = useDispatch();
 
-	const pickLocations = allPossibleFields.pickLocations;
-	const activePickLocation = allPossibleFields.activePickLocation;
+	const {
+		enteredValue: locationAddressValue,
+		errorMessage: locationAddressErrorMessage,
+		setErrorMessage: locationAddressSetErrorMessage,
+		hasError: locationAddressHasError,
+		setHasError: locationAddressSetHasError,
+		valueChangeHandler: locationAddressChangeHandler,
+		valueBlurHandler: locationAddressBlurHandler,
+		valueIsValid: locationAddressIsValid,
+		errorFromServer: locationAddressErrFromServer,
+		setErrorFromServer: locationAddressSetErrorFromServer,
+		id: locationAddressId,
+		reset: locationAddressReset,
+	} = useCreateTicketInput("pickLocationAddress", isAddressEmpty);
 
-	// for the drop down
 	const numberOfPickLocationChangeHandler = (value) => {
 		dispatch(createTicketActions.updateField({ key: "numberOfPickLocation", value: value }));
 	};
 
-	// for the location tabs
-	const changeActiveLocationHandler = (location) => {
-		dispatch(createTicketActions.updateField({ key: "activePickLocation", value: location }));
-	};
-
-	// for current location
-	const {
-		enteredValue: locationValue,
-		errorMessage: locationErrorMessage,
-		setErrorMessage: locationSetErrorMessage,
-		hasError: locationHasError,
-		setHasError: locationSetHasError,
-		valueChangeHandler: locationChangeHandler,
-		valueBlurHandler: locationBlurHandler,
-		valueIsValid: locationIsValid,
-		errorFromServer: locationErrFromServer,
-		setErrorFromServer: locationSetErrorFromServer,
-		id: locationId,
-		reset: locationReset,
-	} = useCreateTicketInput("pickLocation", isAddressEmpty);
-
-	// when the number of locations is changed reset
 	useEffect(() => {
-		const newLocations = Array.from({ length: numberOfPickLocation }, () => "");
+		const newLocations = Array.from({ length: numberOfPickLocation }, () => ({
+			address: "",
+			type: "government",
+		}));
 		dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
-		dispatch(createTicketActions.updateField({ key: "activePickLocation", value: 0 }));
-		locationReset();
+		dispatch(createTicketActions.updateField({ key: "activePickLocationAddress", value: 0 }));
+		dispatch(createTicketActions.updateField({ key: "activePickLocationType", value: 0 }));
+		dispatch(createTicketActions.updateField({ key: "pickLocationAddress", value: "government" }));
+		locationAddressReset();
 	}, [numberOfPickLocation, dispatch]);
 
-	// when the active location is changed the input address to put to the right item in the location list
-	useEffect(() => {
-		dispatch(
-			createTicketActions.updateField({ key: "pickLocation", value: pickLocations[activePickLocation] })
-		);
-	}, [activePickLocation, dispatch]);
+	const changePickLocationChangeHandler = (location) => {
+		dispatch(createTicketActions.updateField({ key: "activePickLocationAddress", value: location }));
+		dispatch(createTicketActions.updateField({ key: "activePickLocationType", value: location }));
+	};
 
-	// when the locationValue from the input changes, update the respective item in the list
 	useEffect(() => {
+		// console.log("fired");
 		const newLocations = pickLocations.slice();
-		newLocations.splice(activePickLocation, 1, locationValue);
+		const item = newLocations.find((loc, ind) => ind === activePickLocationType);
+		const newItem = { ...item, address: locationAddressValue };
+		newLocations.splice(activePickLocationType, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
-		if (pickLocations.every((loc) => isAddressEmpty(loc)[0])) {
-			dispatch(createTicketActions.updateField({ key: "pickLocationsIsValid", value: true }));
+		if (newLocations.every(({ address }) => isAddressEmpty(address)[0])) {
+			dispatch(createTicketActions.updateField({ key: "pickLocationsAddressIsValid", value: true }));
 		} else {
-			dispatch(createTicketActions.updateField({ key: "pickLocationsIsValid", value: false }));
+			dispatch(createTicketActions.updateField({ key: "pickLocationsAddressIsValid", value: false }));
 		}
-	}, [locationValue, dispatch]);
+	}, [locationAddressValue]);
 
-	const tablet = (
-		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
-			{pickLocations.map((location, ind) => (
-				<div key={`${location}${ind}`} className="flex items-center gap-[0.5rem]">
-					{ind !== 0 && <div className="w-[2.5625rem] h-[0.0625rem] bg-[#000]"></div>}
-					<LocationTab
-						number={ind + 1}
-						isActive={activePickLocation === ind}
-						onClick={changeActiveLocationHandler}
-						isValid={isAddressEmpty(location)[0]}
-					/>
-				</div>
-			))}
-		</div>
-	);
+	useEffect(() => {
+		locationAddressReset();
+		dispatch(
+			createTicketActions.updateField({
+				key: "pickLocationAddress",
+				value: pickLocations[activePickLocationAddress].address,
+			})
+		);
+	}, [activePickLocationAddress]);
+
+		const tablet = (
+			<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
+				{pickLocations.map(({ address, type }, ind) => (
+					<div key={`${address}${ind}`} className="flex items-center gap-[0.5rem]">
+						{ind !== 0 && <div className="w-[2.5625rem] h-[0.0625rem] bg-[#000]"></div>}
+						<LocationTab
+							number={ind + 1}
+							isActive={activePickLocationAddress === ind}
+							onClick={changePickLocationChangeHandler}
+							isValid={isAddressEmpty(address)[0]}
+						/>
+					</div>
+				))}
+			</div>
+		);
+
+		const boxesChangeHandler = (type) => {
+			const newLocations = pickLocations.slice();
+			const item = newLocations.find((loc, ind) => ind === activePickLocationType);
+			const newItem = { ...item, type: type };
+			newLocations.splice(activePickLocationType, 1, newItem);
+			dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
+		};
+
+		const boxes = (
+			<div className="flex items-center gap-[1.5rem]">
+				{["government", "commercial", "residential"].map((type, ind) => (
+					<Checkbox
+						key={type}
+						onChange={boxesChangeHandler}
+						isActive={type === pickLocations[activePickLocationType].type}
+					>
+						{type}
+					</Checkbox>
+				))}
+			</div>
+		);
 
 	return (
-		<div>
+		<div className="">
 			<div className="mb-[0.75rem]">
 				<GrayThemedLightText>Pick Up Locations Details:</GrayThemedLightText>
 			</div>
@@ -103,23 +133,30 @@ const PickUpLocation = () => {
 					/>
 				</div>
 				{tablet}
-				<div className="">
-					<GrayThemedLighterText>Address of contact*</GrayThemedLighterText>
+				<div className="mb-[0.75rem]">
+					<GrayThemedLighterText>Location Address*</GrayThemedLighterText>
 					<div className="w-[30rem] h-[6.25rem]">
 						<TextArea
-							id={locationId}
-							onBlur={locationBlurHandler}
-							onChange={locationChangeHandler}
-							value={locationValue}
-							placeholder={"Enter location..."}
+							id={locationAddressId}
+							type={"text"}
+							onBlur={locationAddressBlurHandler}
+							onChange={locationAddressChangeHandler}
+							placeholder={"Enter address..."}
+							value={locationAddressValue}
 							resizable={false}
 						/>
 					</div>
-					{locationHasError && (
-						<ValidationErrorText errorFromServer={locationErrFromServer}>
-							{locationErrorMessage}
+					{locationAddressHasError && (
+						<ValidationErrorText errorFromServer={locationAddressErrFromServer}>
+							{locationAddressErrorMessage}
 						</ValidationErrorText>
 					)}
+				</div>
+				<div className="">
+					<div className="mb-[0.88rem]">
+						<GrayThemedLighterText>Select building type*</GrayThemedLighterText>
+					</div>
+					{boxes}
 				</div>
 			</div>
 		</div>

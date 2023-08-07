@@ -93,7 +93,7 @@ const Location = () => {
 		const newLocations = locations.slice();
 		const item = newLocations.find((loc, ind) => ind === activeLocationType);
 		const newItem = { ...item, type: type };
-		newLocations.splice(activeLocationAddress, 1, newItem);
+		newLocations.splice(activeLocationType, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "locations", value: newLocations }));
 		// dispatch(createTicketActions.updateField({ ey: "activeLocationType",  }));
 	}

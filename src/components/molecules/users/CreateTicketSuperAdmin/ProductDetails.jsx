@@ -6,8 +6,12 @@ import HorizontalRule from '../../../atoms/users/CreateTicketSuperAdmin/Horizont
 import SmallText from '../../../atoms/users/CreateTicketSuperAdmin/SmallText';
 import LightText from '../../../atoms/users/CreateTicketSuperAdmin/LightText';
 import UserActivity from '../../../atoms/users/CreateTicketSuperAdmin/UserActivity';
+import { useSelector } from 'react-redux';
 
 const ProductDetails = () => {
+	const data = useSelector(state => state.authUser.data)
+	const {workspaceName, firstName, lastName, email, phoneNumber} = data
+
   return (
 		<>
 			<div className="grid grid-cols-2 gap-x-[7rem]">
@@ -25,19 +29,19 @@ const ProductDetails = () => {
 			<div className="grid grid-cols-2 gap-x-[7rem] gap-y-[2.5rem]">
 				<div className="">
 					<LightText>Company Name</LightText>
-					<SmallText>Servirox Manufacturing</SmallText>
+					<SmallText>{workspaceName}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Company Rep Full Name</LightText>
-					<SmallText>John Doe</SmallText>
+					<SmallText>{firstName} {lastName}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Company Rep Email</LightText>
-					<SmallText>Usera@mail.com</SmallText>
+					<SmallText>{email}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Company Rep Phone Number</LightText>
-					<SmallText>+234999099876</SmallText>
+					<SmallText>{phoneNumber}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Date Created</LightText>

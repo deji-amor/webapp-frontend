@@ -114,24 +114,26 @@ const allPossibleFields = {
 		"locationAddressHasError": "",
 		//PICk UP LOCATION
 		"numberOfPickLocation": "3",
-		"pickLocations": [{address: "", type: "government"}, {address: "", type: "commercial"}, {address: "", type: "residential"}],
-		"pickLocationsIsValid": false,
-		"activePickLocation": 0, // ZERO INDEX BASED
-		"pickLocation": "",
-		"pickLocationIsValid": "",
-		"pickLocationIsTouched": "",
-		"pickLocationHasError": "",
+		"pickLocations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		"pickLocationsAddressIsValid": false,
+		"activePickLocationAddress": 0, // ZERO INDEX BASED
+		"activePickLocationType": 0, // ZERO INDEX BASED
+		"pickLocationAddress": "",
+		"pickLocationType": "government",
+		"pickLocationAddressIsValid": "",
+		"pickLocationAddressIsTouched": "",
+		"pickLocationAddressHasError": "",
 		//DROP OFF LOCATION
 		"numberOfDropLocation": "3",
-		"dropLocations":[{address: "", type: "government"}, {address: "", type: "commercial"}, {address: "", type: "residential"}],
-		"dropLocationsIsValid": false,
-		"activeDropLocation": 0, // ZERO INDEX BASED
-		"dropLocation": "",
-		"dropLocationIsValid": "",
-		"dropLocationIsTouched": "",
-		"dropLocationHasError": "",
-		"addresses": [],
-		"buildingType": "",
+		"dropOffLocations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		"dropOffLocationsAddressIsValid": false,
+		"activeDropOffLocationAddress": 0, // ZERO INDEX BASED
+		"activeDropOffLocationType": 0, // ZERO INDEX BASED
+		"dropOffLocationAddress": "",
+		"dropOffLocationType": "government",
+		"dropOffLocationAddressIsValid": "",
+		"dropOffLocationAddressIsTouched": "",
+		"dropOffLocationAddressHasError": "",
 		// MATERIALS PROCUREMENT
 		"materialsDescription": "",
 		"materialsDescriptionIsTouched": "",
@@ -144,7 +146,7 @@ const initialState = {
 	error: null,
 	errorMessage: "",
 	successful: null,
-	showAddTicketModal: !false,
+	showAddTicketModal: false,
 	showTemplateModal: false,
 	pathToTemplate: [],
   showServiceRequestsTab: true,
