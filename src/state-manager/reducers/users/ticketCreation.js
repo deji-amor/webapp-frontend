@@ -146,7 +146,7 @@ const initialState = {
 	error: null,
 	errorMessage: "",
 	successful: null,
-	showAddTicketModal: false,
+	showAddTicketModal: true,
 	showTemplateModal: false,
 	pathToTemplate: [],
   showServiceRequestsTab: true,
