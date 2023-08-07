@@ -59,7 +59,7 @@ const MobileLink = () => {
 				</li>
 				<li className="serv li">
 					<ChevronLeftIcon />
-					<NavLink>Services</NavLink>
+					<NavLink>Products</NavLink>
 				</li>
 				<li className="sol li">
 					<ChevronLeftIcon />
