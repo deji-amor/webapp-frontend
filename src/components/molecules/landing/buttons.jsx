@@ -32,7 +32,7 @@ const NavigateButtons = () => {
             <Link to="/super-admin-onboarding">  
                 <button className="try" type="button">Try For Free</button>
             </Link>
-            <Link to="login-admin">
+            <Link to="/login-admin">
                 <button className="login" type="button">Log In</button>
             </Link>
 		</NavigationButtonWrapper>

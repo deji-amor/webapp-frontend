@@ -73,12 +73,12 @@ const MobileLink = () => {
 				</li>
                 <hr />
 				<li className="but">
-					<NavLink>
+					<NavLink to="/super-admin-onboarding">
 						<button className="try">Try For Free</button>
 					</NavLink>
 				</li>
 				<li className="but">
-					<NavLink>
+					<NavLink to="/login-admin">
 						<button className="login">Log In</button>
 					</NavLink>
 				</li>
