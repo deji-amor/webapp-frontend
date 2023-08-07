@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import "./atom.css"
 import PropTypes from "prop-types";
 
 const HeadingWrapper = styled("div")(({ width }) => ({
@@ -57,7 +58,7 @@ const HeadingWrapper = styled("div")(({ width }) => ({
 
 const Hear = ({ description, img, name, position }) => {
 	return (
-		<HeadingWrapper>
+		<HeadingWrapper className="hear">
 			<p>{description}</p>
 			<div className="user">
 				<img src={img} alt="Icon" />

@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import "./atom.css"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const QuestionWrapper = styled("div")(() => ({
@@ -29,7 +30,7 @@ const QuestionWrapper = styled("div")(() => ({
 
 const Question = () => {
 	return (
-		<QuestionWrapper>
+		<QuestionWrapper className="quest">
 			<p>
 				What is IT Service Management and how does Nexium help me and my team to manage our service
 				delivery?

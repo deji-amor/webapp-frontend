@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import "./atom.css";
 import PropTypes from "prop-types";
 
 
@@ -37,7 +38,7 @@ const HeadingWrapper = styled("div")(({width, containerWidth}) => ({
 
 const Header = ({title, description, width, containerWidth}) => {
   return (
-    <HeadingWrapper width={width} containerWidth={containerWidth}>
+    <HeadingWrapper className="head" width={width} containerWidth={containerWidth}>
         <h2>{title}</h2>
         <p>{description}</p>
     </HeadingWrapper>

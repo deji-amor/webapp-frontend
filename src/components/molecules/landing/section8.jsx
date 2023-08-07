@@ -4,6 +4,7 @@ import Ornament from "../../../assets/password/Ornament.png";
 const NewsLetterWrapper = styled("div")(() => ({
 	maxWidth: "100%",
 	height: "auto",
+	// margin: "auto",
 
 	".container": {
 		width: "80%",
@@ -20,7 +21,7 @@ const NewsLetterWrapper = styled("div")(() => ({
 		gap: "64px",
 	},
 
-	h2: {
+	".container h2": {
 		color: "#FEFEFE",
 		textAlign: "center",
 		fontFamily: "Poppins",
@@ -49,7 +50,8 @@ const NewsLetterWrapper = styled("div")(() => ({
 		color: "#ffffff",
 		display: "flex",
 		height: "56px",
-		padding: "18px 24px",
+		width: "200px",
+		// padding: "15px 24px",
 		justifyContent: "center",
 		alignItems: "center",
 		gap: "10px",
@@ -79,7 +81,7 @@ const NewsLetter = () => {
 		<NewsLetterWrapper>
 			<div className="container">
 				<img className="onee" src={Ornament} alt="Ornament" />
-				<h2>Subscribe to our Newsletter</h2>
+				<h2 className="containerh2">Subscribe to our Newsletter</h2>
 				<form>
 					<input type="text" name="email" placeholder="Enter your email address in here" />
 					<button type="button">Subscribe Now</button>

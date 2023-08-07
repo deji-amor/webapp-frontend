@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { styled, useMediaQuery } from "@mui/material";
 import Header from "../../atoms/landing/headings";
 import Question from "../../atoms/landing/faq";
 import DecorCircle from "../../atoms/landing/decorCircle";
@@ -24,12 +24,14 @@ const FaqWrapper = styled("div")(() => ({
 }));
 
 const Faq = () => {
+	const query = useMediaQuery("(max-width: 1100px)")
+
 	return (
 		<FaqWrapper>
 			<Header
 				title="Frequently Asked Questions"
 				description="We will also facilitate the business marketing of these products with our SEO experts so that they become a ready-to-use website and help sell a product from the company"
-				width="450px"
+				width= {query? "380px" : "450px"}
 				containerWidth="80%"
 			/>
 			<div className="questions">

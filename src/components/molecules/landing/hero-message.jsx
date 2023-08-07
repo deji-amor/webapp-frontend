@@ -1,6 +1,6 @@
-import { styled } from "@mui/material";
+import { styled, useMediaQuery } from "@mui/material";
 
-const HeroMessageWrapper = styled("div")(() => ({
+const HeroMessageWrapper = styled("div")(({query}) => ({
     width: "688.17px",
 	color: "#FEFEFE",
 	textAlign: "center",
@@ -12,7 +12,7 @@ const HeroMessageWrapper = styled("div")(() => ({
     gap: "40px",
 
 	h1: {
-		fontSize: "60px",
+		fontSize: query ? "50px" : "60px",
 		fontStyle: "normal",
 		fontWeight: "600",
 		lineHeight: "120%",
@@ -32,7 +32,8 @@ const HeroMessageWrapper = styled("div")(() => ({
         borderRadius: "8px",
         cursor: "pointer",
         position: "relative",
-        zIndex: "10",
+		top: query ? "10px" : "",
+        zIndex: "500",
         width: "200px",
         marginTop: "10px",
         background: "linear-gradient(180deg, #9265E5 0%, rgba(146, 101, 229, 0.00) 100%, rgba(65, 45, 102, 0.90) 100%)",
@@ -40,8 +41,10 @@ const HeroMessageWrapper = styled("div")(() => ({
 }));
 
 const HeroMessage = () => {
+	let query = useMediaQuery("(max-width: 1000px)");
+
 	return (
-		<HeroMessageWrapper>
+		<HeroMessageWrapper query={query}>
 			<h1>Streamlined IT Service Management</h1>
 			<p>
 				Our robust solution is built and optimized specifically for IT teams and workflows,

@@ -3,22 +3,22 @@ import Header from "../../atoms/landing/headings";
 import Feature from "../../atoms/landing/feature";
 
 const FeaturesWrapper = styled("div")(() => ({
-    width: "100%",
-    position: "relative",
-    margin: "0 auto",
-    display: "flex",
-    flexDirection: "column",
-    gap: "64px",
+	width: "100%",
+	position: "relative",
+	margin: "0 auto",
+	display: "flex",
+	flexDirection: "column",
+	gap: "64px",
 
-    ".features": {
-        width: "90%",
-        margin: "0 auto",
-        display: "flex",
-		gap: "20px",
+	".features": {
+		width: "90%",
+		margin: "0 auto",
+		display: "flex",
+		justifyContent: "space-evenly",
+		gap: "10px",
 		flexWrap: "wrap",
-
-    }
-}))
+	},
+}));
 
 const Features = () => {
 	return (
@@ -34,27 +34,34 @@ const Features = () => {
 					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities"
 					color="#ffffff"
 					color2="#EFEFEF"
-                    shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
+					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
 					background="#2B2E72"
 				/>
 
 				<Feature
 					title="Project Management"
 					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities"
-			
 				/>
 
 				<Feature
 					title="Record Keeping"
 					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities"
-			
 				/>
 
 				<Feature
 					title="Customer Transparency"
 					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities"
-			
 				/>
+
+				{/* <Feature
+					title=""
+					description=""
+				/>
+
+				<Feature
+					title=""
+					description=""
+				/> */}
 			</div>
 		</FeaturesWrapper>
 	);

@@ -17,62 +17,63 @@ import Avatar7 from "../../../assets/password/avatar7.png";
 import Range7 from "../../../assets/password/range7.png";
 
 const ManagementWrapper = styled("div")(() => ({
-    width: "90%",
-    height: "auto",
+	width: "90%",
+	height: "auto",
 	position: "relative",
 	margin: "0 auto",
-    display: "flex",
+	display: "flex",
 	justifyContent: "space-around",
-    alignItems: "center",
+	alignItems: "center",
 	gap: "80px",
-	flexWrap: "wrap",
 	padding: "10px",
-    
-    ".content": {
-        width: "416px",
+	flexWrap: "wrap",
+
+	".content": {
+		width: "416px",
 		height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        gap: "40px",
-        zIndex: "10",
-        margin: "auto 0",
-    },
+		display: "flex",
+		flexDirection: "column",
+		gap: "40px",
+		zIndex: "10",
+		margin: "auto 0",
+	},
 
-    ".content h1": {
-        fontFamily: "poppins",
-        fontWeight: "600",
-        fontSize: "48px",
-        lineHeight: "57.6px",
-        letterSpacing: ".5%",
-        color: "#2B2E72",
-    },
+	".content h1": {
+		fontFamily: "poppins",
+		fontWeight: "600",
+		fontSize: "48px",
+		lineHeight: "57.6px",
+		letterSpacing: ".5%",
+		color: "#2B2E72",
+	},
 
-    ".content p": {
-        fontFamily: "poppins",
-        fontWeight: "400",
-        fontSize: "16px",
-        lineHeight: "20px",
-        letterSpacing: ".5%",
-        color: "#78787F",
-    },
+	".content p": {
+		fontFamily: "poppins",
+		fontWeight: "400",
+		fontSize: "16px",
+		lineHeight: "21px",
+		letterSpacing: ".5%",
+		color: "#78787F",
+	},
 
-    ".content button": {
-        color: "#ffffff",
-        height: "40px",
-        borderRadius: "8px",
-        cursor: "pointer",
-        position: "relative",
-        top: "30px",
-        zIndex: "20",
-        width: "142px",
-        background: "linear-gradient(180deg, #9265E5 0%, #412D66 100%)",
-    },
+	".content button": {
+		color: "#ffffff",
+		width: "142px",
+		height: "40px",
+		borderRadius: "8px",
+		cursor: "pointer",
+		position: "relative",
+		top: "30px",
+		zIndex: "20",
+		background: "linear-gradient(180deg, #9265E5 0%, #412D66 100%)",
+	},
 
 	".tableWrapper": {
 		width: "650px",
 		borderRadius: "10px",
 		border: "1px solid #EAECF0",
-		boxShadow: "0px 1.495449423789978px 2.990898847579956px -1.495449423789978px rgba(16, 24, 40, 0.06), 0px 2.990898847579956px 5.981797695159912px -1.495449423789978px rgba(16, 24, 40, 0.10)",
+		boxShadow:
+			"0px 1.495449423789978px 2.990898847579956px -1.495449423789978px rgba(16, 24, 40, 0.06), 0px 2.990898847579956px 5.981797695159912px -1.495449423789978px rgba(16, 24, 40, 0.10)",
 	},
 
 	table: {
@@ -139,22 +140,28 @@ const ManagementWrapper = styled("div")(() => ({
 
 // const TableWrapper = styled("div")(() => ({
 
-	
 // }));
 
 const Management = () => {
 	return (
-		<ManagementWrapper>
-            <DecorCircle top="40px" left="-200px" color="rgba(76, 111, 255, 0.12)" filter="blur(120.32733917236328px)" />
+		<ManagementWrapper className="management">
+			<DecorCircle
+				top="40px"
+				left="-200px"
+				color="rgba(76, 111, 255, 0.12)"
+				filter="blur(120.32733917236328px)"
+			/>
 			<div className="content">
 				<h1>Streamline IT operations with unified management</h1>
-				<p>
-					Develop a website by finding a product identity that has value and branding to become a
-					characteristic of a company. We will also facilitate the business marketing of these
-					products with our SEO experts so that they become a ready-to-use website and help sell a
-					product from the company.
-				</p>
-                <button type="button">Try For Free</button>
+				<div className="contBut">
+					<p>
+						Develop a website by finding a product identity that has value and branding to become a
+						characteristic of a company. We will also facilitate the business marketing of these
+						products with our SEO experts so that they become a ready-to-use website and help sell a
+						product from the company.
+					</p>
+					<button type="button">Try For Free</button>
+				</div>
 			</div>
 			<div className="tableWrapper">
 				<table>

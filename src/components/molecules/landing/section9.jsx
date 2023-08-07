@@ -30,7 +30,7 @@ const Footer = () => {
 			</FooterWrapper>
 			<div
 				style={{
-					width: "80%",
+					width: "90%",
 					position: "relative",
 					display: "flex",
 					justifyContent: "space-between",
