@@ -26,6 +26,7 @@ function getTodayAndTomorrow() {
 	};
 }
 
+
 const Duration = () => {
     const {
 			enteredValue: startDateValue,

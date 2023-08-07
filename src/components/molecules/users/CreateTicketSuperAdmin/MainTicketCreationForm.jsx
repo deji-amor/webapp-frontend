@@ -3,6 +3,8 @@ import FormButton from '../../../atoms/users/CreateTicketSuperAdmin/FormButton'
 import GrayThemedLightText from '../../../atoms/users/CreateTicketSuperAdmin/GrayThemedLightText'
 import GrayThemedLighterText from '../../../atoms/users/CreateTicketSuperAdmin/GrayThemedLighterText'
 import GrayThemedLightestText from '../../../atoms/users/CreateTicketSuperAdmin/GrayThemedLightestText'
+import useCreateTicketFormValidator from '../../../../hooks/useCreateTicketFormValidator'
+import useCreateTicketFields from '../../../../hooks/useCreateTicketFields'
 import { useDispatch, useSelector } from 'react-redux'
 import { createTicketActions } from '../../../../state-manager/reducers/users/ticketCreation'
 import PointOfContact from '../../../atoms/users/CreateTicketSuperAdmin/fields/point-of-contact/PointOfContact'
@@ -22,10 +24,14 @@ import Location from '../../../atoms/users/CreateTicketSuperAdmin/fields/locatio
 import HorizontalRule from '../../../atoms/users/CreateTicketSuperAdmin/HorizontalRule'
 
 const MainTicketCreationForm = () => {
+	const requiredFields = useCreateTicketFields()
+
   const submitHandler = (e) => {
     e.preventDefault()
-    const formData = new FormData(e.target)
-    console.log(formData);
+    // const formData = new FormData(e.target)
+    // console.log(formData);
+		console.log("submitted");
+		console.log(requiredFields);
   }
 
 	const dispatch = useDispatch()
@@ -33,6 +39,10 @@ const MainTicketCreationForm = () => {
 	const goBackHandler = () => {
 		dispatch(createTicketActions.goBackToAddTicketModal());
 	}
+
+	const isFormValid = useCreateTicketFormValidator()
+	const isFormDisabled = !isFormValid
+	console.log({isFormValid, isFormDisabled});
 
 	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
 	const pointOfContact = chosenTemplate.includes("pointOfContact")
@@ -54,7 +64,7 @@ const MainTicketCreationForm = () => {
 
   return (
 		<form onSubmit={submitHandler}>
-			<div className="max-h-[25rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem]">
+			<div className="max-h-[28rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem] mb-[1rem]">
 				<div className="">
 					<GrayThemedLightText>Ticket Details:</GrayThemedLightText>
 				</div>
@@ -97,7 +107,7 @@ const MainTicketCreationForm = () => {
 				<FormButton highLighted={false} onClick={goBackHandler} type="button">
 					Back
 				</FormButton>
-				<FormButton highLighted={true} type="submit">
+				<FormButton highLighted={true} type="submit" loading={false} disabled={isFormDisabled}>
 					Save Ticket
 				</FormButton>
 			</div>

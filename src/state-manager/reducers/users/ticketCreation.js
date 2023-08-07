@@ -47,19 +47,19 @@ function getTodayAndTomorrow() {
 const allPossibleFields = {
 		// POINT OF CONTACT NAME
 		"pointOfContactName": "",
-		"pointOfContactNameIsTouched": "",
-		"pointOfContactNameIsValid": "",
-		"pointOfContactNameHasError": "",
+		"pointOfContactNameIsTouched": false,
+		"pointOfContactNameIsValid": false,
+		"pointOfContactNameHasError": false,
 		// POINT OF CONTACT PHONE NUMBER
 		"pointOfContactPhoneNumber": "",
-		"pointOfContactPhoneNumberIsTouched": "",
-		"pointOfContactPhoneNumberIsValid": "",
-		"pointOfContactPhoneNumberHasError": "",
+		"pointOfContactPhoneNumberIsTouched": false,
+		"pointOfContactPhoneNumberIsValid": false,
+		"pointOfContactPhoneNumberHasError": false,
 		// POINT OF CONTACT ADDRESS
 		"pointOfContactAddress": "",
-		"pointOfContactAddressIsTouched": "",
-		"pointOfContactAddressIsValid": "",
-		"pointOfContactAddressHasError": "",
+		"pointOfContactAddressIsTouched": false,
+		"pointOfContactAddressIsValid": false,
+		"pointOfContactAddressHasError": false,
 		// NUMBER OF TECHNICIANS
 		"numberOfTechnicians": "1",
 		// SCOPE OF WORK
@@ -139,14 +139,14 @@ const allPossibleFields = {
 		"materialsDescriptionIsTouched": "",
 		"materialsDescriptionIsValid": "",
 		"materialsDescriptionHasError": "",
-	}
+}
 
 const initialState = {
 	loading: false,
 	error: null,
 	errorMessage: "",
 	successful: null,
-	showAddTicketModal: false,
+	showAddTicketModal: !false,
 	showTemplateModal: false,
 	pathToTemplate: [],
   showServiceRequestsTab: true,
