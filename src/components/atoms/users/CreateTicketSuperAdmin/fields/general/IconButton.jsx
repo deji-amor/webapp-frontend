@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
 
-const IconButton = ({ children, onClick, icon }) => {
+const IconButton = ({ children, onClick, icon, bolder }) => {
 	const Button = styled("button")`
 		display: flex;
 		padding: 0.375rem 0.75rem;
@@ -14,10 +14,10 @@ const IconButton = ({ children, onClick, icon }) => {
 		color: #2b2e72;
 		font-feature-settings: "clig" off, "liga" off;
 		font-family: Poppins;
-		font-size: 0.875rem;
+		font-size: ${bolder ? "1rem" : "0.875rem"};
 		font-style: normal;
-		font-weight: 500;
-		line-height: normal;
+		font-weight: ${bolder ? "600" : "500"};
+		line-height: ${bolder ? "1.25rem" : "normal"};
 	`;
 
 	return <Button onClick={onClick}>
@@ -30,6 +30,7 @@ IconButton.propTypes = {
   children: PropTypes.node,
   icon: PropTypes.node,
   onClick: PropTypes.func,
+	bolder: PropTypes.bool,
 }
 
 export default IconButton

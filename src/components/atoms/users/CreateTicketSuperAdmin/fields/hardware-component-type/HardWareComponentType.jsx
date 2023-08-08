@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import AddIcon from "@mui/icons-material/Add";
 import Input from '../general/Input';
 import ValidationErrorText from '../../../../Login/ValidationErrorText';
@@ -16,7 +16,6 @@ import BlueThemedXtraSm from '../../BlueThemedXtraSm';
 import { isHardwareTypeValid } from '../../../../../../helpers/validation';
 import { createTicketActions } from '../../../../../../state-manager/reducers/users/ticketCreation';
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from 'react';
 
 const HardWareComponentType = () => {
   const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);

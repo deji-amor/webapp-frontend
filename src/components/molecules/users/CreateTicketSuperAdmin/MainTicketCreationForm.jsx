@@ -43,7 +43,7 @@ const MainTicketCreationForm = () => {
 
 	const isFormValid = useCreateTicketFormValidator()
 	const isFormDisabled = !isFormValid
-	console.log({isFormValid, isFormDisabled});
+	// console.log({isFormValid, isFormDisabled});
 
 	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
 	const pointOfContact = chosenTemplate.includes("pointOfContact")

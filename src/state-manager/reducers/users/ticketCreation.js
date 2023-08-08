@@ -46,6 +46,7 @@ function getTodayAndTomorrow() {
 }
 
 const allPossibleFields = {
+		"customerId": "",
 		// POINT OF CONTACT NAME
 		"pointOfContactName": "",
 		"pointOfContactNameIsTouched": false,
@@ -140,6 +141,17 @@ const allPossibleFields = {
 		"materialsDescriptionIsTouched": "",
 		"materialsDescriptionIsValid": "",
 		"materialsDescriptionHasError": "",
+		// EXTRA FIELDS
+		"extraFieldNameInputTypeCurrentValue": "",
+		"extraFieldNameInputTypeCurrentValueIsValid": "",
+		"extraFieldNameInputTypeCurrentValueIsTouched": "",
+		"extraFieldNameInputTypeCurrentValueIsHasError": "",
+		"extraFieldValueInputTypeCurrentValue": "",
+		"extraFieldValueInputTypeCurrentValueIsValid": "",
+		"extraFieldValueInputTypeCurrentValueIsTouched": "",
+		"extraFieldValueInputTypeCurrentValueIsHasError": "",
+		"additionalFields": [],
+		"additionalFieldsIsValid": "",
 }
 
 const initialState = {

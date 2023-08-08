@@ -33,12 +33,12 @@ const AddOrCancelButton = ({ onClick , type, disabled}) => {
 			} ${
 				disabled
 					? "cursor-not-allowed text-opacity-50"
-					: "cursor-pointer text-opacity-80 hover:text-opacity-100"
+					: "cursor-pointer"
 			}`}
 			disabled={disabled}
 			onClick={onClick}
 		>
-			{type === "add" ? <CheckIcon fontSize="medium" /> : <CloseIcon fontSize="medium" />}
+			{type === "add" ? <CheckIcon fontSize="small" /> : <CloseIcon fontSize="small" />}
 		</button>
 	);
 };

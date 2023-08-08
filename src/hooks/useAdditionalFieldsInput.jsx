@@ -1,0 +1,94 @@
+import React, { useState, useEffect, useId } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { createTicketActions } from "../state-manager/reducers/users/ticketCreation";
+import PropTypes from "prop-types";
+
+const useAdditionalFieldsInput = (pointer, validateValue) => {
+	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+  const additionalFields = allPossibleFields.additionalFields;
+  const dispatch = useDispatch();
+
+  const additionalFieldsList = additionalFields.map((currentField, currentFieldInd) => {
+    const enteredValue = currentField.value;
+    const enteredName = currentField.name
+    const isTouched = currentField.isTouched;
+    const hasError = currentField.hasError;
+    const valueIsValid = currentField.isValid;
+    const errorMessage = currentField.errorMessage
+  
+    const setEnteredValue = (value) => {
+      const fields = additionalFields.slice()
+      const field = additionalFields.find((_, ind) => ind === currentFieldInd)
+      const isValid = validateValue(value)[0]
+      const errMsg = validateValue(value)[1]
+      const newField = {
+				...field,
+				value: value,
+				isValid: isValid,
+				hasError: !(isValid && field.isTouched),
+				errorMessage: errMsg,
+			};
+      fields.splice(currentFieldInd, 1, newField)
+      dispatch(createTicketActions.updateField({ key: "additionalFields", value: fields }));
+    };
+  
+    const setIsTouched = (bool) => {
+      const fields = additionalFields.slice();
+      const field = additionalFields.find((_, ind) => ind === currentFieldInd);
+      const newField = { ...field, isTouched: bool };
+      fields.splice(currentFieldInd, 1, newField);
+      dispatch(createTicketActions.updateField({ key: "additionalFields", value: fields }));
+    };
+  
+    const setHasError = (bool) => {
+      const fields = additionalFields.slice();
+      const field = additionalFields.find((_, ind) => ind === currentFieldInd);
+      const newField = { ...field, hasError: bool };
+      fields.splice(currentFieldInd, 1, newField);
+      dispatch(createTicketActions.updateField({ key: "additionalFields", value: fields }));
+    };
+
+    const id = `${"xr6ty6cu"}currentField`;
+    // const [enteredValue, setEnteredValue] = useState("");
+    // const [isTouched, setIsTouched] = useState(false);
+    // const [hasError, setHasError] = useState(false);
+  
+    const valueChangeHandler = (value) => {
+      setEnteredValue(value);
+      // setErrorFromServer(false);
+    };
+  
+    const valueBlurHandler = () => {
+      setIsTouched(true);
+    };
+  
+    const reset = () => {
+      setEnteredValue("");
+      setIsTouched(false);
+      setHasError(false);
+      // setErrorFromServer(false);
+    };
+
+    return {
+      valueChangeHandler,
+      valueBlurHandler,
+      reset,
+      enteredValue,
+      enteredName,
+      hasError,
+      setHasError,
+      errorMessage,
+      // setErrorMessage,
+      valueIsValid,
+      // errorFromServer,
+      // setErrorFromServer,
+      id,
+    };
+  })
+
+  return additionalFieldsList
+};
+
+useAdditionalFieldsInput.propTypes = {};
+
+export default useAdditionalFieldsInput;

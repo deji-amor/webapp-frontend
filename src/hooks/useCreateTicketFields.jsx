@@ -9,7 +9,8 @@ const useCreateTicketFields = () => {
 	const fields = chosenTemplate.reduce(
 		(previousValue, currentSection) => {
 			if (currentSection === "pointOfContact") {
-				const { pointOfContactName, pointOfContactPhoneNumber, pointOfContactAddress } = allPossibleFields;
+				const { pointOfContactName, pointOfContactPhoneNumber, pointOfContactAddress } =
+					allPossibleFields;
 				return {
 					...previousValue,
 					pointOfContactName,
@@ -27,18 +28,18 @@ const useCreateTicketFields = () => {
 			if (currentSection === "scopeOfWork") {
 				const { scopeOfWorkDescription, scopeOfWorkDocument } = allPossibleFields;
 				return {
-          ...previousValue,
-          scopeOfWorkDescription,
-          scopeOfWorkDocument
-        }
+					...previousValue,
+					scopeOfWorkDescription,
+					scopeOfWorkDocument,
+				};
 			}
 			if (currentSection === "duration") {
 				const { startDateTime, endDateTime } = allPossibleFields;
 				return {
-          ...previousValue,
-          startDateTime,
-          endDateTime
-        }
+					...previousValue,
+					startDateTime,
+					endDateTime,
+				};
 			}
 			if (currentSection === "hardwareComponentQuantity") {
 				const { startDateTime, endDateTime } = allPossibleFields;
@@ -49,7 +50,8 @@ const useCreateTicketFields = () => {
 				};
 			}
 			if (currentSection === "hardwareComponentType") {
-				const { hardwareComponentTypeQuantityValue, hardwareComponentTypeQuantityName } = allPossibleFields;
+				const { hardwareComponentTypeQuantityValue, hardwareComponentTypeQuantityName } =
+					allPossibleFields;
 				return {
 					...previousValue,
 					hardwareComponentTypeQuantityValue,
@@ -58,10 +60,6 @@ const useCreateTicketFields = () => {
 			}
 			if (currentSection === "location") {
 				const { locations } = allPossibleFields;
-        console.log({
-					...previousValue,
-					locations,
-				});
 				return {
 					...previousValue,
 					locations,
@@ -118,9 +116,14 @@ const useCreateTicketFields = () => {
 					dropOffLocations,
 				};
 			}
-      return {...previousValue}
+			return { ...previousValue };
 		},
-		{ ticketType: pathToTemplate.at(0), path: chosenTemplate, form: pathToTemplate.at(-1) }
+		{
+			ticketType: pathToTemplate.at(0),
+			path: chosenTemplate,
+			form: pathToTemplate.at(-1),
+			customerId: allPossibleFields.customerId,
+		}
 	);
 
 	return fields;
