@@ -1,121 +1,133 @@
 import React, { useState } from "react";
-import {
-  TableCell,
-  Menu,
-  MenuItem,
-  IconButton,
-  Modal,
-  Box,
-  Typography,
-  TextField,
-  Button,
-} from "@mui/material";
+import { TableCell, Menu, MenuItem, IconButton, Box } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SuspendModal from "./SuspendModal";
+import SuspendConfirmationModal from "./SuspendConfirmationModal";
+import UnsuspendConfirmationModal from "./UnsuspendConfirmationModal";
 
-const MoreOptionsDropdown = ({ status }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
-  const [suspendComment, setSuspendComment] = useState("");
+const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [isSuspendConfirmationModalOpen, setIsSuspendConfirmationModalOpen] = useState(false);
+	const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
+	const [suspendComment, setSuspendComment] = useState("");
+	const [isUnsuspendConfirmationModalOpen, setIsUnsuspendConfirmationModalOpen] = useState(false);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+	const [currentCustomerId, setCurrentCustomerId] = useState(null);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
 
-  const handleSuspendClick = () => {
-    setIsSuspendModalOpen(true);
-    handleClose();
-  };
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
-  const handleUnsuspendClick = () => {
-    // Handle unsuspend logic here
-    handleClose();
-  };
+	const handleSuspendClick = () => {
+		setIsSuspendConfirmationModalOpen(true);
+		handleClose();
+	};
 
-  const handleSuspendModalClose = () => {
-    setIsSuspendModalOpen(false);
-  };
+	const handleUnsuspendConfirmationClose = () => {
+		setIsUnsuspendConfirmationModalOpen(false);
+	};
 
-  const handleSuspendCommentChange = (event) => {
-    setSuspendComment(event.target.value);
-  };
+	const handleUnsuspendConfirmationYes = () => {
+		onUpdateStatus(currentCustomerId, "Active");
+		setIsUnsuspendConfirmationModalOpen(false);
+	};
 
+	const handleUnsuspendClick = () => {
+		setIsUnsuspendConfirmationModalOpen(true);
+		handleClose();
+	};
 
-  return (
-    <TableCell sx={{ borderBottom: "none", padding: 0 }}>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <IconButton aria-label="more" onClick={handleClick}>
-          <MoreVertIcon />
-        </IconButton>
-        <Menu anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          PaperProps={{
-            sx: {
-              borderRadius: '10px',
-              padding: "6px 12px",
-            },
-          }}
-          >
-          {status === "Active" && (
-            <MenuItem sx={{ borderRadius: '5px', padding: "12px 16px" }} onClick={handleSuspendClick}>
-              Suspend
-            </MenuItem>
-          )}
-          {status === "Suspended" && (
-            <MenuItem sx={{ borderRadius: '5px', padding: "12px 16px" }} onClick={handleUnsuspendClick}>
-              Unsuspend
-            </MenuItem>
-          )}
-        </Menu>
-      </Box>
-      <Modal open={isSuspendModalOpen} onClose={handleSuspendModalClose}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "white",
-            p: 4,
-            width: 300,
-            boxShadow: 4,
-          }}
-        >
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            Suspend Comment
-          </Typography>
-          <TextField
-            label="Comment"
-            multiline
-            rows={4}
-            value={suspendComment}
-            onChange={handleSuspendCommentChange}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSuspendModalClose}
-          >
-            Suspend
-          </Button>
-        </Box>
-      </Modal>
-    </TableCell>
-  );
+	const handleSuspendConfirmationClose = () => {
+		setIsSuspendConfirmationModalOpen(false);
+	};
+
+	const handleSuspendConfirmationYes = () => {
+		setIsSuspendConfirmationModalOpen(false);
+		setIsSuspendModalOpen(true);
+	};
+
+	const handleSuspendModalClose = () => {
+		setIsSuspendModalOpen(false);
+		setSuspendComment("");
+	};
+
+	const handleSuspendCommentChange = (event) => {
+		setSuspendComment(event.target.value);
+	};
+
+	const handleSuspend = () => {
+		setIsSuspendModalOpen(true);
+		setCurrentCustomerId(customerId);
+		handleClose();
+	};
+
+	return (
+		<TableCell sx={{ borderBottom: "none", padding: 0 }}>
+			<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+				<IconButton aria-label="more" onClick={handleClick}>
+					<MoreVertIcon />
+				</IconButton>
+				<Menu
+					anchorEl={anchorEl}
+					open={Boolean(anchorEl)}
+					onClose={handleClose}
+					anchorOrigin={{
+						vertical: "bottom",
+						horizontal: "right",
+					}}
+					transformOrigin={{
+						vertical: "top",
+						horizontal: "right",
+					}}
+					PaperProps={{
+						sx: {
+							borderRadius: "10px",
+							padding: "6px 12px",
+						},
+					}}
+				>
+					{status === "Active" && (
+						<MenuItem
+							sx={{ borderRadius: "5px", padding: "12px 16px" }}
+							onClick={handleSuspendClick}
+						>
+							Suspend
+						</MenuItem>
+					)}
+					{status === "Suspended" && (
+						<MenuItem
+							sx={{ borderRadius: "5px", padding: "12px 16px" }}
+							onClick={handleUnsuspendClick}
+						>
+							Unsuspend
+						</MenuItem>
+					)}
+				</Menu>
+			</Box>
+			<UnsuspendConfirmationModal
+				open={isUnsuspendConfirmationModalOpen}
+				onClose={handleUnsuspendConfirmationClose}
+				onConfirm={handleUnsuspendConfirmationYes}
+			/>
+			<SuspendConfirmationModal
+				open={isSuspendConfirmationModalOpen}
+				onClose={handleSuspendConfirmationClose}
+				onConfirm={handleSuspendConfirmationYes}
+			/>
+			<SuspendModal
+				open={isSuspendModalOpen}
+				onClose={handleSuspendModalClose}
+				suspendComment={suspendComment}
+				onSuspendCommentChange={handleSuspendCommentChange}
+				onSuspend={handleSuspend}
+				onCancel={handleSuspendModalClose}
+			/>
+		</TableCell>
+	);
 };
 
 export default MoreOptionsDropdown;

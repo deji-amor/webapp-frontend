@@ -73,7 +73,7 @@ const DropdownButton = () => {
     setCustomerFormOpen(false);
   };
 
-  const handleCustomerFormSubmit = (formData) => {
+  const handleFormSubmit = (formData) => {
     // Handle the form submission data
     console.log('Form submitted:', formData);
     handleClose(); // Close the form after submission
@@ -107,7 +107,7 @@ const DropdownButton = () => {
         ))}
       </Menu>
 
-      <CustomerForm open={isCustomerFormOpen} onClose={handleCustomerFormClose} onSubmit={handleCustomerFormSubmit} />
+      <CustomerForm open={isCustomerFormOpen} onClose={handleCustomerFormClose} onSubmit={handleFormSubmit} />
     </div>
   );
 };
