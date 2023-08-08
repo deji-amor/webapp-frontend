@@ -137,6 +137,7 @@ const Location = () => {
 							placeholder={"Enter address..."}
 							value={locationAddressValue}
 							resizable={false}
+							isValid={locationAddressIsValid}
 						/>
 					</div>
 					{locationAddressHasError && (

@@ -48,6 +48,9 @@ export const allFields = {
 	dropOffLocation: {
 		dropOffLocations: [], // [{type: "", address: ""}]
 	},
+	additionalFields: {
+		additionalFields: [], // {"fieldName": "fieldValue"}
+	}
 };
 
 const tree = {
@@ -64,6 +67,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -74,6 +78,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -84,6 +89,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -95,6 +101,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -116,6 +123,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"hardwareComponentQuantity",
 			"scopeOfWork",
@@ -127,6 +135,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationInstallation",
 			"scopeOfWork",
@@ -138,6 +147,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"numberOfWorkStation",
 			"scopeOfWork",
@@ -156,6 +166,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
@@ -167,6 +178,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
@@ -177,6 +189,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
@@ -190,6 +203,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationInstallation",
 			"duration",
@@ -200,6 +214,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"hardwareComponentQuantity",
 			"duration",
@@ -218,6 +233,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"hardwareComponentType",
 			"scopeOfWork",
@@ -229,6 +245,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationInstallation",
 			"scopeOfWork",
@@ -240,6 +257,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationCustomization",
 			"scopeOfWork",
@@ -251,6 +269,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationCustomization",
 			"scopeOfWork",
@@ -266,6 +285,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -276,6 +296,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -286,6 +307,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"materialsProcurement",
 			"scopeOfWork",
@@ -314,6 +336,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"materialsProcurement",
 			"scopeOfWork",
@@ -325,6 +348,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"Hardware component",
 			"scopeOfWork",
@@ -343,6 +367,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -353,6 +378,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -363,6 +389,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -392,6 +419,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -402,6 +430,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -412,6 +441,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",

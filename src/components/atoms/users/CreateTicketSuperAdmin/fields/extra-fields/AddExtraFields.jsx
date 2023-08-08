@@ -6,15 +6,12 @@ import ValidationErrorText from "../../../../Login/ValidationErrorText";
 import IconButton from "../general/IconButton";
 import GrayThemedLightText from "../../GrayThemedLightText";
 import GrayThemedLighterText from "../../GrayThemedLighterText";
-import NumberDropDown from "../general/NumberDropDown";
+import BlueThemedLightText from '../../BlueThemedLightText';
+import BlueThemedMediumText from '../../BlueThemedMediumText';
+import GrayThemedLightestText from '../../GrayThemedLightestText';
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import useAdditionalFieldsInput from '../../../../../../hooks/useAdditionalFieldsInput';
-import Tab from "../general/Tab";
 import AddOrCancelButton from "../general/AddOrCancelButton";
-import BlueThemedLightText from "../../BlueThemedLightText";
-import BlueThemeSmall from "../../BlueThemedSmall";
-import BlueThemedMediumText from "../../BlueThemedMediumText";
-import BlueThemedXtraSm from "../../BlueThemedXtraSm";
 import { isFieldNameEmpty, isFieldValueEmpty } from "../../../../../../helpers/validation";
 import { createTicketActions } from "../../../../../../state-manager/reducers/users/ticketCreation";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,6 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 const AddExtraFields = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const additionalFields = allPossibleFields.additionalFields;
+	const additionalFieldsIsValid = allPossibleFields.additionalFieldsIsValid;
 	const [showInput, setShowInput] = useState(false);
 	const dispatch = useDispatch()
 
@@ -72,11 +70,28 @@ const AddExtraFields = () => {
 		setShowInput(false)
 	}
 
-	const isAddFieldButtonDisabled = !(fieldNameIsValid && fieldValueIsValid);
+	const isAddFieldButtonDisabled = !(!fieldNameHasError && fieldValueIsValid);
+	useEffect(() => {
+		if(additionalFields.some(item => item.name === fieldNameValue)){
+			console.log("gotcha");
+			fieldNameSetErrorMessage("field names can not be duplicates")
+			fieldNameSetHasError(true)
+		}
+	}, [fieldNameValue])
 
-	const list = useAdditionalFieldsInput()
-	// console.log({additionalFields});
-	console.log({list});
+	useEffect(() => {
+		if (additionalFields.every(({ value }) => isFieldValueEmpty(value)[0])){
+			dispatch(createTicketActions.updateField({ key: "additionalFieldsIsValid", value: true }));
+		}else {
+			dispatch(createTicketActions.updateField({ key: "additionalFieldsIsValid", value: false }));
+		}
+	}, [additionalFields]);
+
+	const hasNewFieldsReachedLimit = additionalFields.length >= 3
+
+	const list = useAdditionalFieldsInput(isFieldValueEmpty)
+	// console.log({ additionalFields, additionalFieldsIsValid });
+	// console.log({list});
 	const listDiv = list.map(item => {
 		const {
 			enteredValue: value,
@@ -88,11 +103,13 @@ const AddExtraFields = () => {
 			valueBlurHandler: blurHandler,
 			valueIsValid: isValid,
 			id: id,
+			removeSelf: removeSelf,
 			reset: reset,
 		} = item;
 
 		return (
-			<div key={name} className="w-[30rem]">
+			<div key={name} className="w-[30rem] mb-[1rem]">
+				<GrayThemedLightestText>{name}*</GrayThemedLightestText>
 				<div className="flex gap-4">
 					<div className="w-[21rem]">
 						<Input
@@ -101,22 +118,15 @@ const AddExtraFields = () => {
 							onBlur={blurHandler}
 							onChange={changeHandler}
 							placeholder={"Enter field value"}
-							value={fieldValueValue}
+							value={value}
 						/>
 					</div>
-					{/* <div className="self-center space-x-[1rem]">
-						<AddOrCancelButton
-							onClick={addFieldHandler}
-							type="add"
-							disabled={isAddFieldButtonDisabled}
-						/>
-						<AddOrCancelButton onClick={cancelFieldHandler} type="cancel" />
-					</div>{" "} */}
+					<div className="self-center space-x-[1rem]">
+						<AddOrCancelButton onClick={removeSelf} type="cancel" />
+					</div>{" "}
 				</div>
 				{hasError && (
-					<ValidationErrorText errorFromServer={false}>
-						{errorMessage}
-					</ValidationErrorText>
+					<ValidationErrorText errorFromServer={false}>{errorMessage}</ValidationErrorText>
 				)}
 			</div>
 		);
@@ -128,9 +138,13 @@ const AddExtraFields = () => {
 				{listDiv}
 			</div>
 			<div className="mb-[0.25rem]">
+				{
+				!hasNewFieldsReachedLimit ?
 				<IconButton bolder={true} onClick={() => setShowInput((pv) => !pv)} icon={<AddIcon />}>
 					Add New Field
-				</IconButton>
+				</IconButton> : 
+				<BlueThemedLightText>Reached a maximum of 3 extra fields</BlueThemedLightText>
+				}
 			</div>
 			{showInput && (
 				<div className="">
@@ -142,6 +156,7 @@ const AddExtraFields = () => {
 							onChange={fieldNameChangeHandler}
 							placeholder={"Enter field name"}
 							value={fieldNameValue}
+							isValid={fieldNameIsValid}
 						/>
 						{fieldNameHasError && (
 							<ValidationErrorText errorFromServer={fieldNameErrFromServer}>
@@ -159,6 +174,7 @@ const AddExtraFields = () => {
 									onChange={fieldValueChangeHandler}
 									placeholder={"Enter field value"}
 									value={fieldValueValue}
+									isValid={fieldValueIsValid}
 								/>
 							</div>
 							<div className="self-center space-x-[1rem]">

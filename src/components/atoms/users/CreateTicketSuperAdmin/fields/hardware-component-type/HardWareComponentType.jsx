@@ -115,6 +115,7 @@ const HardWareComponentType = () => {
 											onChange={typeChangeHandler}
 											placeholder={"Enter hardware type"}
 											value={typeValue}
+											isValid={typeIsValid}
 										/>
 									</div>
 									<div className="self-center space-x-[1rem]">										

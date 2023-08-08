@@ -71,6 +71,7 @@ const PointOfContact = (props) => {
 						onChange={nameChangeHandler}
 						placeholder={"Enter contact name"}
 						value={nameValue}
+						isValid={nameIsValid}
 					/>
 					{nameHasError && (
 						<ValidationErrorText errorFromServer={nameErrFromServer}>
@@ -87,6 +88,7 @@ const PointOfContact = (props) => {
 						onChange={numberChangeHandler}
 						placeholder={"Enter contact phone number"}
 						value={numberValue}
+						isValid={numberIsValid}
 					/>
 					{numberHasError && (
 						<ValidationErrorText errorFromServer={numberErrFromServer}>
@@ -105,6 +107,7 @@ const PointOfContact = (props) => {
 						value={addressValue}
 						placeholder={"Enter address..."}
 						resizable={false}
+						isValid={addressIsValid}
 					/>
 				</div>
 				{addressHasError && (

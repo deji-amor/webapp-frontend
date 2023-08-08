@@ -151,7 +151,7 @@ const allPossibleFields = {
 		"extraFieldValueInputTypeCurrentValueIsTouched": "",
 		"extraFieldValueInputTypeCurrentValueIsHasError": "",
 		"additionalFields": [],
-		"additionalFieldsIsValid": "",
+		"additionalFieldsIsValid": true,
 }
 
 const initialState = {

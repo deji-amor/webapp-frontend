@@ -91,6 +91,7 @@ const ScopeOfWork = () => {
 						value={scopeOfWorkValue}
 						placeholder={"Enter description..."}
 						resizable={false}
+						isValid={scopeOfWorkIsValid}
 					/>
 				</div>
 				{scopeOfWorkHasError && (

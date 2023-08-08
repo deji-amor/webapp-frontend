@@ -144,6 +144,7 @@ const PickUpLocation = () => {
 							placeholder={"Enter address..."}
 							value={locationAddressValue}
 							resizable={false}
+							isValid={locationAddressIsValid}
 						/>
 					</div>
 					{locationAddressHasError && (

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createTicketActions } from "../state-manager/reducers/users/ticketCreation";
 import PropTypes from "prop-types";
 
-const useAdditionalFieldsInput = (pointer, validateValue) => {
+const useAdditionalFieldsInput = (validateValue) => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
   const additionalFields = allPossibleFields.additionalFields;
   const dispatch = useDispatch();
@@ -22,12 +22,13 @@ const useAdditionalFieldsInput = (pointer, validateValue) => {
       const isValid = validateValue(value)[0]
       const errMsg = validateValue(value)[1]
       const newField = {
-				...field,
-				value: value,
-				isValid: isValid,
-				hasError: !(isValid && field.isTouched),
-				errorMessage: errMsg,
-			};
+        ...field,
+        value: value,
+        isValid: isValid,
+        hasError: !(isValid && true),
+        errorMessage: errMsg,
+        isTouched: true,
+      };
       fields.splice(currentFieldInd, 1, newField)
       dispatch(createTicketActions.updateField({ key: "additionalFields", value: fields }));
     };
@@ -47,6 +48,12 @@ const useAdditionalFieldsInput = (pointer, validateValue) => {
       fields.splice(currentFieldInd, 1, newField);
       dispatch(createTicketActions.updateField({ key: "additionalFields", value: fields }));
     };
+
+    const removeSelf = () => {
+      const fields = additionalFields.slice();
+      fields.splice(currentFieldInd, 1);
+      dispatch(createTicketActions.updateField({ key: "additionalFields", value: fields }));
+    }
 
     const id = `${"xr6ty6cu"}currentField`;
     // const [enteredValue, setEnteredValue] = useState("");
@@ -78,6 +85,7 @@ const useAdditionalFieldsInput = (pointer, validateValue) => {
       hasError,
       setHasError,
       errorMessage,
+      removeSelf,
       // setErrorMessage,
       valueIsValid,
       // errorFromServer,

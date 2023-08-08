@@ -65,6 +65,10 @@ const useCreateTicketFormValidator = () => {
       const {dropOffLocationsAddressIsValid} = allPossibleFields
       return dropOffLocationsAddressIsValid && previousValue
     }
+    if (currentSection === "additionalFields") {
+			const { additionalFieldsIsValid } = allPossibleFields;
+			return additionalFieldsIsValid && previousValue;
+		}
     return true && previousValue
 
   }, true)

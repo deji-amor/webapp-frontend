@@ -60,7 +60,7 @@ const MainTicketCreationForm = () => {
 	const softwareApplicationCustomization = chosenTemplate.includes("softwareApplicationCustomization")
 	const pickUpLocation = chosenTemplate.includes("pickUpLocation")
 	const dropOffLocation = chosenTemplate.includes("dropOffLocation")
-
+	const additionalFields = chosenTemplate.includes("additionalFields")
 	// console.log({chosenTemplate});
 
   return (
@@ -93,18 +93,10 @@ const MainTicketCreationForm = () => {
 					<div className="">
 						{softwareApplicationInstallation && <SoftwareApplicationInstallation />}
 					</div>
-					<div className="">
-						{pickUpLocation && <PickUpLocation />}
-					</div>
-					<div className="">
-						{dropOffLocation && <DropOffLocation />}
-					</div>
-					<div className="">
-						{location && <Location />}
-					</div>
-					<div className=''>
-						<AddExtraFields/>
-					</div>
+					<div className="">{pickUpLocation && <PickUpLocation />}</div>
+					<div className="">{dropOffLocation && <DropOffLocation />}</div>
+					<div className="">{location && <Location />}</div>
+					<div className="">{additionalFields && <AddExtraFields />}</div>
 				</div>
 			</div>
 			<div className="flex items-center justify-end gap-[1rem]">

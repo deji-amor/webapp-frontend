@@ -71,6 +71,7 @@ const Duration = () => {
 					onChange={startDateChangeHandler}
 					placeholder={""}
 					value={startDateValue}
+					isValid={startDateIsValid}
 				/>
 				{startDateHasError && (
 					<ValidationErrorText errorFromServer={startDateErrFromServer}>
@@ -88,6 +89,7 @@ const Duration = () => {
 					onChange={endDateChangeHandler}
 					placeholder={""}
 					value={endDateValue}
+					isValid={endDateIsValid}
 				/>
 				{endDateHasError && (
 					<ValidationErrorText errorFromServer={endDateErrFromServer}>

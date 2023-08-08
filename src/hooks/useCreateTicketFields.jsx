@@ -116,6 +116,14 @@ const useCreateTicketFields = () => {
 					dropOffLocations,
 				};
 			}
+			if (currentSection === "additionalFields") {
+				const { additionalFields } = allPossibleFields;
+				const newAdditionalFields = additionalFields.map(({name, value}) => ({[name]: value}))
+				return {
+					...previousValue,
+					"additionalFields": newAdditionalFields,
+				};
+			}
 			return { ...previousValue };
 		},
 		{
