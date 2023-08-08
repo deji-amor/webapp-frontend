@@ -20,6 +20,7 @@ import SoftwareApplicationCustomization from '../../../atoms/users/CreateTicketS
 import SoftwareApplicationInstallation from '../../../atoms/users/CreateTicketSuperAdmin/fields/software-application-installation/SoftwareApplicationInstallation'
 import PickUpLocation from '../../../atoms/users/CreateTicketSuperAdmin/fields/pick-up-location/PickUpLocation'
 import DropOffLocation from '../../../atoms/users/CreateTicketSuperAdmin/fields/drop-off-location/DropOffLocation'
+import AddExtraFields from '../../../atoms/users/CreateTicketSuperAdmin/fields/extra-fields/AddExtraFields'
 import Location from '../../../atoms/users/CreateTicketSuperAdmin/fields/location/Location'
 import HorizontalRule from '../../../atoms/users/CreateTicketSuperAdmin/HorizontalRule'
 
@@ -100,6 +101,9 @@ const MainTicketCreationForm = () => {
 					</div>
 					<div className="">
 						{location && <Location />}
+					</div>
+					<div className=''>
+						<AddExtraFields/>
 					</div>
 				</div>
 			</div>

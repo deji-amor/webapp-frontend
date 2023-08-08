@@ -118,7 +118,7 @@ const HardWareComponentType = () => {
 											value={typeValue}
 										/>
 									</div>
-									<div className="self-center space-x-2">
+									<div className="self-center space-x-[1rem]">										
 										<AddOrCancelButton
 											onClick={addTypeHandler}
 											type="add"
