@@ -5,7 +5,7 @@ import CustomLogo from "../components/atoms/Password/customLogo";
 const RecoverPassword = () => {
 	return (
 		<>
-			<CustomLogo /> 
+			<CustomLogo />
 			<ForgotPasswordRecoverWrapper>
 				<ForgotPasswordRecover />
 			</ForgotPasswordRecoverWrapper>
