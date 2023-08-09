@@ -1,3 +1,4 @@
+import React, {memo} from "react";
 import {
 	RouterProvider,
 	createBrowserRouter,
@@ -24,7 +25,10 @@ import SuperAdminOnboardingSuccess from "./pages/SuperAdminOnboardingSuccess";
 import ErrorPage from "./pages/ErrorPage";
 import CustomerOnboarding from "./pages/CustomerOnboarding";
 
+const MemoizedProtectedRoute = memo(ProtectedRoute)
+
 function App() {
+
 	const router = createBrowserRouter([
 		{ path: "/", element: <Home />, index: true, errorElement: <ErrorPage /> },
 		{ path: "/login-admin", element: <LoginAdmin /> },
@@ -47,10 +51,10 @@ function App() {
 			path: "/app",
 			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
 			children: [
-				{ path: "dashboard", element:<ProtectedRoute><Dashboard /></ProtectedRoute>, index: true },
-				{ path: "tickets", element: <ProtectedRoute><Tickets /></ProtectedRoute> },
-				{ path: "users", element: <ProtectedRoute><Users /></ProtectedRoute> },
-				{ path: "reports", element: <ProtectedRoute><Reports /></ProtectedRoute> },
+				{ path: "dashboard", element:<MemoizedProtectedRoute><Dashboard /></MemoizedProtectedRoute>, index: true },
+				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute> },
+				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute> },
+				{ path: "reports", element: <MemoizedProtectedRoute><Reports /></MemoizedProtectedRoute> },
 			],
 		},
 	]);
