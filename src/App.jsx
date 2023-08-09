@@ -23,6 +23,8 @@ import SuperAdminVerifyEmail from "./pages/SuperAdminVerifyEmail";
 import SuperAdminOnboardingSuccess from "./pages/SuperAdminOnboardingSuccess";
 import ErrorPage from "./pages/ErrorPage";
 import CustomerOnboarding from "./pages/CustomerOnboarding";
+import CustomerCreatePassword from "./pages/CustomerCreatePassword";
+import CustomerCreatePasswordSuccess from "./pages/CustomerCreatePasswordSuccess";
 
 function App() {
 	const router = createBrowserRouter([
@@ -33,6 +35,8 @@ function App() {
 		{ path: "/forgot-password-success", element: <ForgotPasswordEmailSuccess /> },
 		{ path: "/reset-password-success", element: <ResetPasswordPageSuccess /> },
 		{ path: "/recover-password/:email/:token", element: <RecoverPassword /> },
+		{ path: "/customer-create-password", element: <CustomerCreatePassword /> },
+		{ path: "/customer-create-password-success", element: <CustomerCreatePasswordSuccess /> },
 		{ path: "/password-expired", element: <PasswordExpired /> },
 		{ path: "/password-recovery-success", element: <PasswordRecoverySuccess /> },
 		{ path: "/customer-password", element: <CustomerForgotPasswordPage /> },
