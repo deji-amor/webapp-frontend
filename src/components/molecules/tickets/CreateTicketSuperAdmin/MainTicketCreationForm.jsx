@@ -41,6 +41,9 @@ const MainTicketCreationForm = () => {
 		dispatch(createTicketActions.goBackToAddTicketModal());
 	}
 
+	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+	// console.log({allPossibleFields});
+
 	const isFormValid = useCreateTicketFormValidator()
 	const isFormDisabled = !isFormValid
 	// console.log({isFormValid, isFormDisabled});

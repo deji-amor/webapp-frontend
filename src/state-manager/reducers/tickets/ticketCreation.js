@@ -174,6 +174,14 @@ const createTicketSlice = createSlice({
 	name: "createTicket",
 	initialState: initialState,
 	reducers: {
+		toggleAddTicketModal: (state, action) => {
+			// state.showAddTicketModal = !state.showAddTicketModal;
+			return initialState
+		},
+		toggleTemplateModal: (state, action) => {
+			// state.showTemplateModal = !state.showTemplateModal;
+			return initialState
+		},
 		changeAnyState: (state, action) => {
 			const {key, value} = action.payload;
 			state[key] = value;
@@ -193,22 +201,22 @@ const createTicketSlice = createSlice({
 			state.chosenTemplate = [];
 			state.showAddTicketModal = true;
 			state.showTemplateModal = false;
-			state.pathToTemplate = []
-			state.allPossibleFields = allPossibleFields
+			state.pathToTemplate = [];
+			const customerId = current(state).allPossibleFields.customerId
+			state.allPossibleFields = {...allPossibleFields, customerId};
 		},
 		updateField: (state, action) => {
-			const payload = action.payload
+			const payload = action.payload;
 
-			if(Array.isArray(payload)){
+			if (Array.isArray(payload)) {
 				payload.forEach(({key, value}) => {
-					state.allPossibleFields[key] = value
+					state.allPossibleFields[key] = value;
 				});
-			}else {
-				const {key, value} = payload
-				state.allPossibleFields[key] = value
+			} else {
+				const {key, value} = payload;
+				state.allPossibleFields[key] = value;
 			}
-
-		}
+		},
 	},
 	extraReducers: builder => {
 		builder

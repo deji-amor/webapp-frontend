@@ -6,9 +6,10 @@ import MultiplePathButton from '../../atoms/tickets/CreateTicketSuperAdmin/Multi
 import TicketsSearchCustomer from './TicketsSearchCustomer';
 import AddIcon from "@mui/icons-material/Add";
 import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
+import TopLevel from '../../atoms/tickets/CreateTicketSuperAdmin/MultipleDropdown';
 
 const TicketsSearchBar = () => {
-	const [showSearchCustomers, setShowSearchCustomers] = useState(!false)
+	const [showSearchCustomers, setShowSearchCustomers] = useState(false)
 	const dispatch = useDispatch()
 
 	const searchTicketsValue = useSelector((state) => state.tickets.searchTicketsValue);
@@ -19,6 +20,7 @@ const TicketsSearchBar = () => {
 	const showSearchCustomersHandler = (e) => {
 		e.stopPropagation();
 		setShowSearchCustomers(pv => !pv)
+		dispatch(ticketsActions.updateField({ key: "searchCustomersValue", value: "" }));
 	};
 
 	useEffect(() => {
@@ -46,12 +48,13 @@ const TicketsSearchBar = () => {
 						onChange={changeTicketsSearchHandler}
 					/>
 				</div>
-				<div id="add-ticket-button" className="border border-red-500 relative">
+				<div id="add-ticket-button" className="relative">
 					<MultiplePathButton onClick={showSearchCustomersHandler}>
 						{" "}
 						<AddIcon /> Add New Ticket
 					</MultiplePathButton>
 					{showSearchCustomers && <TicketsSearchCustomer />}
+					
 				</div>
 			</div>
 		</div>

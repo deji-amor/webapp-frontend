@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { styled } from '@mui/material'
+import { createTicketActions } from '../../../state-manager/reducers/tickets/ticketCreation';
+import TopLevel from '../../atoms/tickets/CreateTicketSuperAdmin/MultipleDropdown';
 import AddIcon from "@mui/icons-material/Add";
 import Loader from './Loader';
 import SearchBar from '../../molecules/tickets/SearchBar';
@@ -44,7 +46,7 @@ const Info = styled("p")`
   letter-spacing: 0.00938rem;
 `;
 
-const Actions = styled("p")`
+const Actions = styled("button")`
 	color: ${({ isDisabled }) => (isDisabled ? "rgba(43, 46, 114, 0.4)" : "rgba(43, 46, 114, 1)")};
 	font-family: Poppins;
 	font-size: 0.875rem;
@@ -57,19 +59,22 @@ const Actions = styled("p")`
 `;
 
 const ListWrapper = styled("div")`
+	z-index: 10;
   position: absolute,
-  top: 10rem;
-  left: 10rem;
+  top: 7rem;
+  left: 0rem;
   width: 100%;
+	background: #fff;
 `;
 
 const Item = styled("div")`
 	padding: 0.5rem 1.5rem;
-  z-index: 10;
+	z-index: 10;
+	background: ${({ active }) => (active ? "rgba(80, 87, 229, 0.08)" : "transparent")};
 
 	&:hover {
 		background: rgba(80, 87, 229, 0.08);
-    cursor: pointer;
+		cursor: pointer;
 	}
 
 	h3 {
@@ -91,23 +96,61 @@ const Item = styled("div")`
 	}
 `;
 
+
 const TicketsSearchCustomer = () => {
   const dispatch = useDispatch()
 	const searchCustomersValue = useSelector((state) => state.tickets.searchCustomersValue);
 	const customers = useSelector((state) => state.customers.customers);
   const { loading, successful, } = useSelector((state) => state.customers);
-
-  console.log({customers});
+	const [showTopLevel, setShowTopLevel] = useState(false);
+	const [showCustomersList, setShowCustomerList] = useState(false);
 
   const changeCustomersValueHandler = (value) => {
 		dispatch(ticketsActions.updateField({ key: "searchCustomersValue", value: value }));
 	};
 
-	const customersValueChange = 
+	const customersValueChange = (email) => {
+		dispatch(ticketsActions.updateField({ key: "searchCustomersValue", value: email }));
+	}
+
+	const activeCustomer = useMemo(() => {
+		const activeCustomer = customers.find((customer) => customer.email === searchCustomersValue);
+		return activeCustomer
+	}, [searchCustomersValue])
+
+	const filteredCustomers = useMemo(() => {
+		return customers.filter(({first_name, last_name, email}) => {
+			const joined = ` ${first_name} ${last_name} ${email}`.toLocaleLowerCase()
+			return joined.includes(searchCustomersValue);
+		})
+	}, [searchCustomersValue]);
+	
+	useEffect(() => {
+		if(!searchCustomersValue){
+			setShowCustomerList(false);
+			return
+		}
+		if (activeCustomer){
+			dispatch(createTicketActions.updateField({ key: "customerId", value: activeCustomer.id }));
+			setShowCustomerList(false);
+		}
+
+		else setShowCustomerList(true);
+	}, [searchCustomersValue]);
+
+	const isCreateTicketButtonDisabled = !activeCustomer
 
 return (
 	<Wrapper>
-		<div className="space-y-2 w-full">
+		<div className="w-full absolute top-[5rem] right-full z-100">
+			{showTopLevel && (
+				<div className="absolute top-[115%] right-0 bg-white z-[100]">
+					<TopLevel />
+				</div>
+			)}
+		</div>
+		<div className="w-full absolute top-[5rem] right-full z-100"></div>
+		<div className="space-y-2 w-full relative">
 			<Head>Select Customer</Head>
 			{loading ? (
 				<Loader>Fetching customers</Loader>
@@ -117,25 +160,39 @@ return (
 				) : (
 					<div className="space-y-2">
 						<Info>Which customer is this ticket for?</Info>
-						<div className="relative">
+						<div className="">
 							<SearchBar
 								placeholder={"Search Customer"}
 								value={searchCustomersValue}
 								inverted={true}
 								onChange={changeCustomersValueHandler}
 							/>
-							<ListWrapper className="border border-red-500 max-h-[10rem] overflow-y-auto">
-								{customers.map((customer) => (
-									<Item key={customer.id} className="">
-										<h3>
-											{customer.first_name} {customer.last_name}
-										</h3>
-										<p>{customer.email}</p>
-									</Item>
+							{showCustomersList &&
+								(filteredCustomers.length > 0 && searchCustomersValue ? (
+									<ListWrapper className="absolute w-full top-[7rem] left-0 bg-white">
+										{filteredCustomers.map((customer) => (
+											<Item
+												key={customer.id}
+												className=""
+												active={searchCustomersValue === customer.email}
+												onClick={() => customersValueChange(customer.email)}
+											>
+												<h3>
+													{customer.first_name} {customer.last_name}
+												</h3>
+												<p>{customer.email}</p>
+											</Item>
+										))}
+									</ListWrapper>
+								) : (
+									<Info>No such customer found</Info>
 								))}
-							</ListWrapper>
 						</div>
-						<Actions isDisabled={true}>
+						<Actions
+							disabled={isCreateTicketButtonDisabled}
+							isDisabled={isCreateTicketButtonDisabled}
+							onClick={() => setShowTopLevel((pv) => !pv)}
+						>
 							Create Ticket <AddIcon fontSize="small" />
 						</Actions>
 					</div>

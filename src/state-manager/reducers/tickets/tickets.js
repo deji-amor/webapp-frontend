@@ -7,7 +7,9 @@ const initialState = {
 	successful: null,
 	tickets: [],
 	searchTicketsValue: "",
-  searchCustomersValue: "",
+	searchCustomersValue: "",
+	showServiceRequestsTab: true,
+	showProjectsTab: false,
 };
 
 const ticketsSlice = createSlice({

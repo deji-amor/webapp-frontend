@@ -4,7 +4,6 @@ import { getAuthToken } from "../../../../utilis";
 export const fetchCustomers= createAsyncThunk("customers", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
-		console.log(token)
 		const config = {
 			method: "GET",
 			headers: {
@@ -15,7 +14,7 @@ export const fetchCustomers= createAsyncThunk("customers", async (args, {rejectW
 		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/all-customers`;
 		const response = await fetch(url, config);
 		const result = await response.json();
-    console.log(result)
+    // console.log(result)
 		return result;
 	} catch (err) {
 		if (err.response && err.response.data.message) {

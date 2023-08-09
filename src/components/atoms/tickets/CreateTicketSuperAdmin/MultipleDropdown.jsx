@@ -18,7 +18,7 @@ import { createTicketActions } from '../../../../state-manager/reducers/tickets/
 		border: 0.4px solid #000;
 		background: #fff;
 		box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.32);
-		z-index: 1000;
+		z-index: 10000;
 	`;
 
 const MultipleDropdown = ({options, level: currentLevel}) => {
@@ -40,6 +40,7 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 		font-weight: 500;
 		line-height: 1.25rem; /* 142.857% */
 		cursor: pointer;
+		z-index: 10000;
 		&:hover {
 			background-color: rgba(80, 87, 229, 0.08);
 		}
