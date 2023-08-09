@@ -72,7 +72,7 @@ const SuperAdminSuccess = () => {
 				minHeight: "80vh",
 			}}
 		>
-			<img src={CheckIcon} style={{ width: "56px", flexShrink: "0" }} />
+			<img src={CheckIcon} style={{ width: "48px" }} />
 			<div>
 				<Typography component={"h3"}>
 					Your Email Has Been <br />
