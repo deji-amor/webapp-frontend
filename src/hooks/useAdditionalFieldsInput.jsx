@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useId } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createTicketActions } from "../state-manager/reducers/users/ticketCreation";
+import { createTicketActions } from "../state-manager/reducers/tickets/ticketCreation";
 import PropTypes from "prop-types";
 
 const useAdditionalFieldsInput = (validateValue) => {

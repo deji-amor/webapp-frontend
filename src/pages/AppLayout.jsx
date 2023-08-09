@@ -3,9 +3,10 @@ import { Outlet, Navigate, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/molecules/Dashboard/Sidebar';
 import Navbar from '../components/molecules/Dashboard/Navbar';
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay';
-import InitialAdminCreationFormAndModal from '../components/organisms/users/CreateTicketSuperAdmin/InitialAdminCreationFormAndModal';
-import TicketTemplateCreationOrEditionForm from '../components/organisms/users/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm';
+import InitialAdminCreationFormAndModal from '../components/organisms/tickets/CreateTicketSuperAdmin/InitialAdminCreationFormAndModal';
+import TicketTemplateCreationOrEditionForm from '../components/organisms/tickets/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm';
 import { fetchUsers } from '../state-manager/reducers/users/users';
+import { fetchCustomers } from '../state-manager/reducers/users/customers/customers';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
@@ -60,13 +61,16 @@ const AppLayout = () => {
 	/////////// AUTHENTICATION LOGIC ENDS HERE
 
 	const { loading: usersLoading, users } = useSelector((state) => state.users);
+	const { loading: customersLoading, customers } = useSelector((state) => state.customers);
 
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
 	const showResetModal = useSelector((state) => state.logout.showResetModal);
 	const { showAddTicketModal, showTemplateModal } = useSelector((state) => state.ticketCreation);
-	// useEffect(() => {
-	// 	dispatch(fetchUsers())
-	// }, [])
+
+	useEffect(() => {
+		dispatch(fetchUsers())
+		dispatch(fetchCustomers())
+	}, [])
 
 	return (
 		<>

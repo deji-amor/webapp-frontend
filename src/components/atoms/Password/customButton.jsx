@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { ButtonWrapper } from "./wrappers";
 import { ThreeDots, Oval } from "react-loader-spinner";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const CustomButton = ({
 	butText,

@@ -17,3 +17,7 @@ input::-ms-clear {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ppp {
+    @apply absolute flex items-center pr-4 right-0 inset-y-0;
+}

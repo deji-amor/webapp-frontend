@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
+// import { Chart as ChartJS } from "chart.js/auto";
 import ChartDataLabel from "chartjs-plugin-datalabels";
 
 const StatsPieChart = ({ data }) => {
@@ -9,7 +9,7 @@ const StatsPieChart = ({ data }) => {
 		maintainAspectRatio: false,
 		plugins: {
 			tooltips: {
-				enabled: !false,
+				enabled: true,
 			},
 			datalabels: {
 				formatter: (value, ctx) => {
