@@ -65,7 +65,7 @@ const TicketsTableBody = () => {
 				</Edit>
 			</RecentTicketTableText>
 		</tr>,
-		<tr key={2} className="bg-white border-b hover:bg-gray-50">
+		<tr key={10} className="bg-white border-b hover:bg-gray-50">
 			<RecentTicketTableText>Sevirox Manufacturing</RecentTicketTableText>
 			<RecentTicketTableText>Break Fix Maintenance</RecentTicketTableText>
 			<RecentTicketTableText>ASchevchenko@Servirox...</RecentTicketTableText>
