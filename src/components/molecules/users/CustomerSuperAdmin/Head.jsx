@@ -4,8 +4,6 @@ import HeadSearch from "../../../atoms/users/CustomerSuperAdmin/HeadSearch";
 import DropdownButton from "../../../atoms/users/CustomerSuperAdmin/DropdownButton";
 import { Grid } from "@mui/material";
 import BasicTabs from "../../../organisms/users/CustomerSuperAdmin/UserTabs";
-import CustomerTable from "../../../organisms/users/CustomerSuperAdmin/CustomerTable";
-import PaginationRounded from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 
 const Head = () => {
 	const [filter, setFilter] = useState("All");
