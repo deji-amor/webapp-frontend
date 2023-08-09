@@ -89,7 +89,7 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 	// console.log(pathToTemplate);
 
   return (
-		<div className="w-full h-full">
+		<div className="w-full h-full divide-y-2 divide-[rgba(80,87,229,0.08)]">
 			{selectedOption && (
 				<div className="absolute w-full -left-[101%] top-0">
 					<Wrapper>
@@ -106,7 +106,9 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 					>
 						<div className="w-full flex justify-between">
 							<div className="truncate">{option}</div>
-							{tree[option]?.options && <ArrowForwardIosIcon width={20} height={20} className='text-[0.5rem]'/>}
+							{tree[option]?.options && (
+								<ArrowForwardIosIcon width={20} height={20} className="text-[0.5rem]" />
+							)}
 						</div>
 					</Dropdown>
 				))}

@@ -11,6 +11,8 @@ import BlueThemedLightText from '../../BlueThemedLightText';
 import BlueThemedMediumText from '../../BlueThemedMediumText';
 import BlueThemedXtraSm from '../../BlueThemedXtraSm';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import FolderDeleteIcon from "@mui/icons-material/FolderDelete";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useSelector, useDispatch } from 'react-redux';
 
 const ScopeOfWork = () => {
@@ -53,19 +55,25 @@ const ScopeOfWork = () => {
 			dispatch(createTicketActions.updateField({ key: "scopeOfWorkDocumentIsValid", value: validDocument }));
 		}, [validDocument, dispatch])
 
+		const removeFileIcon = () => {
+			dispatch(createTicketActions.updateField({ key: "scopeOfWorkDocument", value: null }));
+		}
+
 		return (
 			<div className="">
 				<div className="flex items-center justify-start gap-[1rem] mb-[0.5rem]">
 					<GrayThemedLighterText>Scope of work*</GrayThemedLighterText>
-					<label className="cursor-pointer" htmlFor="scope-of-work-document">
 						{validDocument ? (
-							<BlueThemedXtraSm>{scopeOfWorkDocument.name}</BlueThemedXtraSm>
+							<BlueThemedXtraSm>
+								{scopeOfWorkDocument.name} <RemoveCircleOutlineIcon onClick={removeFileIcon} className="cursor-pointer" fontSize="medium" />{" "}
+							</BlueThemedXtraSm>
 						) : (
+						<label className="cursor-pointer" htmlFor="scope-of-work-document">
 							<BlueThemedXtraSm>
 								Attach Document (10mb max) <AttachFileIcon className="rotate-45" fontSize="small" />{" "}
 							</BlueThemedXtraSm>
-						)}
 					</label>
+						)}
 					<input
 						onChange={onDocumentChange}
 						type="file"
@@ -83,6 +91,7 @@ const ScopeOfWork = () => {
 						value={scopeOfWorkValue}
 						placeholder={"Enter description..."}
 						resizable={false}
+						isValid={scopeOfWorkIsValid}
 					/>
 				</div>
 				{scopeOfWorkHasError && (

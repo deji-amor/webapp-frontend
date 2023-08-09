@@ -17,6 +17,16 @@ export function isNotEmpty(value) {
   else return [true, ""]
 }
 
+export function isFieldNameEmpty(value) {
+  if(value.trim().length === 0) return [false, "Field name can not be empty"]
+  else return [true, ""]
+}
+
+export function isFieldValueEmpty(value) {
+  if(value.trim().length === 0) return [false, "Field value can not be empty"]
+  else return [true, ""]
+}
+
 export function isNameEmpty(value) {
 	if (value.trim().length === 0) return [false, "Name can not be empty"];
 	else return [true, ""];

@@ -1,60 +1,56 @@
 export const allFields = {
-	"pointOfContact": {
-		pointOfContactName: {type: "text"},
-		pointOfContactPhoneNumber: {type: "text"},
-		pointOfContactAddress: {type: "text"},
+	pointOfContact: {
+		pointOfContactName: "", // string
+		pointOfContactPhoneNumber: "", // string
+		pointOfContactAddress: "", // string
 	},
-	"numberOfTechniciansNeeded": {
-		numberOfTechnicians: {type: "number"},
+	numberOfTechniciansNeeded: {
+		numberOfTechnicians: "", // number
 	},
-	"scopeOfWork": {
-		scopeOfWorkDescription: {type: "text"},
-		scopeOfWorkDocument: {type: "file"},
+	scopeOfWork: {
+		scopeOfWorkDescription: "", // string
+		scopeOfWorkDocument: "", // file or null
 	},
 	duration: {
-		startDateTime: {type: "date-time"},
-		endDateTime: {type: "date-time"},
+		startDateTime: "", // date-time
+		endDateTime: "", // date-time
 	},
-	"hardwareComponentQuantity": {
-		hardwareQuantity: {type: "number"},
-		hardwareName: {type: "text"},
+	hardwareComponentQuantity: {
+		hardwareQuantity: "", // number
+		hardwareName: "", // string
 	},
-	"hardwareComponentType": {
-		hardwareComponentTypeQuantity: {type: "number"},
-		hardwareComponentTypeList: {type: "list", min: 1, max: 5},
+	hardwareComponentType: {
+		hardwareComponentTypeList: [], // array of hardwares
 	},
 	location: {
-		numberOfLocation: {type: "number"},
-		addresses: {type: "list"},
-		buildingType: {type: "text"},
+		locations: [], // [{type: "", address: ""}]
 	},
-	"materialsProcurement": {
-		materialsDescription: {type: "text"},
+	materialsProcurement: {
+		materialsDescription: "", // string
 	},
-	"numberOfWorkStation": {
-		numberOfWorkStation: {type: "number"},
+	numberOfWorkStation: {
+		numberOfWorkStation: "", // string
 	},
-	"numberOfWorkSystems": {
-		numberOfWorkSystems: {type: "number"},
+	numberOfWorkSystems: {
+		numberOfWorkSystems: "", // string
 	},
-	"softwareApplicationInstallation": {
-		softwareQuantity: {type: "number"},
-		softwareName: {type: "text"},
+	softwareApplicationInstallation: {
+		softwareQuantity: "", // number
+		softwareName: "", // string
 	},
-	"softwareApplicationCustomization": {
-		softwareQuantity: {type: "number"},
-		softwareName: {type: "text"},
+	softwareApplicationCustomization: {
+		softwareQuantity: "", // number
+		softwareName: "", // string
 	},
-	"pickUpLocation": {
-		numberOfLocation: {type: "number"},
-		addresses: {type: "list"},
-		buildingType: {type: "text"},
+	pickUpLocation: {
+		pickLocations: [], // [{type: "", address: ""}]
 	},
-	"dropOffLocation": {
-		numberOfLocation: {type: "number"},
-		addresses: {type: "list"},
-		buildingType: {type: "text"},
+	dropOffLocation: {
+		dropOffLocations: [], // [{type: "", address: ""}]
 	},
+	additionalFields: {
+		additionalFields: [], // {"fieldName": "fieldValue"}
+	}
 };
 
 const tree = {
@@ -71,6 +67,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -81,6 +78,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -91,6 +89,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -102,6 +101,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -123,6 +123,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"hardwareComponentQuantity",
 			"scopeOfWork",
@@ -134,6 +135,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationInstallation",
 			"scopeOfWork",
@@ -145,6 +147,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"numberOfWorkStation",
 			"scopeOfWork",
@@ -163,6 +166,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
@@ -174,6 +178,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
@@ -184,6 +189,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"Number of work system",
 			"duration",
@@ -197,6 +203,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationInstallation",
 			"duration",
@@ -207,6 +214,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"hardwareComponentQuantity",
 			"duration",
@@ -225,6 +233,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"hardwareComponentType",
 			"scopeOfWork",
@@ -236,6 +245,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationInstallation",
 			"scopeOfWork",
@@ -247,6 +257,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationCustomization",
 			"scopeOfWork",
@@ -258,6 +269,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"softwareApplicationCustomization",
 			"scopeOfWork",
@@ -273,6 +285,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -283,6 +296,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -293,6 +307,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"materialsProcurement",
 			"scopeOfWork",
@@ -321,6 +336,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"materialsProcurement",
 			"scopeOfWork",
@@ -332,6 +348,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"Hardware component",
 			"scopeOfWork",
@@ -350,6 +367,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -360,6 +378,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -370,6 +389,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -399,6 +419,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -409,6 +430,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -419,6 +441,7 @@ const tree = {
 		isTemplate: true,
 		fields: [
 			"pointOfContact",
+			"additionalFields",
 			"numberOfTechniciansNeeded",
 			"scopeOfWork",
 			"duration",
@@ -429,3 +452,25 @@ const tree = {
 };
 
 export default tree;
+
+		// fields: [
+		// 	"pointOfContact",
+		// 	"numberOfTechniciansNeeded",
+		// 	"Number of work system",
+		// 	"duration",
+		// 	"location",
+		// ],
+
+// req = {
+// 	ticqetType: "project request", // service request
+// 	form: "alter the end",
+// 	path: ["Project request", "IMAC", "Move", "alter the end"],
+// 	pointOfContactName: "vvvvy",
+// 	pointOfContactAddress: "cytgv",
+// 	pointOfContactPhoneNumber: "zexrtcytyuv",
+// 	numberOfTechnicians: 12,
+// 	numberOfWorkSystems: 5,
+// 	startDateTime: "12/24/56...",
+// 	endDateTime: "12/67.90..",
+// 	location: [{type: "governmental", address: "ctvyvyuvbyu"}]
+// }

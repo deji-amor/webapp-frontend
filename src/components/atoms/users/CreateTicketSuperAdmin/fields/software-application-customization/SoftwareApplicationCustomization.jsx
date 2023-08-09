@@ -46,6 +46,7 @@ const SoftwareApplicationCustomization = () => {
 						value={appValue}
 						placeholder={"Enter software name"}
 						resizable={false}
+						isValid={appIsValid}
 					/>
 				</div>
 				{appHasError && (

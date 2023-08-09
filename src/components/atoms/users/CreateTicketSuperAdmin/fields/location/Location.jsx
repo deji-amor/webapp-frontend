@@ -15,11 +15,11 @@ const Location = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const numberOfLocation = allPossibleFields.numberOfLocation;
 	const locations = allPossibleFields.locations;
+	const locationsAddressIsValid = allPossibleFields.locationsAddressIsValid;
 	const activeLocationAddress = allPossibleFields.activeLocationAddress;
 	const activeLocationType = allPossibleFields.activeLocationType;
 	const dispatch = useDispatch();
 
-	
 	const {
 		enteredValue: locationAddressValue,
 		errorMessage: locationAddressErrorMessage,
@@ -60,7 +60,7 @@ const Location = () => {
 		const newItem = { ...item, address: locationAddressValue };
 		newLocations.splice(activeLocationAddress, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "locations", value: newLocations }));
-		if(locations.every(({address}) => isAddressEmpty(address)[0])){
+		if(newLocations.every(({address}) => isAddressEmpty(address)[0])){
 			dispatch(createTicketActions.updateField({ key: "locationsAddressIsValid", value: true }));
 		}else {
 			dispatch(createTicketActions.updateField({ key: "locationsAddressIsValid", value: false }));
@@ -108,7 +108,7 @@ const Location = () => {
 		</div>
 	);
 
-	// console.log({locations, activeLocationType});
+	// console.log(locations, locationsAddressIsValid);
 
 	return (
 		<div className="">
@@ -137,6 +137,7 @@ const Location = () => {
 							placeholder={"Enter address..."}
 							value={locationAddressValue}
 							resizable={false}
+							isValid={locationAddressIsValid}
 						/>
 					</div>
 					{locationAddressHasError && (

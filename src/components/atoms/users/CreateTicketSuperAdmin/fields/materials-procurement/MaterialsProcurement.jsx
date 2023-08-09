@@ -34,6 +34,7 @@ const MaterialsProcurement = () => {
 					value={materialValue}
 					placeholder={"Enter description..."}
 					resizable={false}
+					isValid={materialIsValid}
 				/>
 			</div>
 			{materialHasError && (

@@ -44,6 +44,7 @@ const HardwareComponentQuantity = () => {
 						value={quantityValue}
 						placeholder={"Enter hardware component name"}
 						resizable={false}
+						isValid={quantityIsValid}
 					/>
 				</div>
 				{quantityHasError && (
