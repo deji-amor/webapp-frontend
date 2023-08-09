@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import SortBy from "../../../atoms/users/CustomerSuperAdmin/SortBy";
 import CustomerTable from "./CustomerTable";
+import { useEffect } from "react";
 
 const CustomTab = (props) => {
 	const { label, ...other } = props;
@@ -65,26 +66,24 @@ function a11yProps(index) {
 
 export default function BasicTabs({ filteredCustomers }) {
 	const [value, setValue] = React.useState(0);
+	const [sortedCustomers, setSortedCustomers] = React.useState(filteredCustomers);
+
+	useEffect(() => {
+		setSortedCustomers(filteredCustomers);
+	  }, [filteredCustomers]);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 
 	const handleSort = (ascending) => {
-		if (ascending) {
-			const sortedCustomers = [...filteredCustomers].sort((a, b) => {
-				const nameA = a.companyName.toLowerCase();
-				const nameB = b.companyName.toLowerCase();
-				return nameA.localeCompare(nameB);
-			});
-		} else {
-			const sortedCustomers = [...filteredCustomers].sort((a, b) => {
-				const nameA = a.companyName.toLowerCase();
-				const nameB = b.companyName.toLowerCase();
-				return nameB.localeCompare(nameA);
-			});
-		}
-	};
+		const sorted = [...sortedCustomers].sort((a, b) => {
+		  const nameA = a.companyName.toLowerCase();
+		  const nameB = b.companyName.toLowerCase();
+		  return ascending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+		});
+		setSortedCustomers(sorted);
+	  };
 
 	return (
 		<Box
@@ -124,7 +123,7 @@ export default function BasicTabs({ filteredCustomers }) {
 				<SortBy onSort={handleSort} />
 			</Box>
 			<UserTabs value={value} index={0}>
-				<CustomerTable filteredCustomers={filteredCustomers} />
+				<CustomerTable filteredCustomers={sortedCustomers}/>
 			</UserTabs>
 			<UserTabs value={value} index={1}>
 				Item Two
