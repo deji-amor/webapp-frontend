@@ -1,16 +1,16 @@
-import ForgotPasswordRecover from "../components/organisms/Password/forgotPasswordRecovery";
 import { ForgotEmailPageWrapper as ForgotPasswordRecoverWrapper } from "../components/atoms/Password/wrappers";
 import CustomLogo from "../components/atoms/Password/customLogo";
+import CreatePassword from "../components/organisms/users/CustomerOnboarding/CreatePassword";
 
-const RecoverPassword = () => {
+const CustomerCreatePassword = () => {
 	return (
 		<>
 			<CustomLogo />
 			<ForgotPasswordRecoverWrapper>
-				<ForgotPasswordRecover />
+				<CreatePassword />
 			</ForgotPasswordRecoverWrapper>
 		</>
 	);
 };
 
-export default RecoverPassword;
+export default CustomerCreatePassword;
