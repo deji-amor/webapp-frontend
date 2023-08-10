@@ -7,7 +7,7 @@ const Dashboard = () => {
   return (
     <div className='space-y-[1.25rem]'>
       <Greeting />
-      <StatsCardGroup />
+      {/* <StatsCardGroup /> */}
       <RecentTickets />
       <RecentTicketTable />
     </div>
