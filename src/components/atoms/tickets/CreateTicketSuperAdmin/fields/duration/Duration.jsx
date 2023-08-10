@@ -1,4 +1,5 @@
 import React from 'react'
+// IMPORT DATEINPUT
 // import DateInput from '../general/DateInput'
 import DateInput from '../general/DateInput'
 import ValidationErrorText from '../../../../Login/ValidationErrorText'
@@ -32,31 +33,39 @@ const Duration = () => {
     const {
 			enteredValue: startDateValue,
 			errorMessage: startDateErrorMessage,
-			setErrorMessage: startDateSetErrorMessage,
+			// START DATE
+			// setErrorMessage: startDateSetErrorMessage,
 			hasError: startDateHasError,
-			setHasError: startDateSetHasError,
+			// START DATE
+			// setHasError: startDateSetHasError,
 			valueChangeHandler: startDateChangeHandler,
 			valueBlurHandler: startDateBlurHandler,
 			valueIsValid: startDateIsValid,
 			errorFromServer: startDateErrFromServer,
-			setErrorFromServer: startDateSetErrorFromServer,
+			// START DATE
+			// setErrorFromServer: startDateSetErrorFromServer,
 			id: startDateId,
-			reset: startDateReset,
+			// START DATE
+			// reset: startDateReset,
 		} = useCreateTicketInput("startDateTime", isValidDateTimeLocal);
 
     const {
 			enteredValue: endDateValue,
 			errorMessage: endDateErrorMessage,
-			setErrorMessage: endDateSetErrorMessage,
+			// END DATE
+			// setErrorMessage: endDateSetErrorMessage,
 			hasError: endDateHasError,
-			setHasError: endDateSetHasError,
+			// END DATE
+			// setHasError: endDateSetHasError,
 			valueChangeHandler: endDateChangeHandler,
 			valueBlurHandler: endDateBlurHandler,
 			valueIsValid: endDateIsValid,
 			errorFromServer: endDateErrFromServer,
-			setErrorFromServer: endDateSetErrorFromServer,
+			// END DATE
+			// setErrorFromServer: endDateSetErrorFromServer,
 			id: endDateId,
-			reset: endDateReset,
+			// END DATE
+			// reset: endDateReset,
 		} = useCreateTicketInput("endDateTime", isValidDateTimeLocal);
 
   return (

@@ -100,8 +100,8 @@ const DropdownButton = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {dropdownItems.map((item, index) => (
-          <MenuItem key={index} style={styles.menuItem} onClick={() => handleMenuItemClick(item.path)}>
+        {dropdownItems.map((item) => (
+          <MenuItem key={item.menuItem} style={styles.menuItem} onClick={() => handleMenuItemClick(item.path)}>
             {item.text}
           </MenuItem>
         ))}

@@ -6,12 +6,14 @@ import { isValidFile } from '../../../../../../helpers/validation';
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import GrayThemedLighterText from "../../GrayThemedLighterText";
 import TextArea from "../general/TextArea";
-import BlueThemeSmall from '../../BlueThemedSmall';
-import BlueThemedLightText from '../../BlueThemedLightText';
-import BlueThemedMediumText from '../../BlueThemedMediumText';
+// SCOPE
+// import BlueThemeSmall from '../../BlueThemedSmall';
+// import BlueThemedLightText from '../../BlueThemedLightText';
+// import BlueThemedMediumText from '../../BlueThemedMediumText';
 import BlueThemedXtraSm from '../../BlueThemedXtraSm';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import FolderDeleteIcon from "@mui/icons-material/FolderDelete";
+// SCOPE
+// import FolderDeleteIcon from "@mui/icons-material/FolderDelete";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -19,27 +21,34 @@ const ScopeOfWork = () => {
     const {
 			enteredValue: scopeOfWorkValue,
 			errorMessage: scopeOfWorkErrorMessage,
-			setErrorMessage: scopeOfWorkSetErrorMessage,
+// SCOPE
+			// setErrorMessage: scopeOfWorkSetErrorMessage,
 			hasError: scopeOfWorkHasError,
-			setHasError: scopeOfWorkSetHasError,
+// SCOPE
+			// setHasError: scopeOfWorkSetHasError,
 			valueChangeHandler: scopeOfWorkChangeHandler,
 			valueBlurHandler: scopeOfWorkBlurHandler,
 			valueIsValid: scopeOfWorkIsValid,
 			errorFromServer: scopeOfWorkErrFromServer,
-			setErrorFromServer: scopeOfWorkSetErrorFromServer,
+// SCOPE
+			// setErrorFromServer: scopeOfWorkSetErrorFromServer,
 			id: scopeOfWorkId,
-			reset: scopeOfWorkReset,
+// SCOPE
+			// reset: scopeOfWorkReset,
 		} = useCreateTicketInput("scopeOfWorkDescription", isScopeOfWorkEmpty);
 
     const dispatch = useDispatch()
     const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
     const scopeOfWorkDocument = allPossibleFields.scopeOfWorkDocument;
 
+// SCOPE
     // console.log(scopeOfWorkDocument);
-
     const onDocumentChange = (event) => {
-      const selectedFile = event.target.files[0]; // The selected file is the first element in the "files" array
+      const selectedFile = event.target.files[0]; 
+// SCOPE
+	// The selected file is the first element in the "files" array
       if (selectedFile) {
+// SCOPE
         // Do something with the selected file (e.g., read its content, upload it, etc.)
         console.log("Selected file:", selectedFile);
         dispatch(createTicketActions.updateField({ key: "scopeOfWorkDocument", value: selectedFile }));

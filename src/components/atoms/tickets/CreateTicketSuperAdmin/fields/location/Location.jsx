@@ -15,7 +15,8 @@ const Location = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const numberOfLocation = allPossibleFields.numberOfLocation;
 	const locations = allPossibleFields.locations;
-	const locationsAddressIsValid = allPossibleFields.locationsAddressIsValid;
+	// LOCATION
+	// const locationsAddressIsValid = allPossibleFields.locationsAddressIsValid;
 	const activeLocationAddress = allPossibleFields.activeLocationAddress;
 	const activeLocationType = allPossibleFields.activeLocationType;
 	const dispatch = useDispatch();
@@ -23,14 +24,17 @@ const Location = () => {
 	const {
 		enteredValue: locationAddressValue,
 		errorMessage: locationAddressErrorMessage,
-		setErrorMessage: locationAddressSetErrorMessage,
+	// LOCATION
+		// setErrorMessage: locationAddressSetErrorMessage,
 		hasError: locationAddressHasError,
-		setHasError: locationAddressSetHasError,
+	// LOCATION
+		// setHasError: locationAddressSetHasError,
 		valueChangeHandler: locationAddressChangeHandler,
 		valueBlurHandler: locationAddressBlurHandler,
 		valueIsValid: locationAddressIsValid,
 		errorFromServer: locationAddressErrFromServer,
-		setErrorFromServer: locationAddressSetErrorFromServer,
+	// LOCATION
+		// setErrorFromServer: locationAddressSetErrorFromServer,
 		id: locationAddressId,
 		reset: locationAddressReset,
 	} = useCreateTicketInput("locationAddress", isAddressEmpty);
@@ -54,6 +58,7 @@ const Location = () => {
 	};
 
 	useEffect(() => {
+		// LOCATION
 		// console.log("fired");
 		const newLocations = locations.slice();
 		const item = newLocations.find((loc, ind) => ind === activeLocationAddress);
@@ -95,6 +100,7 @@ const Location = () => {
 		const newItem = { ...item, type: type };
 		newLocations.splice(activeLocationType, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "locations", value: newLocations }));
+		// LOCATION
 		// dispatch(createTicketActions.updateField({ ey: "activeLocationType",  }));
 	}
 
@@ -107,7 +113,7 @@ const Location = () => {
 			))}
 		</div>
 	);
-
+	// LOCATION
 	// console.log(locations, locationsAddressIsValid);
 
 	return (

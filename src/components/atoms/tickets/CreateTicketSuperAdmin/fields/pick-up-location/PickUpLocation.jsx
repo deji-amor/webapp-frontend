@@ -22,14 +22,17 @@ const PickUpLocation = () => {
 	const {
 		enteredValue: locationAddressValue,
 		errorMessage: locationAddressErrorMessage,
-		setErrorMessage: locationAddressSetErrorMessage,
+		// LOCATION
+		// setErrorMessage: locationAddressSetErrorMessage,
 		hasError: locationAddressHasError,
-		setHasError: locationAddressSetHasError,
+		// LOCATION
+		// setHasError: locationAddressSetHasError,
 		valueChangeHandler: locationAddressChangeHandler,
 		valueBlurHandler: locationAddressBlurHandler,
 		valueIsValid: locationAddressIsValid,
 		errorFromServer: locationAddressErrFromServer,
-		setErrorFromServer: locationAddressSetErrorFromServer,
+		// LOCATION
+		// setErrorFromServer: locationAddressSetErrorFromServer,
 		id: locationAddressId,
 		reset: locationAddressReset,
 	} = useCreateTicketInput("pickLocationAddress", isAddressEmpty);
@@ -56,6 +59,7 @@ const PickUpLocation = () => {
 	};
 
 	useEffect(() => {
+		// LOCATION
 		// console.log("fired");
 		const newLocations = pickLocations.slice();
 		const item = newLocations.find((loc, ind) => ind === activePickLocationType);

@@ -36,9 +36,10 @@ const NavbarDropdown = () => {
 			gap: 8px;
 		}
 	`;
-	const resetPasswordHandler = () => {
-		console.log("reset");
-	};
+	// RESET
+	// const resetPasswordHandler = () => {
+	// 	console.log("reset");
+	// };
 
 	const dispatch = useDispatch();
 	const handleShowLogoutModal = () => {

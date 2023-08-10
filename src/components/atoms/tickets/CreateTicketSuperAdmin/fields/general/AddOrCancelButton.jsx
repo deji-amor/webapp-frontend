@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
-import AddIcon from "@mui/icons-material/Add";
-import ClearIcon from "@mui/icons-material/Clear";
+// IMPORT
+// import AddIcon from "@mui/icons-material/Add";
+// import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
 const AddOrCancelButton = ({ onClick , type, disabled}) => {
+	// BUTTON
   // const Button = styled("div")`
 	// 	color: white;
 	// 	background-color: rgba(43, 46, 114, ${disabled ? "0.5" : "1"});
@@ -21,7 +23,7 @@ const AddOrCancelButton = ({ onClick , type, disabled}) => {
 	// 	cursor: ${disabled ? "not-allowed" : "pointer"};
 	// 	bg-opacity: ${disabled ? "0.5" : "1"};
 	// `;
-
+	// RETURN
 	// return (
 	// 	<button className={`text-white bg-[#2b2e72] rounded-[0.5rem] font-500 text-[0.875rem] p-[0.375rem] text-center inline-flex items-center ${disabled ? "cursor-not-allowed bg-opacity-[0.5]" : "cursor-pointer bg-opacity-100"}`} type="button" disabled={disabled} onClick={onClick}>{type === "add" ? <AddIcon/> : <ClearIcon/>}</button>
 	// );

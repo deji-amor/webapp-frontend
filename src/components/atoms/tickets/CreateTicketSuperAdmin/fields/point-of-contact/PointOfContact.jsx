@@ -1,6 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
-import GrayThemedLightText from "../../GrayThemedLightText";
+// POINT
+// import PropTypes from "prop-types";
+// import GrayThemedLightText from "../../GrayThemedLightText";
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
 import { isNameEmpty, isPhoneNumber, isAddressEmpty } from "../../../../../../helpers/validation";
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
@@ -8,52 +9,65 @@ import GrayThemedLighterText from "../../GrayThemedLighterText";
 import GrayThemedLightestText from "../../GrayThemedLightestText";
 import Input from "../general/Input";
 import TextArea from "../general/TextArea";
-import { useSelector } from "react-redux";
+// POINT
+// import { useSelector } from "react-redux";
 
 const PointOfContact = (props) => {
 	const {
 		enteredValue: nameValue,
 		errorMessage: nameErrorMessage,
-		setErrorMessage: nameSetErrorMessage,
+// POINT
+		// setErrorMessage: nameSetErrorMessage,
 		hasError: nameHasError,
-		setHasError: nameSetHasError,
+// POINT
+		// setHasError: nameSetHasError,
 		valueChangeHandler: nameChangeHandler,
 		valueBlurHandler: nameBlurHandler,
 		valueIsValid: nameIsValid,
 		errorFromServer: nameErrFromServer,
-		setErrorFromServer: nameSetErrorFromServer,
+// POINT
+		// setErrorFromServer: nameSetErrorFromServer,
 		id: nameId,
-		reset: nameReset,
+// POINT
+		// reset: nameReset,
 	} = useCreateTicketInput("pointOfContactName", isNameEmpty);
 
 	const {
 		enteredValue: numberValue,
 		errorMessage: numberErrorMessage,
-		setErrorMessage: numberSetErrorMessage,
+// POINT
+		// setErrorMessage: numberSetErrorMessage,
 		hasError: numberHasError,
-		setHasError: numberSetHasError,
+// POINT
+		// setHasError: numberSetHasError,
 		valueChangeHandler: numberChangeHandler,
 		valueBlurHandler: numberBlurHandler,
 		valueIsValid: numberIsValid,
 		errorFromServer: numberErrFromServer,
-		setErrorFromServer: numberSetErrorFromServer,
+// POINT
+		// setErrorFromServer: numberSetErrorFromServer,
 		id: numberId,
-		reset: numberReset,
+// POINT
+		// reset: numberReset,
 	} = useCreateTicketInput("pointOfContactPhoneNumber", isPhoneNumber);
 
 	const {
 		enteredValue: addressValue,
 		errorMessage: addressErrorMessage,
-		setErrorMessage: addressSetErrorMessage,
+// POINT
+		// setErrorMessage: addressSetErrorMessage,
 		hasError: addressHasError,
-		setHasError: addressSetHasError,
+// POINT
+		// setHasError: addressSetHasError,
 		valueChangeHandler: addressChangeHandler,
 		valueBlurHandler: addressBlurHandler,
 		valueIsValid: addressIsValid,
 		errorFromServer: addressErrFromServer,
-		setErrorFromServer: addressSetErrorFromServer,
+// POINT
+		// setErrorFromServer: addressSetErrorFromServer,
 		id: addressId,
-		reset: addressReset,
+// POINT
+		// reset: addressReset,
 	} = useCreateTicketInput("pointOfContactAddress", isAddressEmpty);
 
 	return (

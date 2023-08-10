@@ -54,13 +54,13 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 		if (!tree[option]?.options) {
 			const newpath = [...pathToTemplate].slice(0, currentLevel);
 			newpath[currentLevel] = option;
-			// CONSOLING PATH
+			// CONSOLED PATH
 			// console.log({oldPath: pathToTemplate, newpath});
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
 			// REDIRECT TO Ticket TEMPLATE FORM
 			// console.log(tree[option]);
 			dispatch(createTicketActions.goToTicketTemplateForm(tree[option]?.fields));
-			// CONSOLING CHOSEN TEMPLATE
+			// CONSOLED CHOSEN TEMPLATE
 			// console.log("chosen template");
 			return;
 		}
@@ -71,6 +71,7 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 			setSelectedOption(null);
 			dispatch(createTicketActions.changeAnyState({ key: "level", value: currentLevel }));
 			const newPath = [...pathToTemplate].slice(0, currentLevel);
+			// CONSOLED NEW PATH
 			// console.log(newPath);
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newPath }));
 			return;
@@ -90,6 +91,7 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
 		}
 	}
+	// CONSOLED PATH TO TEMPLATE
 	// console.log(pathToTemplate);
 
   return (

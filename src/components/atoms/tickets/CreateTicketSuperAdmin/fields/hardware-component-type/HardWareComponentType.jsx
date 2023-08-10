@@ -37,7 +37,8 @@ const HardWareComponentType = () => {
 			valueBlurHandler: typeBlurHandler,
 			valueIsValid: typeIsValid,
 			errorFromServer: typeErrFromServer,
-			setErrorFromServer: typeSetErrorFromServer,
+			// TYPE
+			// setErrorFromServer: typeSetErrorFromServer,
 			id: typeId,
 			reset: typeReset,
 		} = useCreateTicketInput("hardwareInputTypeCurrentValue", isHardwareTypeValid);

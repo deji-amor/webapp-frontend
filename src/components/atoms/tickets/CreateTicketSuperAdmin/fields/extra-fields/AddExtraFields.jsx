@@ -33,7 +33,8 @@ const AddExtraFields = () => {
 		valueBlurHandler: fieldNameBlurHandler,
 		valueIsValid: fieldNameIsValid,
 		errorFromServer: fieldNameErrFromServer,
-		setErrorFromServer: fieldNameSetErrorFromServer,
+		// FIELD VALUE
+		// setErrorFromServer: fieldNameSetErrorFromServer,
 		id: fieldNameId,
 		reset: fieldNameReset,
 	} = useCreateTicketInput("extraFieldNameInputTypeCurrentValue", isFieldValueEmpty);
@@ -41,20 +42,24 @@ const AddExtraFields = () => {
 	const {
 		enteredValue: fieldValueValue,
 		errorMessage: fieldValueErrorMessage,
-		setErrorMessage: fieldValueSetErrorMessage,
+		// FIELD VALUE
+		// setErrorMessage: fieldValueSetErrorMessage,
 		hasError: fieldValueHasError,
-		setHasError: fieldValueSetHasError,
+		// FIELD VALUE
+		// setHasError: fieldValueSetHasError,
 		valueChangeHandler: fieldValueChangeHandler,
 		valueBlurHandler: fieldValueBlurHandler,
 		valueIsValid: fieldValueIsValid,
 		errorFromServer: fieldValueErrFromServer,
-		setErrorFromServer: fieldValueSetErrorFromServer,
+		// FIELD VALUE
+		// setErrorFromServer: fieldValueSetErrorFromServer,
 		id: fieldValueId,
 		reset: fieldValueReset,
 	} = useCreateTicketInput("extraFieldValueInputTypeCurrentValue", isFieldValueEmpty);
 
 	const addFieldHandler = () => {
 		const newField = {name: fieldNameValue, value: fieldValueValue, isValid: true, isTouched: false, hasError: false,}
+		// NEW FIELD
 		// const newField = {[fieldNameValue]: fieldValueValue}
 		const addFields = additionalFields.slice()
 		addFields.push(newField)
@@ -90,6 +95,7 @@ const AddExtraFields = () => {
 	const hasNewFieldsReachedLimit = additionalFields.length >= 3
 
 	const list = useAdditionalFieldsInput(isFieldValueEmpty)
+	// CONSOLED
 	// console.log({ additionalFields, additionalFieldsIsValid });
 	// console.log({list});
 	const listDiv = list.map(item => {
@@ -98,13 +104,16 @@ const AddExtraFields = () => {
 			enteredName: name,
 			errorMessage: errorMessage,
 			hasError: hasError,
-			setHasError: setHasError,
+			// SET
+			// setHasError: setHasError,
 			valueChangeHandler: changeHandler,
 			valueBlurHandler: blurHandler,
-			valueIsValid: isValid,
+			// IS VALID
+			// valueIsValid: isValid,
 			id: id,
 			removeSelf: removeSelf,
-			reset: reset,
+			// RESET
+			// reset: reset,
 		} = item;
 
 		return (
