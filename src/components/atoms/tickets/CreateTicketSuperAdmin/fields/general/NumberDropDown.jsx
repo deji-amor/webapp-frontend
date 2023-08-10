@@ -28,10 +28,10 @@ const NumberDropDown = ({min, max, value, onChange}) => {
 }
 
 NumberDropDown.propTypes = {
-  min: PropTypes.number,
-  max: PropTypes.number,
-  value: PropTypes.string,
-  onChange: PropTypes.func
-}
+	min: PropTypes.number,
+	max: PropTypes.number,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	onChange: PropTypes.func,
+};
 
 export default NumberDropDown

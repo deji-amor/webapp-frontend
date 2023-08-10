@@ -1,4 +1,5 @@
 import React from 'react'
+import { createTicket } from '../../../../state-manager/reducers/tickets/ticketCreation'
 import FormButton from '../../../atoms/tickets/CreateTicketSuperAdmin/FormButton'
 import GrayThemedLightText from '../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightText'
 import GrayThemedLighterText from '../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLighterText'
@@ -26,27 +27,21 @@ import HorizontalRule from '../../../atoms/tickets/CreateTicketSuperAdmin/Horizo
 
 const MainTicketCreationForm = () => {
 	const requiredFields = useCreateTicketFields()
+	const dispatch = useDispatch()
 
   const submitHandler = (e) => {
     e.preventDefault()
-    // const formData = new FormData(e.target)
-    // console.log(formData);
-		console.log("submitted");
-		console.log(requiredFields);
+		dispatch(createTicket(requiredFields))
   }
-
-	const dispatch = useDispatch()
 
 	const goBackHandler = () => {
 		dispatch(createTicketActions.goBackToAddTicketModal());
 	}
 
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
-	// console.log({allPossibleFields});
 
 	const isFormValid = useCreateTicketFormValidator()
 	const isFormDisabled = !isFormValid
-	// console.log({isFormValid, isFormDisabled});
 
 	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
 	const pointOfContact = chosenTemplate.includes("pointOfContact")
@@ -68,7 +63,7 @@ const MainTicketCreationForm = () => {
 
   return (
 		<form onSubmit={submitHandler}>
-			<div className="max-h-[28rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem] mb-[1rem]">
+			<div className="max-h-[26rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem] mb-[1rem]">
 				<div className="">
 					<GrayThemedLightText>Ticket Details:</GrayThemedLightText>
 				</div>

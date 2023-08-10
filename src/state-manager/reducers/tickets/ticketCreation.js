@@ -1,9 +1,36 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
+import S3 from "react-aws-s3";
+// import { awsconfig } from "../../../config/awsconfig";
+
+// export const awsUpload = async ({file, fileName, dirName}) => {
+// 	try {
+// 		awsconfig.dirName = dirName;
+
+// 		const ReactS3Client = new S3(awsconfig);
+// 		console.log(awsconfig, ReactS3Client)
+
+// 		// const result = await ReactS3Client.uploadFile(file, fileName);
+
+// 		// return result;
+// 		return null
+// 	} catch (error) {
+// 		console.log("error", error);
+// 	}
+// };
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
+
 	try {
 		const token = await getAuthToken();
+		if(args.scopeOfWorkDocument){
+			const {scopeOfWorkDocument} = args
+			console.log("has document")
+			// awsUpload()
+		}else {
+			console.log("has no document")
+		}
+
 		const config = {
 			method: "POST",
 			headers: {
@@ -45,67 +72,97 @@ function getTodayAndTomorrow() {
 	};
 }
 
+const addressItem = {address: "", type: "government"}
+const addressList = [addressItem]
+
+export const allRequiredFields = {
+	customerId: "",
+	pointOfContactName: "",
+	pointOfContactPhoneNumber: "",
+	pointOfContactAddress: "",
+	numberOfTechnicians: "1",
+	scopeOfWorkDescription: "",
+	scopeOfWorkDocument: null,
+	scopeOfWorkDocumentUrl: "",
+	startDateTime: getTodayAndTomorrow().today,
+	endDateTime: getTodayAndTomorrow().tomorrow,
+	hardwareComponentTypeList: [],
+	hardwareComponentTypeQuantityValue: "1",
+	hardwareComponentTypeQuantityName: "",
+	softwareInstallationQuantity: "1",
+	softwareInstallationName: "",
+	softwareCustomizationQuantity: "1",
+	softwareCustomizationName: "",
+	numberOfWorkstation: "1",
+	numberOfWorkSystem: "1",
+	locations: addressList,
+	numberOfLocation: addressList.length,
+	pickLocations: addressList,
+	numberOfPickLocation: addressList.length,
+	dropOffLocations: addressList,
+	numberOfDropLocation: addressList.length,
+	materialsDescription: "",
+	additionalFields: [],
+};
+
 const allPossibleFields = {
-		"customerId": "",
+	...allRequiredFields,
 		// POINT OF CONTACT NAME
-		"pointOfContactName": "",
+		
 		"pointOfContactNameIsTouched": false,
 		"pointOfContactNameIsValid": false,
 		"pointOfContactNameHasError": false,
 		// POINT OF CONTACT PHONE NUMBER
-		"pointOfContactPhoneNumber": "",
+		
 		"pointOfContactPhoneNumberIsTouched": false,
 		"pointOfContactPhoneNumberIsValid": false,
 		"pointOfContactPhoneNumberHasError": false,
 		// POINT OF CONTACT ADDRESS
-		"pointOfContactAddress": "",
+		
 		"pointOfContactAddressIsTouched": false,
 		"pointOfContactAddressIsValid": false,
 		"pointOfContactAddressHasError": false,
 		// NUMBER OF TECHNICIANS
-		"numberOfTechnicians": "1",
+		
 		// SCOPE OF WORK
-		"scopeOfWorkDescription": "",
+		
 		"scopeOfWorkDescriptionIsTouched": "",
 		"scopeOfWorkDescriptionIsValid": "",
 		"scopeOfWorkDescriptionHasError": "",
-		"scopeOfWorkDocument": null,
+		
 		"scopeOfWorkDocumentIsValid": false, // might not be need for this
 		// DURATION
-		"startDateTime": getTodayAndTomorrow().today,
-		"endDateTime": getTodayAndTomorrow().tomorrow,
+
 		//HARDWARE COMPONENT TYPE
 		"hardwareInputTypeCurrentValue": "",
 		"hardwareInputTypeCurrentValueIsValid": "",
 		"hardwareInputTypeCurrentValueIsTouched": "",
 		"hardwareInputTypeCurrentValueIsHasError": "",
-		"hardwareComponentTypeList": [],
+		
 		"hardwareComponentTypeListIsValid": "",
 		//HARDWARE COMPONENT QUANTITY
-		"hardwareComponentTypeQuantityValue": "1",
-		"hardwareComponentTypeQuantityName": "",
+		
+		
 		"hardwareComponentTypeQuantityNameIsValid": "",
 		"hardwareComponentTypeQuantityNameIsTouched": "",
 		"hardwareComponentTypeQuantityNameHasError": "",
 		//SOFTWARE INSTALLATION
-		"softwareInstallationQuantity": "1",
-		"softwareInstallationName": "",
+
 		"softwareInstallationNameIsValid": "",
 		"softwareInstallationNameIsTouched": "",
 		"softwareInstallationNameHasError": "",
 		//SOFTWARE CUSTOMIZATION
-		"softwareCustomizationQuantity": "1",
-		"softwareCustomizationName": "",
+
 		"softwareCustomizationNameIsValid": "",
 		"softwareCustomizationNameIsTouched": "",
 		"softwareCustomizationNameHasError": "",
 		// WORKSTATION
-		"numberOfWorkstation": "1",
+		
 		// WORK SYSTEM
-		"numberOfWorkSystem": "1",
+		
 		//LOCATION
-		"numberOfLocation": "3",
-		"locations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		
+		
 		"locationsAddressIsValid": false,
 		"activeLocationAddress": 0, // ZERO INDEX BASED
 		"activeLocationType": 0, // ZERO INDEX BASED
@@ -115,8 +172,8 @@ const allPossibleFields = {
 		"locationAddressIsTouched": "",
 		"locationAddressHasError": "",
 		//PICk UP LOCATION
-		"numberOfPickLocation": "3",
-		"pickLocations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		
+		
 		"pickLocationsAddressIsValid": false,
 		"activePickLocationAddress": 0, // ZERO INDEX BASED
 		"activePickLocationType": 0, // ZERO INDEX BASED
@@ -126,8 +183,8 @@ const allPossibleFields = {
 		"pickLocationAddressIsTouched": "",
 		"pickLocationAddressHasError": "",
 		//DROP OFF LOCATION
-		"numberOfDropLocation": "3",
-		"dropOffLocations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		
+		
 		"dropOffLocationsAddressIsValid": false,
 		"activeDropOffLocationAddress": 0, // ZERO INDEX BASED
 		"activeDropOffLocationType": 0, // ZERO INDEX BASED
@@ -137,7 +194,7 @@ const allPossibleFields = {
 		"dropOffLocationAddressIsTouched": "",
 		"dropOffLocationAddressHasError": "",
 		// MATERIALS PROCUREMENT
-		"materialsDescription": "",
+		
 		"materialsDescriptionIsTouched": "",
 		"materialsDescriptionIsValid": "",
 		"materialsDescriptionHasError": "",
@@ -150,7 +207,7 @@ const allPossibleFields = {
 		"extraFieldValueInputTypeCurrentValueIsValid": "",
 		"extraFieldValueInputTypeCurrentValueIsTouched": "",
 		"extraFieldValueInputTypeCurrentValueIsHasError": "",
-		"additionalFields": [],
+		
 		"additionalFieldsIsValid": true,
 }
 

@@ -109,6 +109,7 @@ const Location = () => {
 	);
 
 	// console.log(locations, locationsAddressIsValid);
+	// console.log({numberOfLocation});
 
 	return (
 		<div className="">

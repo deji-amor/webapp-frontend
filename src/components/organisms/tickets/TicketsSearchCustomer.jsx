@@ -142,13 +142,20 @@ const TicketsSearchCustomer = () => {
 
 return (
 	<Wrapper>
-		<div className="w-full absolute top-[5rem] right-full z-100">
+		<div className="w-full absolute top-full left-0 z-100">
+			{showTopLevel && (
+				<div className="absolute top-[115%] left-0 bg-white z-[100]">
+					<TopLevel />
+				</div>
+			)}
+		</div>
+		{/* <div className="w-full absolute top-[5rem] right-full z-100">
 			{showTopLevel && (
 				<div className="absolute top-[115%] right-0 bg-white z-[100]">
 					<TopLevel />
 				</div>
 			)}
-		</div>
+		</div> */}
 		<div className="w-full absolute top-[5rem] right-full z-100"></div>
 		<div className="space-y-2 w-full relative">
 			<Head>Select Customer</Head>
