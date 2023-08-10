@@ -2,6 +2,7 @@ export function isValidEmail(email) {
   // Regular expression pattern for email validation
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
+  // RETURN
   // return emailPattern.test(email);
   if(email.trim().length === 0) return [false, "Email can not be empty"]
   if (!emailPattern.test(email)) {
@@ -114,11 +115,11 @@ export function isHardwareQuantityValid(value) {
 }
 
 // // Example usage:
+// DATES
 // const dateString1 = "2023-08-04T12:00";
 // const dateString2 = "2023-13-04T25:00"; // Invalid date or time values
 // const dateString3 = "2023-08-04T12:001"; // Invalid format
 // const dateString4 = "2023-02-31T12:00"; // Invalid date or time values
-
 // console.log(isValidDateTimeLocal(dateString1)); // Output: [true, null]
 // console.log(isValidDateTimeLocal(dateString2)); // Output: [false, "Invalid date or time values."]
 // console.log(isValidDateTimeLocal(dateString3)); // Output: [false, "Invalid format. The format should be 'YYYY-MM-DDTHH:mm'."]

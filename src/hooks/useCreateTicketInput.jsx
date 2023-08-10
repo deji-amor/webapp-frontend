@@ -28,6 +28,7 @@ const useCreateTicketInput = (pointer, validateValue) => {
 	}, [enteredValue, dispatch, pointer, validateValue])
 
 	const id = useId();
+	// USESTATE
 	// const [enteredValue, setEnteredValue] = useState("");
 	// const [isTouched, setIsTouched] = useState(false);
 	// const [hasError, setHasError] = useState(false);

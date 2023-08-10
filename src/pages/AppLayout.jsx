@@ -44,6 +44,7 @@ const AppLayout = () => {
 		const checkIfTokenExistsAndIsValid = async () => {
 			dispatch(logoutActions.countDownSeconds());
 			const token = await getAuthToken();
+			// CONSOLED
 			// console.log({token});
 			if (allowedTimeOfInactivityInSeconds <= 0 && token && !logoutProcessLoading) {
 				const deviceName = getDeviceName();
@@ -60,8 +61,9 @@ const AppLayout = () => {
 	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
 	/////////// AUTHENTICATION LOGIC ENDS HERE
 
-	const { loading: usersLoading, users } = useSelector((state) => state.users);
-	const { loading: customersLoading, customers } = useSelector((state) => state.customers);
+	// USESELECTORS
+	// const { loading: usersLoading, users } = useSelector((state) => state.users);
+	// const { loading: customersLoading, customers } = useSelector((state) => state.customers);
 
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
 	const showResetModal = useSelector((state) => state.logout.showResetModal);

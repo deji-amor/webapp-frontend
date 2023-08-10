@@ -60,13 +60,16 @@ const CustomTableCell = ({ children, status }) => {
 		? "600"
 		: statusStyle.fontWeight || "normal";
 
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+		// USE STATE
+	// const [anchorEl, setAnchorEl] = React.useState(null);
+
+	// HANDLES
+	// const handleClick = (event) => {
+	// 	setAnchorEl(event.currentTarget);
+	// };
+	// const handleClose = () => {
+	// 	setAnchorEl(null);
+	// };
 
 	return (
 		<TableCell
@@ -112,11 +115,17 @@ const CustomerTable = ({ filteredCustomers, sortedCustomers, handleUpdateStatus 
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;
 	const currentCustomers = filteredCustomers.slice(indexOfFirstCustomer, indexOfLastCustomer);
 	const totalCustomers = filteredCustomers.length;
-	const totalPages = Math.ceil(totalCustomers / customersPerPage);
+
+	// Total Pages
+	// const totalPages = Math.ceil(totalCustomers / customersPerPage);
 
 	const filteredCustomersByStatus = currentCustomers.filter(
 		(customer) => filter === "All" || customer.status === filter
 	);
+
+	const handleEditCustomerProfile = () => {
+		console.log("HI")
+	}
 
 	return (
 		<React.Fragment>

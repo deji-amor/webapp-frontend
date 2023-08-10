@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useId } from "react";
+// IMPORT
+// import React, { useState, useEffect, useId } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createTicketActions } from "../state-manager/reducers/tickets/ticketCreation";
-import PropTypes from "prop-types";
+// IMPORT
+// import PropTypes from "prop-types";
 
 const useAdditionalFieldsInput = (validateValue) => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
@@ -11,7 +13,8 @@ const useAdditionalFieldsInput = (validateValue) => {
   const additionalFieldsList = additionalFields.map((currentField, currentFieldInd) => {
     const enteredValue = currentField.value;
     const enteredName = currentField.name
-    const isTouched = currentField.isTouched;
+    // IS TOUCHED
+    // const isTouched = currentField.isTouched;
     const hasError = currentField.hasError;
     const valueIsValid = currentField.isValid;
     const errorMessage = currentField.errorMessage
@@ -56,12 +59,14 @@ const useAdditionalFieldsInput = (validateValue) => {
     }
 
     const id = `${"xr6ty6cu"}currentField`;
+    // USE STATE
     // const [enteredValue, setEnteredValue] = useState("");
     // const [isTouched, setIsTouched] = useState(false);
     // const [hasError, setHasError] = useState(false);
   
     const valueChangeHandler = (value) => {
       setEnteredValue(value);
+      // SET ERROR
       // setErrorFromServer(false);
     };
   
@@ -73,6 +78,7 @@ const useAdditionalFieldsInput = (validateValue) => {
       setEnteredValue("");
       setIsTouched(false);
       setHasError(false);
+      // SET ERROR
       // setErrorFromServer(false);
     };
 
@@ -86,8 +92,10 @@ const useAdditionalFieldsInput = (validateValue) => {
       setHasError,
       errorMessage,
       removeSelf,
+      // SET ERROR
       // setErrorMessage,
       valueIsValid,
+      // SET ERROR
       // errorFromServer,
       // setErrorFromServer,
       id,

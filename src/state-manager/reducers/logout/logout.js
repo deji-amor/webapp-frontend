@@ -68,11 +68,13 @@ const logoutSlice = createSlice({
 
 			//  Reset Password
 			.addCase(logout.pending, (state, action) => {
+				// Consoled
 				// console.log("pending");
 				state.loading = true;
 			})
 
 			.addCase(logout.fulfilled, (state, {payload}) => {
+				// Consoled
 				// console.log("fulfilled", payload);
 				state.loading = false;
 				state.token = payload;
@@ -91,6 +93,7 @@ const logoutSlice = createSlice({
 			})
 
 			.addCase(logout.rejected, (state, {payload}) => {
+				// Consoled
 				// console.log("rejected", payload);
 				state.loading = false;
 				state.errorMessage = "Logout failed!";
@@ -100,6 +103,7 @@ const logoutSlice = createSlice({
 	},
 });
 
+// EXPORT
 // export const { } = passwordSlice.actions
 
 export default logoutSlice.reducer;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const useCreateTicketFormValidator = () => {
   const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
@@ -8,6 +8,7 @@ const useCreateTicketFormValidator = () => {
   const isFormValid = chosenTemplate.reduce((previousValue, currentSection) => {
     if(currentSection === "pointOfContact"){
       const { pointOfContactNameIsValid, pointOfContactPhoneNumberIsValid , pointOfContactAddressIsValid} = allPossibleFields;
+      // CONSOLED
       // console.log({
 			// 	pointOfContactNameIsValid,
 			// 	pointOfContactPhoneNumberIsValid,
@@ -16,7 +17,9 @@ const useCreateTicketFormValidator = () => {
       return previousValue && (pointOfContactNameIsValid && pointOfContactPhoneNumberIsValid && pointOfContactAddressIsValid)
     }
     if (currentSection === "numberOfTechniciansNeeded") {
-       const { numberOfTechnicians } = allPossibleFields;
+      // CONSOLED
+      //  const { numberOfTechnicians } = allPossibleFields;
+      // CONSOLED
       //  console.log({ numberOfTechnicians });
       return true && previousValue;
     }
