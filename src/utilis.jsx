@@ -3,19 +3,16 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const addErrorIntoField = (errors) => (errors ? { error: true } : { error: false });
-export const phoneRegExp =
-	/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+export const phoneRegExp = /^(?:\+1)?[2-9]\d{2}-[2-9]\d{2}-\d{4}$/;
 export const pawdRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-export const removeAuthToken = () => {
-	return localforage
-		.removeItem("authToken")
-		.then(() => {
-			return true;
-		})
-		.catch((error) => {
-			return false;
-		});
+export const removeAuthToken = async () => {
+	try {
+		await localforage.removeItem("authToken");
+		return true;
+	} catch (error) {
+		return false;
+	}
 };
 
 export const getAuthToken = async () => {
@@ -44,21 +41,16 @@ export const ProtectedRoute = ({ children }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const getToken = async () => {
+		const checkToken = async () => {
 			const token = await getAuthToken();
 
-			if (!token || token === null || token === undefined) {
-				return navigate("/");
+			if (!token) {
+				navigate("/");
 			}
 		};
 
-		getToken();
-
+		checkToken();
 	}, [navigate]);
-
-	
 
 	return children;
 };
-
-// 

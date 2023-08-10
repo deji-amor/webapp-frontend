@@ -1,4 +1,4 @@
-name: React CI
+name: Build and Deploy app to cloud 
 
 on:
   push:

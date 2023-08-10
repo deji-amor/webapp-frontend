@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { ButtonWrapper } from "./wrappers";
 import { ThreeDots, Oval } from "react-loader-spinner";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const CustomButton = ({
 	butText,
@@ -14,6 +14,7 @@ const CustomButton = ({
 	serverError,
 	validationError,
 	currentError,
+	style,
 	onClick,
 	defaultCursor,
 }) => {
@@ -21,6 +22,7 @@ const CustomButton = ({
 		<ButtonWrapper
 			width={butWidth}
 			height={butHeight}
+			style={style}
 			error={serverError || validationError || currentError || error || defaultCursor}
 		>
 			<button
@@ -48,6 +50,7 @@ CustomButton.propTypes = {
 	butWidth: PropTypes.string,
 	butHeight: PropTypes.string,
 	name: PropTypes.string,
+	style: PropTypes.object,
 	backgroundColor: PropTypes.string,
 	onClick: PropTypes.func,
 	loading: PropTypes.bool,

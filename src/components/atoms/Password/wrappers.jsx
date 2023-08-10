@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
 
-export const LogoWrapper = styled("span")(({color}) => ({
+export const LogoWrapper = styled("span")(({color, style}) => ({
 	display: "flex",
 	justifyContent: "center",
 	alignItems: "center",
@@ -10,8 +10,10 @@ export const LogoWrapper = styled("span")(({color}) => ({
 	zIndex: "10",
 	gap: "10px",
 
+	style,
+
 	span: {
-		color: color ? color : "#000",
+		color: color || "#000",
 		textAlign: "center",
 		fontFamily: "Inter",
 		fontSize: "20px",
@@ -21,7 +23,7 @@ export const LogoWrapper = styled("span")(({color}) => ({
 	},
 }));
 
-export const ButtonWrapper = styled("div")(({ width, height, error }) => ({
+export const ButtonWrapper = styled("div")(({ width, height }) => ({
 	maxWidth: "100%",
 	display: "flex",
 	justifyContent: "center",
@@ -29,8 +31,8 @@ export const ButtonWrapper = styled("div")(({ width, height, error }) => ({
 
 	button: {
 		background: "#2B2E72",
-		width: width ? width : "100%",
-		height: height ? height : "46px",
+		width: width || "100%",
+		height: height || "46px",
 		color: "white",
 		position: 'relative',
 		zIndex: "10",
@@ -40,7 +42,6 @@ export const ButtonWrapper = styled("div")(({ width, height, error }) => ({
 		fontSize: "18px",
 		letterSpacing: "1px",
 		cursor: 'pointer',
-		// cursor: error ? "not-allowed" : "pointer",
 	},
 
 	span: {
@@ -72,7 +73,7 @@ export const ButtonWrapper = styled("div")(({ width, height, error }) => ({
 }));
 
 export const DescriptionWrapper = styled("div")(
-	({ mquery, size, color, align, width, padding }) => ({
+	({size, color, align, width, padding }) => ({
 		width: "100%",
 		display: "flex",
 		justifyContent: "center",
@@ -80,9 +81,9 @@ export const DescriptionWrapper = styled("div")(
 		p: {
 			padding: padding ? "0 20px" : "",
 			width: width,
-			color: color ? color : "#282828",
-			textAlign: align ? align : "center",
-			fontSize: size ? size : "18px",
+			color: color || "#282828",
+			textAlign: align || "center",
+			fontSize: size || "18px",
 			fontStyle: "normal",
 			fontWeight: "400",
 			lineHeight: "162.023%",
@@ -90,10 +91,10 @@ export const DescriptionWrapper = styled("div")(
 	})
 );
 
-export const IconWrapper = styled("div")(({ mquery, style, size, color, align, width }) => ({
-	width: width ? width : "",
+export const IconWrapper = styled("div")(({ style, size, color, align, width }) => ({
+	width: width || "",
 	color: "var(--text-heading-dark, #27272E)",
-	textAlign: align ? align : "center",
+	textAlign: align || "center",
 	position: "relative",
 
 	span: {
@@ -103,23 +104,21 @@ export const IconWrapper = styled("div")(({ mquery, style, size, color, align, w
 	"span .icon": {
 		style,
 		fontSize: size,
-		color: color ? color : "rgba(43, 46, 114, 0.72)",
+		color: color || "rgba(43, 46, 114, 0.72)",
 	},
 }));
 
-export const InputWrapper = styled("div")(({ mquery, inputWidth, inputHeight, error, empty, value, confirm }) => ({
+export const InputWrapper = styled("div")(({inputWidth, inputHeight, error, empty, value, confirm}) => ({
 	width: "100%",
 	position: "relative",
 
 	input: {
-		width: inputWidth ? inputWidth : "100%",
-		height: inputHeight ? inputHeight : "46px",
+		width: inputWidth || '100%',
+		height: inputHeight || "46px",
 		borderRadius: "6px",
 		background: "#EEE",
 		padding: "15px",
-		outline: empty && !value ? `0.1px solid ${(empty && !value) ? "#D73D3D" : "none"}`
-				: empty && !confirm ? `0.1px solid ${(empty && !confirm) ? "#D73D3D" : "none"}` 
-				:`0.1px solid ${(error || empty) ? "#D73D3D" : "none"}`,
+		outline: `0.1px solid ${((empty && !value) || (empty && !confirm) || error) ? "#D73D3D" : "none"}`,
 		color: "#2B2E72",
 		position: "relative",
 	},
@@ -129,7 +128,7 @@ export const InputWrapper = styled("div")(({ mquery, inputWidth, inputHeight, er
 	},
 }));
 
-export const ToolTipWrapper = styled("div")(({ error, color }) => ({
+export const ToolTipWrapper = styled("div")(({color}) => ({
 	width: "100%",
 	display: "flex",
 	gap: "5px",
@@ -137,7 +136,7 @@ export const ToolTipWrapper = styled("div")(({ error, color }) => ({
 	p: {
 		width: "100%",
 		flexShrink: "0",
-		color: color ? color : "rgba(43, 46, 114, 0.72)",
+		color: color || "rgba(43, 46, 114, 0.72)",
 		fontSize: "14px",
 		fontStyle: "normal",
 		fontWeight: "500",
@@ -181,15 +180,15 @@ export const TipNoteWrapper = styled("div")(() => ({
 	},
 }));
 
-export const TitleWrapper = styled("div")(({ mquery, size, color, align, padding }) => ({
+export const TitleWrapper = styled("div")(({ size, color, align, padding }) => ({
 	width: "100%",
 	padding: padding ? "0 30px" : "",
 
 	h2: {
-		color: color ? color : "#2B2E72",
-		textAlign: align ? align : "center",
+		color: color || "#2B2E72",
+		textAlign: align || "center",
 		fontFamily: "Poppins",
-		fontSize: size ? size : "40px",
+		fontSize: size || "40px",
 		fontStyle: "normal",
 		fontWeight: "600",
 		lineHeight: "136.023%",
@@ -220,7 +219,7 @@ export const ErrorCardWrapper = styled("div")(({ error, style, size, color }) =>
 }));
 
 export const InputButtonWrapper = styled("div")(({ width }) => ({
-	width: width ? width : "100%;",
+	width: width || "100%;",
 	display: "flex",
 	flexDirection: "column",
 	gap: "30px",
@@ -228,7 +227,7 @@ export const InputButtonWrapper = styled("div")(({ width }) => ({
 
 export const HeaderContentWrapper = styled("div")(({ padding, align }) => ({
 	width: "100%",
-	align: align ? align : "center",
+	align: align || "center",
 	padding: padding ? "0 30px" : "",
 	display: "flex",
 	flexDirection: "column",
@@ -238,7 +237,7 @@ export const HeaderContentWrapper = styled("div")(({ padding, align }) => ({
 }));
 
 export const ForgotEmailWrapper = styled("form")(({ width }) => ({
-	width: width ? width : "425px",
+	width: width || "425px",
 	height: "auto",
 	display: "flex",
 	flexDirection: "column",
