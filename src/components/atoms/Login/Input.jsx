@@ -2,7 +2,6 @@ import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PropTypes from "prop-types";
-// import { styled } from "@mui/material";
 
 const Input = ({ placeholder, type, value, onChange, onBlur, hasError, id }) => {
 	const [showPassword, setShowPassword] = useState(false);

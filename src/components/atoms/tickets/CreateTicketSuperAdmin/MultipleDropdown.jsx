@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {styled} from "@mui/material"
 import tree from '../../../../state-manager/reducers/tickets/ticketCreationMultiplePath'
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+// IMPORT ARROWBACKIOSICON
 // import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTicketActions } from '../../../../state-manager/reducers/tickets/ticketCreation';
@@ -53,11 +54,13 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 		if (!tree[option]?.options) {
 			const newpath = [...pathToTemplate].slice(0, currentLevel);
 			newpath[currentLevel] = option;
+			// CONSOLING PATH
 			// console.log({oldPath: pathToTemplate, newpath});
 			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
 			// REDIRECT TO Ticket TEMPLATE FORM
 			// console.log(tree[option]);
 			dispatch(createTicketActions.goToTicketTemplateForm(tree[option]?.fields));
+			// CONSOLING CHOSEN TEMPLATE
 			// console.log("chosen template");
 			return;
 		}

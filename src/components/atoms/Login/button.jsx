@@ -1,25 +1,25 @@
 import PropTypes from "prop-types";
-// import { styled } from "@mui/material";
+import { styled } from "@mui/material";
 
 const Button = ({ children, isDisabled, type, isLoading, loadingText }) => {
-	// const MyButton = styled("button")`
-	// 	display: block;
-	// 	width: 100%;
-	// 	padding: 1rem 1.5rem;
-	// 	border-radius: 0.5rem;
-	// 	background: #2b2e72;
-	// 	color: #fff;
-	// 	font-family: "Poppins", sans-serif;
-	// 	font-size: 1.25rem;
-	// 	font-style: normal;
-	// 	font-weight: 600;
-	// 	line-height: 0.875rem; /* 70% */
-	// 	cursor: ${({ disabled }) => (disabled ? "not-allowed" : "")};
-	// 	opacity: ${({ disabled }) => (disabled ? "0.40" : "")};
-	// `;
-	// {
-	// 	<MyButton disabled={isDisabled} type={type || "button"}>{children}</MyButton>
-	// }
+	const MyButton = styled("button")`
+		display: block;
+		width: 100%;
+		padding: 1rem 1.5rem;
+		border-radius: 0.5rem;
+		background: #2b2e72;
+		color: #fff;
+		font-family: "Poppins", sans-serif;
+		font-size: 1.25rem;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 0.875rem; /* 70% */
+		cursor: ${({ disabled }) => (disabled ? "not-allowed" : "")};
+		opacity: ${({ disabled }) => (disabled ? "0.40" : "")};
+	`;
+	{
+		<MyButton disabled={isDisabled} type={type || "button"}>{children}</MyButton>
+	}
 	
 	const spinner = (
 		<svg

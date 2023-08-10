@@ -8,7 +8,6 @@ const HeaderContent = ({
 	title,
 	titleSize,
 	desWidth,
-	titleColor,
 	iconColor,
 	iconSize,
 	description,
