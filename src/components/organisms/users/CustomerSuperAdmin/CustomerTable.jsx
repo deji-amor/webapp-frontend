@@ -123,7 +123,7 @@ const CustomerTable = ({ filteredCustomers, sortedCustomers, handleUpdateStatus 
 		(customer) => filter === "All" || customer.status === filter
 	);
 
-	const handleEditCustomerProfile = () => {
+	const handleEditCustomerProfile = (id) => {
 		console.log("HI")
 	}
 
