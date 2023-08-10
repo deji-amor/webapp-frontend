@@ -114,7 +114,7 @@ export const InputWrapper = styled("div")(({ mquery, inputWidth, inputHeight, er
 	position: "relative",
 
 	input: {
-		width: inputWidth ? inputWidth : "100%",
+		width: `${inputWidth ? inputWidth : '100%'}`,
 		height: inputHeight ? inputHeight : "46px",
 		borderRadius: "6px",
 		background: "#EEE",
