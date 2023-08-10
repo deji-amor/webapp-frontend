@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const addErrorIntoField = (errors) => (errors ? { error: true } : { error: false });
-export const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
-	
+export const phoneRegExp = /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i;
 export const pawdRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 export const removeAuthToken = () => {
@@ -53,12 +52,9 @@ export const ProtectedRoute = ({ children }) => {
 		};
 
 		getToken();
-
 	}, [navigate]);
-
-	
 
 	return children;
 };
 
-// 
+//
