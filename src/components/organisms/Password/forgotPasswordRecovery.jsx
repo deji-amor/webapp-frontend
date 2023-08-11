@@ -22,7 +22,7 @@ const ForgotPasswordRecover = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { email, token } = useParams();
-	const response = useSelector((state) => state.forgotPassword.response);
+	const { response } = useSelector((state) => state.forgotPassword);
 
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
