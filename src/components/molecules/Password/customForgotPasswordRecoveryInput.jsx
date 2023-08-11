@@ -7,6 +7,117 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
+const ValueToolTip = ({ condition, text }) => {
+	return (
+		<ToolTip
+			toolTipIcon={
+				condition ? (
+					<CheckCircleOutlineIcon className="icon" />
+				) : (
+					<HelpOutlineIcon className="icon" />
+				)
+			}
+			toolTipText={text}
+			toolTipColor={condition ? "rgba(18, 133, 37, 0.72)" : ""}
+		/>
+	);
+};
+
+const ValueToolTips = ({ hasUpper, hasLower, hasNumber, hasSymbol, hasEightChar }) => {
+	return (
+		<>
+			<ValueToolTip condition={hasUpper} text="Minimum 1 uppercase letter" />
+			<ValueToolTip condition={hasLower} text="Minimum 1 lowercase letter" />
+			<ValueToolTip condition={hasSymbol} text="Minimum 1 special letter" />
+			<ValueToolTip condition={hasNumber} text="Minimum 1 number" />
+			<ValueToolTip condition={hasEightChar} text="Minimum of 8 characters" />
+		</>
+	);
+};
+
+const ValidationErrorToolTip = ({ condition, text }) => (
+	<ToolTip
+		toolTipIcon={
+			condition ? (
+				<CheckCircleOutlineIcon className="icon" />
+			) : (
+				<ErrorOutlineIcon className="icon" />
+			)
+		}
+		toolTipText={text}
+		toolTipColor={condition ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
+	/>
+);
+
+const ValidationErrorTips = ({ hasUpper, hasLower, hasNumber, hasSymbol, hasEightChar }) => {
+	return (
+		<>
+			<ValidationErrorToolTip condition={hasUpper} text="Minimum 1 uppercase letter" />
+			<ValidationErrorToolTip condition={hasLower} text="Minimum 1 lowercase letter" />
+			<ValidationErrorToolTip condition={hasSymbol} text="Minimum 1 special letter" />
+			<ValidationErrorToolTip condition={hasNumber} text="Minimum 1 number" />
+			<ValidationErrorToolTip condition={hasEightChar} text="Minimum of 8 characters" />
+		</>
+	);
+};
+
+const SingleTips = ({ match, confirm, empty, name }) => {
+	return !match && confirm.length >= 1 ? (
+		<ToolTip
+			toolTipIcon={<ErrorOutlineIcon className="icon" />}
+			toolTipText="Password does not match new password entered!"
+			toolTipColor={"#D73D3D"}
+		/>
+	) : empty && name === "confirmPassword" && !confirm ? (
+		<ToolTip
+			toolTipIcon={<ErrorOutlineIcon className="icon" />}
+			toolTipText="Confirm password input field cannot be empty!"
+			toolTipColor={"#D73D3D"}
+		/>
+	) : (
+		""
+	);
+};
+
+const PasswordField = ({
+	label,
+	type,
+	width,
+	height,
+	placeholder,
+	empty,
+	name,
+	value,
+	confirm,
+	currentError,
+	forgotPasswordRecoveryError,
+	errorMessage,
+	serverRecoveryError,
+	handleChange,
+}) => {
+	return (
+		<>
+			<CustomLabel label={label} />
+			<CustomInput
+				type={type}
+				width={width}
+				height={height}
+				placeholder={placeholder}
+				label={label}
+				empty={empty}
+				name={name}
+				value={value}
+				confirm={confirm}
+				currentError={currentError}
+				error={forgotPasswordRecoveryError}
+				errorMessage={errorMessage}
+				serverError={serverRecoveryError}
+				handleChange={handleChange}
+			/>
+		</>
+	);
+};
+
 const ForgotPasswordRecoveryInput = ({
 	type,
 	width,
@@ -33,180 +144,53 @@ const ForgotPasswordRecoveryInput = ({
 	return (
 		<InputButtonWrapper error={forgotPasswordRecoveryError}>
 			<div>
-				<CustomLabel label={label} />
-				<CustomInput
+				<PasswordField
+					label={label}
 					type={type}
 					width={width}
 					height={height}
 					placeholder={placeholder}
-					label={label}
 					empty={empty}
 					name={name}
 					value={value}
 					confirm={confirm}
 					currentError={currentError}
-					error={forgotPasswordRecoveryError}
+					forgotPasswordRecoveryError={forgotPasswordRecoveryError}
 					errorMessage={errorMessage}
-					serverError={serverRecoveryError}
+					serverRecoveryError={serverRecoveryError}
 					handleChange={handleChange}
 				/>
 				{single ? (
-					!match && confirm.length >= 1 ? (
-						<ToolTip
-							toolTipIcon={<ErrorOutlineIcon className="icon" />}
-							toolTipText="Password does not match new password entered!"
-							toolTipColor={"#D73D3D"}
-						/>
-					) : empty && name === 'confirmPassword' && !confirm ? (
-						<ToolTip
-							toolTipIcon={<ErrorOutlineIcon className="icon" />}
-							toolTipText="Confirm password input field cannot be empty!"
-							toolTipColor={"#D73D3D"}
-						/>
-					) : (
-						""
-					)
-				) : value && !match && !currentError ? (
-					<>
-						<>
-							<ToolTip
-								toolTipIcon={
-									hasUpper ? (
-										<CheckCircleOutlineIcon className="icon" />
-									) : (
-										<HelpOutlineIcon className="icon" />
-									)
-								}
-								toolTipText="Minimum 1 uppercase letter"
-								toolTipColor={hasUpper ? "rgba(18, 133, 37, 0.72)" : ""}
-							/>
-
-							<ToolTip
-								toolTipIcon={
-									hasLower ? (
-										<CheckCircleOutlineIcon className="icon" />
-									) : (
-										<HelpOutlineIcon className="icon" />
-									)
-								}
-								toolTipText="Minimum 1 lowercase letter"
-								toolTipColor={hasLower ? "rgba(18, 133, 37, 0.72)" : ""}
-							/>
-
-							<ToolTip
-								toolTipIcon={
-									hasSymbol ? (
-										<CheckCircleOutlineIcon className="icon" />
-									) : (
-										<HelpOutlineIcon className="icon" />
-									)
-								}
-								toolTipText="Minimum 1 special letter"
-								toolTipColor={hasSymbol ? "rgba(18, 133, 37, 0.72)" : ""}
-							/>
-
-							<ToolTip
-								toolTipIcon={
-									hasNumber ? (
-										<CheckCircleOutlineIcon className="icon" />
-									) : (
-										<HelpOutlineIcon className="icon" />
-									)
-								}
-								toolTipText="Minimum 1 number"
-								toolTipColor={hasNumber ? "rgba(18, 133, 37, 0.72)" : ""}
-							/>
-
-							<ToolTip
-								toolTipIcon={
-									hasEightChar ? (
-										<CheckCircleOutlineIcon className="icon" />
-									) : (
-										<HelpOutlineIcon className="icon" />
-									)
-								}
-								toolTipText="Minimum of 8 characters"
-								toolTipColor={hasEightChar ? "rgba(18, 133, 37, 0.72)" : ""}
-							/>
-						</>
-					</>
+					<SingleTips match={match} empty={empty} confirm={confirm} name={name} />
+				) : (value && !match && !currentError) ? (
+					<ValueToolTips
+						hasLower={hasLower}
+						hasUpper={hasUpper}
+						hasNumber={hasNumber}
+						hasSymbol={hasSymbol}
+						hasEightChar={hasEightChar}
+					/>
 				) : validationError ? (
-					<>
-						<ToolTip
-							toolTipIcon={
-								hasUpper ? (
-									<CheckCircleOutlineIcon className="icon" />
-								) : (
-									<ErrorOutlineIcon className="icon" />
-								)
-							}
-							toolTipText="Minimum 1 uppercase letter"
-							toolTipColor={hasUpper ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-						/>
-
-						<ToolTip
-							toolTipIcon={
-								hasLower ? (
-									<CheckCircleOutlineIcon className="icon" />
-								) : (
-									<ErrorOutlineIcon className="icon" />
-								)
-							}
-							toolTipText="Minimum 1 lowercase letter"
-							toolTipColor={hasLower ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-						/>
-
-						<ToolTip
-							toolTipIcon={
-								hasSymbol ? (
-									<CheckCircleOutlineIcon className="icon" />
-								) : (
-									<ErrorOutlineIcon className="icon" />
-								)
-							}
-							toolTipText="Minimum 1 special letter"
-							toolTipColor={hasSymbol ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-						/>
-
-						<ToolTip
-							toolTipIcon={
-								hasNumber ? (
-									<CheckCircleOutlineIcon className="icon" />
-								) : (
-									<ErrorOutlineIcon className="icon" />
-								)
-							}
-							toolTipText="Minimum 1 number"
-							toolTipColor={hasNumber ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-						/>
-
-						<ToolTip
-							toolTipIcon={
-								hasEightChar ? (
-									<CheckCircleOutlineIcon className="icon" />
-								) : (
-									<ErrorOutlineIcon className="icon" />
-								)
-							}
-							toolTipText="Minimum of 8 characters"
-							toolTipColor={hasEightChar ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-						/>
-					</>
-				) : currentError && current.length > 2 ? (
+					<ValidationErrorTips
+						hasLower={hasLower}
+						hasUpper={hasUpper}
+						hasNumber={hasNumber}
+						hasSymbol={hasSymbol}
+						hasEightChar={hasEightChar}
+					/>
+				) : (currentError && current.length > 2) ? (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="New Password is the same as current password "
-						toolTipColor={"#D73D3D"}
+						toolTipColor="#D73D3D"
 					/>
-				) : empty && !value ? (
+				) : (empty && !value) ? (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="Password input field cannot be empty"
-						toolTipColor={"#D73D3D"}
+						toolTipColor="#D73D3D"
 					/>
-				) :	(
-					""
-				)}
+				) : null}
 			</div>
 		</InputButtonWrapper>
 	);
@@ -239,4 +223,53 @@ ForgotPasswordRecoveryInput.propTypes = {
 	handleFormSubmit: PropTypes.func,
 };
 
+PasswordField.propTypes = {
+	name: PropTypes.string,
+	value: PropTypes.string,
+	type: PropTypes.string,
+	empty: PropTypes.bool,
+	width: PropTypes.string,
+	height: PropTypes.string,
+	label: PropTypes.string,
+	placeholder: PropTypes.string,
+	forgotPasswordRecoveryError: PropTypes.bool,
+	errorMessage: PropTypes.string,
+	serverRecoveryError: PropTypes.bool,
+	handleChange: PropTypes.func,
+	confirm: PropTypes.string,
+	currentError: PropTypes.bool,
+};
+
+ValueToolTip.propTypes = {
+	text: PropTypes.string,
+	condition: PropTypes.bool,
+};
+
+ValueToolTips.propTypes = {
+	hasLower: PropTypes.bool,
+	hasUpper: PropTypes.bool,
+	hasNumber: PropTypes.bool,
+	hasEightChar: PropTypes.bool,
+	hasSymbol: PropTypes.bool,
+};
+
+ValidationErrorTips.propTypes = {
+	hasLower: PropTypes.bool,
+	hasUpper: PropTypes.bool,
+	hasNumber: PropTypes.bool,
+	hasEightChar: PropTypes.bool,
+	hasSymbol: PropTypes.bool,
+};
+
+SingleTips.propTypes = {
+	name: PropTypes.string,
+	match: PropTypes.bool,
+	empty: PropTypes.bool,
+	confirm: PropTypes.string,
+};
+
+ValidationErrorToolTip.propTypes = {
+	text: PropTypes.string,
+	condition: PropTypes.bool,
+};
 export default ForgotPasswordRecoveryInput;
