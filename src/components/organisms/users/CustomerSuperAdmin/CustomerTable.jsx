@@ -17,7 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Pagination from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 import MoreOptionsDropdown from "../../../atoms/users/CustomerSuperAdmin/MoreOptionsDropdown";
-import CustomerProfileModal from "../../../molecules/users/CustomerSuperAdmin/CustomerProfileModal";
+import CustomerProfileModal from "../../../molecules/users/CustomerSuperAdmin/EditableFields";
 import { useSelector, useDispatch } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
 
@@ -63,7 +63,7 @@ const CustomTableCell = ({ children, status }) => {
 		? "600"
 		: statusStyle.fontWeight || "normal";
 
-		// USE STATE
+	// USE STATE
 	// const [anchorEl, setAnchorEl] = React.useState(null);
 
 	// HANDLES
@@ -102,7 +102,6 @@ const CustomTableCell = ({ children, status }) => {
 const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 	const dispatch = useDispatch();
 
-
 	const [filter, setFilter] = useState("All");
 	const [page, setPage] = useState(1);
 	const customersPerPage = 6;
@@ -117,41 +116,20 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 		setPage(newPage);
 	};
 
-	// const [selectedCustomer, setSelectedCustomer] = useState(null);
-  	// const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-
-	//   const handleOpenProfileModal = (customer) => {
-	// 	if (customer) {
-	// 	  setSelectedCustomer(customer);
-	// 	  setIsProfileModalOpen(true);
-	// 	}
-	//   };
-	
-	//   const handleCloseProfileModal = () => {
-	// 	setIsProfileModalOpen(false);
-	//   };
-
-	  const showEditUserHandler = (customer) => {
-		console.log(customer)
-		dispatch(createTicketActions.updateField({ key: "customerId", value: customer.id }))
-		dispatch(createTicketActions.goBackToAddTicketModal(customer))
-	  }
+	const showEditUserHandler = (customer) => {
+		console.log(customer);
+		dispatch(createTicketActions.updateField({ key: "customerId", value: customer.id }));
+		dispatch(createTicketActions.goBackToAddTicketModal(customer));
+	};
 
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;
 	const currentCustomers = filteredCustomers.slice(indexOfFirstCustomer, indexOfLastCustomer);
 	const totalCustomers = filteredCustomers.length;
 
-	// Total Pages
-	// const totalPages = Math.ceil(totalCustomers / customersPerPage);
-
 	const filteredCustomersByStatus = currentCustomers.filter(
 		(customer) => filter === "All" || customer.status === filter
 	);
-
-	const handleEditCustomerProfile = (id) => {
-		console.log("HI")
-	}
 
 	return (
 		<React.Fragment>
@@ -205,20 +183,19 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 								<CustomTableCell>{customer.representativeEmail}</CustomTableCell>
 								<CustomTableCell status={customer.status}>{customer.status}</CustomTableCell>
 								<CustomTableCell>
-									<Box sx={{ display: 'flex', alignItems: 'center', gap: '1', flex: '1 0 0' }}>
+									<Box sx={{ display: "flex", alignItems: "center", gap: "1", flex: "1 0 0" }}>
 										<Link
-										onClick={() => showEditUserHandler(customer)}
-										
-										style={{
-											color: '#2B2E72',
-											fontWeight: '600',
-											textDecoration: 'none',
-										}}
+											onClick={() => showEditUserHandler(customer)}
+											style={{
+												color: "#2B2E72",
+												fontWeight: "600",
+												textDecoration: "none",
+											}}
 										>
-										<IconButton aria-label="edit">
-											<EditIcon sx={{ color: '#2B2E72', fontWeight: '600' }} />
-										</IconButton>
-										Edit Customer Profile
+											<IconButton aria-label="edit">
+												<EditIcon sx={{ color: "#2B2E72", fontWeight: "600" }} />
+											</IconButton>
+											Edit Customer Profile
 										</Link>
 										{customer.status !== "Inactive" && (
 											<MoreOptionsDropdown
@@ -245,11 +222,7 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 					sx={{ "& .MuiPaginationItem-root": { color: "#2b2e72", backgroundColor: "transparent" } }}
 				/>
 			</Box>
-			{/* <CustomerProfileModal
-			isOpen={isProfileModalOpen}
-			onClose={handleCloseProfileModal}
-			customer={selectedCustomer}
-			/> */}
+			<CustomerProfileModal />
 		</React.Fragment>
 	);
 };
