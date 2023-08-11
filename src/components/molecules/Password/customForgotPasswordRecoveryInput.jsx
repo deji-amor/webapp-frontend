@@ -7,134 +7,56 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-const ValueTips = ({ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }) => {
+const ValueToolTip = ({ condition, text }) => {
+	return (
+		<ToolTip
+			toolTipIcon={
+				condition ? (
+					<CheckCircleOutlineIcon className="icon" />
+				) : (
+					<HelpOutlineIcon className="icon" />
+				)
+			}
+			toolTipText={text}
+			toolTipColor={condition ? "rgba(18, 133, 37, 0.72)" : ""}
+		/>
+	);
+};
+
+const ValueToolTips = ({ hasUpper, hasLower, hasNumber, hasSymbol, hasEightChar }) => {
 	return (
 		<>
-			<ToolTip
-				toolTipIcon={
-					hasUpper ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<HelpOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum 1 uppercase letter"
-				toolTipColor={hasUpper ? "rgba(18, 133, 37, 0.72)" : ""}
-			/>
-
-			<ToolTip
-				toolTipIcon={
-					hasLower ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<HelpOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum 1 lowercase letter"
-				toolTipColor={hasLower ? "rgba(18, 133, 37, 0.72)" : ""}
-			/>
-
-			<ToolTip
-				toolTipIcon={
-					hasSymbol ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<HelpOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum 1 special letter"
-				toolTipColor={hasSymbol ? "rgba(18, 133, 37, 0.72)" : ""}
-			/>
-
-			<ToolTip
-				toolTipIcon={
-					hasNumber ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<HelpOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum 1 number"
-				toolTipColor={hasNumber ? "rgba(18, 133, 37, 0.72)" : ""}
-			/>
-
-			<ToolTip
-				toolTipIcon={
-					hasEightChar ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<HelpOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum of 8 characters"
-				toolTipColor={hasEightChar ? "rgba(18, 133, 37, 0.72)" : ""}
-			/>
+			<ValueToolTip condition={hasUpper} text="Minimum 1 uppercase letter" />
+			<ValueToolTip condition={hasLower} text="Minimum 1 lowercase letter" />
+			<ValueToolTip condition={hasSymbol} text="Minimum 1 special letter" />
+			<ValueToolTip condition={hasNumber} text="Minimum 1 number" />
+			<ValueToolTip condition={hasEightChar} text="Minimum of 8 characters" />
 		</>
 	);
 };
 
-const ValidationTips = ({ hasUpper, hasLower, hasNumber, hasSymbol, hasEightChar }) => {
+const ValidationErrorToolTip = ({ condition, text }) => (
+	<ToolTip
+		toolTipIcon={
+			condition ? (
+				<CheckCircleOutlineIcon className="icon" />
+			) : (
+				<ErrorOutlineIcon className="icon" />
+			)
+		}
+		toolTipText={text}
+		toolTipColor={condition ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
+	/>
+);
+
+const ValidationErrorTips = ({ hasUpper, hasLower, hasNumber, hasSymbol, hasEightChar }) => {
 	return (
 		<>
-			<ToolTip
-				toolTipIcon={
-					hasUpper ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<ErrorOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum 1 uppercase letter"
-				toolTipColor={hasUpper ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-			/>
-
-			<ToolTip
-				toolTipIcon={
-					hasLower ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<ErrorOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum 1 lowercase letter"
-				toolTipColor={hasLower ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-			/>
-
-			<ToolTip
-				toolTipIcon={
-					hasSymbol ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<ErrorOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum 1 special letter"
-				toolTipColor={hasSymbol ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-			/>
-
-			<ToolTip
-				toolTipIcon={
-					hasNumber ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<ErrorOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum 1 number"
-				toolTipColor={hasNumber ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-			/>
-
-			<ToolTip
-				toolTipIcon={
-					hasEightChar ? (
-						<CheckCircleOutlineIcon className="icon" />
-					) : (
-						<ErrorOutlineIcon className="icon" />
-					)
-				}
-				toolTipText="Minimum of 8 characters"
-				toolTipColor={hasEightChar ? "rgba(18, 133, 37, 0.72)" : "rgba(215, 61, 61, 0.72)"}
-			/>
+			<ValidationErrorToolTip condition={hasUpper} text="Minimum 1 uppercase letter" />
+			<ValidationErrorToolTip condition={hasLower} text="Minimum 1 lowercase letter" />
+			<ValidationErrorToolTip condition={hasSymbol} text="Minimum 1 special letter" />
+			<ValidationErrorToolTip condition={hasNumber} text="Minimum 1 number" />
+			<ValidationErrorToolTip condition={hasEightChar} text="Minimum of 8 characters" />
 		</>
 	);
 };
@@ -203,7 +125,7 @@ const ForgotPasswordRecoveryInput = ({
 				{single ? (
 					<SingleTips match={match} empty={empty} confirm={confirm} name={name} />
 				) : value && !match && !currentError ? (
-					<ValueTips
+					<ValueToolTips
 						hasLower={hasLower}
 						hasUpper={hasUpper}
 						hasNumber={hasNumber}
@@ -211,7 +133,7 @@ const ForgotPasswordRecoveryInput = ({
 						hasEightChar={hasEightChar}
 					/>
 				) : validationError ? (
-					<ValidationTips
+					<ValidationErrorTips
 						hasLower={hasLower}
 						hasUpper={hasUpper}
 						hasNumber={hasNumber}
@@ -265,7 +187,12 @@ ForgotPasswordRecoveryInput.propTypes = {
 	handleFormSubmit: PropTypes.func,
 };
 
-ValueTips.propTypes = {
+ValueToolTip.propTypes = {
+	text: PropTypes.string,
+	condition: PropTypes.bool,
+};
+
+ValueToolTips.propTypes = {
 	hasLower: PropTypes.bool,
 	hasUpper: PropTypes.bool,
 	hasNumber: PropTypes.bool,
@@ -273,7 +200,7 @@ ValueTips.propTypes = {
 	hasSymbol: PropTypes.bool,
 };
 
-ValidationTips.propTypes = {
+ValidationErrorTips.propTypes = {
 	hasLower: PropTypes.bool,
 	hasUpper: PropTypes.bool,
 	hasNumber: PropTypes.bool,
@@ -286,5 +213,10 @@ SingleTips.propTypes = {
 	match: PropTypes.bool,
 	empty: PropTypes.bool,
 	confirm: PropTypes.string,
+};
+
+ValidationErrorToolTip.propTypes = {
+	text: PropTypes.string,
+	condition: PropTypes.bool,
 };
 export default ForgotPasswordRecoveryInput;
