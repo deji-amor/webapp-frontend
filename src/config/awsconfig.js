@@ -1,11 +1,12 @@
-export const awsconfig = {
-	bucketName: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_BUCKET_NAME,
+import AWS from "aws-sdk";
 
-	region: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_REGION,
-
+// Initialize AWS S3 configuration
+AWS.config.update({
 	accessKeyId: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_ACCESS_KEY_ID,
-
 	secretAccessKey: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_SECRET_ACCESS_KEY,
+	region: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_REGION,
+});
 
-	s3Url: import.meta.env.VITE_NEXT_PUBLIC_APP_S3URL,
-};
+const S3 = new AWS.S3();
+
+export {S3};

@@ -134,7 +134,8 @@ const MainTicketCreationForm = () => {
 				<FormButton highLighted={false} onClick={goBackHandler} type="button">
 					Back
 				</FormButton>
-				<FormButton highLighted={true} type="submit" disabled={isFormDisabled || loading}>
+				<FormButton highLighted={true} type="submit" disabled={false}>
+				{/* <FormButton highLighted={true} type="submit" disabled={isFormDisabled || loading}> */}
 					{loading ? <Loader>Creating Ticket...</Loader> : "Save Ticket"}
 				</FormButton>
 			</div>

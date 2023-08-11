@@ -1,69 +1,18 @@
 import React from "react";
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-// import S3 from "react-aws-s3";
-// import { awsconfig } from "../../../config/awsconfig";
-
-// export const awsUpload = async ({file, fileName, dirName}) => {
-// 	try {
-// 		awsconfig.dirName = dirName;
-
-// 		const ReactS3Client = new S3(awsconfig);
-// 		console.log(awsconfig, ReactS3Client)
-
-// 		// const result = await ReactS3Client.uploadFile(file, fileName);
-
-// 		// return result;
-// 		return null
-// 	} catch (error) {
-// 		console.log("error", error);
-// 	}
-// };
+import { uploadImage } from "../../aws/aws-crud-operations";
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
-	const t = {
-		customerId: 43,
-		ticketType: "project ticket", // service ticket
-		ticketForm: "alter the end",
-		ticketPath: ["Project request", "IMAC", "Move", "alter the end"],
-		pointOfContactName: "Auwal Muhammad",
-		pointOfContactPhoneNumber: "+918678886766",
-		pointOfContactAddress: "No 2 New Street Chicago, ",
-		numberOfTechnicians: 3,
-		scopeOfWorkDescription: "",
-		scopeOfWorkDocumentUrl: "",
-		startDateTime: "2023-08-11 22:00",
-		endDateTime: "2023-08-15 08:00",
-		hardwareQuantity: "",
-		hardwareName: "",
-		hardwareComponentTypeList: [],
-		locations: [{type: "governmental", address: "No 2 test street, Chicago"}],
-		materialsDescription: "",
-		numberOfWorkStation: "",
-		numberOfWorkSystems: 3,
-		softwareCustomizationQuantity: "",
-		softwareCustomizationName: "",
-		softwareInstallationQuantity: "",
-		softwareInstallationName: "",
-		pickLocations: [],
-		dropOffLocations: [],
-		additionalFields: [
-			{customerPhone: "7838727878"},
-			{customerAge: "30"},
-			{anotherField: "hjhggfhg"},
-		],
-	};
-
 	try {
 		const token = await getAuthToken();
-		// if(args.scopeOfWorkDocument){
-		// 	const {scopeOfWorkDocument} = args
-		// 	console.log("has document")
-		// 	// awsUpload()
-		// }else {
-		// 	console.log("has no document")
-		// }
-
+		if(args.scopeOfWorkDocument){
+			const {scopeOfWorkDocument} = args
+			const result = await uploadImage(scopeOfWorkDocument)
+			console.log(result)
+			const {Location: scopeOfWorkDocumentUrl} = result;
+			args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+		}
 		const config = {
 			method: "POST",
 			headers: {
@@ -164,7 +113,7 @@ const allPossibleFields = {
 		// SCOPE OF WORK
 		
 		"scopeOfWorkDescriptionIsTouched": "",
-		"scopeOfWorkDescriptionIsValid": "",
+		"scopeOfWorkDescriptionIsValid": false,
 		"scopeOfWorkDescriptionHasError": "",
 		
 		"scopeOfWorkDocumentIsValid": false, // might not be need for this
@@ -176,21 +125,21 @@ const allPossibleFields = {
 		"hardwareInputTypeCurrentValueIsTouched": "",
 		"hardwareInputTypeCurrentValueIsHasError": "",
 		
-		"hardwareComponentTypeListIsValid": "",
+		"hardwareComponentTypeListIsValid": false,
 		//HARDWARE COMPONENT QUANTITY
 		
 		
-		"hardwareQuantityIsValid": "",
+		"hardwareQuantityIsValid": false,
 		"hardwareQuantityIsTouched": "",
 		"hardwareQuantityHasError": "",
 		//SOFTWARE INSTALLATION
 
-		"softwareInstallationNameIsValid": "",
+		"softwareInstallationNameIsValid": false,
 		"softwareInstallationNameIsTouched": "",
 		"softwareInstallationNameHasError": "",
 		//SOFTWARE CUSTOMIZATION
 
-		"softwareCustomizationNameIsValid": "",
+		"softwareCustomizationNameIsValid": false,
 		"softwareCustomizationNameIsTouched": "",
 		"softwareCustomizationNameHasError": "",
 		// WORKSTATION
@@ -205,7 +154,7 @@ const allPossibleFields = {
 		"activeLocationType": 0, // ZERO INDEX BASED
 		"locationAddress": "",
 		"locationType": "government",
-		"locationAddressIsValid": "",
+		"locationAddressIsValid": false,
 		"locationAddressIsTouched": "",
 		"locationAddressHasError": "",
 		//PICk UP LOCATION
@@ -216,7 +165,7 @@ const allPossibleFields = {
 		"activePickLocationType": 0, // ZERO INDEX BASED
 		"pickLocationAddress": "",
 		"pickLocationType": "government",
-		"pickLocationAddressIsValid": "",
+		"pickLocationAddressIsValid": false,
 		"pickLocationAddressIsTouched": "",
 		"pickLocationAddressHasError": "",
 		//DROP OFF LOCATION
@@ -227,13 +176,13 @@ const allPossibleFields = {
 		"activeDropOffLocationType": 0, // ZERO INDEX BASED
 		"dropOffLocationAddress": "",
 		"dropOffLocationType": "government",
-		"dropOffLocationAddressIsValid": "",
+		"dropOffLocationAddressIsValid": false,
 		"dropOffLocationAddressIsTouched": "",
 		"dropOffLocationAddressHasError": "",
 		// MATERIALS PROCUREMENT
 		
 		"materialsDescriptionIsTouched": "",
-		"materialsDescriptionIsValid": "",
+		"materialsDescriptionIsValid": false,
 		"materialsDescriptionHasError": "",
 		// EXTRA FIELDS
 		"extraFieldNameInputTypeCurrentValue": "",
