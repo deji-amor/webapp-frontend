@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ForgotEmailWrapper as ForgotPasswordResetWrapper } from "../../atoms/Password/wrappers";
-import { forgotpasswordrecovery } from "../../../state-manager/reducers/password/forgotpassword";
-import { SET_ERROR_NULL } from "../../../state-manager/reducers/password/forgotpassword";
+import { forgotpasswordrecovery, SET_ERROR_NULL } from "../../../state-manager/reducers/password/forgotpassword";
 import HeaderContent from "../../molecules/Password/customHeaderSection";
 import ErrorCard from "../../molecules/Password/customErrorCard";
 import CustomButton from "../../atoms/Password/customButton";
@@ -96,7 +95,7 @@ const ForgotPasswordRecover = () => {
 		try {
 			dispatch(forgotpasswordrecovery({ email, resetToken: token, password, confirmPassword }));
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 

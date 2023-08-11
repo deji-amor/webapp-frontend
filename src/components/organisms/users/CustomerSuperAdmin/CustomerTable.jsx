@@ -60,14 +60,13 @@ const CustomTableCell = ({ children, status }) => {
 		? "600"
 		: statusStyle.fontWeight || "normal";
 
-		// USE STATE
-	// const [anchorEl, setAnchorEl] = React.useState(null);
+	// USE STATE const [anchorEl, setAnchorEl] = React.useState(null);
 
-	// HANDLES
-	// const handleClick = (event) => {
+	// FUNTION const handleClick = (event) => {
 	// 	setAnchorEl(event.currentTarget);
 	// };
-	// const handleClose = () => {
+
+	// FUNTION const handleClose = () => {
 	// 	setAnchorEl(null);
 	// };
 

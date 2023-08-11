@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import TextFields from "../../molecules/SuperAdmin/TextField";
 import SelectFields from "../../atoms/SuperAdmin/SelectField";
 import { useForm } from "react-hook-form";
@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import CheckboxFields from "../../molecules/SuperAdmin/CheckboxField";
 import ForgotPasswordRecoveryInput from "../../molecules/Password/customForgotPasswordRecoveryInput";
 import { schema } from "../../atoms/SuperAdmin/Schema";
-import ToolTip from "../../atoms/Password/customInputToolTip";
+// TOOLTIP import ToolTip from "../../atoms/Password/customInputToolTip";
 import { useDispatch, useSelector } from "react-redux";
 import { validatePassword } from "../../atoms/Password/validators";
 import CustomButton from "../../atoms/Password/customButton";
@@ -161,13 +161,13 @@ const RegisterForm = () => {
 		try {
 			dispatch(superAdminCreate(data));
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 
 	return (
 		<div style={{ marginTop: "100px" }}>
-			{response === "Email has already been used!" ? (
+			{response === "Email has already been used!" && (
 				<ErrorCard
 					align="left"
 					error={serverError}
@@ -179,7 +179,7 @@ const RegisterForm = () => {
 					style={{position: "absolute", top: "200px", width: "330px"}}
 					description="The company email you entered already exist."
 				/>
-			) : response === "Workspace name has been used!" ? (
+			) || response === "Workspace name has been used!" && (
 				<ErrorCard
 					align="left"
 					error={serverError}
@@ -191,8 +191,6 @@ const RegisterForm = () => {
 					style={{position: "absolute", top: "200px", width: "330px"}}
 					description="Workspace name has been used."
 				/>
-			) : (
-				""
 			)}
 
 			<Box

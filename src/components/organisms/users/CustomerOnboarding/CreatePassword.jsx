@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ForgotEmailWrapper as ForgotPasswordResetWrapper } from "../../../atoms/Password/wrappers";
-import { forgotpasswordrecovery } from "../../../../state-manager/reducers/password/forgotpassword";
-import { SET_ERROR_NULL } from "../../../../state-manager/reducers/password/forgotpassword";
+import { forgotpasswordrecovery, SET_ERROR_NULL } from "../../../../state-manager/reducers/password/forgotpassword";
 import ErrorCard from "../../../molecules/Password/customErrorCard";
 import CustomButton from "../../../atoms/Password/customButton";
 import lockmage from "../../../../assets/password/lock.png";
@@ -86,9 +85,9 @@ const CreatePassword = () => {
 
 		if (response) setLoading(false)
 
-		// if (response === "Invalid request!") return navigate("/password-expired")
+		// CONDITION if (response === "Invalid request!") return navigate("/password-expired")
 
-		// if (response === "You can not use your previous password!") return setServerError(true);
+		// CONDITION if (response === "You can not use your previous password!") return setServerError(true);
 
 		if (response === "Your password has been reset successfully!") return navigate("/customer-create-password-success");
 	}, [
@@ -119,7 +118,7 @@ const CreatePassword = () => {
 		try {
 			dispatch(forgotpasswordrecovery({ email, resetToken: token, password, confirmPassword }));
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 

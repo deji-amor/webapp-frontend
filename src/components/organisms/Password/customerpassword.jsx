@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { customerforgotpasswordemail } from "../../../state-manager/reducers/password/forgotpassword";
 import {
+	customerforgotpasswordemail,
 	SET_EMAIL,
 	SET_ERROR_NULL,
 } from "../../../state-manager/reducers/password/forgotpassword";
@@ -16,17 +16,17 @@ const CustomerpasswordBanner = () => {
 	const [serverError, setServerError] = useState(false);
 	const [email, setEmail] = useState("");
 	const [empty, setEmpty] = useState(false);
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const response = useSelector(state => state.forgotPassword.response);
+	const response = useSelector((state) => state.forgotPassword.response);
 
 	const handleEmailChange = (e) => {
 		setEmail(e.target.value);
 		setServerError(false);
 		dispatch(SET_ERROR_NULL());
-		setEmpty(false)
+		setEmpty(false);
 	};
 
 	const handleFormSubmit = (e) => {
@@ -34,25 +34,25 @@ const CustomerpasswordBanner = () => {
 
 		if (!email) return setEmpty(true);
 
-		setLoading(true)
+		setLoading(true);
 
 		try {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(customerforgotpasswordemail({ email }));
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 
 	useEffect(() => {
 		if (email) validateEmail(setForgotPasswordError, email);
 
-		if (response) setLoading(false)
+		if (response) setLoading(false);
 
 		if (response === "User with the email address not found!") return setServerError(true);
 
-		if (response === "Password reset link has been sent to your email!") return navigate("/forgot-password-success");
-
+		if (response === "Password reset link has been sent to your email!")
+			return navigate("/forgot-password-success");
 	}, [email, dispatch, response, navigate, empty]);
 
 	return (
@@ -61,7 +61,7 @@ const CustomerpasswordBanner = () => {
 				title="Streamlined IT Service Management."
 				description="Our robust solution is built and optimized specifically for IT teams and workflows, influenced by feedback, and centred around end-user and endpoint support.. "
 			/>
-			
+
 			<CustomerPasswordForm
 				serverError={serverError}
 				forgotPasswordError={forgotPasswordError}

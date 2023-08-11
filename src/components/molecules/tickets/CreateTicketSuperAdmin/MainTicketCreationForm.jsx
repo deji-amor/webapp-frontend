@@ -1,8 +1,8 @@
 import React from 'react'
 import FormButton from '../../../atoms/tickets/CreateTicketSuperAdmin/FormButton'
 import GrayThemedLightText from '../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightText'
-import GrayThemedLighterText from '../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLighterText'
-import GrayThemedLightestText from '../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightestText'
+// IMPORT import GrayThemedLighterText from '../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLighterText'
+// IMPORT import GrayThemedLightestText from '../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightestText'
 import useCreateTicketFormValidator from '../../../../hooks/useCreateTicketFormValidator'
 import useCreateTicketFields from '../../../../hooks/useCreateTicketFields'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,8 +29,8 @@ const MainTicketCreationForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    // const formData = new FormData(e.target)
-    // console.log(formData);
+    //FORMDATA const formData = new FormData(e.target)
+    //CONSOLE console.log(formData);
 		console.log("submitted");
 		console.log(requiredFields);
   }
@@ -41,12 +41,12 @@ const MainTicketCreationForm = () => {
 		dispatch(createTicketActions.goBackToAddTicketModal());
 	}
 
-	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
-	// console.log({allPossibleFields});
+	// ALLPOSSIBLEFIELDS const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+	// CONSOLE console.log({allPossibleFields});
 
 	const isFormValid = useCreateTicketFormValidator()
 	const isFormDisabled = !isFormValid
-	// console.log({isFormValid, isFormDisabled});
+	// CONSOLE console.log({isFormValid, isFormDisabled});
 
 	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
 	const pointOfContact = chosenTemplate.includes("pointOfContact")
@@ -64,7 +64,7 @@ const MainTicketCreationForm = () => {
 	const pickUpLocation = chosenTemplate.includes("pickUpLocation")
 	const dropOffLocation = chosenTemplate.includes("dropOffLocation")
 	const additionalFields = chosenTemplate.includes("additionalFields")
-	// console.log({chosenTemplate});
+	// CONSOLE console.log({chosenTemplate});
 
   return (
 		<form onSubmit={submitHandler}>

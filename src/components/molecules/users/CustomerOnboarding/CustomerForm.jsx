@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Box, Button, Typography, Dialog, DialogContent } from "@mui/material";
+import { Box, Button, Typography, Dialog, DialogContent } from "@mui/material";
 import { useForm } from "react-hook-form";
 import TextFields from "../../SuperAdmin/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -32,6 +32,7 @@ const CustomerForm = ({ open, onClose }) => {
 
 	const [successModalOpen, setSuccessModalOpen] = useState(false);
 	const [customerFormOpen, setCustomerFormOpen] = useState(true);
+	console.log(customerFormOpen)
 
 	const handleFormSubmit = (data) => {
 		console.log("Form data:", data);

@@ -50,7 +50,7 @@ const SuperAdminVerify = () => {
 		try {
 			dispatch(superAdminSendEmail(email.email))
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 

@@ -65,6 +65,7 @@ export function isValidFile(file) {
 	// Validate if the file has a valid name and extension (optional but recommended)
 	// And Ensure that the file has content (not empty)
 	const filename = file.name.trim();
+  console.log(filename)
 
 	return (file.size != "" || file.size != 0);
 }

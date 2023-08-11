@@ -22,7 +22,7 @@ const ForgotEmailSuccess = () => {
 		try {
 			dispatch(forgotpasswordemail(email));
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 

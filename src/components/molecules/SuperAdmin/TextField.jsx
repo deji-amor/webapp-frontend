@@ -4,7 +4,6 @@ import { addErrorIntoField } from "../../../utilis";
 import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
 import PropTypes from "prop-types";
 
-
 const TextFields = ({ label, inputProps, control, name, errors, serverError, type }) => {
 	return (
 		<FormControl
@@ -48,7 +47,8 @@ const TextFields = ({ label, inputProps, control, name, errors, serverError, typ
 					/>
 				)}
 			/>
-			{errors[name] ? <ErrorMessage message={errors[name].message} /> : serverError ? <ErrorMessage message="already exist" /> : null}
+			{(errors[name] && <ErrorMessage message={errors[name].message} />) ||
+				(serverError && <ErrorMessage message="already exist" />)}
 		</FormControl>
 	);
 };
@@ -61,6 +61,6 @@ TextFields.propTypes = {
 	errors: PropTypes.object,
 	serverError: PropTypes.bool,
 	name: PropTypes.string,
-}
+};
 
 export default TextFields;

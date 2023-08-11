@@ -1,9 +1,9 @@
-import React from 'react'
-import RecentTicketTableText from '../../atoms/Dashboard/RecentTicketTableText';
-import StatusTab from '../../atoms/tickets/StatusTab';
+import React from "react";
+import RecentTicketTableText from "../../atoms/Dashboard/RecentTicketTableText";
+import StatusTab from "../../atoms/tickets/StatusTab";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { styled } from '@mui/material';
+import { styled } from "@mui/material";
 
 const Edit = styled("p")`
 	color: #2b2e72;
@@ -15,12 +15,12 @@ const Edit = styled("p")`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-  gap: 0.2rem;
+	gap: 0.2rem;
 `;
 
 const TicketsTableBody = () => {
-  const item = (
-		<tr className="bg-white border-b hover:bg-gray-50" >
+	const item = (
+		<tr className="bg-white border-b hover:bg-gray-50">
 			<RecentTicketTableText>Sevirox Manufacturing</RecentTicketTableText>
 			<RecentTicketTableText>Break Fix Maintenance</RecentTicketTableText>
 			<RecentTicketTableText>ASchevchenko@Servirox...</RecentTicketTableText>
@@ -36,7 +36,9 @@ const TicketsTableBody = () => {
 		</tr>
 	);
 
-  const list = [
+	console.log(item);
+
+	const list = [
 		<tr key={1} className="bg-white border-b hover:bg-gray-50">
 			<RecentTicketTableText>Sevirox Manufacturing</RecentTicketTableText>
 			<RecentTicketTableText>Break Fix Maintenance</RecentTicketTableText>
@@ -165,11 +167,7 @@ const TicketsTableBody = () => {
 		</tr>,
 	];
 
-  return (
-		<tbody>
-      {list}
-		</tbody>
-	);
-}
+	return <tbody>{list}</tbody>;
+};
 
-export default TicketsTableBody
+export default TicketsTableBody;
