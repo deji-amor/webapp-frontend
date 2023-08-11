@@ -24,16 +24,15 @@ const HardwareComponentQuantity = () => {
 		// QUANTITY
 		// setErrorFromServer: quantitySetErrorFromServer,
 		id: quantityId,
-		// QUANTITY
-		// reset: quantityReset,
-	} = useCreateTicketInput("hardwareComponentTypeQuantityName", isHardwareQuantityValid);
+		reset: quantityReset,
+	} = useCreateTicketInput("hardwareName", isHardwareQuantityValid);
 
   const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
-  const hardwareComponentTypeQuantityValue = allPossibleFields.hardwareComponentTypeQuantityValue;
+  const hardwareQuantity = allPossibleFields.hardwareQuantity;
   const dispatch = useDispatch();
 
   const hardwareComponentTypeQuantityValueChangeHandler = (value) => {
-    dispatch(createTicketActions.updateField({ key: "hardwareComponentTypeQuantityValue", value: value }));
+    dispatch(createTicketActions.updateField({ key: "hardwareQuantity", value: value }));
   };
 
   return (
@@ -63,7 +62,7 @@ const HardwareComponentQuantity = () => {
 					min={1}
 					max={100}
 					onChange={hardwareComponentTypeQuantityValueChangeHandler}
-					value={hardwareComponentTypeQuantityValue}
+					value={hardwareQuantity}
 				/>
 			</div>
 		</div>

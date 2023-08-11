@@ -96,7 +96,6 @@ const Item = styled("div")`
 	}
 `;
 
-
 const TicketsSearchCustomer = () => {
   const dispatch = useDispatch()
 	const searchCustomersValue = useSelector((state) => state.tickets.searchCustomersValue);
@@ -142,9 +141,9 @@ const TicketsSearchCustomer = () => {
 
 return (
 	<Wrapper>
-		<div className="w-full absolute top-[5rem] right-full z-100">
+		<div className="w-full absolute top-full left-0 z-100">
 			{showTopLevel && (
-				<div className="absolute top-[115%] right-0 bg-white z-[100]">
+				<div className="absolute top-[115%] left-0 bg-white z-[100]">
 					<TopLevel />
 				</div>
 			)}
@@ -169,7 +168,7 @@ return (
 							/>
 							{showCustomersList &&
 								(filteredCustomers.length > 0 && searchCustomersValue ? (
-									<ListWrapper className="absolute w-full top-[7rem] left-0 bg-white">
+									<ListWrapper className="absolute w-full top-[7rem] max-h-[18rem] overflow-y-auto left-0 bg-white">
 										{filteredCustomers.map((customer) => (
 											<Item
 												key={customer.id}

@@ -30,8 +30,7 @@ const useCreateTicketInput = (pointer, validateValue) => {
 	// USE STATE const [enteredValue, setEnteredValue] = useState("");
 	// USE STATE const [isTouched, setIsTouched] = useState(false);
 	// USE STATE const [hasError, setHasError] = useState(false);
-	const [_, errMsg] = validateValue(enteredValue);
-	console.log(_)
+	const errMsg = validateValue(enteredValue)[1];
 	const [errorMessage, setErrorMessage] = useState(errMsg);
 	const [errorFromServer, setErrorFromServer] = useState(false);
 

@@ -50,7 +50,7 @@ const FormButton = ({ onClick, highLighted, children, type, disabled, loading })
 			className={`flex py-[0.625rem] px-[1.5rem] gap-[0.5rem] rounded-[0.75rem] text-white font-poppins text-[0.875rem] transition-all ${
 				disabled
 					? "cursor-not-allowed bg-[rgba(43,46,114,0.4)]"
-					: "cursor-pointer bg-[rgba(43,46,114,0.6)] hover:bg-[rgba(43,46,114,1)]"
+					: "cursor-pointer bg-[rgba(43,46,114,1)]"
 			}`}
 			disabled={disabled}
 			type={type}

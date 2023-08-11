@@ -11,7 +11,7 @@ const PaginationButtonList = ({
 }) => {
 	let List = Array.from(new Array(numberOfButtons))
 		.map((_, ind) => (
-			<PaginationButton key={_ + 1} onClick={onClick} isActive={currentPage === ind + 1}>
+			<PaginationButton key={ind + 1} onClick={onClick} isActive={currentPage === ind + 1}>
 				{ind + 1}
 			</PaginationButton>
 		))

@@ -1,4 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
+import uiReducer from "./reducers/UI/ui"
 import authUserReducer from "./reducers/users/authUser"
 import usersReducer from "./reducers/users/users"
 import customersReducer from "./reducers/users/customers/customers"
@@ -18,6 +19,7 @@ const persistConfig = {
 	key: "root",
 	storage,
 	blacklist: [
+        "ui",
 		"loginAdmin",
 		"loginCustomer",
 		"forgotpassword",
@@ -30,6 +32,7 @@ const persistConfig = {
 };
 
 const rootReducers = combineReducers({
+    ui: uiReducer,
     forgotPassword: forgotPasswordReducer,
     resetPassword: resetPasswordReducer,
     loginAdmin: loginAdminReducer,
