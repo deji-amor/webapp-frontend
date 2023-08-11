@@ -66,7 +66,7 @@ export function isValidFile(file) {
 	// And Ensure that the file has content (not empty)
 	const filename = file.name.trim();
 
-	return (file.size !== ""|| file.size !== 0);
+	return (file.size != "" || file.size != 0);
 }
 
 export function isValidDateTimeLocal(inputString) {
