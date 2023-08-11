@@ -1,5 +1,5 @@
 import React, {useEffect, memo} from 'react'
-import { Outlet, Navigate, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/molecules/Dashboard/Sidebar';
 import Navbar from '../components/molecules/Dashboard/Navbar';
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay';
@@ -11,7 +11,7 @@ import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
 import { getAuthToken, getDeviceName } from '../utilis';
-import authUser, { authUserActions } from '../state-manager/reducers/users/authUser';
+import { authUserActions } from '../state-manager/reducers/users/authUser';
 
 // Memoized Sidebar and Navbar components to prevent unnecessary re-renders
 const MemoizedSidebar = memo(Sidebar);
@@ -44,8 +44,6 @@ const AppLayout = () => {
 		const checkIfTokenExistsAndIsValid = async () => {
 			dispatch(logoutActions.countDownSeconds());
 			const token = await getAuthToken();
-			// CONSOLED
-			// console.log({token});
 			if (allowedTimeOfInactivityInSeconds <= 0 && token && !logoutProcessLoading) {
 				const deviceName = getDeviceName();
 				dispatch(authUserActions.clearData());
@@ -61,9 +59,8 @@ const AppLayout = () => {
 	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
 	/////////// AUTHENTICATION LOGIC ENDS HERE
 
-	// USESELECTORS
-	// const { loading: usersLoading, users } = useSelector((state) => state.users);
-	// const { loading: customersLoading, customers } = useSelector((state) => state.customers);
+	// USE SELECTOR const { loading: usersLoading, users } = useSelector((state) => state.users);
+	// USE SELECTOR const { loading: customersLoading, customers } = useSelector((state) => state.customers);
 
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
 	const showResetModal = useSelector((state) => state.logout.showResetModal);

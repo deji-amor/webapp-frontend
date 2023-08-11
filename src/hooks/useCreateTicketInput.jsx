@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useId } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createTicketActions } from "../state-manager/reducers/tickets/ticketCreation";
-import PropTypes from "prop-types";
 
 const useCreateTicketInput = (pointer, validateValue) => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
@@ -28,10 +27,9 @@ const useCreateTicketInput = (pointer, validateValue) => {
 	}, [enteredValue, dispatch, pointer, validateValue])
 
 	const id = useId();
-	// USESTATE
-	// const [enteredValue, setEnteredValue] = useState("");
-	// const [isTouched, setIsTouched] = useState(false);
-	// const [hasError, setHasError] = useState(false);
+	// USE STATE const [enteredValue, setEnteredValue] = useState("");
+	// USE STATE const [isTouched, setIsTouched] = useState(false);
+	// USE STATE const [hasError, setHasError] = useState(false);
 	const [_, errMsg] = validateValue(enteredValue);
 	const [errorMessage, setErrorMessage] = useState(errMsg);
 	const [errorFromServer, setErrorFromServer] = useState(false);

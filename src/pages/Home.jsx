@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { styled } from "@mui/material";
 import LandingOrg from '../components/organisms/landing/landingOrg'
 
