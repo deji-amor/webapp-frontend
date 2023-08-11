@@ -4,18 +4,11 @@ import EnterFieldInput from '../general/EnterFieldInput';
 import Input from "../general/Input";
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
 import IconButton from "../general/IconButton";
-// IMPORT
-// import GrayThemedLightText from "../../GrayThemedLightText";
-// import GrayThemedLighterText from "../../GrayThemedLighterText";
 import BlueThemedLightText from '../../BlueThemedLightText';
-// IMPORT
-// import BlueThemedMediumText from '../../BlueThemedMediumText';
 import GrayThemedLightestText from '../../GrayThemedLightestText';
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import useAdditionalFieldsInput from '../../../../../../hooks/useAdditionalFieldsInput';
 import AddOrCancelButton from "../general/AddOrCancelButton";
-// IMPORT
-// import { isFieldNameEmpty, isFieldValueEmpty } from "../../../../../../helpers/validation";
 import { createTicketActions } from "../../../../../../state-manager/reducers/tickets/ticketCreation";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -99,9 +92,7 @@ const AddExtraFields = () => {
 	const hasNewFieldsReachedLimit = additionalFields.length >= 3
 
 	const list = useAdditionalFieldsInput(isFieldValueEmpty)
-	// CONSOLED
-	// console.log({ additionalFields, additionalFieldsIsValid });
-	// console.log({list});
+	
 	const listDiv = list.map(item => {
 		const {
 			enteredValue: value,
