@@ -62,21 +62,27 @@ const ValidationErrorTips = ({ hasUpper, hasLower, hasNumber, hasSymbol, hasEigh
 };
 
 const SingleTips = ({ match, confirm, empty, name }) => {
-	return !match && confirm.length >= 1 ? (
-		<ToolTip
-			toolTipIcon={<ErrorOutlineIcon className="icon" />}
-			toolTipText="Password does not match new password entered!"
-			toolTipColor={"#D73D3D"}
-		/>
-	) : empty && name === "confirmPassword" && !confirm ? (
-		<ToolTip
-			toolTipIcon={<ErrorOutlineIcon className="icon" />}
-			toolTipText="Confirm password input field cannot be empty!"
-			toolTipColor={"#D73D3D"}
-		/>
-	) : (
-		""
-	);
+	return (
+		<>
+			{
+				!match && confirm.length >= 1 ? (
+					<ToolTip
+						toolTipIcon={<ErrorOutlineIcon className="icon" />}
+						toolTipText="Password does not match new password entered!"
+						toolTipColor={"#D73D3D"}
+					/>
+				) : empty && name === "confirmPassword" && !confirm ? (
+					<ToolTip
+						toolTipIcon={<ErrorOutlineIcon className="icon" />}
+						toolTipText="Confirm password input field cannot be empty!"
+						toolTipColor={"#D73D3D"}
+					/>
+				) : (
+					""
+				)
+			}
+		</>
+	)
 };
 
 const PasswordField = ({
@@ -160,9 +166,9 @@ const ForgotPasswordRecoveryInput = ({
 					serverRecoveryError={serverRecoveryError}
 					handleChange={handleChange}
 				/>
-				{single ? (
+				{single && (
 					<SingleTips match={match} empty={empty} confirm={confirm} name={name} />
-				) : (value && !match && !currentError) ? (
+				) || (value && !match && !currentError) && (
 					<ValueToolTips
 						hasLower={hasLower}
 						hasUpper={hasUpper}
@@ -170,7 +176,7 @@ const ForgotPasswordRecoveryInput = ({
 						hasSymbol={hasSymbol}
 						hasEightChar={hasEightChar}
 					/>
-				) : validationError ? (
+				) || validationError && (
 					<ValidationErrorTips
 						hasLower={hasLower}
 						hasUpper={hasUpper}
@@ -178,19 +184,19 @@ const ForgotPasswordRecoveryInput = ({
 						hasSymbol={hasSymbol}
 						hasEightChar={hasEightChar}
 					/>
-				) : (currentError && current.length > 2) ? (
+				) || (currentError && current.length > 2) && (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="New Password is the same as current password "
 						toolTipColor="#D73D3D"
 					/>
-				) : (empty && !value) ? (
+				) || (empty && !value) && (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="Password input field cannot be empty"
 						toolTipColor="#D73D3D"
 					/>
-				) : null}
+				)}
 			</div>
 		</InputButtonWrapper>
 	);
