@@ -70,7 +70,7 @@ export default function BasicTabs({ filteredCustomers }) {
 
 	useEffect(() => {
 		setSortedCustomers(filteredCustomers);
-	  }, [filteredCustomers]);
+	}, [filteredCustomers]);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -78,12 +78,16 @@ export default function BasicTabs({ filteredCustomers }) {
 
 	const handleSort = (ascending) => {
 		const sorted = [...sortedCustomers].sort((a, b) => {
-		  const nameA = a.companyName.toLowerCase();
-		  const nameB = b.companyName.toLowerCase();
-		  return ascending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+			const nameA = a.companyName.toLowerCase();
+			const nameB = b.companyName.toLowerCase();
+			return ascending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
 		});
 		setSortedCustomers(sorted);
-	  };
+	};
+
+	const handleUpdateStatus = (customerId, newStatus, comment) => {
+		console.log("ACTIVE");
+	};
 
 	return (
 		<Box
@@ -123,7 +127,10 @@ export default function BasicTabs({ filteredCustomers }) {
 				<SortBy onSort={handleSort} />
 			</Box>
 			<UserTabs value={value} index={0}>
-				<CustomerTable filteredCustomers={sortedCustomers}/>
+				<CustomerTable
+					filteredCustomers={sortedCustomers}
+					handleUpdateStatus={handleUpdateStatus}
+				/>
 			</UserTabs>
 			<UserTabs value={value} index={1}>
 				Item Two

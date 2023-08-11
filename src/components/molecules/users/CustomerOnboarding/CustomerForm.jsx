@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Modal, Box, Button, Typography, Dialog, DialogContent } from "@mui/material";
+import { Box, Button, Typography, Dialog, DialogContent } from "@mui/material";
 import { useForm } from "react-hook-form";
-import TextFields from "../../SuperAdmin/TextField";
+import TextFields from "../../users/CustomerOnboarding/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../../atoms/users/CustomerOnboarding/Schema";
 import SuccessModal from "../../../atoms/users/CustomerOnboarding/SuccessModal";
@@ -10,7 +10,7 @@ const CustomerForm = ({ open, onClose }) => {
 	const {
 		handleSubmit,
 		control,
-		formState: { errors },
+		formState: { errors, isValid },
 		reset,
 	} = useForm({
 		defaultValues: {
@@ -43,6 +43,19 @@ const CustomerForm = ({ open, onClose }) => {
 	const closeSuccessModal = () => {
 		setSuccessModalOpen(false);
 	};
+
+	let saveButtonStyles = {
+		background: "#2b2e72",
+		textTransform: 'none',
+		"&:hover": {
+		  backgroundColor: "#2b2e72",
+		},
+	  };
+	
+	  if (!isValid) {
+		saveButtonStyles.pointerEvents = "none";
+		saveButtonStyles.opacity = 0.5;
+	  }
 
 	return (
 		<>
@@ -78,7 +91,8 @@ const CustomerForm = ({ open, onClose }) => {
 								control={control}
 								type="text"
 								name="companyName"
-								label="Company name"
+								label="Company name*"
+								placeholder="Enter Company name"
 							/>
 						</Box>
 						<Box sx={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
@@ -87,14 +101,16 @@ const CustomerForm = ({ open, onClose }) => {
 								control={control}
 								type="text"
 								name="companyRepFirstName"
-								label="Company representative first name"
+								label="Company representative first name*"
+								placeholder="Enter Company representative first name"
 							/>
 							<TextFields
 								errors={errors}
 								control={control}
 								type="text"
 								name="companyRepLastName"
-								label="Company representative last name"
+								label="Company representative last name*"
+								placeholder="Enter Company representative last name"
 							/>
 						</Box>
 						<Box sx={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
@@ -102,7 +118,8 @@ const CustomerForm = ({ open, onClose }) => {
 								errors={errors}
 								control={control}
 								name="companyRepEmail"
-								label="Company representative email"
+								label="Company representative email*"
+								placeholder="Enter Company representative email"
 								type="text"
 							/>
 							<TextFields
@@ -110,6 +127,7 @@ const CustomerForm = ({ open, onClose }) => {
 								control={control}
 								name="companyRepPhoneNumber"
 								label="Company representative phone number"
+								placeholder=" Enter Company representative phone number"
 								type="tel"
 								inputProps={{
 									type: "phone",
@@ -122,6 +140,7 @@ const CustomerForm = ({ open, onClose }) => {
 								control={control}
 								name="companyFinanceEmail"
 								label="Company finance team email"
+								placeholder="Enter Company finance team email"
 								type="text"
 							/>
 							<TextFields
@@ -129,16 +148,17 @@ const CustomerForm = ({ open, onClose }) => {
 								control={control}
 								name="companyOfficialEmail"
 								label="Company official email"
+								placeholder="Enter Company official email"
 								type="text"
 							/>
 						</Box>
 						<Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: "16px" }}>
 							<Button
 								onClick={handleClose}
-								variant="outlined"
 								sx={{
 									color: "#2b2e72",
 									borderColor: "#2b2e72",
+									textTransform: 'none',
 									"&:hover": {
 										backgroundColor: "transparent",
 										color: "#2b2e72",
@@ -149,17 +169,12 @@ const CustomerForm = ({ open, onClose }) => {
 								Cancel
 							</Button>
 							<Button
-								type="submit"
-								variant="contained"
-								sx={{
-									background: "#2b2e72",
-									"&:hover": {
-										backgroundColor: "#2b2e72",
-									},
-								}}
-							>
-								Save And Send Link
-							</Button>
+							type="submit"
+							variant="contained"
+							sx={saveButtonStyles}
+						>
+							Save And Send Link
+						</Button>
 						</Box>
 					</form>
 				</DialogContent>

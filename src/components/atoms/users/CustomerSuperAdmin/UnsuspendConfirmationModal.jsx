@@ -24,7 +24,7 @@ const UnsuspendConfirmationModal = ({ open, onClose, onConfirm }) => {
 	`;
 
 	return (
-		<Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+		<Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
 			<DialogContent
 				sx={{
 					padding: "24px 32px",

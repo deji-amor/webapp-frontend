@@ -17,7 +17,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Pagination from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 import MoreOptionsDropdown from "../../../atoms/users/CustomerSuperAdmin/MoreOptionsDropdown";
-import CustomerProfileModal from "../../../molecules/users/CustomerSuperAdmin/EditableFields";
 import { useSelector, useDispatch } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
 
@@ -131,6 +130,14 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 		(customer) => filter === "All" || customer.status === filter
 	);
 
+	const [unsuspendModalOpen, setUnsuspendModalOpen] = useState(false);
+	const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+	const handleUnsuspendCustomer = (customer) => {
+		setSelectedCustomer(customer);
+		setUnsuspendModalOpen(true);
+	};
+
 	return (
 		<React.Fragment>
 			<TableContainer component={Paper} sx={{ boxShadow: "none", margin: 0, alignItems: "center" }}>
@@ -222,7 +229,13 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 					sx={{ "& .MuiPaginationItem-root": { color: "#2b2e72", backgroundColor: "transparent" } }}
 				/>
 			</Box>
-			<CustomerProfileModal />
+			{selectedCustomer !== null && (
+				<UnsuspendConfirmationModal
+					open={unsuspendModalOpen}
+					onClose={() => setUnsuspendModalOpen(false)}
+					onConfirm={() => handleUnsuspendConfirmation(selectedCustomer)}
+				/>
+			)}
 		</React.Fragment>
 	);
 };

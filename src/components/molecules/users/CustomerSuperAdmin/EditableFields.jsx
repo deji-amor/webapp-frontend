@@ -28,6 +28,7 @@ function EditableFields() {
 
 	const [newField, setNewField] = useState("");
 	const [addingNewField, setAddingNewField] = useState(false);
+	const [isFormEdited, setIsFormEdited] = useState(false);
 
 	const handleOpenModal = () => {
 		setOpenModal(true);
@@ -35,10 +36,16 @@ function EditableFields() {
 
 	const handleCloseModal = () => {
 		setOpenModal(false);
+		setNewField("");
+		setAddingNewField(false);
+		setIsFormEdited(false);
+		const resetFields = fields.map((field) => ({ ...field, editable: false }));
+		setFields(resetFields);
 	};
 
 	const handleAddNewField = () => {
 		setAddingNewField(true);
+		setIsFormEdited(true);
 	};
 
 	const handleNewFieldChange = (event) => {
@@ -48,9 +55,10 @@ function EditableFields() {
 	const handleConfirmNewField = () => {
 		if (newField.trim() !== "") {
 			setFields([...fields, { label: newField, type: "text", editable: false }]);
+			setNewField("");
+			setAddingNewField(false);
+			setIsFormEdited(true);
 		}
-		setNewField("");
-		setAddingNewField(false);
 	};
 
 	const handleEditField = (index) => {
@@ -67,6 +75,7 @@ function EditableFields() {
 		const updatedFields = fields.map((field, i) => {
 			if (i === index) {
 				field.editable = false;
+				setIsFormEdited(true);
 			}
 			return field;
 		});
@@ -109,7 +118,7 @@ function EditableFields() {
 								fontWeight: "400",
 								"& .MuiOutlinedInput-root": {
 									borderRadius: "6px",
-									fontSize: "16px",
+									fontSize: "15px",
 									fontWeight: "400",
 								},
 								"& .MuiOutlinedInput-notchedOutline": {
@@ -167,7 +176,7 @@ function EditableFields() {
 								fontWeight: "400",
 								"& .MuiOutlinedInput-root": {
 									borderRadius: "6px",
-									fontSize: "16px",
+									fontSize: "15px",
 									fontWeight: "400",
 								},
 								"& .MuiOutlinedInput-notchedOutline": {
@@ -220,7 +229,6 @@ function EditableFields() {
 				<DialogActions sx={{ padding: "30px" }}>
 					<Button
 						onClick={handleCloseModal}
-						variant="outlined"
 						sx={{
 							color: "#2b2e72",
 							borderColor: "#2b2e72",
@@ -239,13 +247,14 @@ function EditableFields() {
 					<Button
 						variant="contained"
 						sx={{
-							background: "#2b2e72",
+							background: isFormEdited ? "rgba(43, 46, 114, 0.5)" : "#2b2e72",
 							textTransform: "none",
 							fontFamily: "Poppins",
 							"&:hover": {
 								backgroundColor: "#2b2e72",
 							},
 						}}
+						disabled={!isFormEdited}
 					>
 						Save Changes
 					</Button>
