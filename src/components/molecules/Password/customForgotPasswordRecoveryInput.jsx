@@ -79,33 +79,24 @@ const SingleTips = ({ match, confirm, empty, name }) => {
 	);
 };
 
-const RecoveryPassword = ({
+const PasswordField = ({
+	label,
 	type,
 	width,
 	height,
-	name,
 	placeholder,
-	label,
 	empty,
-	single,
-	forgotPasswordRecoveryError,
-	validationError,
-	errorMessage,
+	name,
 	value,
-	match,
-	currentError,
-	current,
-	handleChange,
-	serverRecoveryError,
 	confirm,
-	hasUpper,
-	hasLower,
-	hasSymbol,
-	hasNumber,
-	hasEightChar,
+	currentError,
+	forgotPasswordRecoveryError,
+	errorMessage,
+	serverRecoveryError,
+	handleChange,
 }) => {
 	return (
-		<div>
+		<>
 			<CustomLabel label={label} />
 			<CustomInput
 				type={type}
@@ -123,40 +114,7 @@ const RecoveryPassword = ({
 				serverError={serverRecoveryError}
 				handleChange={handleChange}
 			/>
-			{single ? (
-				<SingleTips match={match} empty={empty} confirm={confirm} name={name} />
-			) : value && !match && !currentError ? (
-				<ValueToolTips
-					hasLower={hasLower}
-					hasUpper={hasUpper}
-					hasNumber={hasNumber}
-					hasSymbol={hasSymbol}
-					hasEightChar={hasEightChar}
-				/>
-			) : validationError ? (
-				<ValidationErrorTips
-					hasLower={hasLower}
-					hasUpper={hasUpper}
-					hasNumber={hasNumber}
-					hasSymbol={hasSymbol}
-					hasEightChar={hasEightChar}
-				/>
-			) : currentError && current.length > 2 ? (
-				<ToolTip
-					toolTipIcon={<ErrorOutlineIcon className="icon" />}
-					toolTipText="New Password is the same as current password "
-					toolTipColor="#D73D3D"
-				/>
-			) : empty && !value ? (
-				<ToolTip
-					toolTipIcon={<ErrorOutlineIcon className="icon" />}
-					toolTipText="Password input field cannot be empty"
-					toolTipColor="#D73D3D"
-				/>
-			) : (
-				""
-			)}
-		</div>
+		</>
 	);
 };
 
@@ -185,30 +143,55 @@ const ForgotPasswordRecoveryInput = ({
 
 	return (
 		<InputButtonWrapper error={forgotPasswordRecoveryError}>
-			<RecoveryPassword
-				type={type}
-				width={width}
-				height={height}
-				name={name}
-				placeholder={placeholder}
-				label={label}
-				empty={empty}
-				single={single}
-				validationError={validationError}
-				errorMessage={errorMessage}
-				value={value}
-				match={match}
-				currentError={currentError}
-				current={current}
-				handleChange={handleChange}
-				serverRecoveryError={serverRecoveryError}
-				confirm={confirm}
-				hasUpper={hasUpper}
-				hasLower={hasLower}
-				hasSymbol={hasSymbol}
-				hasNumber={hasNumber}
-				hasEightChar={hasEightChar}
-			/>
+			<div>
+				<PasswordField
+					label={label}
+					type={type}
+					width={width}
+					height={height}
+					placeholder={placeholder}
+					empty={empty}
+					name={name}
+					value={value}
+					confirm={confirm}
+					currentError={currentError}
+					forgotPasswordRecoveryError={forgotPasswordRecoveryError}
+					errorMessage={errorMessage}
+					serverRecoveryError={serverRecoveryError}
+					handleChange={handleChange}
+				/>
+				{single ? (
+					<SingleTips match={match} empty={empty} confirm={confirm} name={name} />
+				) : value && !match && !currentError ? (
+					<ValueToolTips
+						hasLower={hasLower}
+						hasUpper={hasUpper}
+						hasNumber={hasNumber}
+						hasSymbol={hasSymbol}
+						hasEightChar={hasEightChar}
+					/>
+				) : validationError ? (
+					<ValidationErrorTips
+						hasLower={hasLower}
+						hasUpper={hasUpper}
+						hasNumber={hasNumber}
+						hasSymbol={hasSymbol}
+						hasEightChar={hasEightChar}
+					/>
+				) : currentError && current.length > 2 ? (
+					<ToolTip
+						toolTipIcon={<ErrorOutlineIcon className="icon" />}
+						toolTipText="New Password is the same as current password "
+						toolTipColor="#D73D3D"
+					/>
+				) : empty && !value ? (
+					<ToolTip
+						toolTipIcon={<ErrorOutlineIcon className="icon" />}
+						toolTipText="Password input field cannot be empty"
+						toolTipColor="#D73D3D"
+					/>
+				) : null}
+			</div>
 		</InputButtonWrapper>
 	);
 };
@@ -240,37 +223,21 @@ ForgotPasswordRecoveryInput.propTypes = {
 	handleFormSubmit: PropTypes.func,
 };
 
-RecoveryPassword.propTypes = {
-	// props: PropTypes.object,
+PasswordField.propTypes = {
 	name: PropTypes.string,
 	value: PropTypes.string,
-	butText: PropTypes.string,
 	type: PropTypes.string,
-	butType: PropTypes.string,
-	single: PropTypes.bool,
-	match: PropTypes.bool,
 	empty: PropTypes.bool,
-	validationError: PropTypes.bool,
-	note: PropTypes.string,
-	confirm: PropTypes.string,
 	width: PropTypes.string,
 	height: PropTypes.string,
 	label: PropTypes.string,
-	validators: PropTypes.object,
 	placeholder: PropTypes.string,
-	current: PropTypes.string,
 	forgotPasswordRecoveryError: PropTypes.bool,
-	currentError: PropTypes.bool,
-	serverError: PropTypes.bool,
 	errorMessage: PropTypes.string,
 	serverRecoveryError: PropTypes.bool,
 	handleChange: PropTypes.func,
-	handleFormSubmit: PropTypes.func,
-	hasLower: PropTypes.bool,
-	hasUpper: PropTypes.bool,
-	hasNumber: PropTypes.bool,
-	hasEightChar: PropTypes.bool,
-	hasSymbol: PropTypes.bool,
+	confirm: PropTypes.string,
+	currentError: PropTypes.bool,
 };
 
 ValueToolTip.propTypes = {
