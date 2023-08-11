@@ -103,13 +103,3 @@ export function isHardwareQuantityValid(value) {
 	if (value.trim().length === 0) return [false, "Hardware quantity can not be empty"];
 	else return [true, ""];
 }
-
-// // Example usage:
-// DATE const dateString1 = "2023-08-04T12:00";
-// DATE const dateString2 = "2023-13-04T25:00"; // Invalid date or time values
-// DATE const dateString3 = "2023-08-04T12:001"; // Invalid format
-// DATE const dateString4 = "2023-02-31T12:00"; // Invalid date or time values
-// DATE console.log(isValidDateTimeLocal(dateString1)); // Output: [true, null]
-// DATE console.log(isValidDateTimeLocal(dateString2)); // Output: [false, "Invalid date or time values."]
-// DATE console.log(isValidDateTimeLocal(dateString3)); // Output: [false, "Invalid format. The format should be 'YYYY-MM-DDTHH:mm'."]
-// DATE console.log(isValidDateTimeLocal(dateString4)); // Output: [false, "Invalid date or time values."]
