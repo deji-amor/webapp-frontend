@@ -1,15 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { styled } from '@mui/material'
-// IMPORT
-// import AddIcon from "@mui/icons-material/Add";
-// import ClearIcon from "@mui/icons-material/Clear";
+import React from "react";
+import PropTypes from "prop-types";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
-const AddOrCancelButton = ({ onClick , type, disabled}) => {
+const AddOrCancelButton = ({ onClick, type, disabled }) => {
 	// BUTTON
-  // const Button = styled("div")`
+	// const Button = styled("div")`
 	// 	color: white;
 	// 	background-color: rgba(43, 46, 114, ${disabled ? "0.5" : "1"});
 	// 	font-weight: 500;
@@ -32,11 +28,7 @@ const AddOrCancelButton = ({ onClick , type, disabled}) => {
 		<button
 			className={`inline-flex items-center justify-center ${
 				type === "add" ? "text-[#04850D]" : "text-[#D73D3D]"
-			} ${
-				disabled
-					? "cursor-not-allowed text-opacity-50"
-					: "cursor-pointer"
-			}`}
+			} ${disabled ? "cursor-not-allowed text-opacity-50" : "cursor-pointer"}`}
 			disabled={disabled}
 			onClick={onClick}
 		>
@@ -46,9 +38,9 @@ const AddOrCancelButton = ({ onClick , type, disabled}) => {
 };
 
 AddOrCancelButton.propTypes = {
-  onClick: PropTypes.func,
-  type: PropTypes.string,
-  disabled: PropTypes.bool
-}
+	onClick: PropTypes.func,
+	type: PropTypes.string,
+	disabled: PropTypes.bool,
+};
 
-export default AddOrCancelButton
+export default AddOrCancelButton;
