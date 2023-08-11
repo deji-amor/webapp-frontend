@@ -65,20 +65,18 @@ const SingleTips = ({ match, confirm, empty, name }) => {
 	return (
 		<>
 			{
-				!match && confirm.length >= 1 ? (
+				!match && confirm.length >= 1 && (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="Password does not match new password entered!"
 						toolTipColor={"#D73D3D"}
 					/>
-				) : empty && name === "confirmPassword" && !confirm ? (
+				) || empty && name === "confirmPassword" && !confirm && (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="Confirm password input field cannot be empty!"
 						toolTipColor={"#D73D3D"}
 					/>
-				) : (
-					""
 				)
 			}
 		</>
