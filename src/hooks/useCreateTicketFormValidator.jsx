@@ -1,74 +1,77 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React from "react";
+import { useSelector } from "react-redux";
 
 const useCreateTicketFormValidator = () => {
-  const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
-  const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
+	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 
-  const isFormValid = chosenTemplate.reduce((previousValue, currentSection) => {
-    if(currentSection === "pointOfContact"){
-      const { pointOfContactNameIsValid, pointOfContactPhoneNumberIsValid , pointOfContactAddressIsValid} = allPossibleFields;
-      
-      return previousValue && (pointOfContactNameIsValid && pointOfContactPhoneNumberIsValid && pointOfContactAddressIsValid)
-    }
-    if (currentSection === "numberOfTechniciansNeeded") {
-      // CURRENT  const { numberOfTechnicians } = allPossibleFields;
-      return (true && previousValue);
-    }
-    if (currentSection === "scopeOfWork") {
-      const { scopeOfWorkDescriptionIsValid } = allPossibleFields;
-      return scopeOfWorkDescriptionIsValid && (previousValue)
-    }
-    if(currentSection === "duration"){
-      return (true && previousValue);
-    }
-    if (currentSection === "hardwareComponentQuantity") {
-      const {hardwareComponentTypeQuantityNameIsValid} = allPossibleFields
-      return hardwareComponentTypeQuantityNameIsValid && previousValue
-    }
-    if(currentSection === "hardwareComponentType"){
-      const { hardwareComponentTypeListIsValid } = allPossibleFields;
-      return hardwareComponentTypeListIsValid && previousValue
-    }
-    if (currentSection === "location") {
-      const { locationsAddressIsValid } = allPossibleFields;
-      return locationsAddressIsValid && previousValue;
-    }
-    if (currentSection === "materialsProcurement") {
-      const { materialsDescriptionIsValid } = allPossibleFields;
-      return materialsDescriptionIsValid && previousValue;
-    }
-    if (currentSection === "numberOfWorkStation") {
-      return (true && previousValue)
-    }
-    if (currentSection === "numberOfWorkSystems") {
-      return (true && previousValue);
-    }
-    if (currentSection === "softwareApplicationInstallation") {
-      const {softwareInstallationNameIsValid} = allPossibleFields
-      return softwareInstallationNameIsValid && previousValue
-    }
-    if (currentSection === "softwareApplicationCustomization") {
-      const { softwareCustomizationNameIsValid } = allPossibleFields;
-      return softwareCustomizationNameIsValid && previousValue
-    }
-    if(currentSection === "pickUpLocation"){
-      const {pickLocationsAddressIsValid} = allPossibleFields
-      return pickLocationsAddressIsValid && previousValue
-    }
-    if (currentSection === "dropOffLocation") {
-      const {dropOffLocationsAddressIsValid} = allPossibleFields
-      return dropOffLocationsAddressIsValid && previousValue
-    }
-    if (currentSection === "additionalFields") {
-			const { additionalFieldsIsValid } = allPossibleFields;
-			return additionalFieldsIsValid && previousValue;
+	const {
+		pointOfContactNameIsValid,
+		pointOfContactPhoneNumberIsValid,
+		pointOfContactAddressIsValid,
+		scopeOfWorkDescriptionIsValid,
+		hardwareComponentTypeQuantityNameIsValid,
+		hardwareComponentTypeListIsValid,
+		locationsAddressIsValid,
+		materialsDescriptionIsValid,
+		softwareInstallationNameIsValid,
+		softwareCustomizationNameIsValid,
+		pickLocationsAddressIsValid,
+		dropOffLocationsAddressIsValid,
+		additionalFieldsIsValid,
+	} = allPossibleFields;
+
+	const isFormValid = chosenTemplate.every((currentSection) => {
+		switch (currentSection) {
+			case "pointOfContact":
+				return (
+					pointOfContactNameIsValid &&
+					pointOfContactPhoneNumberIsValid &&
+					pointOfContactAddressIsValid
+				);
+
+			case "numberOfTechniciansNeeded":
+			case "duration":
+			case "numberOfWorkStation":
+			case "numberOfWorkSystems":
+				return true;
+
+			case "scopeOfWork":
+				return scopeOfWorkDescriptionIsValid;
+
+			case "hardwareComponentQuantity":
+				return hardwareComponentTypeQuantityNameIsValid;
+
+			case "hardwareComponentType":
+				return hardwareComponentTypeListIsValid;
+
+			case "location":
+				return locationsAddressIsValid;
+
+			case "materialsProcurement":
+				return materialsDescriptionIsValid;
+
+			case "softwareApplicationInstallation":
+				return softwareInstallationNameIsValid;
+
+			case "softwareApplicationCustomization":
+				return softwareCustomizationNameIsValid;
+
+			case "pickUpLocation":
+				return pickLocationsAddressIsValid;
+
+			case "dropOffLocation":
+				return dropOffLocationsAddressIsValid;
+
+			case "additionalFields":
+				return additionalFieldsIsValid;
+
+			default:
+				return true;
 		}
-    return (true && previousValue)
+	});
 
-  }, true)
+	return isFormValid;
+};
 
-  return isFormValid
-}
-
-export default useCreateTicketFormValidator
+export default useCreateTicketFormValidator;

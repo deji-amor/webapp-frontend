@@ -144,13 +144,13 @@ const ForgotPasswordRecoveryInput = ({
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="New Password is the same as current password "
-						toolTipColor={"#D73D3D"}
+						toolTipColor="#D73D3D"
 					/>
 				) : empty && !value ? (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="Password input field cannot be empty"
-						toolTipColor={"#D73D3D"}
+						toolTipColor="#D73D3D"
 					/>
 				) : (
 					""
