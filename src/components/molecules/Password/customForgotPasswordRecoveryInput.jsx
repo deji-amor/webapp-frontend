@@ -162,7 +162,7 @@ const ForgotPasswordRecoveryInput = ({
 				/>
 				{single ? (
 					<SingleTips match={match} empty={empty} confirm={confirm} name={name} />
-				) : value && !match && !currentError ? (
+				) : (value && !match && !currentError) ? (
 					<ValueToolTips
 						hasLower={hasLower}
 						hasUpper={hasUpper}
@@ -178,13 +178,13 @@ const ForgotPasswordRecoveryInput = ({
 						hasSymbol={hasSymbol}
 						hasEightChar={hasEightChar}
 					/>
-				) : currentError && current.length > 2 ? (
+				) : (currentError && current.length > 2) ? (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="New Password is the same as current password "
 						toolTipColor="#D73D3D"
 					/>
-				) : empty && !value ? (
+				) : (empty && !value) ? (
 					<ToolTip
 						toolTipIcon={<ErrorOutlineIcon className="icon" />}
 						toolTipText="Password input field cannot be empty"
