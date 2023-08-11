@@ -2,8 +2,7 @@ export function isValidEmail(email) {
   // Regular expression pattern for email validation
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
-  // RETURN
-  // return emailPattern.test(email);
+  // REGULAR return emailPattern.test(email);
   if(email.trim().length === 0) return [false, "Email can not be empty"]
   if (!emailPattern.test(email)) {
     return [false, "Invalid email format"]
@@ -61,20 +60,14 @@ export function isScopeOfWorkEmpty(value) {
 
 export function isValidFile(file) {
 	// Check if the object is a file
-	if (!(file instanceof File)) {
-		return false;
-	}
+	if (!(file instanceof File)) return false;
 
 	// Validate if the file has a valid name and extension (optional but recommended)
 	const filename = file.name.trim();
-	if (filename === "") {
-		return false;
-	}
+	if (filename === "") return false;
 
 	// Ensure that the file has content (not empty)
-	if (file.size === 0) {
-		return false;
-	}
+	if (file.size === 0) return false;
 
 	return true;
 }
