@@ -8,27 +8,19 @@ const useCreateTicketFormValidator = () => {
   const isFormValid = chosenTemplate.reduce((previousValue, currentSection) => {
     if(currentSection === "pointOfContact"){
       const { pointOfContactNameIsValid, pointOfContactPhoneNumberIsValid , pointOfContactAddressIsValid} = allPossibleFields;
-      // CONSOLED
-      // console.log({
-			// 	pointOfContactNameIsValid,
-			// 	pointOfContactPhoneNumberIsValid,
-			// 	pointOfContactAddressIsValid,
-			// });
+      
       return previousValue && (pointOfContactNameIsValid && pointOfContactPhoneNumberIsValid && pointOfContactAddressIsValid)
     }
     if (currentSection === "numberOfTechniciansNeeded") {
-      // CONSOLED
-      //  const { numberOfTechnicians } = allPossibleFields;
-      // CONSOLED
-      //  console.log({ numberOfTechnicians });
-      return true && previousValue;
+      // CURRENT  const { numberOfTechnicians } = allPossibleFields;
+      return (true && previousValue);
     }
     if (currentSection === "scopeOfWork") {
       const { scopeOfWorkDescriptionIsValid } = allPossibleFields;
       return scopeOfWorkDescriptionIsValid && (previousValue)
     }
     if(currentSection === "duration"){
-      return true && previousValue;
+      return (true && previousValue);
     }
     if (currentSection === "hardwareComponentQuantity") {
       const {hardwareComponentTypeQuantityNameIsValid} = allPossibleFields
@@ -47,10 +39,10 @@ const useCreateTicketFormValidator = () => {
       return materialsDescriptionIsValid && previousValue;
     }
     if (currentSection === "numberOfWorkStation") {
-      return true && previousValue
+      return (true && previousValue)
     }
     if (currentSection === "numberOfWorkSystems") {
-      return true && previousValue;
+      return (true && previousValue);
     }
     if (currentSection === "softwareApplicationInstallation") {
       const {softwareInstallationNameIsValid} = allPossibleFields
@@ -72,7 +64,7 @@ const useCreateTicketFormValidator = () => {
 			const { additionalFieldsIsValid } = allPossibleFields;
 			return additionalFieldsIsValid && previousValue;
 		}
-    return true && previousValue
+    return (true && previousValue)
 
   }, true)
 
