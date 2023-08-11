@@ -15,7 +15,7 @@ import NumberOfTechnicians from '../../../atoms/tickets/CreateTicketSuperAdmin/f
 import HardWareComponentType from '../../../atoms/tickets/CreateTicketSuperAdmin/fields/hardware-component-type/HardWareComponentType'
 import HardwareComponentQuantity from '../../../atoms/tickets/CreateTicketSuperAdmin/fields/hardware-component-quantity/HardwareComponentQuantity'
 import NumberOfWorkstation from '../../../atoms/tickets/CreateTicketSuperAdmin/fields/number-of-workstation/NumberOfWorkstation'
-import NumberOfWorkSystem from '../../../atoms/tickets/CreateTicketSuperAdmin/fields/number-of-worksystem/NumberOfWorksystem'
+import NumberOfWorkSystem from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/number-of-worksystem/NumberOfWorksystem"
 import SoftwareApplicationCustomization from '../../../atoms/tickets/CreateTicketSuperAdmin/fields/software-application-customization/SoftwareApplicationCustomization'
 import SoftwareApplicationInstallation from '../../../atoms/tickets/CreateTicketSuperAdmin/fields/software-application-installation/SoftwareApplicationInstallation'
 import PickUpLocation from '../../../atoms/tickets/CreateTicketSuperAdmin/fields/pick-up-location/PickUpLocation'
