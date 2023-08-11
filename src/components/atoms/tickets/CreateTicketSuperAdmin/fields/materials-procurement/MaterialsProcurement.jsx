@@ -9,16 +9,20 @@ const MaterialsProcurement = () => {
     const {
 			enteredValue: materialValue,
 			errorMessage: materialErrorMessage,
-			setErrorMessage: materialSetErrorMessage,
+			// MATERIAL
+			// setErrorMessage: materialSetErrorMessage,
 			hasError: materialHasError,
-			setHasError: materialSetHasError,
+			// MATERIAL
+			// setHasError: materialSetHasError,
 			valueChangeHandler: materialChangeHandler,
 			valueBlurHandler: materialBlurHandler,
 			valueIsValid: materialIsValid,
 			errorFromServer: materialErrFromServer,
-			setErrorFromServer: materialSetErrorFromServer,
+			// MATERIAL
+			// setErrorFromServer: materialSetErrorFromServer,
 			id: materialId,
-			reset: materialReset,
+			// MATERIAL
+			// reset: materialReset,
 		} = useCreateTicketInput("materialsDescription", isMaterialEmpty);
 
   return (

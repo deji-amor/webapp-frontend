@@ -65,7 +65,7 @@ export const validatePassword = (
 ) => {
 	const uppercaseRegExp = /(?=.*?[A-Z])/;
 	const lowercaseRegExp = /(?=.*?[a-z])/;
-	const digitsRegExp = /(?=.*?[0-9])/;
+	const digitsRegExp = /(?=.*\d)/;
 	const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
 	const minLengthRegExp = /.{8,}/;
 

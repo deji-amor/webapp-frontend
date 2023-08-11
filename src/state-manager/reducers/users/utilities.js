@@ -1,6 +1,3 @@
-import tree from "./ticketCreationMultiplePath"
-
-const findPath = (template) => {
-  const arr = []
-  
-}
+// UTL const findPath = (template) => {
+// UTL  const arr = []
+// UTL }

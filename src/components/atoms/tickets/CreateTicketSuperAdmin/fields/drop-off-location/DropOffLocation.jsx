@@ -22,14 +22,17 @@ const DropOffLocation = () => {
 	const {
 		enteredValue: locationAddressValue,
 		errorMessage: locationAddressErrorMessage,
-		setErrorMessage: locationAddressSetErrorMessage,
+		// lOCATION ADDRESS COMMENTED
+		// setErrorMessage: locationAddressSetErrorMessage,
 		hasError: locationAddressHasError,
-		setHasError: locationAddressSetHasError,
+		// lOCATION ADDRESS COMMENTED
+		// setHasError: locationAddressSetHasError,
 		valueChangeHandler: locationAddressChangeHandler,
 		valueBlurHandler: locationAddressBlurHandler,
 		valueIsValid: locationAddressIsValid,
 		errorFromServer: locationAddressErrFromServer,
-		setErrorFromServer: locationAddressSetErrorFromServer,
+		// lOCATION ADDRESS COMMENTED
+		// setErrorFromServer: locationAddressSetErrorFromServer,
 		id: locationAddressId,
 		reset: locationAddressReset,
 	} = useCreateTicketInput("dropOffLocationAddress", isAddressEmpty);
@@ -48,7 +51,7 @@ const DropOffLocation = () => {
 	dispatch(createTicketActions.updateField({ key: "activeDropOffLocationType", value: 0 }));
 	dispatch(createTicketActions.updateField({ key: "dropOffLocationAddress", value: "governmental" }));
 	locationAddressReset();
-}, [numberOfDropLocation, dispatch]);
+}, [numberOfDropLocation, dispatch, locationAddressReset]);
 
 	const changeDropOffLocationChangeHandler = (location) => {
 		dispatch(createTicketActions.updateField({ key: "activeDropOffLocationAddress", value: location }));
@@ -56,6 +59,7 @@ const DropOffLocation = () => {
 	};
 
 	useEffect(() => {
+		// CONSOLE FIRED
 		// console.log("fired");
 		const newLocations = dropOffLocations.slice();
 		const item = newLocations.find((loc, ind) => ind === activeDropOffLocationAddress);
@@ -67,7 +71,7 @@ const DropOffLocation = () => {
 		} else {
 			dispatch(createTicketActions.updateField({ key: "dropOffLocationsAddressIsValid", value: false }));
 		}
-	}, [locationAddressValue]);
+	}, [locationAddressValue, activeDropOffLocationAddress, dispatch, dropOffLocations]);
 
 	useEffect(() => {
 		locationAddressReset();
@@ -77,12 +81,12 @@ const DropOffLocation = () => {
 				value: dropOffLocations[activeDropOffLocationAddress].address,
 			})
 		);
-	}, [activeDropOffLocationAddress]);
+	}, [activeDropOffLocationAddress, dispatch, dropOffLocations, locationAddressReset]);
 
 	const tablet = (
 		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
 			{dropOffLocations.map(({ address, type }, ind) => (
-				<div key={`${address}${ind}`} className="flex items-center gap-[0.5rem]">
+				<div key={`${address}${type}`} className="flex items-center gap-[0.5rem]">
 					{ind !== 0 && <div className="w-[2.5625rem] h-[0.0625rem] bg-[#000]"></div>}
 					<LocationTab
 						number={ind + 1}

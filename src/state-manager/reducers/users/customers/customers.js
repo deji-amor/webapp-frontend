@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import { getAuthToken } from "../../../../utilis";
 
 export const fetchCustomers= createAsyncThunk("customers", async (args, {rejectWithValue}) => {
@@ -14,7 +14,6 @@ export const fetchCustomers= createAsyncThunk("customers", async (args, {rejectW
 		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/all-customers`;
 		const response = await fetch(url, config);
 		const result = await response.json();
-    // console.log(result)
 		return result;
 	} catch (err) {
 		if (err.response && err.response.data.message) {

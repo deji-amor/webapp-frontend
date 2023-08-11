@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const useCreateTicketFormValidator = () => {
   const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
@@ -8,24 +8,19 @@ const useCreateTicketFormValidator = () => {
   const isFormValid = chosenTemplate.reduce((previousValue, currentSection) => {
     if(currentSection === "pointOfContact"){
       const { pointOfContactNameIsValid, pointOfContactPhoneNumberIsValid , pointOfContactAddressIsValid} = allPossibleFields;
-      // console.log({
-			// 	pointOfContactNameIsValid,
-			// 	pointOfContactPhoneNumberIsValid,
-			// 	pointOfContactAddressIsValid,
-			// });
+      
       return previousValue && (pointOfContactNameIsValid && pointOfContactPhoneNumberIsValid && pointOfContactAddressIsValid)
     }
     if (currentSection === "numberOfTechniciansNeeded") {
-       const { numberOfTechnicians } = allPossibleFields;
-      //  console.log({ numberOfTechnicians });
-      return true && previousValue;
+      // CURRENT  const { numberOfTechnicians } = allPossibleFields;
+      return (true && previousValue);
     }
     if (currentSection === "scopeOfWork") {
       const { scopeOfWorkDescriptionIsValid } = allPossibleFields;
       return scopeOfWorkDescriptionIsValid && (previousValue)
     }
     if(currentSection === "duration"){
-      return true && previousValue;
+      return (true && previousValue);
     }
     if (currentSection === "hardwareComponentQuantity") {
       const {hardwareNameIsValid} = allPossibleFields
@@ -44,10 +39,10 @@ const useCreateTicketFormValidator = () => {
       return materialsDescriptionIsValid && previousValue;
     }
     if (currentSection === "numberOfWorkStation") {
-      return true && previousValue
+      return (true && previousValue)
     }
     if (currentSection === "numberOfWorkSystems") {
-      return true && previousValue;
+      return (true && previousValue);
     }
     if (currentSection === "softwareApplicationInstallation") {
       const {softwareInstallationNameIsValid} = allPossibleFields
@@ -69,7 +64,7 @@ const useCreateTicketFormValidator = () => {
 			const { additionalFieldsIsValid } = allPossibleFields;
 			return additionalFieldsIsValid && previousValue;
 		}
-    return true && previousValue
+    return (true && previousValue)
 
   }, true)
 

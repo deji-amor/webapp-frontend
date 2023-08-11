@@ -9,9 +9,6 @@ import NumberDropDown from '../general/NumberDropDown';
 import useCreateTicketInput from '../../../../../../hooks/useCreateTicketInput';
 import Tab from '../general/Tab';
 import AddOrCancelButton from '../general/AddOrCancelButton';
-import BlueThemedLightText from '../../BlueThemedLightText';
-import BlueThemeSmall from '../../BlueThemedSmall';
-import BlueThemedMediumText from '../../BlueThemedMediumText';
 import BlueThemedXtraSm from '../../BlueThemedXtraSm';
 import { isHardwareTypeValid } from '../../../../../../helpers/validation';
 import { createTicketActions } from "../../../../../../state-manager/reducers/tickets/ticketCreation";
@@ -37,7 +34,8 @@ const HardWareComponentType = () => {
 			valueBlurHandler: typeBlurHandler,
 			valueIsValid: typeIsValid,
 			errorFromServer: typeErrFromServer,
-			setErrorFromServer: typeSetErrorFromServer,
+			// TYPE
+			// setErrorFromServer: typeSetErrorFromServer,
 			id: typeId,
 			reset: typeReset,
 		} = useCreateTicketInput("hardwareInputTypeCurrentValue", isHardwareTypeValid);

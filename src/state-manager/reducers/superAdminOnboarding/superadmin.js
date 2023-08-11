@@ -78,6 +78,7 @@ export const superAdminSendEmail = createAsyncThunk("superAdminSendEmail", async
     try {
         const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-resend-email-verification`;
         const res = await fetch(url, config);
+        console.log(res)
 
     }catch (err) {
         if (err.response && err.response.data.message) {

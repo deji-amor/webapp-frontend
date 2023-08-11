@@ -1,5 +1,5 @@
 import { FormControl, MenuItem, TextField } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { addErrorIntoField } from "../../../utilis";
 import ErrorMessage from "../../atoms/SuperAdmin/ErrorMessage";
 

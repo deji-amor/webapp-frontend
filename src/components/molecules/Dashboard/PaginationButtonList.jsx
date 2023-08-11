@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { styled } from "@mui/material";
 import PaginationButton from "../../atoms/Dashboard/PaginationButton";
 
 const PaginationButtonList = ({
@@ -12,7 +11,7 @@ const PaginationButtonList = ({
 }) => {
 	let List = Array.from(new Array(numberOfButtons))
 		.map((_, ind) => (
-			<PaginationButton key={ind + 1} onClick={onClick} isActive={currentPage === ind + 1}>
+			<PaginationButton key={_ + 1} onClick={onClick} isActive={currentPage === ind + 1}>
 				{ind + 1}
 			</PaginationButton>
 		))

@@ -12,16 +12,20 @@ const SoftwareApplicationInstallation = () => {
   const {
 		enteredValue: appValue,
 		errorMessage: appErrorMessage,
-		setErrorMessage: appSetErrorMessage,
+		// APP
+		// setErrorMessage: appSetErrorMessage,
 		hasError: appHasError,
-		setHasError: appSetHasError,
+		// APP
+		// setHasError: appSetHasError,
 		valueChangeHandler: appChangeHandler,
 		valueBlurHandler: appBlurHandler,
 		valueIsValid: appIsValid,
 		errorFromServer: appErrFromServer,
-		setErrorFromServer: appSetErrorFromServer,
+		// APP
+		// setErrorFromServer: appSetErrorFromServer,
 		id: appId,
-		reset: appReset,
+		// APP
+		// reset: appReset,
 	} = useCreateTicketInput("softwareInstallationName", isHardwareQuantityValid);
 
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);

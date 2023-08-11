@@ -6,9 +6,6 @@ const useCreateTicketFields = () => {
 	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
   const { pathToTemplate } = useSelector((state) => state.ticketCreation);
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
-
-	// console.log({allRequiredFields});
-
 	const fields = chosenTemplate.reduce(
 		(previousValue, currentSection) => {
 			if (currentSection === "pointOfContact") {
@@ -141,9 +138,6 @@ const useCreateTicketFields = () => {
 			customerId: +allPossibleFields.customerId,
 		}
 	);
-
-	// console.log({fields});
-
 	return fields;
 };
 

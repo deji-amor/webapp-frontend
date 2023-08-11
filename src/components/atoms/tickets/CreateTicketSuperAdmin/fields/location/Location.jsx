@@ -15,7 +15,7 @@ const Location = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const numberOfLocation = allPossibleFields.numberOfLocation;
 	const locations = allPossibleFields.locations;
-	const locationsAddressIsValid = allPossibleFields.locationsAddressIsValid;
+	// LOCATION const locationsAddressIsValid = allPossibleFields.locationsAddressIsValid;
 	const activeLocationAddress = allPossibleFields.activeLocationAddress;
 	const activeLocationType = allPossibleFields.activeLocationType;
 	const dispatch = useDispatch();
@@ -23,14 +23,17 @@ const Location = () => {
 	const {
 		enteredValue: locationAddressValue,
 		errorMessage: locationAddressErrorMessage,
-		setErrorMessage: locationAddressSetErrorMessage,
+	// LOCATION
+		// setErrorMessage: locationAddressSetErrorMessage,
 		hasError: locationAddressHasError,
-		setHasError: locationAddressSetHasError,
+	// LOCATION
+		// setHasError: locationAddressSetHasError,
 		valueChangeHandler: locationAddressChangeHandler,
 		valueBlurHandler: locationAddressBlurHandler,
 		valueIsValid: locationAddressIsValid,
 		errorFromServer: locationAddressErrFromServer,
-		setErrorFromServer: locationAddressSetErrorFromServer,
+	// LOCATION
+		// setErrorFromServer: locationAddressSetErrorFromServer,
 		id: locationAddressId,
 		reset: locationAddressReset,
 	} = useCreateTicketInput("locationAddress", isAddressEmpty);
@@ -54,7 +57,6 @@ const Location = () => {
 	};
 
 	useEffect(() => {
-		// console.log("fired");
 		const newLocations = locations.slice();
 		const item = newLocations.find((loc, ind) => ind === activeLocationAddress);
 		const newItem = { ...item, address: locationAddressValue };
@@ -76,7 +78,7 @@ const Location = () => {
 	const tablet = (
 		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
 			{locations.map(({ address, type }, ind) => (
-				<div key={`${address}${ind}`} className="flex items-center gap-[0.5rem]">
+				<div key={`${address}${type}`} className="flex items-center gap-[0.5rem]">
 					{ind !== 0 && <div className="w-[2.5625rem] h-[0.0625rem] bg-[#000]"></div>}
 					<LocationTab
 						number={ind + 1}
@@ -95,7 +97,7 @@ const Location = () => {
 		const newItem = { ...item, type: type };
 		newLocations.splice(activeLocationType, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "locations", value: newLocations }));
-		// dispatch(createTicketActions.updateField({ ey: "activeLocationType",  }));
+		// LOCATION dispatch(createTicketActions.updateField({ ey: "activeLocationType",  }));
 	}
 
 	const boxes = (
@@ -107,9 +109,6 @@ const Location = () => {
 			))}
 		</div>
 	);
-
-	// console.log(locations, locationsAddressIsValid);
-	// console.log({numberOfLocation});
 
 	return (
 		<div className="">

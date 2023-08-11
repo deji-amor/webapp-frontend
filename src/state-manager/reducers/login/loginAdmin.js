@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import localforage from "localforage";
 import {encrypt} from "n-krypta";
-import axios from "axios";
 
 export const loginAdmin = createAsyncThunk("auth/loginAdmin", async (args, {rejectWithValue}) => {
 	const {deviceName, username, password} = args;

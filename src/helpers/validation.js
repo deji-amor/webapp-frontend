@@ -2,7 +2,7 @@ export function isValidEmail(email) {
   // Regular expression pattern for email validation
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
-  // return emailPattern.test(email);
+  // REGULAR return emailPattern.test(email);
   if(email.trim().length === 0) return [false, "Email can not be empty"]
   if (!emailPattern.test(email)) {
     return [false, "Invalid email format"]
@@ -60,22 +60,13 @@ export function isScopeOfWorkEmpty(value) {
 
 export function isValidFile(file) {
 	// Check if the object is a file
-	if (!(file instanceof File)) {
-		return false;
-	}
+	if (!(file instanceof File)) return false;
 
 	// Validate if the file has a valid name and extension (optional but recommended)
+	// And Ensure that the file has content (not empty)
 	const filename = file.name.trim();
-	if (filename === "") {
-		return false;
-	}
 
-	// Ensure that the file has content (not empty)
-	if (file.size === 0) {
-		return false;
-	}
-
-	return true;
+	return (file.size != "" || file.size != 0);
 }
 
 export function isValidDateTimeLocal(inputString) {
@@ -114,12 +105,11 @@ export function isHardwareQuantityValid(value) {
 }
 
 // // Example usage:
-// const dateString1 = "2023-08-04T12:00";
-// const dateString2 = "2023-13-04T25:00"; // Invalid date or time values
-// const dateString3 = "2023-08-04T12:001"; // Invalid format
-// const dateString4 = "2023-02-31T12:00"; // Invalid date or time values
-
-// console.log(isValidDateTimeLocal(dateString1)); // Output: [true, null]
-// console.log(isValidDateTimeLocal(dateString2)); // Output: [false, "Invalid date or time values."]
-// console.log(isValidDateTimeLocal(dateString3)); // Output: [false, "Invalid format. The format should be 'YYYY-MM-DDTHH:mm'."]
-// console.log(isValidDateTimeLocal(dateString4)); // Output: [false, "Invalid date or time values."]
+// DATE const dateString1 = "2023-08-04T12:00";
+// DATE const dateString2 = "2023-13-04T25:00"; // Invalid date or time values
+// DATE const dateString3 = "2023-08-04T12:001"; // Invalid format
+// DATE const dateString4 = "2023-02-31T12:00"; // Invalid date or time values
+// DATE console.log(isValidDateTimeLocal(dateString1)); // Output: [true, null]
+// DATE console.log(isValidDateTimeLocal(dateString2)); // Output: [false, "Invalid date or time values."]
+// DATE console.log(isValidDateTimeLocal(dateString3)); // Output: [false, "Invalid format. The format should be 'YYYY-MM-DDTHH:mm'."]
+// DATE console.log(isValidDateTimeLocal(dateString4)); // Output: [false, "Invalid date or time values."]

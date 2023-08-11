@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import Toasts from "../../atoms/Login/Toasts";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { loginAdminActions } from "../../../state-manager/reducers/login/loginAdmin";
 import { styled } from "@mui/material";

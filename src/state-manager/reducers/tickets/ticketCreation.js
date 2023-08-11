@@ -270,11 +270,11 @@ const createTicketSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		toggleAddTicketModal: (state, action) => {
-			// state.showAddTicketModal = !state.showAddTicketModal;
+			// TICKET state.showAddTicketModal = !state.showAddTicketModal;
 			return initialState
 		},
 		toggleTemplateModal: (state, action) => {
-			// state.showTemplateModal = !state.showTemplateModal;
+			// TICKET state.showTemplateModal = !state.showTemplateModal;
 			return initialState
 		},
 		changeAnyState: (state, action) => {

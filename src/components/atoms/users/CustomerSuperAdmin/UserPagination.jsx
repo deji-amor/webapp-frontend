@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import { Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 export default function PaginationRounded({ totalResults, resultsPerPage, currentPage, onPageChange }) {
   const totalPages = Math.ceil(totalResults / resultsPerPage);

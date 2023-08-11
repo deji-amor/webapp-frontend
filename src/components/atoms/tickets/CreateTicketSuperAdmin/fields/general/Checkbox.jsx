@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { styled } from '@mui/material'
+import React from "react";
+import PropTypes from "prop-types";
+import { styled } from "@mui/material";
 
 const Checkbox = ({ onChange, isActive, children }) => {
   const Box = styled("input")`
@@ -42,9 +42,9 @@ const Checkbox = ({ onChange, isActive, children }) => {
 };
 
 Checkbox.propTypes = {
-  onChange: PropTypes.func,
-  isActive: PropTypes.bool,
-  children: PropTypes.node
-}
+	onChange: PropTypes.func,
+	isActive: PropTypes.bool,
+	children: PropTypes.node,
+};
 
-export default Checkbox
+export default Checkbox;

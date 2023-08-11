@@ -1,6 +1,4 @@
-import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
-import axios from "axios";
-import {encrypt} from "n-krypta";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import { removeAuthToken, getAuthToken } from "../../../utilis";
 
 export const logout = createAsyncThunk("logout", async (args, {rejectWithValue}) => {
@@ -65,15 +63,12 @@ const logoutSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder
-
 			//  Reset Password
 			.addCase(logout.pending, (state, action) => {
-				// console.log("pending");
 				state.loading = true;
 			})
 
 			.addCase(logout.fulfilled, (state, {payload}) => {
-				// console.log("fulfilled", payload);
 				state.loading = false;
 				state.token = payload;
 				const code = payload.code;
@@ -91,7 +86,6 @@ const logoutSlice = createSlice({
 			})
 
 			.addCase(logout.rejected, (state, {payload}) => {
-				// console.log("rejected", payload);
 				state.loading = false;
 				state.errorMessage = "Logout failed!";
 				state.clickIncrement = state.clickIncrement + 1;
@@ -100,7 +94,6 @@ const logoutSlice = createSlice({
 	},
 });
 
-// export const { } = passwordSlice.actions
 
 export default logoutSlice.reducer;
 export const logoutActions = logoutSlice.actions;

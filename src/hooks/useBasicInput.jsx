@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useId} from 'react'
-import PropTypes from 'prop-types'
 
 const useBasicInput = (validateValue) => {
   const id = useId()

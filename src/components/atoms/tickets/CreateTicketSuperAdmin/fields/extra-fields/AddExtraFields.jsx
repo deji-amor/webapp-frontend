@@ -4,22 +4,19 @@ import EnterFieldInput from '../general/EnterFieldInput';
 import Input from "../general/Input";
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
 import IconButton from "../general/IconButton";
-import GrayThemedLightText from "../../GrayThemedLightText";
-import GrayThemedLighterText from "../../GrayThemedLighterText";
 import BlueThemedLightText from '../../BlueThemedLightText';
-import BlueThemedMediumText from '../../BlueThemedMediumText';
 import GrayThemedLightestText from '../../GrayThemedLightestText';
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import useAdditionalFieldsInput from '../../../../../../hooks/useAdditionalFieldsInput';
 import AddOrCancelButton from "../general/AddOrCancelButton";
-import { isFieldNameEmpty, isFieldValueEmpty } from "../../../../../../helpers/validation";
 import { createTicketActions } from "../../../../../../state-manager/reducers/tickets/ticketCreation";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddExtraFields = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const additionalFields = allPossibleFields.additionalFields;
-	const additionalFieldsIsValid = allPossibleFields.additionalFieldsIsValid;
+	// ADDITIONAL FIRELD
+	// const additionalFieldsIsValid = allPossibleFields.additionalFieldsIsValid;
 	const [showInput, setShowInput] = useState(false);
 	const dispatch = useDispatch()
 
@@ -33,7 +30,8 @@ const AddExtraFields = () => {
 		valueBlurHandler: fieldNameBlurHandler,
 		valueIsValid: fieldNameIsValid,
 		errorFromServer: fieldNameErrFromServer,
-		setErrorFromServer: fieldNameSetErrorFromServer,
+		// FIELD VALUE
+		// setErrorFromServer: fieldNameSetErrorFromServer,
 		id: fieldNameId,
 		reset: fieldNameReset,
 	} = useCreateTicketInput("extraFieldNameInputTypeCurrentValue", isFieldValueEmpty);
@@ -41,20 +39,24 @@ const AddExtraFields = () => {
 	const {
 		enteredValue: fieldValueValue,
 		errorMessage: fieldValueErrorMessage,
-		setErrorMessage: fieldValueSetErrorMessage,
+		// FIELD VALUE
+		// setErrorMessage: fieldValueSetErrorMessage,
 		hasError: fieldValueHasError,
-		setHasError: fieldValueSetHasError,
+		// FIELD VALUE
+		// setHasError: fieldValueSetHasError,
 		valueChangeHandler: fieldValueChangeHandler,
 		valueBlurHandler: fieldValueBlurHandler,
 		valueIsValid: fieldValueIsValid,
 		errorFromServer: fieldValueErrFromServer,
-		setErrorFromServer: fieldValueSetErrorFromServer,
+		// FIELD VALUE
+		// setErrorFromServer: fieldValueSetErrorFromServer,
 		id: fieldValueId,
 		reset: fieldValueReset,
 	} = useCreateTicketInput("extraFieldValueInputTypeCurrentValue", isFieldValueEmpty);
 
 	const addFieldHandler = () => {
 		const newField = {name: fieldNameValue, value: fieldValueValue, isValid: true, isTouched: false, hasError: false,}
+		// NEW FIELD
 		// const newField = {[fieldNameValue]: fieldValueValue}
 		const addFields = additionalFields.slice()
 		addFields.push(newField)
@@ -90,21 +92,23 @@ const AddExtraFields = () => {
 	const hasNewFieldsReachedLimit = additionalFields.length >= 3
 
 	const list = useAdditionalFieldsInput(isFieldValueEmpty)
-	// console.log({ additionalFields, additionalFieldsIsValid });
-	// console.log({list});
+	
 	const listDiv = list.map(item => {
 		const {
 			enteredValue: value,
 			enteredName: name,
 			errorMessage: errorMessage,
 			hasError: hasError,
-			setHasError: setHasError,
+			// SET
+			// setHasError: setHasError,
 			valueChangeHandler: changeHandler,
 			valueBlurHandler: blurHandler,
-			valueIsValid: isValid,
+			// IS VALID
+			// valueIsValid: isValid,
 			id: id,
 			removeSelf: removeSelf,
-			reset: reset,
+			// RESET
+			// reset: reset,
 		} = item;
 
 		return (
