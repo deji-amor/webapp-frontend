@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Title from "../../atoms/Logout/Title";
 import Message from "../../atoms/Logout/Message";
 import ButtonUnHighlighted from "../../atoms/Logout/ButtonUnHighlighted";

@@ -1,7 +1,4 @@
-import React from "react";
-// PROpTYPES
-import PropTypes from "prop-types";
-import PaginationText from "../../atoms/Dashboard/PaginationText";
+import React from "react";import PaginationText from "../../atoms/Dashboard/PaginationText";
 import PaginationButtonList from "./PaginationButtonList";
 import usePagination from "../../atoms/Dashboard/usePagination";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -22,9 +19,6 @@ const RecentTicketTablePagination = (props) => {
 		newStartingPoint,
 		newEndingPoint,
 	} = usePagination(totalItems, itemsOnEachPage, maxNumberOfButtons);
-
-	// CONSOLED
-	// console.log({ newStartingPoint, newEndingPoint });
 
 	return (
 		<div className="bg-white p-[0.8rem] rounded-b-[0.75rem] border-t-2 border-b-[#ECECEC] flex items-center justify-between">

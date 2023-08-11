@@ -3,7 +3,6 @@ import { styled } from "@mui/material";
 import CustomerWelcomeHeader from "../../atoms/Login/CustomerWelcomeHeader";
 import CustomerWelcomeParagraph from "../../atoms/Login/CustomerWelcomeParagraph";
 import bgImage from "../../../assets/login/standard-quality-control-concept-m1.png";
-import bg from "../../../assets/login/MicrosoftTeams-image.png";
 import Logo from "../../atoms/Login/Logo";
 import Chat from "../../atoms/Login/Chat";
 

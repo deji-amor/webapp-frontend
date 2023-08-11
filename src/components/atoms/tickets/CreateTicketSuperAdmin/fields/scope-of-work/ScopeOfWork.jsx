@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react'
 import { createTicketActions } from "../../../../../../state-manager/reducers/tickets/ticketCreation";
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
-import { isScopeOfWorkEmpty } from "../../../../../../helpers/validation";
-import { isValidFile } from '../../../../../../helpers/validation';
+import { isScopeOfWorkEmpty, isValidFile } from "../../../../../../helpers/validation";
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import GrayThemedLighterText from "../../GrayThemedLighterText";
 import TextArea from "../general/TextArea";
-// SCOPE
-// import BlueThemeSmall from '../../BlueThemedSmall';
-// import BlueThemedLightText from '../../BlueThemedLightText';
-// import BlueThemedMediumText from '../../BlueThemedMediumText';
 import BlueThemedXtraSm from '../../BlueThemedXtraSm';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-// SCOPE
-// import FolderDeleteIcon from "@mui/icons-material/FolderDelete";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -40,9 +33,6 @@ const ScopeOfWork = () => {
     const dispatch = useDispatch()
     const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
     const scopeOfWorkDocument = allPossibleFields.scopeOfWorkDocument;
-
-// SCOPE
-    // console.log(scopeOfWorkDocument);
     const onDocumentChange = (event) => {
       const selectedFile = event.target.files[0]; 
 // SCOPE

@@ -29,7 +29,7 @@ const Sidebar = () => {
 		}
 	`;
 
-	const data = useSelector(state => state.authUser.data)
+	// DATA const data = useSelector(state => state.authUser.data)
 	
 	return (
 		<Aside>

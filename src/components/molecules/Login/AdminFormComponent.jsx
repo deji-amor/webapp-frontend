@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, NavLink, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import EmojiHeader from "../../atoms/Login/EmojiHeader";
 import Header from "../../atoms/Login/Header";
@@ -74,7 +74,7 @@ const AdminFormComponent = () => {
 				passwordReset()
 				dispatch(loginAdminActions.resetLoginAdmin());
 				navigate("/app/dashboard");
-				return 
+				return
 			}
 		};
 

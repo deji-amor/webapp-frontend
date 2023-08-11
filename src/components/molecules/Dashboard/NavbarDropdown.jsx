@@ -38,7 +38,6 @@ const NavbarDropdown = () => {
 	`;
 	// RESET
 	// const resetPasswordHandler = () => {
-	// 	console.log("reset");
 	// };
 
 	const dispatch = useDispatch();

@@ -1,7 +1,4 @@
 import React from "react";
-// POINT
-// import PropTypes from "prop-types";
-// import GrayThemedLightText from "../../GrayThemedLightText";
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
 import { isNameEmpty, isPhoneNumber, isAddressEmpty } from "../../../../../../helpers/validation";
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
@@ -9,8 +6,6 @@ import GrayThemedLighterText from "../../GrayThemedLighterText";
 import GrayThemedLightestText from "../../GrayThemedLightestText";
 import Input from "../general/Input";
 import TextArea from "../general/TextArea";
-// POINT
-// import { useSelector } from "react-redux";
 
 const PointOfContact = (props) => {
 	const {
