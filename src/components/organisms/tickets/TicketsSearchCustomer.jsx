@@ -96,7 +96,6 @@ const Item = styled("div")`
 	}
 `;
 
-
 const TicketsSearchCustomer = () => {
   const dispatch = useDispatch()
 	const searchCustomersValue = useSelector((state) => state.tickets.searchCustomersValue);
