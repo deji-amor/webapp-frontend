@@ -31,6 +31,7 @@ const MainTicketCreationForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+		// console.log(requiredFields);
 		dispatch(createTicket(requiredFields))
   }
 
@@ -38,7 +39,7 @@ const MainTicketCreationForm = () => {
 		dispatch(createTicketActions.goBackToAddTicketModal());
 	}
 
-	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+	const {allPossibleFields} = useSelector((state) => state.ticketCreation);
 
 	const isFormValid = useCreateTicketFormValidator()
 	const isFormDisabled = !isFormValid

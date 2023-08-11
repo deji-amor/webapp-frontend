@@ -100,7 +100,7 @@ const Location = () => {
 
 	const boxes = (
 		<div className="flex items-center gap-[1.5rem]">
-			{["government", "commercial", "residential"].map((type, ind) => (
+			{["governmental", "commercial", "residential"].map((type, ind) => (
 				<Checkbox key={type} onChange={boxesChangeHandler} isActive={type === locations[activeLocationType].type}>
 					{type}
 				</Checkbox>

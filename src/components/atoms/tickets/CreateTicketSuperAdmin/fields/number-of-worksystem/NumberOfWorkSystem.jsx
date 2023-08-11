@@ -6,11 +6,11 @@ import { createTicketActions } from "../../../../../../state-manager/reducers/ti
 
 const NumberOfWorkSystem = () => {
     const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
-		const numberOfWorkSystem = allPossibleFields.numberOfWorkSystem;
+		const numberOfWorkSystems = allPossibleFields.numberOfWorkSystems;
 		const dispatch = useDispatch();
 
-		const numberOfWorkSystemChangeHandler = (value) => {
-			dispatch(createTicketActions.updateField({ key: "numberOfWorkSystem", value: value }));
+		const numberOfWorkSystemsChangeHandler = (value) => {
+			dispatch(createTicketActions.updateField({ key: "numberOfWorkSystems", value: value }));
 		};
 
 		return (
@@ -19,8 +19,8 @@ const NumberOfWorkSystem = () => {
 				<NumberDropDown
 					min={1}
 					max={100}
-					onChange={numberOfWorkSystemChangeHandler}
-					value={numberOfWorkSystem}
+					onChange={numberOfWorkSystemsChangeHandler}
+					value={numberOfWorkSystems}
 				/>
 			</div>
 		);

@@ -45,11 +45,11 @@ const useCreateTicketFields = () => {
 				};
 			}
 			if (currentSection === "hardwareComponentQuantity") {
-				const { startDateTime, endDateTime } = allPossibleFields;
+				const { hardwareQuantity, hardwareName } = allPossibleFields;
 				return {
 					...previousValue,
-					startDateTime,
-					endDateTime,
+					hardwareQuantity,
+					hardwareName,
 				};
 			}
 			if (currentSection === "hardwareComponentType") {
@@ -85,10 +85,10 @@ const useCreateTicketFields = () => {
 				};
 			}
 			if (currentSection === "numberOfWorkSystems") {
-				const { numberOfWorkSystem } = allPossibleFields;
+				const { numberOfWorkSystems } = allPossibleFields;
 				return {
 					...previousValue,
-					numberOfWorkSystems: numberOfWorkSystem,
+					numberOfWorkSystems,
 				};
 			}
 			if (currentSection === "softwareApplicationInstallation") {
@@ -135,7 +135,7 @@ const useCreateTicketFields = () => {
 		},
 		{
 			...allRequiredFields,
-			ticketType: pathToTemplate.at(0),
+			ticketType: pathToTemplate.at(0) === "Project Tickets" ? "project ticket" : "service ticket",
 			ticketPath: pathToTemplate,
 			ticketForm: pathToTemplate.at(-1),
 			customerId: +allPossibleFields.customerId,

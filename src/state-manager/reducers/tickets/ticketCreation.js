@@ -1,6 +1,7 @@
+import React from "react";
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-import S3 from "react-aws-s3";
+// import S3 from "react-aws-s3";
 // import { awsconfig } from "../../../config/awsconfig";
 
 // export const awsUpload = async ({file, fileName, dirName}) => {
@@ -20,16 +21,48 @@ import S3 from "react-aws-s3";
 // };
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
+	const t = {
+		customerId: 43,
+		ticketType: "project ticket", // service ticket
+		ticketForm: "alter the end",
+		ticketPath: ["Project request", "IMAC", "Move", "alter the end"],
+		pointOfContactName: "Auwal Muhammad",
+		pointOfContactPhoneNumber: "+918678886766",
+		pointOfContactAddress: "No 2 New Street Chicago, ",
+		numberOfTechnicians: 3,
+		scopeOfWorkDescription: "",
+		scopeOfWorkDocumentUrl: "",
+		startDateTime: "2023-08-11 22:00",
+		endDateTime: "2023-08-15 08:00",
+		hardwareQuantity: "",
+		hardwareName: "",
+		hardwareComponentTypeList: [],
+		locations: [{type: "governmental", address: "No 2 test street, Chicago"}],
+		materialsDescription: "",
+		numberOfWorkStation: "",
+		numberOfWorkSystems: 3,
+		softwareCustomizationQuantity: "",
+		softwareCustomizationName: "",
+		softwareInstallationQuantity: "",
+		softwareInstallationName: "",
+		pickLocations: [],
+		dropOffLocations: [],
+		additionalFields: [
+			{customerPhone: "7838727878"},
+			{customerAge: "30"},
+			{anotherField: "hjhggfhg"},
+		],
+	};
 
 	try {
 		const token = await getAuthToken();
-		if(args.scopeOfWorkDocument){
-			const {scopeOfWorkDocument} = args
-			console.log("has document")
-			// awsUpload()
-		}else {
-			console.log("has no document")
-		}
+		// if(args.scopeOfWorkDocument){
+		// 	const {scopeOfWorkDocument} = args
+		// 	console.log("has document")
+		// 	// awsUpload()
+		// }else {
+		// 	console.log("has no document")
+		// }
 
 		const config = {
 			method: "POST",
@@ -37,9 +70,11 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
+			body: JSON.stringify(args),
 		};
-		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/users`;
+		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/create`;
 		const response = await fetch(url, config);
+		console.log({args, response})
 		const result = await response.json();
 		return result;
 	} catch (err) {
@@ -72,7 +107,7 @@ function getTodayAndTomorrow() {
 	};
 }
 
-const addressItem = {address: "", type: "government"}
+const addressItem = {address: "", type: "governmental"}
 const addressList = [addressItem]
 
 export const allRequiredFields = {
@@ -87,14 +122,16 @@ export const allRequiredFields = {
 	startDateTime: getTodayAndTomorrow().today,
 	endDateTime: getTodayAndTomorrow().tomorrow,
 	hardwareComponentTypeList: [],
-	hardwareComponentTypeQuantityValue: "1",
-	hardwareComponentTypeQuantityName: "",
+	hardwareQuantity: "1",
+	hardwareName: "",
+	// hardwareComponentTypeQuantityValue: "1",
+	// hardwareComponentTypeQuantityName: "",
 	softwareInstallationQuantity: "1",
 	softwareInstallationName: "",
 	softwareCustomizationQuantity: "1",
 	softwareCustomizationName: "",
 	numberOfWorkstation: "1",
-	numberOfWorkSystem: "1",
+	numberOfWorkSystems: "1",
 	locations: addressList,
 	numberOfLocation: addressList.length,
 	pickLocations: addressList,
@@ -143,9 +180,9 @@ const allPossibleFields = {
 		//HARDWARE COMPONENT QUANTITY
 		
 		
-		"hardwareComponentTypeQuantityNameIsValid": "",
-		"hardwareComponentTypeQuantityNameIsTouched": "",
-		"hardwareComponentTypeQuantityNameHasError": "",
+		"hardwareQuantityIsValid": "",
+		"hardwareQuantityIsTouched": "",
+		"hardwareQuantityHasError": "",
 		//SOFTWARE INSTALLATION
 
 		"softwareInstallationNameIsValid": "",
@@ -219,12 +256,13 @@ const initialState = {
 	showAddTicketModal: false,
 	showTemplateModal: false,
 	pathToTemplate: [],
-  showServiceRequestsTab: true,
-  showProjectsTab: false,
+	showServiceRequestsTab: true,
+	showProjectsTab: false,
 	level: 0,
 	mode: "creation",
 	chosenTemplate: [],
-	allPossibleFields: allPossibleFields
+	allPossibleFields: allPossibleFields,
+	data: null,
 };
 
 const createTicketSlice = createSlice({
@@ -277,9 +315,30 @@ const createTicketSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder
-			.addCase(createTicket.pending, (state, action) => {})
-			.addCase(createTicket.fulfilled, (state, action) => {})
-			.addCase(createTicket.rejected, (state, action) => {});
+			.addCase(createTicket.pending, (state, action) => {
+				state.loading = true
+			})
+			.addCase(createTicket.fulfilled, (state, {payload}) => {
+				state.loading = true
+				state.loading = false
+				const {status, code, data, message} = payload
+				console.log(payload)
+				if(status === "OK" && code === 200){
+					state.data = data
+					state.successful = true
+					console.log("truly successful")
+				}else {
+					state.error = true
+					state.errorMessage = message
+				}
+			})
+			.addCase(createTicket.rejected, (state, {payload}) => {
+				console.log({payload})
+				state.loading = false
+				state.error = true;
+				state.errorMessage = "Failed to create";
+				state.successful = false
+			});
 	},
 });
 

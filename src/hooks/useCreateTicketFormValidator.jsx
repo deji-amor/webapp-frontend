@@ -28,8 +28,8 @@ const useCreateTicketFormValidator = () => {
       return true && previousValue;
     }
     if (currentSection === "hardwareComponentQuantity") {
-      const {hardwareComponentTypeQuantityNameIsValid} = allPossibleFields
-      return hardwareComponentTypeQuantityNameIsValid && previousValue
+      const {hardwareNameIsValid} = allPossibleFields
+      return hardwareNameIsValid && previousValue
     }
     if(currentSection === "hardwareComponentType"){
       const { hardwareComponentTypeListIsValid } = allPossibleFields;
