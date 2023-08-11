@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { createTicket } from "../../../../state-manager/reducers/tickets/ticketCreation";
 import FormButton from "../../../atoms/tickets/CreateTicketSuperAdmin/FormButton";
 import GrayThemedLightText from "../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightText";
-import GrayThemedLighterText from "../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLighterText";
-import GrayThemedLightestText from "../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightestText";
 import Loader from "../../../organisms/tickets/Loader";
 import useCreateTicketFormValidator from "../../../../hooks/useCreateTicketFormValidator";
 import useCreateTicketFields from "../../../../hooks/useCreateTicketFields";
@@ -33,7 +31,6 @@ const MainTicketCreationForm = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(requiredFields);
 		dispatch(createTicket(requiredFields));
 	};
 
@@ -41,7 +38,7 @@ const MainTicketCreationForm = () => {
 		dispatch(createTicketActions.goBackToAddTicketModal());
 	};
 
-	const { allPossibleFields, loading, error, errorMessage, successful } = useSelector(
+	const {loading, error, errorMessage, successful } = useSelector(
 		(state) => state.ticketCreation
 	);
 	useEffect(() => {
@@ -134,8 +131,7 @@ const MainTicketCreationForm = () => {
 				<FormButton highLighted={false} onClick={goBackHandler} type="button">
 					Back
 				</FormButton>
-				<FormButton highLighted={true} type="submit" disabled={false}>
-				{/* <FormButton highLighted={true} type="submit" disabled={isFormDisabled || loading}> */}
+				<FormButton highLighted={true} type="submit" disabled={isFormDisabled || loading}>
 					{loading ? <Loader>Creating Ticket...</Loader> : "Save Ticket"}
 				</FormButton>
 			</div>
