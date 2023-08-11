@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { pawdRegExp, phoneRegExp } from "../../../utilis";
+import { phoneRegExp } from "../../../utilis";
 
 export const schema = yup.object({
 	firstName: yup.string().required("First Name is required"),

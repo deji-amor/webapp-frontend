@@ -1,9 +1,6 @@
-import { styled, useMediaQuery } from "@mui/material";
-import { useState } from "react";
+import { styled } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import PropTypes from "prop-types";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const MobileLinkWrapper = styled("div")(() => ({
 	".mobileL": {

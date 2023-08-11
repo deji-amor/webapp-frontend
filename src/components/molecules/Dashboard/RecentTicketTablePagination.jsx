@@ -1,4 +1,5 @@
 import React from "react";
+// PROpTYPES
 import PropTypes from "prop-types";
 import PaginationText from "../../atoms/Dashboard/PaginationText";
 import PaginationButtonList from "./PaginationButtonList";
@@ -22,7 +23,7 @@ const RecentTicketTablePagination = (props) => {
 		newEndingPoint,
 	} = usePagination(totalItems, itemsOnEachPage, maxNumberOfButtons);
 
-	// consoled
+	// CONSOLED
 	// console.log({ newStartingPoint, newEndingPoint });
 
 	return (

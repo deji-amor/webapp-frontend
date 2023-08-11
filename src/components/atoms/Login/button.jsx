@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+// STYLED
 import { styled } from "@mui/material";
 
 const Button = ({ children, isDisabled, type, isLoading, loadingText }) => {

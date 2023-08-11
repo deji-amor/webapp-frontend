@@ -4,22 +4,26 @@ import EnterFieldInput from '../general/EnterFieldInput';
 import Input from "../general/Input";
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
 import IconButton from "../general/IconButton";
-import GrayThemedLightText from "../../GrayThemedLightText";
-import GrayThemedLighterText from "../../GrayThemedLighterText";
+// IMPORT
+// import GrayThemedLightText from "../../GrayThemedLightText";
+// import GrayThemedLighterText from "../../GrayThemedLighterText";
 import BlueThemedLightText from '../../BlueThemedLightText';
-import BlueThemedMediumText from '../../BlueThemedMediumText';
+// IMPORT
+// import BlueThemedMediumText from '../../BlueThemedMediumText';
 import GrayThemedLightestText from '../../GrayThemedLightestText';
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import useAdditionalFieldsInput from '../../../../../../hooks/useAdditionalFieldsInput';
 import AddOrCancelButton from "../general/AddOrCancelButton";
-import { isFieldNameEmpty, isFieldValueEmpty } from "../../../../../../helpers/validation";
+// IMPORT
+// import { isFieldNameEmpty, isFieldValueEmpty } from "../../../../../../helpers/validation";
 import { createTicketActions } from "../../../../../../state-manager/reducers/tickets/ticketCreation";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddExtraFields = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const additionalFields = allPossibleFields.additionalFields;
-	const additionalFieldsIsValid = allPossibleFields.additionalFieldsIsValid;
+	// ADDITIONAL FIRELD
+	// const additionalFieldsIsValid = allPossibleFields.additionalFieldsIsValid;
 	const [showInput, setShowInput] = useState(false);
 	const dispatch = useDispatch()
 
