@@ -1,8 +1,5 @@
 import React from 'react'
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PropTypes from 'prop-types'
-import { isValid } from 'i18n-iso-countries';
 
 const Input = ({ placeholder, type, value, onChange, onBlur, hasError, id, isValid }) => {
 	const changeHandler = (e) => onChange(e.target.value);
