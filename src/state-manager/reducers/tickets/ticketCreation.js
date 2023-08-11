@@ -88,7 +88,7 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 
 function getTodayAndTomorrow() {
 	const today = new Date();
-	today.setHours(0, 0, 0, 0);
+	// today.setHours(0, 0, 0, 0);
 	const tomorrow = new Date(today);
 	tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -336,7 +336,7 @@ const createTicketSlice = createSlice({
 				console.log({payload})
 				state.loading = false
 				state.error = true;
-				state.errorMessage = "Failed to create";
+				state.errorMessage = payload;
 				state.successful = false
 			});
 	},

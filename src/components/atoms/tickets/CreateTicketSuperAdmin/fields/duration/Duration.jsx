@@ -9,7 +9,7 @@ import useCreateTicketInput from '../../../../../../hooks/useCreateTicketInput'
 function getTodayAndTomorrow() {
 	const today = new Date();
 	const tomorrow = new Date(today);
-	today.setHours(0, 0, 0, 0);
+	// today.setHours(0, 0, 0, 0);
 	tomorrow.setDate(tomorrow.getDate() + 1);
 
 	function formatDate(date) {
@@ -27,6 +27,7 @@ function getTodayAndTomorrow() {
 	};
 }
 
+const rightNow = getTodayAndTomorrow().today
 
 const Duration = () => {
     const {
@@ -66,7 +67,7 @@ const Duration = () => {
 				<DateInput
 					id={startDateId}
 					type={"datetime-local"}
-					min={getTodayAndTomorrow().today}
+					min={rightNow}
 					onBlur={startDateBlurHandler}
 					onChange={startDateChangeHandler}
 					placeholder={""}

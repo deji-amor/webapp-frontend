@@ -40,11 +40,11 @@ const Location = () => {
 	};
 
 	useEffect(() => {
-		const newLocations = Array.from({length: numberOfLocation}, () => ({address: "", type: "government"}))
+		const newLocations = Array.from({length: numberOfLocation}, () => ({address: "", type: "governmental"}))
 		dispatch(createTicketActions.updateField({ key: "locations", value: newLocations }));
 		dispatch(createTicketActions.updateField({ key: "activeLocationAddress", value: 0 }));
 		dispatch(createTicketActions.updateField({ key: "activeLocationType", value: 0 }));
-		dispatch(createTicketActions.updateField({ key: "locationType", value: "government" }));
+		dispatch(createTicketActions.updateField({ key: "locationType", value: "governmental" }));
 		locationAddressReset()
 	}, [numberOfLocation, dispatch])
 	

@@ -149,13 +149,6 @@ return (
 				</div>
 			)}
 		</div>
-		{/* <div className="w-full absolute top-[5rem] right-full z-100">
-			{showTopLevel && (
-				<div className="absolute top-[115%] right-0 bg-white z-[100]">
-					<TopLevel />
-				</div>
-			)}
-		</div> */}
 		<div className="w-full absolute top-[5rem] right-full z-100"></div>
 		<div className="space-y-2 w-full relative">
 			<Head>Select Customer</Head>
@@ -176,7 +169,7 @@ return (
 							/>
 							{showCustomersList &&
 								(filteredCustomers.length > 0 && searchCustomersValue ? (
-									<ListWrapper className="absolute w-full top-[7rem] left-0 bg-white">
+									<ListWrapper className="absolute w-full top-[7rem] max-h-[18rem] overflow-y-auto left-0 bg-white">
 										{filteredCustomers.map((customer) => (
 											<Item
 												key={customer.id}

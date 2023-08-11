@@ -41,12 +41,12 @@ const PickUpLocation = () => {
 	useEffect(() => {
 		const newLocations = Array.from({ length: numberOfPickLocation }, () => ({
 			address: "",
-			type: "government",
+			type: "governmental",
 		}));
 		dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
 		dispatch(createTicketActions.updateField({ key: "activePickLocationAddress", value: 0 }));
 		dispatch(createTicketActions.updateField({ key: "activePickLocationType", value: 0 }));
-		dispatch(createTicketActions.updateField({ key: "pickLocationAddress", value: "government" }));
+		dispatch(createTicketActions.updateField({ key: "pickLocationAddress", value: "governmental" }));
 		locationAddressReset();
 	}, [numberOfPickLocation, dispatch]);
 
@@ -105,7 +105,7 @@ const PickUpLocation = () => {
 
 		const boxes = (
 			<div className="flex items-center gap-[1.5rem]">
-				{["government", "commercial", "residential"].map((type, ind) => (
+				{["governmental", "commercial", "residential"].map((type, ind) => (
 					<Checkbox
 						key={type}
 						onChange={boxesChangeHandler}

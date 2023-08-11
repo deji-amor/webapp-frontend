@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 
 const Loader = ({children}) => {
   const spinner = (
-		<div role="status" className='font-poppins flex items-center gap-[0.5rem]'>
+		<div role="status" className="font-poppins flex items-center gap-[0.5rem]">
 			<svg
 				aria-hidden="true"
-				className="w-4 h-4 mr-2 text-gray-200 animate-spin fill-blue-600"
+				className="w-4 h-4 mr-2 text-gray-200 animate-spin fill-[#2b2e72]"
 				viewBox="0 0 100 101"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
