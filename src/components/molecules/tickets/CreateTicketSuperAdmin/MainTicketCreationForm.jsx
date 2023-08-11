@@ -89,7 +89,6 @@ const MainTicketCreationForm = () => {
 	const pickUpLocation = chosenTemplate.includes("pickUpLocation");
 	const dropOffLocation = chosenTemplate.includes("dropOffLocation");
 	const additionalFields = chosenTemplate.includes("additionalFields");
-	// console.log({chosenTemplate});
 
 	return (
 		<form onSubmit={submitHandler}>
