@@ -7,7 +7,6 @@ import BarChartSharpIcon from "@mui/icons-material/BarChartSharp";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import Logo from "../../atoms/Login/Logo";
 import { styled } from "@mui/material";
-import { useSelector } from "react-redux";
 
 const Sidebar = () => {
 	const Aside = styled("div")`
