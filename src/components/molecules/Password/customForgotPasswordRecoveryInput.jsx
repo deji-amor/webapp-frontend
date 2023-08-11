@@ -139,6 +139,24 @@ const ValidationTips = ({ hasUpper, hasLower, hasNumber, hasSymbol, hasEightChar
 	);
 };
 
+const SingleTips = ({ match, confirm, empty, name }) => {
+	return !match && confirm.length >= 1 ? (
+		<ToolTip
+			toolTipIcon={<ErrorOutlineIcon className="icon" />}
+			toolTipText="Password does not match new password entered!"
+			toolTipColor={"#D73D3D"}
+		/>
+	) : empty && name === "confirmPassword" && !confirm ? (
+		<ToolTip
+			toolTipIcon={<ErrorOutlineIcon className="icon" />}
+			toolTipText="Confirm password input field cannot be empty!"
+			toolTipColor={"#D73D3D"}
+		/>
+	) : (
+		""
+	);
+};
+
 const ForgotPasswordRecoveryInput = ({
 	type,
 	width,
@@ -183,21 +201,7 @@ const ForgotPasswordRecoveryInput = ({
 					handleChange={handleChange}
 				/>
 				{single ? (
-					!match && confirm.length >= 1 ? (
-						<ToolTip
-							toolTipIcon={<ErrorOutlineIcon className="icon" />}
-							toolTipText="Password does not match new password entered!"
-							toolTipColor={"#D73D3D"}
-						/>
-					) : empty && name === "confirmPassword" && !confirm ? (
-						<ToolTip
-							toolTipIcon={<ErrorOutlineIcon className="icon" />}
-							toolTipText="Confirm password input field cannot be empty!"
-							toolTipColor={"#D73D3D"}
-						/>
-					) : (
-						""
-					)
+					<SingleTips match={match} empty={empty} confirm={confirm} name={name} />
 				) : value && !match && !currentError ? (
 					<ValueTips
 						hasLower={hasLower}
@@ -269,12 +273,18 @@ ValueTips.propTypes = {
 	hasSymbol: PropTypes.bool,
 };
 
-
 ValidationTips.propTypes = {
 	hasLower: PropTypes.bool,
 	hasUpper: PropTypes.bool,
 	hasNumber: PropTypes.bool,
 	hasEightChar: PropTypes.bool,
 	hasSymbol: PropTypes.bool,
+};
+
+SingleTips.propTypes = {
+	name: PropTypes.string,
+	match: PropTypes.bool,
+	empty: PropTypes.bool,
+	confirm: PropTypes.string,
 };
 export default ForgotPasswordRecoveryInput;
