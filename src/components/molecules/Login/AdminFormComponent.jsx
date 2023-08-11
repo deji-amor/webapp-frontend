@@ -73,8 +73,7 @@ const AdminFormComponent = () => {
 				usernameReset()
 				passwordReset()
 				dispatch(loginAdminActions.resetLoginAdmin());
-				navigate("/app/dashboard");
-				return
+				return navigate("/app/dashboard");
 			}
 		};
 
@@ -130,7 +129,6 @@ const AdminFormComponent = () => {
 					title: errorTitle,
 				})
 			);
-			return;
 		}
 	}, [
 		token,

@@ -32,11 +32,15 @@ const InputButton = ({
     error: forgotPasswordError || serverError || empty,
   };
 
-  const toolTipText = forgotPasswordError
-    ? errorMessage
-    : serverError
-    ? serverErrorMessage
-    : `${label} input field cannot be empty!`;
+  const getToolTipText = () => {
+    if (forgotPasswordError) {
+      return errorMessage;
+    } else if (serverError) {
+      return serverErrorMessage;
+    } else {
+      return `${label} input field cannot be empty!`;
+    }
+  }
 
   return (
     <InputButtonWrapper error={errorProps.error}>
@@ -49,14 +53,14 @@ const InputButton = ({
           label={label}
           empty={empty}
           error={errorProps.error}
-          errorMessage={toolTipText}
+          errorMessage={getToolTipText}
           serverError={serverError}
           defaultCursor={errorProps.error || defaultCursor}
           handleChange={handleEmailChange}
         />
 
         {errorProps.error && (
-          <ToolTip toolTipIcon={errorProps.toolTipIcon} toolTipColor={errorProps.toolTipColor} toolTipText={toolTipText} />
+          <ToolTip toolTipIcon={errorProps.toolTipIcon} toolTipColor={errorProps.toolTipColor} toolTipText={getToolTipText} />
         )}
       </div>
       <div>

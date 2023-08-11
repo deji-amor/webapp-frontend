@@ -61,8 +61,7 @@ const CustomerFormComponent = () => {
 				usernameReset();
 				passwordReset();
 				dispatch(loginCustomerActions.resetLoginAdmin());
-				navigate("/app/dashboard");
-				return;
+				return navigate("/app/dashboard");
 			}
 		};
 		getAuthTokenHandler();
