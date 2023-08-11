@@ -1,5 +1,5 @@
 import Greeting from '../../components/molecules/Dashboard/Greeting'
-import StatsCardGroup from '../../components/organisms/Dashboard/StatsCardGroup'
+// STATS import StatsCardGroup from '../../components/organisms/Dashboard/StatsCardGroup'
 import RecentTickets from '../../components/organisms/Dashboard/RecentTickets'
 import RecentTicketTable from '../../components/organisms/Dashboard/RecentTicketTable'
 
@@ -7,7 +7,7 @@ const Dashboard = () => {
   return (
     <div className='space-y-[1.25rem]'>
       <Greeting />
-      <StatsCardGroup />
+      {/* <StatsCardGroup /> */}
       <RecentTickets />
       <RecentTicketTable />
     </div>
