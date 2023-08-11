@@ -92,7 +92,7 @@ const AdminFormComponent = () => {
 			passwordSetErrorMessage("Password may be invalid");
 			passwordSetHasError(true);
 			passwordSetErrorFromServer(true);
-			return navigate("/");
+			return;
 		}
 
 		if (error && errorMessage === "Invalid username!") {
