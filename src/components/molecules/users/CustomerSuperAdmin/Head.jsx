@@ -4,12 +4,16 @@ import HeadSearch from "../../../atoms/users/CustomerSuperAdmin/HeadSearch";
 import DropdownButton from "../../../atoms/users/CustomerSuperAdmin/DropdownButton";
 import { Grid } from "@mui/material";
 import BasicTabs from "../../../organisms/users/CustomerSuperAdmin/UserTabs";
+import { useSelector, useDispatch } from "react-redux";
 
 const Head = () => {
 	const [filter, setFilter] = useState("All");
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredCustomers, setFilteredCustomers] = useState([]);
 	const [customers, setCustomers] = useState([]);
+
+	const dispatch = useDispatch()
+	const { loading: customersLoading, customers: , successful, error, errorMessage } = useSelector((state) => state.customers)
 
 	const sampleCustomers = [
 		{

@@ -192,49 +192,6 @@ const TicketsSearchCustomer = () => {
 					)}
 			</div>
 			<div className="w-full absolute top-[5rem] right-full z-100"></div>
-			<div className="space-y-2 w-full relative">
-				<Head>Select Customer</Head>
-				{(loading && <Loader>Fetching customers</Loader>) ||
-					(successful &&
-						((customers.length === 0 && <Info>You have no customers, go add create one!</Info>) || (
-							<div className="space-y-2">
-								<Info>Which customer is this ticket for?</Info>
-								<div className="">
-									<SearchBar
-										placeholder={"Search Customer"}
-										value={searchCustomersValue}
-										inverted={true}
-										onChange={changeCustomersValueHandler}
-									/>
-									{showCustomersList &&
-										((filteredCustomers.length > 0 && searchCustomersValue && (
-											<ListWrapper className="absolute w-full top-[7rem] left-0 bg-white">
-												{filteredCustomers.map((customer) => (
-													<Item
-														key={customer.id}
-														className=""
-														active={searchCustomersValue === customer.email}
-														onClick={() => customersValueChange(customer.email)}
-													>
-														<h3>
-															{customer.first_name} {customer.last_name}
-														</h3>
-														<p>{customer.email}</p>
-													</Item>
-												))}
-											</ListWrapper>
-										)) || <Info>No such customer found</Info>)}
-								</div>
-								<Actions
-									disabled={isCreateTicketButtonDisabled}
-									isDisabled={isCreateTicketButtonDisabled}
-									onClick={() => setShowTopLevel((pv) => !pv)}
-								>
-									Create Ticket <AddIcon fontSize="small" />
-								</Actions>
-							</div>
-						))) || <Info>Could not fetch users</Info>}
-			</div>
 		</Wrapper>
 	);
 };

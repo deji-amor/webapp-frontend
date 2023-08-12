@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Toasts from "../../atoms/general/Toast";
 import { useSelector, useDispatch } from "react-redux";
 import { UIActions } from "../../../state-manager/reducers/UI/ui";
