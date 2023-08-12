@@ -17,7 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Pagination from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 import MoreOptionsDropdown from "../../../atoms/users/CustomerSuperAdmin/MoreOptionsDropdown";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
 
 const statusColors = {
@@ -119,6 +119,8 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 		dispatch(createTicketActions.updateField({ key: "customerId", value: customer.id }));
 		dispatch(createTicketActions.goBackToAddTicketModal(customer));
 	};
+
+	const { loading: customersLoading, customers, successful, error, errorMessage } = useSelector((state) => state.customers)
 
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;
