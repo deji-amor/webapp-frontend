@@ -29,19 +29,15 @@ const CustomerForm = ({ open, onClose }) => {
 		onClose();
 		reset();
 	};
-
 	const [successModalOpen, setSuccessModalOpen] = useState(false);
-
 	const handleFormSubmit = (data) => {
 		console.log("Form data:", data);
 		setSuccessModalOpen(true);
 		reset({});
 	};
-
 	const closeSuccessModal = () => {
 		setSuccessModalOpen(false);
 	};
-
 	const saveButtonStyles = {
 		background: "#2b2e72",
 		textTransform: "none",
