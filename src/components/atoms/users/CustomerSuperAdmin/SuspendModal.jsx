@@ -37,6 +37,7 @@ const SuspendModal = ({
 		if (!isSuspendButtonDisabled) {
 			console.log("SUSPENDED");
 			onSuspend();
+			onClose();
 		}
 	};
 

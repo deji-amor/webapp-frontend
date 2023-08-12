@@ -14,6 +14,9 @@ const TextFields = ({
 	type,
 	placeholder,
 }) => {
+	const errorMessage = errors[name] ? errors[name].message : null;
+	const serverErrorMessage = serverError ? "already exist" : null;
+
 	return (
 		<FormControl
 			fullWidth
@@ -56,11 +59,8 @@ const TextFields = ({
 					/>
 				)}
 			/>
-			{errors[name] ? (
-				<ErrorMessage message={errors[name].message} />
-			) : serverError ? (
-				<ErrorMessage message="already exist" />
-			) : null}
+			{errorMessage && <ErrorMessage message={errorMessage} />}
+			{serverErrorMessage && <ErrorMessage message={serverErrorMessage} />}
 		</FormControl>
 	);
 };

@@ -133,7 +133,7 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 	const [unsuspendModalOpen, setUnsuspendModalOpen] = useState(false);
 	const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-	const handleUnsuspendCustomer = (customer) => {
+	const handleUnsuspendConfirmation = (customer) => {
 		setSelectedCustomer(customer);
 		setUnsuspendModalOpen(true);
 	};
