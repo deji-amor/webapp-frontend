@@ -1,6 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
 import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule";
 import CompanyNameAndPathToTemplate from './CompanyNameAndPathToTemplate'
 import MainTicketCreationForm from './MainTicketCreationForm'

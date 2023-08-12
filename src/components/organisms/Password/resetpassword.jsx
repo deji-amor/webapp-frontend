@@ -126,7 +126,7 @@ const ResetPassword = () => {
 				})
 			);
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 

@@ -2,7 +2,7 @@ import React from 'react'
 import BlueThemedMediumText from '../../../atoms/tickets/CreateTicketSuperAdmin/BlueThemedMediumText'
 import BlueThemeSmall from '../../../atoms/tickets/CreateTicketSuperAdmin/BlueThemedSmall'
 import BlueThemedLightText from '../../../atoms/tickets/CreateTicketSuperAdmin/BlueThemedLightText'
-import HorizontalRule from '../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule'
+// IMPORT import HorizontalRule from '../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule'
 import { useSelector } from 'react-redux'
 
 const CompanyNameAndPathToTemplate = () => {

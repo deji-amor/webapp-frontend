@@ -52,6 +52,7 @@ const AppLayout = () => {
 				dispatch(logout({ deviceName: deviceName }));
 			}
 			if (!token) {
+				console.log("Bube")
 				navigate("/");
 			}
 		};

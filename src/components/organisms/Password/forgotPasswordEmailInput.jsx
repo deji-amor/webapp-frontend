@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { forgotpasswordemail } from "../../../state-manager/reducers/password/forgotpassword";
-import { SET_EMAIL, SET_ERROR_NULL } from "../../../state-manager/reducers/password/forgotpassword";
+import { forgotpasswordemail, SET_EMAIL, SET_ERROR_NULL } from "../../../state-manager/reducers/password/forgotpassword";
 import { ForgotEmailWrapper } from "../../atoms/Password/wrappers";
 import { useNavigate } from "react-router-dom";
 import ErrorCard from "../../molecules/Password/customErrorCard";
@@ -40,7 +39,7 @@ const ForgotPasswordEmail = () => {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(forgotpasswordemail({ email }));
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 

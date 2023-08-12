@@ -17,7 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Pagination from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 import MoreOptionsDropdown from "../../../atoms/users/CustomerSuperAdmin/MoreOptionsDropdown";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
 
 const statusColors = {
@@ -62,14 +62,13 @@ const CustomTableCell = ({ children, status }) => {
 		? "600"
 		: statusStyle.fontWeight || "normal";
 
-	// USE STATE
-	// const [anchorEl, setAnchorEl] = React.useState(null);
+	// USE STATE const [anchorEl, setAnchorEl] = React.useState(null);
 
-	// HANDLES
-	// const handleClick = (event) => {
+	// FUNTION const handleClick = (event) => {
 	// 	setAnchorEl(event.currentTarget);
 	// };
-	// const handleClose = () => {
+
+	// FUNTION const handleClose = () => {
 	// 	setAnchorEl(null);
 	// };
 
