@@ -107,9 +107,9 @@ function EditableFields() {
 						gap: "20px",
 					}}
 				>
-					{fields.map((field, index) => (
+					{fields.map((field) => (
 						<FormControl
-							key={index}
+							key={field.id}
 							fullWidth
 							sx={{
 								mb: "0.5rem",
