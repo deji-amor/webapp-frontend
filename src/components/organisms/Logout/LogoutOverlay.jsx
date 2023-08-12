@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Modal from "../../molecules/Logout/Modal";
 import Overlay from "../../atoms/Logout/Overlay";
 import { useDispatch } from "react-redux";

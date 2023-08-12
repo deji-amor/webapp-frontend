@@ -25,7 +25,7 @@ const useAdditionalFieldsInput = (validateValue) => {
         ...field,
         value: value,
         isValid: isValid,
-        hasError: !(isValid && true),
+        hasError: !isValid,
         errorMessage: errMsg,
         isTouched: true,
       };

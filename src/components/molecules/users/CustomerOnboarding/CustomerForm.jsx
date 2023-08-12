@@ -31,6 +31,8 @@ const CustomerForm = ({ open, onClose }) => {
 	};
 
 	const [successModalOpen, setSuccessModalOpen] = useState(false);
+	const [customerFormOpen, setCustomerFormOpen] = useState(true);
+	console.log(customerFormOpen)
 
 	const handleFormSubmit = (data) => {
 		console.log("Form data:", data);
