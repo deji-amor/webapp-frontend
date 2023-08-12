@@ -1,18 +1,29 @@
+import React from "react";
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
+import { uploadImage } from "../../aws/aws-crud-operations";
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
+		if(args.scopeOfWorkDocument){
+			const {scopeOfWorkDocument} = args
+			const result = await uploadImage(scopeOfWorkDocument)
+			console.log(result)
+			const {Location: scopeOfWorkDocumentUrl} = result;
+			args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+		}
 		const config = {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
+			body: JSON.stringify(args),
 		};
-		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/users`;
+		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/create`;
 		const response = await fetch(url, config);
+		console.log({args, response})
 		const result = await response.json();
 		return result;
 	} catch (err) {
@@ -26,7 +37,7 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 
 function getTodayAndTomorrow() {
 	const today = new Date();
-	today.setHours(0, 0, 0, 0);
+	// today.setHours(0, 0, 0, 0);
 	const tomorrow = new Date(today);
 	tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -45,101 +56,133 @@ function getTodayAndTomorrow() {
 	};
 }
 
+const addressItem = {address: "", type: "governmental"}
+const addressList = [addressItem]
+
+export const allRequiredFields = {
+	customerId: "",
+	pointOfContactName: "",
+	pointOfContactPhoneNumber: "",
+	pointOfContactAddress: "",
+	numberOfTechnicians: "1",
+	scopeOfWorkDescription: "",
+	scopeOfWorkDocument: null,
+	scopeOfWorkDocumentUrl: "",
+	startDateTime: getTodayAndTomorrow().today,
+	endDateTime: getTodayAndTomorrow().tomorrow,
+	hardwareComponentTypeList: [],
+	hardwareQuantity: "1",
+	hardwareName: "",
+	// hardwareComponentTypeQuantityValue: "1",
+	// hardwareComponentTypeQuantityName: "",
+	softwareInstallationQuantity: "1",
+	softwareInstallationName: "",
+	softwareCustomizationQuantity: "1",
+	softwareCustomizationName: "",
+	numberOfWorkstation: "1",
+	numberOfWorkSystems: "1",
+	locations: addressList,
+	numberOfLocation: addressList.length,
+	pickLocations: addressList,
+	numberOfPickLocation: addressList.length,
+	dropOffLocations: addressList,
+	numberOfDropLocation: addressList.length,
+	materialsDescription: "",
+	additionalFields: [],
+};
+
 const allPossibleFields = {
-		"customerId": "",
+	...allRequiredFields,
 		// POINT OF CONTACT NAME
-		"pointOfContactName": "",
+		
 		"pointOfContactNameIsTouched": false,
 		"pointOfContactNameIsValid": false,
 		"pointOfContactNameHasError": false,
 		// POINT OF CONTACT PHONE NUMBER
-		"pointOfContactPhoneNumber": "",
+		
 		"pointOfContactPhoneNumberIsTouched": false,
 		"pointOfContactPhoneNumberIsValid": false,
 		"pointOfContactPhoneNumberHasError": false,
 		// POINT OF CONTACT ADDRESS
-		"pointOfContactAddress": "",
+		
 		"pointOfContactAddressIsTouched": false,
 		"pointOfContactAddressIsValid": false,
 		"pointOfContactAddressHasError": false,
 		// NUMBER OF TECHNICIANS
-		"numberOfTechnicians": "1",
+		
 		// SCOPE OF WORK
-		"scopeOfWorkDescription": "",
+		
 		"scopeOfWorkDescriptionIsTouched": "",
-		"scopeOfWorkDescriptionIsValid": "",
+		"scopeOfWorkDescriptionIsValid": false,
 		"scopeOfWorkDescriptionHasError": "",
-		"scopeOfWorkDocument": null,
+		
 		"scopeOfWorkDocumentIsValid": false, // might not be need for this
 		// DURATION
-		"startDateTime": getTodayAndTomorrow().today,
-		"endDateTime": getTodayAndTomorrow().tomorrow,
+
 		//HARDWARE COMPONENT TYPE
 		"hardwareInputTypeCurrentValue": "",
 		"hardwareInputTypeCurrentValueIsValid": "",
 		"hardwareInputTypeCurrentValueIsTouched": "",
 		"hardwareInputTypeCurrentValueIsHasError": "",
-		"hardwareComponentTypeList": [],
-		"hardwareComponentTypeListIsValid": "",
+		
+		"hardwareComponentTypeListIsValid": false,
 		//HARDWARE COMPONENT QUANTITY
-		"hardwareComponentTypeQuantityValue": "1",
-		"hardwareComponentTypeQuantityName": "",
-		"hardwareComponentTypeQuantityNameIsValid": "",
-		"hardwareComponentTypeQuantityNameIsTouched": "",
-		"hardwareComponentTypeQuantityNameHasError": "",
+		
+		
+		"hardwareQuantityIsValid": false,
+		"hardwareQuantityIsTouched": "",
+		"hardwareQuantityHasError": "",
 		//SOFTWARE INSTALLATION
-		"softwareInstallationQuantity": "1",
-		"softwareInstallationName": "",
-		"softwareInstallationNameIsValid": "",
+
+		"softwareInstallationNameIsValid": false,
 		"softwareInstallationNameIsTouched": "",
 		"softwareInstallationNameHasError": "",
 		//SOFTWARE CUSTOMIZATION
-		"softwareCustomizationQuantity": "1",
-		"softwareCustomizationName": "",
-		"softwareCustomizationNameIsValid": "",
+
+		"softwareCustomizationNameIsValid": false,
 		"softwareCustomizationNameIsTouched": "",
 		"softwareCustomizationNameHasError": "",
 		// WORKSTATION
-		"numberOfWorkstation": "1",
+		
 		// WORK SYSTEM
-		"numberOfWorkSystem": "1",
+		
 		//LOCATION
-		"numberOfLocation": "3",
-		"locations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		
+		
 		"locationsAddressIsValid": false,
 		"activeLocationAddress": 0, // ZERO INDEX BASED
 		"activeLocationType": 0, // ZERO INDEX BASED
 		"locationAddress": "",
 		"locationType": "government",
-		"locationAddressIsValid": "",
+		"locationAddressIsValid": false,
 		"locationAddressIsTouched": "",
 		"locationAddressHasError": "",
 		//PICk UP LOCATION
-		"numberOfPickLocation": "3",
-		"pickLocations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		
+		
 		"pickLocationsAddressIsValid": false,
 		"activePickLocationAddress": 0, // ZERO INDEX BASED
 		"activePickLocationType": 0, // ZERO INDEX BASED
 		"pickLocationAddress": "",
 		"pickLocationType": "government",
-		"pickLocationAddressIsValid": "",
+		"pickLocationAddressIsValid": false,
 		"pickLocationAddressIsTouched": "",
 		"pickLocationAddressHasError": "",
 		//DROP OFF LOCATION
-		"numberOfDropLocation": "3",
-		"dropOffLocations": [{address: "", type: "government"}, {address: "", type: "government"}, {address: "", type: "government"}],
+		
+		
 		"dropOffLocationsAddressIsValid": false,
 		"activeDropOffLocationAddress": 0, // ZERO INDEX BASED
 		"activeDropOffLocationType": 0, // ZERO INDEX BASED
 		"dropOffLocationAddress": "",
 		"dropOffLocationType": "government",
-		"dropOffLocationAddressIsValid": "",
+		"dropOffLocationAddressIsValid": false,
 		"dropOffLocationAddressIsTouched": "",
 		"dropOffLocationAddressHasError": "",
 		// MATERIALS PROCUREMENT
-		"materialsDescription": "",
+		
 		"materialsDescriptionIsTouched": "",
-		"materialsDescriptionIsValid": "",
+		"materialsDescriptionIsValid": false,
 		"materialsDescriptionHasError": "",
 		// EXTRA FIELDS
 		"extraFieldNameInputTypeCurrentValue": "",
@@ -150,7 +193,7 @@ const allPossibleFields = {
 		"extraFieldValueInputTypeCurrentValueIsValid": "",
 		"extraFieldValueInputTypeCurrentValueIsTouched": "",
 		"extraFieldValueInputTypeCurrentValueIsHasError": "",
-		"additionalFields": [],
+		
 		"additionalFieldsIsValid": true,
 }
 
@@ -162,12 +205,13 @@ const initialState = {
 	showAddTicketModal: false,
 	showTemplateModal: false,
 	pathToTemplate: [],
-  showServiceRequestsTab: true,
-  showProjectsTab: false,
+	showServiceRequestsTab: true,
+	showProjectsTab: false,
 	level: 0,
 	mode: "creation",
 	chosenTemplate: [],
-	allPossibleFields: allPossibleFields
+	allPossibleFields: allPossibleFields,
+	data: null,
 };
 
 const createTicketSlice = createSlice({
@@ -220,9 +264,30 @@ const createTicketSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder
-			.addCase(createTicket.pending, (state, action) => {})
-			.addCase(createTicket.fulfilled, (state, action) => {})
-			.addCase(createTicket.rejected, (state, action) => {});
+			.addCase(createTicket.pending, (state, action) => {
+				state.loading = true
+			})
+			.addCase(createTicket.fulfilled, (state, {payload}) => {
+				state.loading = true
+				state.loading = false
+				const {status, code, data, message} = payload
+				console.log(payload)
+				if(status === "OK" && code === 200){
+					state.data = data
+					state.successful = true
+					console.log("truly successful")
+				}else {
+					state.error = true
+					state.errorMessage = message
+				}
+			})
+			.addCase(createTicket.rejected, (state, {payload}) => {
+				console.log({payload})
+				state.loading = false
+				state.error = true;
+				state.errorMessage = payload;
+				state.successful = false
+			});
 	},
 });
 

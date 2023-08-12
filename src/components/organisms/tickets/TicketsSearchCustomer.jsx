@@ -139,12 +139,57 @@ const TicketsSearchCustomer = () => {
 
 	return (
 		<Wrapper>
-			<div className="w-full absolute top-[5rem] right-full z-100">
+			<div className="w-full absolute top-full left-0 z-100">
 				{showTopLevel && (
-					<div className="absolute top-[115%] right-0 bg-white z-[100]">
+					<div className="absolute top-[115%] left-0 bg-white z-[100]">
 						<TopLevel />
 					</div>
 				)}
+			</div>
+			<div className="w-full absolute top-[5rem] right-full z-100"></div>
+			<div className="space-y-2 w-full relative">
+				<Head>Select Customer</Head>
+				{(loading && <Loader>Fetching customers</Loader>) ||
+					(successful && customers.length === 0 && (
+						<Info>You have no customers, go add create one!</Info>
+					)) || (
+						<div className="space-y-2">
+							<Info>Which customer is this ticket for?</Info>
+							<div className="">
+								<SearchBar
+									placeholder={"Search Customer"}
+									value={searchCustomersValue}
+									inverted={true}
+									onChange={changeCustomersValueHandler}
+								/>
+								{showCustomersList &&
+									((filteredCustomers.length > 0 && searchCustomersValue && (
+										<ListWrapper className="absolute w-full top-[7rem] max-h-[18rem] overflow-y-auto left-0 bg-white">
+											{filteredCustomers.map((customer) => (
+												<Item
+													key={customer.id}
+													className=""
+													active={searchCustomersValue === customer.email}
+													onClick={() => customersValueChange(customer.email)}
+												>
+													<h3>
+														{customer.first_name} {customer.last_name}
+													</h3>
+													<p>{customer.email}</p>
+												</Item>
+											))}
+										</ListWrapper>
+									)) || <Info>No such customer found</Info>)}
+							</div>
+							<Actions
+								disabled={isCreateTicketButtonDisabled}
+								isDisabled={isCreateTicketButtonDisabled}
+								onClick={() => setShowTopLevel((pv) => !pv)}
+							>
+								Create Ticket <AddIcon fontSize="small" />
+							</Actions>
+						</div>
+					)}
 			</div>
 			<div className="w-full absolute top-[5rem] right-full z-100"></div>
 			<div className="space-y-2 w-full relative">

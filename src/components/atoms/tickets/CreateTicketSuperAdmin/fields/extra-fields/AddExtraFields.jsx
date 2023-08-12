@@ -9,6 +9,7 @@ import GrayThemedLightestText from '../../GrayThemedLightestText';
 import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
 import useAdditionalFieldsInput from '../../../../../../hooks/useAdditionalFieldsInput';
 import AddOrCancelButton from "../general/AddOrCancelButton";
+import { isFieldValueEmpty } from '../../../../../../helpers/validation';
 import { createTicketActions } from "../../../../../../state-manager/reducers/tickets/ticketCreation";
 import { useSelector, useDispatch } from "react-redux";
 

@@ -44,12 +44,12 @@ const DropOffLocation = () => {
 	useEffect(() => {
 	const newLocations = Array.from({ length: numberOfDropLocation }, () => ({
 		address: "",
-		type: "government",
+		type: "governmental",
 	}));
 	dispatch(createTicketActions.updateField({ key: "dropOffLocations", value: newLocations }));
 	dispatch(createTicketActions.updateField({ key: "activeDropOffLocationAddress", value: 0 }));
 	dispatch(createTicketActions.updateField({ key: "activeDropOffLocationType", value: 0 }));
-	dispatch(createTicketActions.updateField({ key: "dropOffLocationAddress", value: "government" }));
+	dispatch(createTicketActions.updateField({ key: "dropOffLocationAddress", value: "governmental" }));
 	locationAddressReset();
 }, [numberOfDropLocation, dispatch, locationAddressReset]);
 
@@ -109,7 +109,7 @@ const DropOffLocation = () => {
 
 	const boxes = (
 		<div className="flex items-center gap-[1.5rem]">
-			{["government", "commercial", "residential"].map((type, ind) => (
+			{["governmental", "commercial", "residential"].map((type, ind) => (
 				<Checkbox
 					key={type}
 					onChange={boxesChangeHandler}

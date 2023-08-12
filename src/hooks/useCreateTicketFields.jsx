@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { allRequiredFields } from "../state-manager/reducers/tickets/ticketCreation";
 
 const useCreateTicketFields = () => {
 	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
   const { pathToTemplate } = useSelector((state) => state.ticketCreation);
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
-
 	const fields = chosenTemplate.reduce(
 		(previousValue, currentSection) => {
 			if (currentSection === "pointOfContact") {
@@ -22,7 +22,7 @@ const useCreateTicketFields = () => {
 				const { numberOfTechnicians } = allPossibleFields;
 				return {
 					...previousValue,
-					numberOfTechnicians,
+					numberOfTechnicians: +numberOfTechnicians,
 				};
 			}
 			if (currentSection === "scopeOfWork") {
@@ -42,11 +42,11 @@ const useCreateTicketFields = () => {
 				};
 			}
 			if (currentSection === "hardwareComponentQuantity") {
-				const { startDateTime, endDateTime } = allPossibleFields;
+				const { hardwareQuantity, hardwareName } = allPossibleFields;
 				return {
 					...previousValue,
-					startDateTime,
-					endDateTime,
+					hardwareQuantity,
+					hardwareName,
 				};
 			}
 			if (currentSection === "hardwareComponentType") {
@@ -54,8 +54,8 @@ const useCreateTicketFields = () => {
 					allPossibleFields;
 				return {
 					...previousValue,
-					hardwareComponentTypeQuantityValue,
-					hardwareComponentTypeQuantityName,
+					hardwareQuantity: hardwareComponentTypeQuantityValue,
+					hardwareName: hardwareComponentTypeQuantityName,
 				};
 			}
 			if (currentSection === "location") {
@@ -63,6 +63,8 @@ const useCreateTicketFields = () => {
 				return {
 					...previousValue,
 					locations,
+					pickLocations: [],
+					dropOffLocations: [],
 				};
 			}
 			if (currentSection === "materialsProcurement") {
@@ -80,10 +82,10 @@ const useCreateTicketFields = () => {
 				};
 			}
 			if (currentSection === "numberOfWorkSystems") {
-				const { numberOfWorkSystem } = allPossibleFields;
+				const { numberOfWorkSystems } = allPossibleFields;
 				return {
 					...previousValue,
-					numberOfWorkSystem,
+					numberOfWorkSystems,
 				};
 			}
 			if (currentSection === "softwareApplicationInstallation") {
@@ -107,6 +109,7 @@ const useCreateTicketFields = () => {
 				return {
 					...previousValue,
 					pickLocations,
+					locations: [],
 				};
 			}
 			if (currentSection === "dropOffLocation") {
@@ -114,26 +117,27 @@ const useCreateTicketFields = () => {
 				return {
 					...previousValue,
 					dropOffLocations,
+					locations: [],
 				};
 			}
 			if (currentSection === "additionalFields") {
 				const { additionalFields } = allPossibleFields;
-				const newAdditionalFields = additionalFields.map(({name, value}) => ({[name]: value}))
+				const newAdditionalFields = additionalFields.map(({ name, value }) => ({ [name]: value }));
 				return {
 					...previousValue,
-					"additionalFields": newAdditionalFields,
+					additionalFields: newAdditionalFields,
 				};
 			}
 			return { ...previousValue };
 		},
 		{
-			ticketType: pathToTemplate.at(0),
-			path: chosenTemplate,
-			form: pathToTemplate.at(-1),
-			customerId: allPossibleFields.customerId,
+			...allRequiredFields,
+			ticketType: pathToTemplate.at(0) === "Project Tickets" ? "project ticket" : "service ticket",
+			ticketPath: pathToTemplate,
+			ticketForm: pathToTemplate.at(-1),
+			customerId: +allPossibleFields.customerId,
 		}
 	);
-
 	return fields;
 };
 

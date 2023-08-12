@@ -230,6 +230,7 @@ const RegisterForm = () => {
 							type="text"
 							name="firstName"
 							label="First Name"
+							placeholder="First Name"
 						/>
 
 						<TextFields
@@ -238,6 +239,7 @@ const RegisterForm = () => {
 							type="text"
 							name="lastName"
 							label="Last Name"
+							placeholder="Last Name"
 						/>
 					</Box>
 					<Box sx={{ display: "flex", gap: "30px" }}>
@@ -247,6 +249,7 @@ const RegisterForm = () => {
 							control={control}
 							name="workspaceName"
 							label="Workspace Name"
+							placeholder="Workspace Name"
 							type="text"
 						/>
 						<TextFields
@@ -255,6 +258,7 @@ const RegisterForm = () => {
 							control={control}
 							name="companyEmail"
 							label="Company Email"
+							placeholder="Company Email"
 							type="text"
 						/>
 					</Box>
@@ -264,6 +268,7 @@ const RegisterForm = () => {
 						control={control}
 						name="phoneNumber"
 						label="Phone Number"
+						placeholder="Phone Number"
 						type="tel"
 						inputProps={{
 							type: "phone",

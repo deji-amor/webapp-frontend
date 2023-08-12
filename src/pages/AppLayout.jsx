@@ -1,5 +1,6 @@
 import React, {useEffect, memo} from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import ToastContainer from '../components/molecules/general/ToastContainer';
 import Sidebar from '../components/molecules/Dashboard/Sidebar';
 import Navbar from '../components/molecules/Dashboard/Navbar';
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay';
@@ -18,6 +19,7 @@ const MemoizedSidebar = memo(Sidebar);
 const MemoizedNavbar = memo(Navbar);
 const MemoizedInitialAdminCreationFormAndModal = memo(InitialAdminCreationFormAndModal);
 const MemoizedTicketTemplateCreationOrEditionForm = memo(TicketTemplateCreationOrEditionForm)
+const MemoizedToastContainer = memo(ToastContainer)
 
 const AppLayout = () => {
 	/////////// AUTHENTICATION LOGIC STARTS HERE
@@ -74,6 +76,7 @@ const AppLayout = () => {
 
 	return (
 		<>
+			{<MemoizedToastContainer/>}
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
 			{showAddTicketModal && <MemoizedInitialAdminCreationFormAndModal />}

@@ -20,7 +20,7 @@ const LocationTab = ({ number, onClick, isActive, isValid }) => {
 		line-height: 1.25rem; /* 125% */
 	`;
 
-	return <Tablet onClick={() => onClick(number-1)}>Location {number}</Tablet>;
+	return <Tablet type='button' onClick={() => onClick(number-1)}>Location {number}</Tablet>;
 };
 
 LocationTab.propTypes = {

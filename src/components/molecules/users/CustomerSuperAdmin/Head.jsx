@@ -11,14 +11,15 @@ const Head = () => {
 	const [filteredCustomers, setFilteredCustomers] = useState([]);
 	const [customers, setCustomers] = useState([]);
 
-	// Sample data for customers
 	const sampleCustomers = [
 		{
 			id: 1,
 			companyName: "Sevirox Manufacturing",
 			representativeName: "Alexander Schevchenko",
 			representativeEmail: "ASchevchenko@Servirox.com",
+			representativePhone: "09088776655",
 			status: "Active",
+			dateCreated: new Date().toISOString(),
 		},
 		{
 			id: 2,
@@ -65,7 +66,6 @@ const Head = () => {
 	];
 
 	useEffect(() => {
-		// api
 		setTimeout(() => {
 			setCustomers(sampleCustomers);
 			setFilteredCustomers(sampleCustomers);
