@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Table,
 	TableBody,
@@ -17,126 +17,135 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Pagination from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 import MoreOptionsDropdown from "../../../atoms/users/CustomerSuperAdmin/MoreOptionsDropdown";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
+import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 
 const statusColors = {
 	Active: "rgba(18, 133, 26, 0.20)",
 	Inactive: "rgba(237, 117, 56, 0.20)",
 	Suspended: "rgba(204, 150, 29, 0.20)",
-};
-
-const statusStyles = {
+  };
+  
+  const statusStyles = {
 	Active: {
-		color: "#04850D",
-		fontWeight: "600",
+	  color: "#04850D",
+	  fontWeight: "600",
 	},
 	Inactive: {
-		color: "#ED5A11",
-		fontWeight: "600",
+	  color: "#ED5A11",
+	  fontWeight: "600",
 	},
 	Suspended: {
-		color: "#CC961D",
-		fontWeight: "600",
+	  color: "#CC961D",
+	  fontWeight: "600",
 	},
-};
-
-const CustomTableCell = ({ children, status }) => {
+  };
+  
+  const CustomTableCell = ({ children, status }) => {
 	const statusColor = statusColors[status] || "transparent";
 	const statusStyle = statusStyles[status] || {};
-
+  
 	const textColor = [
-		"Company Name",
-		"Representative Name",
-		"Representative Email",
-		"Status",
+	  "Company Name",
+	  "Representative Name",
+	  "Representative Email",
+	  "Status",
 	].includes(children)
-		? "#333"
-		: statusStyle.color || "#333";
+	  ? "#333"
+	  : statusStyle.color || "#333";
 	const fontWeight = [
-		"Company Name",
-		"Representative Name",
-		"Representative Email",
-		"Status",
+	  "Company Name",
+	  "Representative Name",
+	  "Representative Email",
+	  "Status",
 	].includes(children)
-		? "600"
-		: statusStyle.fontWeight || "normal";
-
-	// USE STATE const [anchorEl, setAnchorEl] = React.useState(null);
-
-	// FUNTION const handleClick = (event) => {
-	// 	setAnchorEl(event.currentTarget);
-	// };
-
-	// FUNTION const handleClose = () => {
-	// 	setAnchorEl(null);
-	// };
-
+	  ? "600"
+	  : statusStyle.fontWeight || "normal";
+  
 	return (
-		<TableCell
-			sx={{
-				padding: "4px 12px",
-				fontWeight: fontWeight,
-				fontFamily: "Poppins",
-				color: textColor,
-			}}
+	  <TableCell
+		sx={{
+		  padding: "4px 12px",
+		  fontWeight: fontWeight,
+		  fontFamily: "Poppins",
+		  color: textColor,
+		}}
+	  >
+		<span
+		  style={{
+			backgroundColor: statusColor,
+			color: textColor,
+			borderRadius: statusStyle.borderRadius || "16px",
+			padding: "4px 12px",
+			fontSize: "14px",
+			whiteSpace: "nowrap",
+		  }}
 		>
-			<span
-				style={{
-					backgroundColor: statusColor,
-					color: textColor,
-					borderRadius: statusStyle.borderRadius || "16px",
-					padding: "4px 12px",
-					fontSize: "14px",
-					whiteSpace: "nowrap",
-				}}
-			>
-				{children}
-			</span>
-		</TableCell>
+		  {children}
+		</span>
+	  </TableCell>
 	);
-};
-
-const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
+  };
+  
+  const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 	const dispatch = useDispatch();
-
+  
+	useEffect(() => {
+	  dispatch(fetchCustomers());
+	}, [dispatch]);
+  
 	const [filter, setFilter] = useState("All");
 	const [page, setPage] = useState(1);
 	const customersPerPage = 6;
-
+  
 	const handleFilterChange = (event) => {
-		const selectedStatus = event.target.value;
-		setFilter(selectedStatus);
-		setPage(1);
+	  const selectedStatus = event.target.value;
+	  setFilter(selectedStatus);
+	  setPage(1);
 	};
-
+  
 	const handlePageChange = (newPage) => {
-		setPage(newPage);
+	  setPage(newPage);
 	};
-
+  
 	const showEditUserHandler = (customer) => {
-		console.log(customer);
-		dispatch(createTicketActions.updateField({ key: "customerId", value: customer.id }));
-		dispatch(createTicketActions.goBackToAddTicketModal(customer));
+	  console.log(customer);
+	  dispatch(
+		createTicketActions.updateField({
+		  key: "customerId",
+		  value: customer.id,
+		})
+	  );
+	  dispatch(createTicketActions.goBackToAddTicketModal(customer));
 	};
-
-	const { loading: customersLoading, customers, successful, error, errorMessage } = useSelector((state) => state.customers)
-
+  
+	const {
+	  loading: customersLoading,
+	  customers,
+	  successful,
+	  error,
+	  errorMessage,
+	} = useSelector((state) => state.customers);
+  
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;
-	const currentCustomers = filteredCustomers.slice(indexOfFirstCustomer, indexOfLastCustomer);
-	const totalCustomers = filteredCustomers.length;
-
-	const filteredCustomersByStatus = currentCustomers.filter(
-		(customer) => filter === "All" || customer.status === filter
+	const currentCustomers = filteredCustomers.slice(
+	  indexOfFirstCustomer,
+	  indexOfLastCustomer
 	);
-
+	const totalCustomers = filteredCustomers.length;
+  
+	const filteredCustomersByStatus = currentCustomers.filter(
+	  (customer) => filter === "All" || customer.status === filter
+	);
+  
 	const [unsuspendModalOpen, setUnsuspendModalOpen] = useState(false);
 	const [selectedCustomer, setSelectedCustomer] = useState(null);
-
+  
 	const handleUnsuspendConfirmation = (customer) => {
-		setSelectedCustomer(customer);
-		setUnsuspendModalOpen(true);
+	  setSelectedCustomer(customer);
+	  setUnsuspendModalOpen(true);
 	};
 
 	return (
