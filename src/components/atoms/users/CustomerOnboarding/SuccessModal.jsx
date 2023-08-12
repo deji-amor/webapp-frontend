@@ -28,7 +28,6 @@ const SuccessModal = ({ open, onClose, onBackToCustomerTable }) => {
 
 	const handleCreateAnotherCustomer = () => {
 		setOpenCustomerFormModal(true);
-		handleClose();
 	  };
 
 	const handleBackToCustomerTable = () => {
@@ -106,7 +105,7 @@ const SuccessModal = ({ open, onClose, onBackToCustomerTable }) => {
 
 		<CustomerForm
         open={openCustomerFormModal}
-        // onClose={closeCustomerFormModal}
+		onClose={handleBackToCustomerTable}
       />
 	  </>
 	);
