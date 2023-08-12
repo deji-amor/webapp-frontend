@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
+import {createSlice, current} from "@reduxjs/toolkit";
 
 const initialState = {
 	toasts: [],
