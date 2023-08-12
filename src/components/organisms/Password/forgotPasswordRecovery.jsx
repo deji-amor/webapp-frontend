@@ -96,7 +96,7 @@ const ForgotPasswordRecover = () => {
 		try {
 			dispatch(forgotpasswordrecovery({ email, resetToken: token, password, confirmPassword }));
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 

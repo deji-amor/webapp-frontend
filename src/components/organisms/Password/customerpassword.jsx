@@ -40,7 +40,7 @@ const CustomerpasswordBanner = () => {
 			dispatch(SET_EMAIL({ email }));
 			dispatch(customerforgotpasswordemail({ email }));
 		} catch (err) {
-			// console.log(err);
+			// CONSOLE console.log(err);
 		}
 	};
 
