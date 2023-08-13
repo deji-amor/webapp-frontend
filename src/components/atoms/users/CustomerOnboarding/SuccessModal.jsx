@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, Box, Button, Typography, DialogContent, styled } from "@mui/material";
 import FeaturedIcon from "../../../../assets/user/CustomerOnboarding/Featuredicon.png";
 
-const SuccessModal = ({ open, onClose }) => {
+const SuccessModal = ({ open, onClose, onBackToCustomerTable }) => {
 	const Typography = styled("h3")`
 		color: #2b2e72;
 		text-align: center;
@@ -12,6 +12,7 @@ const SuccessModal = ({ open, onClose }) => {
 		font-weight: 600;
 		line-height: 28px; /* 140% */
 	`;
+
 	const Text = styled("p")`
 		color: #828282;
 		text-align: center;
@@ -22,12 +23,13 @@ const SuccessModal = ({ open, onClose }) => {
 		line-height: 20px; /* 142.857% */
 	`;
 
-	const handleClose = () => {
+	const handleBackToCustomerTable = () => {
+		onBackToCustomerTable();
 		onClose();
 	};
 
 	return (
-		<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+		<Dialog open={open} onClose={handleBackToCustomerTable} fullWidth maxWidth="sm">
 			<DialogContent
 				sx={{
 					padding: "30px",
@@ -43,8 +45,8 @@ const SuccessModal = ({ open, onClose }) => {
 				<div>
 					<Typography component={"h3"}>Customer Profile Created</Typography>
 					<Text>
-						A log in link has been sent to the company representative email address <br /> to
-						activate the customer account.
+						A log in link has been sent to the company representative email address
+						<br /> to activate the customer account.
 					</Text>
 				</div>
 				<Box
@@ -58,7 +60,7 @@ const SuccessModal = ({ open, onClose }) => {
 					}}
 				>
 					<Button
-						onClick={handleClose}
+						onClick={handleBackToCustomerTable}
 						variant="outlined"
 						sx={{
 							color: "#2b2e72",

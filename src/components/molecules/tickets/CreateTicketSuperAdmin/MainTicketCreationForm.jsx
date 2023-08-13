@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import { createTicket } from "../../../../state-manager/reducers/tickets/ticketCreation";
+import {
+	createTicket,
+	createTicketActions,
+} from "../../../../state-manager/reducers/tickets/ticketCreation";
 import FormButton from "../../../atoms/tickets/CreateTicketSuperAdmin/FormButton";
 import GrayThemedLightText from "../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightText";
 import Loader from "../../../organisms/tickets/Loader";
@@ -7,7 +10,6 @@ import useCreateTicketFormValidator from "../../../../hooks/useCreateTicketFormV
 import useCreateTicketFields from "../../../../hooks/useCreateTicketFields";
 import { useDispatch, useSelector } from "react-redux";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
-import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
 import PointOfContact from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/point-of-contact/PointOfContact";
 import MaterialsProcurement from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/materials-procurement/MaterialsProcurement";
 import ScopeOfWork from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/scope-of-work/ScopeOfWork";
@@ -51,7 +53,6 @@ const MainTicketCreationForm = () => {
 				})
 			);
 			dispatch(createTicketActions.toggleTemplateModal());
-			return
 		}
 		if (error === true) {
 				dispatch(
@@ -62,7 +63,6 @@ const MainTicketCreationForm = () => {
 					})
 				);
 			dispatch(createTicketActions.toggleTemplateModal());
-			return
 		}
 	}, [error, successful]);
 
