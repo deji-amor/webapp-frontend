@@ -102,7 +102,6 @@ const customersSlice = createSlice({
 			})
 			.addCase(fetchCustomers.fulfilled, (state, action) => {
 				const {status, code, data} = action.payload;
-				// console.log(action.payload)
 				state.loading = false;
 				if (code === 200 && status === "OK") {
 					state.customers = data;

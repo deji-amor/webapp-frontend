@@ -12,22 +12,26 @@ const Head = () => {
 
 	const customers = useSelector((state) => state.customers.customers);
 
+	const filterCustomers = () => {
+		const filtered = customers.filter((customer) => {
+		  if (!customer) {
+			return false;
+		  }
+		  return (
+			(searchQuery === "" ||
+			  (customer.companyName && customer.companyName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+			  (customer.representativeName && customer.representativeName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+			  (customer.status && customer.status.toLowerCase().includes(searchQuery.toLowerCase())) ||
+			  (customer.representativeEmail && customer.representativeEmail.toLowerCase().includes(searchQuery.toLowerCase())))
+		  );
+		});
+		setFilteredCustomers(filtered);
+	  };
+	  
+
 	useEffect(() => {
 		filterCustomers();
 	}, [searchQuery, customers]);
-
-	const filterCustomers = () => {
-		const filtered = customers.filter((customer) => {
-			return (
-				(searchQuery === "" ||
-					customer.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-					customer.representativeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-					customer.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
-					customer.representativeEmail.toLowerCase().includes(searchQuery.toLowerCase()))
-			);
-		});
-		setFilteredCustomers(filtered);
-	};
 
 	const handleSearch = (searchQuery) => {
 		setSearchQuery(searchQuery);

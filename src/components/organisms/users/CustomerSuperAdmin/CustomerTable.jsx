@@ -145,10 +145,6 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 		setUnsuspendModalOpen(true);
 	};
 
-	// const handleSendVerificationLink = (customer) => {
-	// 	dispatch(sendVerificationLink(customer));
-	//   };
-
 	return (
 		<React.Fragment>
 			<TableContainer component={Paper} sx={{ boxShadow: "none", margin: 0, alignItems: "center" }}>
