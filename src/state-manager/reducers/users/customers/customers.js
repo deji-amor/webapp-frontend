@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import { getAuthToken } from "../../../../utilis";
+import {getAuthToken} from "../../../../utilis";
 
-export const fetchCustomers= createAsyncThunk("customers", async (args, {rejectWithValue}) => {
+export const fetchCustomers = createAsyncThunk("customers", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
 		const config = {
@@ -24,12 +24,67 @@ export const fetchCustomers= createAsyncThunk("customers", async (args, {rejectW
 	}
 });
 
+export const createCustomer = createAsyncThunk(
+	"createCustomer",
+	async (args, {rejectWithValue}) => {
+		console.log(args);
+		try {
+			const token = await getAuthToken();
+			const config = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(args),
+			};
+			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/create-account`;
+			const response = await fetch(url, config);
+			console.log(response);
+		} catch (err) {
+			if (err.response && err.response.data.message) {
+				return rejectWithValue(err.response.data.message);
+			} else {
+				return rejectWithValue(err.message);
+			}
+		}
+	}
+);
+
+// CUSTOMER PASSWORD
+export const setCustomerPassword = createAsyncThunk(
+	"setCustomerPassword",
+	async (args, {rejectWithValue}) => {
+		console.log(args);
+		try {
+			const config = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(args),
+			};
+			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/onboarding`;
+			const response = await fetch(url, config);
+			const data = response.json();
+			return data.message;
+		} catch (err) {
+			if (err.response && err.response.data.message) {
+				return rejectWithValue(err.response.data.message);
+			} else {
+				return rejectWithValue(err.message);
+			}
+		}
+	}
+);
+
 const initialState = {
 	loading: false,
 	error: null,
 	errorMessage: "",
 	successful: null,
 	customers: [],
+	response: null,
 };
 
 const customersSlice = createSlice({
@@ -47,7 +102,7 @@ const customersSlice = createSlice({
 			})
 			.addCase(fetchCustomers.fulfilled, (state, action) => {
 				const {status, code, data} = action.payload;
-        // console.log(action.payload)
+				// console.log(action.payload)
 				state.loading = false;
 				if (code === 200 && status === "OK") {
 					state.customers = data;
@@ -65,6 +120,35 @@ const customersSlice = createSlice({
 				state.successful = false;
 				state.error = true;
 				state.errorMessage = "Could not fetch all customers";
+			})
+
+			// ADDCASE FOR CREATECUSTOMER
+			.addCase(createCustomer.pending, (state, action) => {
+				state.loading = true;
+			})
+			.addCase(createCustomer.fulfilled, (state, action) => {
+				state.loading = false;
+				state.error = false;
+				state.successful = true;
+			})
+			.addCase(createCustomer.rejected, (state, action) => {
+				state.error = true;
+				state.loading = false;
+			})
+
+			// ADDCASE CUSTOMER SET PASSWORD
+			.addCase(setCustomerPassword.pending, (state, action) => {
+				state.loading = true;
+			})
+			.addCase(setCustomerPassword.fulfilled, (state, action, payload) => {
+				state.loading = false;
+				state.error = false;
+				state.successful = true;
+				state.response = payload;
+			})
+			.addCase(setCustomerPassword.rejected, (state, action) => {
+				state.error = true;
+				state.loading = false;
 			});
 	},
 });

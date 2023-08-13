@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ForgotEmailWrapper as ForgotPasswordResetWrapper } from "../../../atoms/Password/wrappers";
-import { forgotpasswordrecovery, SET_ERROR_NULL } from "../../../../state-manager/reducers/password/forgotpassword";
+import { setCustomerPassword } from "../../../../state-manager/reducers/users/customers/customers";
 import ErrorCard from "../../../molecules/Password/customErrorCard";
 import CustomButton from "../../../atoms/Password/customButton";
 import lockmage from "../../../../assets/password/lock.png";
@@ -45,7 +45,7 @@ const CreatePassword = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { email, token } = useParams();
-	const response = useSelector((state) => state.forgotPassword.response);
+	const response = useSelector((state) => state.setCustomerPassword);
 
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
@@ -59,7 +59,7 @@ const CreatePassword = () => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
 		setServerError(false);
 		setValidationError(false);
-		dispatch(SET_ERROR_NULL());
+		// dispatch(SET_ERROR_NULL());
 		setEmpty(false)
 	};
 
@@ -81,7 +81,7 @@ const CreatePassword = () => {
 			setError(true);
 		}
 
-		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
+		// if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
 
 		if (response) setLoading(false)
 
@@ -89,7 +89,7 @@ const CreatePassword = () => {
 
 		// CONDITION if (response === "You can not use your previous password!") return setServerError(true);
 
-		if (response === "Your password has been reset successfully!") return navigate("/customer-create-password-success");
+		if (response === "Your password created successfully!") return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -116,7 +116,7 @@ const CreatePassword = () => {
 		setLoading(true)
 
 		try {
-			dispatch(forgotpasswordrecovery({ email, resetToken: token, password, confirmPassword }));
+			dispatch(setCustomerPassword({ email, token, password, confirmPassword }));
 		} catch (err) {
 			// CONSOLE console.log(err);
 		}

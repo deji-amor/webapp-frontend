@@ -39,7 +39,7 @@ function App() {
 		{ path: "/forgot-password-success", element: <ForgotPasswordEmailSuccess /> },
 		{ path: "/reset-password-success", element: <ResetPasswordPageSuccess /> },
 		{ path: "/recover-password/:email/:token", element: <RecoverPassword /> },
-		{ path: "/customer-create-password", element: <CustomerCreatePassword /> },
+		{ path: "/customer-onboarding/:email/:token", element: <CustomerCreatePassword /> },
 		{ path: "/customer-create-password-success", element: <CustomerCreatePasswordSuccess /> },
 		{ path: "/password-expired", element: <PasswordExpired /> },
 		{ path: "/password-recovery-success", element: <PasswordRecoverySuccess /> },

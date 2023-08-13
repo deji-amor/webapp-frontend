@@ -5,8 +5,12 @@ import TextFields from "../../users/CustomerOnboarding/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../../atoms/users/CustomerOnboarding/Schema";
 import SuccessModal from "../../../atoms/users/CustomerOnboarding/SuccessModal";
+import { useDispatch, useSelector } from "react-redux";
+import { createCustomer } from "../../../../state-manager/reducers/users/customers/customers";
 
 const CustomerForm = ({ open, onClose }) => {
+	const dispatch = useDispatch();
+
 	const {
 		handleSubmit,
 		control,
@@ -15,12 +19,12 @@ const CustomerForm = ({ open, onClose }) => {
 	} = useForm({
 		defaultValues: {
 			companyName: "",
-			companyRepFirstName: "",
-			companyRepLastName: "",
-			companyRepEmail: "",
-			companyRepPhoneNumber: "",
+			representativeFirstName: "",
+			representativeLastName: "",
+			representativeEmail: "",
+			representativePhoneNumber: "",
 			companyFinanceEmail: "",
-			companyOfficialEmail: "",
+			companyEmail: "",
 		},
 		resolver: yupResolver(schema),
 	});
@@ -30,11 +34,16 @@ const CustomerForm = ({ open, onClose }) => {
 		reset();
 	};
 	const [successModalOpen, setSuccessModalOpen] = useState(false);
-	const handleFormSubmit = (data) => {
+
+	const handleFormSubmit = async (data) => {
 		console.log("Form data:", data);
+
+		dispatch(createCustomer(data));
+
 		setSuccessModalOpen(true);
 		reset({});
 	};
+
 	const closeSuccessModal = () => {
 		setSuccessModalOpen(false);
 	};
@@ -102,7 +111,7 @@ const CustomerForm = ({ open, onClose }) => {
 									errors={errors}
 									control={control}
 									type="text"
-									name="companyRepFirstName"
+									name="representativeFirstName"
 									label="Company representative first name*"
 									placeholder="Enter Company representative first name"
 								/>
@@ -110,7 +119,7 @@ const CustomerForm = ({ open, onClose }) => {
 									errors={errors}
 									control={control}
 									type="text"
-									name="companyRepLastName"
+									name="representativeLastName"
 									label="Company representative last name*"
 									placeholder="Enter Company representative last name"
 								/>
@@ -119,7 +128,7 @@ const CustomerForm = ({ open, onClose }) => {
 								<TextFields
 									errors={errors}
 									control={control}
-									name="companyRepEmail"
+									name="representativeEmail"
 									label="Company representative email*"
 									placeholder="Enter Company representative email"
 									type="text"
@@ -127,7 +136,7 @@ const CustomerForm = ({ open, onClose }) => {
 								<TextFields
 									errors={errors}
 									control={control}
-									name="companyRepPhoneNumber"
+									name="representativePhoneNumber"
 									label="Company representative phone number"
 									placeholder=" Enter Company representative phone number"
 									type="tel"
@@ -148,7 +157,7 @@ const CustomerForm = ({ open, onClose }) => {
 								<TextFields
 									errors={errors}
 									control={control}
-									name="companyOfficialEmail"
+									name="companyEmail"
 									label="Company official email"
 									placeholder="Enter Company official email"
 									type="text"
