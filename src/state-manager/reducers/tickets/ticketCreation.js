@@ -117,6 +117,7 @@ const allPossibleFields = {
 		
 		"scopeOfWorkDocumentIsValid": false, // might not be need for this
 		// DURATION
+		"durationIsValid": true,
 
 		//HARDWARE COMPONENT TYPE
 		"hardwareInputTypeCurrentValue": "",
