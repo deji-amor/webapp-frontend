@@ -65,6 +65,11 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 		handleClose();
 	};
 
+	const handleResendVerification = () => {
+
+    handleClose();
+  };
+
 	return (
 		<TableCell sx={{ borderBottom: "none", padding: 0 }}>
 			<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -106,6 +111,14 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 							Unsuspend
 						</MenuItem>
 					)}
+						{status === "Inactive" && (
+					<MenuItem
+					sx={{ borderRadius: "5px", padding: "12px 16px" }}
+					onClick={handleResendVerification}
+					>
+					Resend Verification Link
+					</MenuItem>
+				)}
 				</Menu>
 			</Box>
 			<UnsuspendConfirmationModal

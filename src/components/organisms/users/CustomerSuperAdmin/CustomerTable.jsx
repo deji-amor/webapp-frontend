@@ -91,9 +91,10 @@ const CustomTableCell = ({ children, status }) => {
 const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(fetchCustomers());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(fetchCustomers());
+	// }, [dispatch]);
+	console.log(filteredCustomers);
 
 	const [filter, setFilter] = useState("All");
 	const [page, setPage] = useState(1);

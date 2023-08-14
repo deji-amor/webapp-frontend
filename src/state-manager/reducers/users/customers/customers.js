@@ -78,6 +78,60 @@ export const setCustomerPassword = createAsyncThunk(
 	}
 );
 
+// SUSPEND-UNSUSPEND
+export const suspendUnsuspend = createAsyncThunk(
+	"suspendUnsuspend",
+	async (customerId, {rejectWithValue}) => {
+		try {
+			const token = await getAuthToken();
+			const config = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({customerId}),
+			};
+			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/suspend-unsuspend`;
+			const response = await fetch(url, config);
+			const data = await response.json();
+			return data.message;
+		} catch (err) {
+			if (err.response && err.response.data.message) {
+				return rejectWithValue(err.response.data.message);
+			} else {
+				return rejectWithValue(err.message);
+			}
+		}
+	}
+);
+
+// RESEND MY VERIFICATION LINK
+export const resendMyVerificationLink = createAsyncThunk(
+  "resendMyVerificationLink",
+  async (args, { rejectWithValue }) => {
+    try {
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(args),
+      };
+      const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/resend-my-verification`;
+      const response = await fetch(url, config);
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      if (err.response && err.response.data.message) {
+        return rejectWithValue(err.response.data.message);
+      } else {
+        return rejectWithValue(err.message);
+      }
+    }
+  }
+);
+
 const initialState = {
 	loading: false,
 	error: null,
@@ -148,8 +202,33 @@ const customersSlice = createSlice({
 			.addCase(setCustomerPassword.rejected, (state, action) => {
 				state.error = true;
 				state.loading = false;
+			})
+
+		// ADDCASE FOR SUSPEND-UNSUSPEND CUSTOMER
+			.addCase(suspendUnsuspend.pending, (state, action) => {
+				state.loading = true;
+			})
+			.addCase(suspendUnsuspend.fulfilled, (state, action) => {
+				state.loading = false;
+				state.error = false;
+				state.successful = true;
+			})
+			.addCase(suspendUnsuspend.rejected, (state, action) => {
+				state.error = true;
+				state.loading = false;
+			})
+
+		// ADDCASE FOR RESEND MY VERIICATION
+			.addCase(resendMyVerificationLink.pending, (state, action) => {
+				state.loading = true;
+			})
+			.addCase(resendMyVerificationLink.fulfilled, (state, action) => {
+				state.loading = false;
+			})
+			.addCase(resendMyVerificationLink.rejected, (state, action) => {
+				state.loading = false;
 			});
-	},
+		}
 });
 
 export default customersSlice.reducer;

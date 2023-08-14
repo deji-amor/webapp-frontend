@@ -26,6 +26,7 @@ import ErrorPage from "./pages/ErrorPage";
 import CustomerOnboarding from "./pages/CustomerOnboarding";
 import CustomerCreatePassword from "./pages/CustomerCreatePassword";
 import CustomerCreatePasswordSuccess from "./pages/CustomerCreatePasswordSuccess";
+import CustomerPasswordLinkExpired from "./pages/customerPasswordLinkExpired";
 
 const MemoizedProtectedRoute = memo(ProtectedRoute)
 
@@ -41,6 +42,7 @@ function App() {
 		{ path: "/recover-password/:email/:token", element: <RecoverPassword /> },
 		{ path: "/customer-onboarding/:email/:token", element: <CustomerCreatePassword /> },
 		{ path: "/customer-create-password-success", element: <CustomerCreatePasswordSuccess /> },
+		{ path: "/customer-password-expired", element: <CustomerPasswordLinkExpired /> },
 		{ path: "/password-expired", element: <PasswordExpired /> },
 		{ path: "/password-recovery-success", element: <PasswordRecoverySuccess /> },
 		{ path: "/customer-password", element: <CustomerForgotPasswordPage /> },
