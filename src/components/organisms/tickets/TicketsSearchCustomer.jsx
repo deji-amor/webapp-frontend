@@ -125,6 +125,9 @@ const TicketsSearchCustomer = () => {
 	}, [searchCustomersValue]);
 
 	useEffect(() => {
+		if(!activeCustomer){
+			setShowTopLevel(false)
+		}
 		if (!searchCustomersValue) {
 			setShowCustomerList(false);
 			return;
