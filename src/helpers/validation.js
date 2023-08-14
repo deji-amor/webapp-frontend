@@ -74,7 +74,7 @@ export function isValidDateTimeLocal(inputString) {
   const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
 
   if (!regex.test(inputString)) {
-    return [false, "Invalid format. The format should be 'YYYY-MM-DDTHH:mm'."];
+    return [false, "Invalid format. The format should e.g '2022-07-05T04:32'."];
   }
 
   const [datePart, timePart] = inputString.split('T');
