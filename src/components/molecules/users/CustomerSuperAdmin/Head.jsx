@@ -4,69 +4,25 @@ import HeadSearch from "../../../atoms/users/CustomerSuperAdmin/HeadSearch";
 import DropdownButton from "../../../atoms/users/CustomerSuperAdmin/DropdownButton";
 import { Grid } from "@mui/material";
 import BasicTabs from "../../../organisms/users/CustomerSuperAdmin/UserTabs";
-import { useDispatch } from "react-redux";
-import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers"
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 
 const Head = () => {
 	const [filter, setFilter] = useState("All");
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredCustomers, setFilteredCustomers] = useState([]);
 	const [customers, setCustomers] = useState([]);
-	const dispatch = useDispatch();
 
-	// const sampleCustomers = [
-	// 	{
-	// 		id: 1,
-	// 		companyName: "Sevirox Manufacturing",
-	// 		representativeName: "Alexander Schevchenko",
-	// 		representativeEmail: "ASchevchenko@Servirox.com",
-	// 		representativePhone: "09088776655",
-	// 		status: "Active",
-	// 		dateCreated: new Date().toISOString(),
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		companyName: "Sevirox Manufacturing",
-	// 		representativeName: "Jane Smith",
-	// 		representativeEmail: "jane@example.com",
-	// 		status: "Inactive",
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		companyName: "Sammy Highway",
-	// 		representativeName: "Mike Johnson",
-	// 		representativeEmail: "mike@example.com",
-	// 		status: "Suspended",
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		companyName: "Lorem Adel",
-	// 		representativeName: "Alexander Schevchenko",
-	// 		representativeEmail: "ASchevchenko@Servirox.com",
-	// 		status: "Inactive",
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		companyName: "Sevirox Manufacturing",
-	// 		representativeName: "Jane Smith",
-	// 		representativeEmail: "jane@example.com",
-	// 		status: "Active",
-	// 	},
-	// 	{
-	// 		id: 6,
-	// 		companyName: "Sammy Highway",
-	// 		representativeName: "Mike Johnson",
-	// 		representativeEmail: "mike@example.com",
-	// 		status: "Suspended",
-	// 	},
-	// 	{
-	// 		id: 7,
-	// 		companyName: "Gbubemi Deji Enterprises",
-	// 		representativeName: "Richard Gbemisola",
-	// 		representativeEmail: "ricgbe@example.com",
-	// 		status: "Suspended",
-	// 	},
-	// ];
+	const dispatch = useDispatch();
+	const {
+		loading: customersLoading,
+		customers: allCustomers,
+		successful,
+		error,
+		errorMessage,
+	} = useSelector((state) => state.customers);
+
+	const sampleCustomers = allCustomers;
 
 	const filterCustomers = useCallback(() => {
 		if (filter === "All" && searchQuery === "") {
@@ -84,21 +40,20 @@ const Head = () => {
 			});
 			setFilteredCustomers(filtered);
 		}
-	}, [filter, searchQuery, customers])
+	}, [filter, searchQuery, customers]);
 
 	useEffect(() => {
-		setTimeout(() => {
-			const customerList = dispatch(fetchCustomers())
-			setCustomers(customerList);
-			setFilteredCustomers(customerList);
-		}, 500);
+		dispatch(fetchCustomers());
 	}, [dispatch]);
+
+	useEffect(() => {
+		setCustomers(sampleCustomers);
+		setFilteredCustomers(sampleCustomers);
+	}, [sampleCustomers]);
 
 	useEffect(() => {
 		filterCustomers();
 	}, [filterCustomers]);
-
-	
 
 	const handleFilterChange = (event) => {
 		setFilter(event.target.value);

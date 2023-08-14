@@ -1,8 +1,11 @@
 import React from "react";
 import { Dialog, Box, Button, Typography, DialogContent, styled } from "@mui/material";
 import FeaturedIcon from "../../../../assets/user/CustomerOnboarding/Featuredicon.png";
+import CustomerForm from "../../../molecules/users/CustomerOnboarding/CustomerForm";
+import { useState } from "react";
 
 const SuccessModal = ({ open, onClose, onBackToCustomerTable }) => {
+	const [openCustomerFormModal, setOpenCustomerFormModal] = useState(false);
 	const Typography = styled("h3")`
 		color: #2b2e72;
 		text-align: center;
@@ -23,12 +26,17 @@ const SuccessModal = ({ open, onClose, onBackToCustomerTable }) => {
 		line-height: 20px; /* 142.857% */
 	`;
 
+	const handleCreateAnotherCustomer = () => {
+		setOpenCustomerFormModal(true);
+	  };
+
 	const handleBackToCustomerTable = () => {
 		onBackToCustomerTable();
 		onClose();
 	};
 
 	return (
+		<>
 		<Dialog open={open} onClose={handleBackToCustomerTable} fullWidth maxWidth="sm">
 			<DialogContent
 				sx={{
@@ -77,6 +85,7 @@ const SuccessModal = ({ open, onClose, onBackToCustomerTable }) => {
 						Back
 					</Button>
 					<Button
+					onClick={handleCreateAnotherCustomer}
 						variant="contained"
 						sx={{
 							background: "#2b2e72",
@@ -93,6 +102,12 @@ const SuccessModal = ({ open, onClose, onBackToCustomerTable }) => {
 				</Box>
 			</DialogContent>
 		</Dialog>
+
+		<CustomerForm
+        open={openCustomerFormModal}
+		onClose={handleBackToCustomerTable}
+      />
+	  </>
 	);
 };
 

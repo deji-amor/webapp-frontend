@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Table,
 	TableBody,
@@ -17,8 +17,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Pagination from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 import MoreOptionsDropdown from "../../../atoms/users/CustomerSuperAdmin/MoreOptionsDropdown";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
+import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 
 const statusColors = {
 	Active: "rgba(18, 133, 26, 0.20)",
@@ -61,16 +62,6 @@ const CustomTableCell = ({ children, status }) => {
 	].includes(children)
 		? "600"
 		: statusStyle.fontWeight || "normal";
-
-	// USE STATE const [anchorEl, setAnchorEl] = React.useState(null);
-
-	// FUNTION const handleClick = (event) => {
-	// 	setAnchorEl(event.currentTarget);
-	// };
-
-	// FUNTION const handleClose = () => {
-	// 	setAnchorEl(null);
-	// };
 
 	return (
 		<TableCell
@@ -116,9 +107,22 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 
 	const showEditUserHandler = (customer) => {
 		console.log(customer);
-		dispatch(createTicketActions.updateField({ key: "customerId", value: customer.id }));
+		dispatch(
+			createTicketActions.updateField({
+				key: "customerId",
+				value: customer.id,
+			})
+		);
 		dispatch(createTicketActions.goBackToAddTicketModal(customer));
 	};
+
+	const {
+		loading: customersLoading,
+		customers,
+		successful,
+		error,
+		errorMessage,
+	} = useSelector((state) => state.customers);
 
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;
@@ -184,9 +188,9 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 					<TableBody>
 						{filteredCustomersByStatus.map((customer) => (
 							<TableRow key={customer.id}>
-								<CustomTableCell>{customer.companyName}</CustomTableCell>
-								<CustomTableCell>{customer.representativeName}</CustomTableCell>
-								<CustomTableCell>{customer.representativeEmail}</CustomTableCell>
+								<CustomTableCell>{customer.company_name}</CustomTableCell>
+								<CustomTableCell>{customer.first_name} {customer.last_name}</CustomTableCell>
+								<CustomTableCell>{customer.email}</CustomTableCell>
 								<CustomTableCell status={customer.status}>{customer.status}</CustomTableCell>
 								<CustomTableCell>
 									<Box sx={{ display: "flex", alignItems: "center", gap: "1", flex: "1 0 0" }}>
@@ -203,7 +207,7 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 											</IconButton>
 											Edit Customer Profile
 										</Link>
-										{customer.status !== "Inactive" && (
+										{customer.status !== "inactive" && (
 											<MoreOptionsDropdown
 												status={customer.status}
 												customerId={customer.id}
