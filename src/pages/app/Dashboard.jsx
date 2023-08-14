@@ -1,5 +1,5 @@
 import Greeting from '../../components/molecules/Dashboard/Greeting'
-// STATS import StatsCardGroup from '../../components/organisms/Dashboard/StatsCardGroup'
+import StatsCardGroup from '../../components/organisms/Dashboard/StatsCardGroup'
 import RecentTickets from '../../components/organisms/Dashboard/RecentTickets'
 import RecentTicketTable from '../../components/organisms/Dashboard/RecentTicketTable'
 
