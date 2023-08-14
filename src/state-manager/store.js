@@ -27,7 +27,8 @@ const persistConfig = {
 		"logout",
 		"ticketCreation",
 		"tickets",
-        "customers"
+        "customers",
+        "users"
 	],
 };
 

@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PaginationText from '../../atoms/Dashboard/PaginationText';
 import PaginationButtonList from '../../molecules/Dashboard/PaginationButtonList';
 import usePagination from '../../atoms/Dashboard/usePagination';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useSelector, useDispatch } from 'react-redux';
+import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
 
 const TicketsTablePagination = () => {
-	const totalItems = 100;
-	const itemsOnEachPage = 10;
+	const { loading: ticketsLoading, activeTickets } = useSelector((state) => state.tickets);
+
+	const {loading: customersLoading } = useSelector((state) => state.customers);
+
+	const dispatch = useDispatch()
+
+	const totalItems = activeTickets.length;
+	const itemsOnEachPage = 5;
 	const maxNumberOfButtons = 5;
 	const {
 		currentPage,
@@ -21,7 +29,16 @@ const TicketsTablePagination = () => {
 		newEndingPoint,
 	} = usePagination(totalItems, itemsOnEachPage, maxNumberOfButtons);
 
-	console.log({ newStartingPoint, newEndingPoint });
+	useEffect(() => {
+		dispatch(
+			ticketsActions.updateField({ key: "activeTicketsStartPoint", value: itemStartPoint - 1 })
+		);
+		dispatch(
+			ticketsActions.updateField({ key: "activeTicketsEndPoint", value: itemEndPoint })
+		);
+	}, [itemStartPoint, itemStartPoint, totalItems])
+
+	if(ticketsLoading || customersLoading) return <></>
 
 	return (
 		<div className="bg-white p-[0.8rem] rounded-b-[0.75rem] border-t-2 border-b-[#ECECEC] flex items-center justify-between">

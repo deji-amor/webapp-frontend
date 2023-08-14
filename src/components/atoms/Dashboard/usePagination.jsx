@@ -6,7 +6,7 @@ const usePagination = (items, itemsOnPage = 5, maxNumberOfButtons = 5) => {
 	const currentRange = currentPage * itemsOnPage;
 
 	const itemStartPoint = currentRange - itemsOnPage + 1;
-	const itemEndPoint = currentRange;
+	const itemEndPoint = currentRange > items ? items : currentRange;
 
 	const diff = currentPage - Math.ceil(maxNumberOfButtons / 2);
 	let newStartingPoint = diff < 1 ? 0 : diff;

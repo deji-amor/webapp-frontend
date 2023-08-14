@@ -21,7 +21,6 @@ const Wrapper = styled("div")`
 `;
 
 const Tickets = () => {
-
   return (
 		<div className="space-y-[1.62rem]">
       <TicketsSearchBar/>

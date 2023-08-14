@@ -100,6 +100,7 @@ const customersSlice = createSlice({
 		builder
 			.addCase(fetchCustomers.pending, (state, action) => {
 				state.loading = true;
+				state.customers = []
 			})
 			.addCase(fetchCustomers.fulfilled, (state, action) => {
 				const {status, code, data} = action.payload;
@@ -156,7 +157,7 @@ const customersSlice = createSlice({
 				state.successful = true;
 				state.response = payload;
 			})
-			.addMatcher(setCustomerPassword.rejected, (state, action) => {
+			.addCase(setCustomerPassword.rejected, (state, action) => {
 				state.error = true;
 				state.loading = false;
 				state.successful = false;

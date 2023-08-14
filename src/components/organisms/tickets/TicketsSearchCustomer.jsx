@@ -104,6 +104,8 @@ const TicketsSearchCustomer = () => {
 	const [showTopLevel, setShowTopLevel] = useState(false);
 	const [showCustomersList, setShowCustomerList] = useState(false);
 
+	console.log({customers});
+
 	const changeCustomersValueHandler = (value) => {
 		dispatch(ticketsActions.updateField({ key: "searchCustomersValue", value: value }));
 	};
