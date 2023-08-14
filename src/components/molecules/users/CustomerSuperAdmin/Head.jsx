@@ -12,8 +12,8 @@ const Head = () => {
 	const [filteredCustomers, setFilteredCustomers] = useState([]);
 	const [customers, setCustomers] = useState([]);
 
-	const dispatch = useDispatch()
-	const { loading: customersLoading, customers: , successful, error, errorMessage } = useSelector((state) => state.customers)
+	// const dispatch = useDispatch()
+	// const { loading: customersLoading, customers: , successful, error, errorMessage } = useSelector((state) => state.customers)
 
 	const sampleCustomers = [
 		{
