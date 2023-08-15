@@ -6,13 +6,14 @@ import {
 	SET_ERROR_NULL,
 	validateToken,
 } from "../../../../state-manager/reducers/users/customers/customers";
+import ErrorCard from "../../../molecules/Password/customErrorCard";
 import CustomButton from "../../../atoms/Password/customButton";
 import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
 import PasswordLinkExp from "./passwordLinkExp";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
-import { styled } from "@mui/material";
+import { Typography, styled } from "@mui/material";
 
 const CreatePassword = () => {
 	const Typography = styled("h3")`
@@ -37,6 +38,7 @@ const CreatePassword = () => {
 
 	const [error, setError] = useState(false);
 	const [validationError, setValidationError] = useState(false);
+	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
 	const [empty, setEmpty] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -57,6 +59,7 @@ const CreatePassword = () => {
 
 	const handleChange = (e) => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
+		setServerError(false);
 		setValidationError(false);
 		dispatch(SET_ERROR_NULL());
 		setEmpty(false);
@@ -86,9 +89,10 @@ const CreatePassword = () => {
 
 		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
 
-		if (passwordResponse) setLoading(false)
+		if (passwordResponse) setLoading(false);
 
-		if (passwordResponse === "Your password has been set successfully! You can login now") return navigate("/customer-create-password-success");
+		if (passwordResponse === "Your password has been set successfully! You can login now")
+			return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -123,9 +127,11 @@ const CreatePassword = () => {
 	};
 
 	return (
-		<ForgotPasswordResetWrapper>
-			{(validationResponse === "Invalid verification link!" && <PasswordLinkExp email={email} />) || (
-				<>
+		<>
+			{(validationResponse === "Invalid verification link!" && (
+				<PasswordLinkExp email={email} />
+			)) || (
+				<ForgotPasswordResetWrapper>
 					<div style={{ display: "flex", justifyContent: "center" }}>
 						<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
 					</div>
@@ -174,9 +180,9 @@ const CreatePassword = () => {
 						loading={loading}
 						error={error}
 					/>
-				</>
+				</ForgotPasswordResetWrapper>
 			)}
-		</ForgotPasswordResetWrapper>
+		</>
 	);
 };
 

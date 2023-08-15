@@ -314,7 +314,7 @@ const customersSlice = createSlice({
 				state.passwordResponse = null
 			})
 
-			.addCase(setCustomerPassword.fulfilled, (state, action, {payload}) => {
+			.addCase(setCustomerPassword.fulfilled, (state, {payload}) => {
 				const {message} = payload
 				state.loading = false;
 				state.error = false;
