@@ -1,5 +1,33 @@
 import { styled } from "@mui/material";
 
+export const LoaderWrapper = styled("div")(() => ({
+	width: "100%",
+	height: "100%",
+	position: "absolute",
+	top: "0",
+	left: "0",
+	zIndex: "100",
+	backgroundColor: "rgba(255, 255, 255, .15)",
+	backdropFilter: "blur(5px)",
+}));
+
+export const LoaderContainerWrapper = styled("div")(() => ({
+	width: "100%",
+	height: "100%",
+	position: "absolute",
+	top: "0",
+	left: "0",
+	zIndex: "150",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+
+	".loader": {
+		position: "absolute",
+		zIndex: "150",
+	},
+}));
+
 export const LogoWrapper = styled("span")(({color, style}) => ({
 	display: "flex",
 	justifyContent: "center",
