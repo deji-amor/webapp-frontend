@@ -29,6 +29,7 @@ import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/Horizo
 
 const MainTicketCreationForm = () => {
 	const requiredFields = useCreateTicketFields();
+	console.log({requiredFields});
 	const dispatch = useDispatch();
 
 	const submitHandler = (e) => {

@@ -6,7 +6,7 @@ const usePagination = (items, itemsOnPage = 5, maxNumberOfButtons = 5) => {
 	const currentRange = currentPage * itemsOnPage;
 
 	const itemStartPoint = currentRange - itemsOnPage + 1;
-	const itemEndPoint = currentRange;
+	const itemEndPoint = currentRange > items ? items : currentRange;
 
 	const diff = currentPage - Math.ceil(maxNumberOfButtons / 2);
 	let newStartingPoint = diff < 1 ? 0 : diff;
@@ -18,6 +18,10 @@ const usePagination = (items, itemsOnPage = 5, maxNumberOfButtons = 5) => {
 			newStartingPoint = Array.from(new Array(pages)).length - maxNumberOfButtons;
 			newEndingPoint = Array.from(new Array(pages)).length;
 		}
+	}
+
+	const reset = () => {
+		setCurrentPage(1)
 	}
 
 	const goForward = () => {
@@ -52,6 +56,7 @@ const usePagination = (items, itemsOnPage = 5, maxNumberOfButtons = 5) => {
 		itemStartPoint, // 20 in e.g
 		newStartingPoint, // the visible first pagination button (inclusive)
 		newEndingPoint, // the visible end pagination button (exclusive)
+		reset
 	};
 };
 

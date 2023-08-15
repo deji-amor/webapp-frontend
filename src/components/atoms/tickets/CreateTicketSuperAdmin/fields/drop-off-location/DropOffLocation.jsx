@@ -51,7 +51,7 @@ const DropOffLocation = () => {
 	dispatch(createTicketActions.updateField({ key: "activeDropOffLocationType", value: 0 }));
 	dispatch(createTicketActions.updateField({ key: "dropOffLocationAddress", value: "governmental" }));
 	locationAddressReset();
-}, [numberOfDropLocation, dispatch, locationAddressReset]);
+}, [numberOfDropLocation, dispatch]);
 
 	const changeDropOffLocationChangeHandler = (location) => {
 		dispatch(createTicketActions.updateField({ key: "activeDropOffLocationAddress", value: location }));
@@ -71,7 +71,7 @@ const DropOffLocation = () => {
 		} else {
 			dispatch(createTicketActions.updateField({ key: "dropOffLocationsAddressIsValid", value: false }));
 		}
-	}, [locationAddressValue, activeDropOffLocationAddress, dispatch, dropOffLocations]);
+	}, [locationAddressValue]);
 
 	useEffect(() => {
 		locationAddressReset();
@@ -81,7 +81,7 @@ const DropOffLocation = () => {
 				value: dropOffLocations[activeDropOffLocationAddress].address,
 			})
 		);
-	}, [activeDropOffLocationAddress, dispatch, dropOffLocations, locationAddressReset]);
+	}, [activeDropOffLocationAddress]);
 
 	const tablet = (
 		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">

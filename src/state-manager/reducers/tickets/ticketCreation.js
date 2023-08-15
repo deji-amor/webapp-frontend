@@ -212,6 +212,7 @@ const initialState = {
 	chosenTemplate: [],
 	allPossibleFields: allPossibleFields,
 	data: null,
+	customer: {},
 };
 
 const createTicketSlice = createSlice({
@@ -242,12 +243,17 @@ const createTicketSlice = createSlice({
 			state.showTemplateModal = true;
 		},
 		goBackToAddTicketModal: (state, action) => {
-			state.chosenTemplate = [];
-			state.showAddTicketModal = true;
-			state.showTemplateModal = false;
-			state.pathToTemplate = [];
-			const customerId = current(state).allPossibleFields.customerId
-			state.allPossibleFields = {...allPossibleFields, customerId};
+			if(window.location.pathname.includes("/tickets")){
+				return initialState
+			}else {
+				state.customer = action.payload
+				state.chosenTemplate = [];
+				state.showAddTicketModal = true;
+				state.showTemplateModal = false;
+				state.pathToTemplate = [];
+				const customerId = current(state).allPossibleFields.customerId
+				state.allPossibleFields = {...allPossibleFields, customerId};
+			}
 		},
 		updateField: (state, action) => {
 			const payload = action.payload;

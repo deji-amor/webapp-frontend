@@ -74,11 +74,13 @@ const Location = () => {
 		dispatch(createTicketActions.updateField({ key: "locationAddress", value: locations[activeLocationAddress].address }));
 	}, [activeLocationAddress])
 
+	console.log({locations});
+
 
 	const tablet = (
 		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
 			{locations.map(({ address, type }, ind) => (
-				<div key={`${address}${type}`} className="flex items-center gap-[0.5rem]">
+				<div key={`${address}${type}${ind}`} className="flex items-center gap-[0.5rem]">
 					{ind !== 0 && <div className="w-[2.5625rem] h-[0.0625rem] bg-[#000]"></div>}
 					<LocationTab
 						number={ind + 1}

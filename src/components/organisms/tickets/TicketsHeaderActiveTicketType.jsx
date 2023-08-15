@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
 
 const TicketsHeaderActiveTicketType = () => {
-    const { showServiceRequestsTab, showProjectsTab } = useSelector(
+    const { showServiceRequestsTab, showProjectsTab} = useSelector(
 			(state) => state.tickets
 		);
 		const dispatch = useDispatch();
