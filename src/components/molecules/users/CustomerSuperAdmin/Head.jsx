@@ -43,9 +43,9 @@ const Head = () => {
 		}
 	}, [filter, searchQuery, customers]);
 
-	useEffect(() => {
-		dispatch(fetchCustomers());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(fetchCustomers());
+	// }, [dispatch]);
 
 	useEffect(() => {
 		setCustomers(sampleCustomers);

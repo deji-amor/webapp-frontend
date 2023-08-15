@@ -64,10 +64,18 @@ const CreatePassword = () => {
 	};
 
 	useEffect(() => {
-		console.log(validationResponse)
+		console.log({email, token})
 
 		dispatch(validateToken({email, token}))
 
+		console.log(validationResponse)
+
+		if (validationResponse) setLoading(false)
+
+		if (validationResponse === "Invalid verification link!") return navigate("/customer-token-expired")
+	}, [validationResponse, dispatch, email, token, navigate])
+
+	useEffect(() => {
 		validatePassword(
 			password,
 			setHasUpper,
@@ -87,10 +95,6 @@ const CreatePassword = () => {
 
 		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
 
-		if (validationResponse) setLoading(false)
-
-		if (validationResponse === "Invalid verification link!") return navigate("/password-expired")
-
 		if (response === "Your password has been set successfully! You can login now") return navigate("/customer-create-password-success");
 	}, [
 		password,
@@ -106,13 +110,12 @@ const CreatePassword = () => {
 		navigate,
 		validationResponse,
 		response,
-		email,
-		token,
-		validationError,
 	]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		dispatch(SET_ERROR_NULL());
 
 		if ((!password && !confirmPassword) || (!password || !confirmPassword)) return setEmpty(true);
 
@@ -147,7 +150,7 @@ const CreatePassword = () => {
 						Create Your Password 
 					</Typography>
 					<Text>
-						Hello <span style={{ color: '#2b2e72', fontWeight: '600' }}>Usera@mail.com</span>, please create your password to activate your account and login.
+						Hello <span style={{ color: '#2b2e72', fontWeight: '600' }}>{email}</span>, please create your password to activate your account and login.
 					</Text>
 				</div>
 			

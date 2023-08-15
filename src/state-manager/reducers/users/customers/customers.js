@@ -67,7 +67,7 @@ export const validateToken = createAsyncThunk(
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/check-verification-link`;
 			const response = await fetch(url, config);
 			const data = await response.json()
-			return data.message
+			return data
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -101,7 +101,7 @@ export const setCustomerPassword = createAsyncThunk(
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/onboarding`;
 			const response = await fetch(url, config);
 			const data = response.json();
-			return data.message;
+			return data
 
 		} catch (err) {
 			if (err.response && err.response.data.message) {
@@ -287,19 +287,24 @@ const customersSlice = createSlice({
 				state.successful = false;
 				state.error = false;
 				state.creationSuccess = false
+				state.validationResponse = null
 			})
 
 			.addCase(validateToken.fulfilled, (state, {payload}) => {
+				const {message, data} = payload
+				console.log(data)
 				state.loading = false;
 				state.error = false;
-				state.validationResponse = payload
+				state.validationResponse = message ? message : null
 			})
 
 			.addCase(validateToken.rejected, (state, {payload}) => {
+				const {message, data} = payload
+				console.log(data)
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false
-				state.validationResponse = payload
+				state.validationResponse = message ? message : null
 				state.successful = false;
 			})
 
@@ -308,19 +313,23 @@ const customersSlice = createSlice({
 				state.loading = true;
 				state.successful = false;
 				state.error = false;
+				state.response = null
 			})
 
-			.addCase(setCustomerPassword.fulfilled, (state, action, payload) => {
+			.addCase(setCustomerPassword.fulfilled, (state, action, {payload}) => {
+				const {message} = payload
 				state.loading = false;
 				state.error = false;
 				state.successful = true;
-				state.response = payload;
+				state.response = message ? message : null;
 			})
 
-			.addCase(setCustomerPassword.rejected, (state, action) => {
+			.addCase(setCustomerPassword.rejected, (state, {payload}) => {
+				const {message} = payload
 				state.error = true;
 				state.loading = false;
 				state.successful = false;
+				state.response = message ? message : null;
 			})
 
 			// ADDCASE FOR SUSPEND-UNSUSPEND CUSTOMER
@@ -361,7 +370,7 @@ const customersSlice = createSlice({
 				state.loading = false;
 			})
 
-			.addMatcher(resendMyVerificationLink.rejected, (state, action) => {
+			.addCase(resendMyVerificationLink.rejected, (state, action) => {
 				state.loading = false;
 			});
 	},

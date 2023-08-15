@@ -70,6 +70,8 @@ const CustomerForm = ({ open, onClose }) => {
 	const [serverError, setServerError] = useState(false);
 
 	useEffect(() => {
+		dispatch(fetchCustomers());
+		
 		if (
 			response === "Email already been used by another user!" ||
 			response === "Company name already exist!"
@@ -83,7 +85,6 @@ const CustomerForm = ({ open, onClose }) => {
 
 		const timeout = setTimeout(() => {
 			if (creationSuccess && loading) {
-				dispatch(fetchCustomers());
 				setLoading(false);
 				setSuccessModalOpen(true);
 				reset({});
