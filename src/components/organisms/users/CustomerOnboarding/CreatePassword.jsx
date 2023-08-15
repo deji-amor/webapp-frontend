@@ -67,6 +67,7 @@ const CreatePassword = () => {
 	}, [dispatch, email, token]);
 
 	useEffect(() => {
+		console.log(passwordResponse)
 		validatePassword(
 			password,
 			setHasUpper,
