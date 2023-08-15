@@ -7,10 +7,11 @@ import SmallText from '../../../atoms/tickets/CreateTicketSuperAdmin/SmallText';
 import LightText from '../../../atoms/tickets/CreateTicketSuperAdmin/LightText';
 import UserActivity from '../../../atoms/tickets/CreateTicketSuperAdmin/UserActivity';
 import { useSelector } from 'react-redux';
+import { getDateFromDateTime } from '../../../../helpers/date-manipulation';
 
 const ProductDetails = () => {
-	const data = useSelector(state => state.authUser.data)
-	const {workspaceName, firstName, lastName, email, phoneNumber} = data
+	const customer = useSelector((state) => state.ticketCreation.customer);
+	const { company_name, first_name, last_name, email, phone_number, datetime, status  } = customer;
 
   return (
 		<>
@@ -29,11 +30,11 @@ const ProductDetails = () => {
 			<div className="grid grid-cols-2 gap-x-[7rem] gap-y-[2.5rem]">
 				<div className="">
 					<LightText>Company Name</LightText>
-					<SmallText>{workspaceName}</SmallText>
+					<SmallText>{company_name}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Company Rep Full Name</LightText>
-					<SmallText>{firstName} {lastName}</SmallText>
+					<SmallText>{first_name} {last_name}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Company Rep Email</LightText>
@@ -41,15 +42,15 @@ const ProductDetails = () => {
 				</div>
 				<div className="">
 					<LightText>Company Rep Phone Number</LightText>
-					<SmallText>{phoneNumber}</SmallText>
+					<SmallText>{phone_number}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Date Created</LightText>
-					<SmallText>22/06/2023</SmallText>
+					<SmallText>{getDateFromDateTime(datetime)}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Status</LightText>
-					<UserActivity status={true} />
+					<UserActivity status={status} />
 				</div>
 			</div>
 		</>

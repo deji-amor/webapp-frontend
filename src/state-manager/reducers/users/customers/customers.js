@@ -228,6 +228,7 @@ const customersSlice = createSlice({
 			// Fetch Customers
 			.addCase(fetchCustomers.pending, (state, action) => {
 				state.loading = true;
+				state.customers = []
 			})
 
 			.addCase(fetchCustomers.fulfilled, (state, action) => {

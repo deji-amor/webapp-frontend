@@ -137,6 +137,17 @@ const AddExtraFields = () => {
 		);
 	})
 
+	const setHowInputHandler = () => {
+		setShowInput((pv) => !pv)
+	}
+
+	useEffect(() => {
+		if(showInput){
+			const divEl = document.getElementById("ticket-creation-form-sections");
+			divEl.scrollIntoView({ behavior: "smooth" });
+		}
+	}, [showInput])
+
   return (
 		<div>
 			<div className="mb-[0.25rem]">
@@ -145,14 +156,14 @@ const AddExtraFields = () => {
 			<div className="mb-[0.25rem]">
 				{
 				!hasNewFieldsReachedLimit ?
-				<IconButton bolder={true} onClick={() => setShowInput((pv) => !pv)} icon={<AddIcon />}>
+				<IconButton bolder={true} onClick={setHowInputHandler} icon={<AddIcon />}>
 					Add New Field
 				</IconButton> : 
 				<BlueThemedLightText>Reached a maximum of 3 extra fields</BlueThemedLightText>
 				}
 			</div>
 			{showInput && (
-				<div className="">
+				<div id="extra-fields-input" className="">
 					<div className="w-[18.25rem] mb-[0.25rem]">
 						<EnterFieldInput
 							id={fieldNameId}

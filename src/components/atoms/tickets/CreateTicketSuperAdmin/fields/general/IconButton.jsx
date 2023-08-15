@@ -20,7 +20,7 @@ const IconButton = ({ children, onClick, icon, bolder }) => {
 		line-height: ${bolder ? "1.25rem" : "normal"};
 	`;
 
-	return <Button onClick={onClick}>
+	return <Button type='button' onClick={onClick}>
     {icon}
     {children}
   </Button>;
