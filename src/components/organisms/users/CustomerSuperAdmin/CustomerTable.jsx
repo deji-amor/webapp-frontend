@@ -209,7 +209,6 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 											</IconButton>
 											Edit Customer Profile
 										</Link>
-										{/* {customer.status !== "inactive" && ( */}
 											<MoreOptionsDropdown
 												status={customer.status}
 												customerId={customer.id}
@@ -217,7 +216,6 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 													handleUpdateStatus(customer.id, newStatus, comment)
 												}
 											/>
-										{/* // )} */}
 									</Box>
 								</CustomTableCell>
 							</TableRow>

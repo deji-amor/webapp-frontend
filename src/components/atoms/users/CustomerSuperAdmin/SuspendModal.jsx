@@ -128,7 +128,10 @@ const SuspendModal = ({
 						Cancel
 					</Button>
 					<Button
-						onClick={handleSuspend}
+						onClick={() => {
+							onSuspend
+							onClose()
+						}}
 						variant="contained"
 						sx={suspendButtonStyles}
 						disabled={isSuspendButtonDisabled}
