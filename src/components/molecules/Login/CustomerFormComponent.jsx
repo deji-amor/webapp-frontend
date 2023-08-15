@@ -56,12 +56,12 @@ const CustomerFormComponent = () => {
 
 	useEffect(() => {
 		const getAuthTokenHandler = async () => {
-			const to = await getAuthToken(); // auth toKen
+			const to = await getAuthToken();
 			if (successful && to && wasSubmitted) {
 				usernameReset();
 				passwordReset();
 				dispatch(loginCustomerActions.resetLoginAdmin());
-				return navigate("/app/dashboard");
+				return navigate("/customer/customer-dashboard");
 			}
 		};
 		getAuthTokenHandler();
