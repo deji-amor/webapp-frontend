@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import { getAuthToken } from "../../../utilis";
 
 export const fetchTickets = createAsyncThunk("tickets", async (args, {rejectWithValue}) => {

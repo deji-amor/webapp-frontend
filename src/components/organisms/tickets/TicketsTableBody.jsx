@@ -24,9 +24,6 @@ const Edit = styled("p")`
 const TicketsTableBody = () => {
 	const {
 		tickets,
-		successful,
-		error,
-		errorMessage,
 		loading: ticketsLoading,
 		searchTicketsValue,
 		showServiceRequestsTab,
@@ -52,7 +49,7 @@ const TicketsTableBody = () => {
 	const filteredSearchTickets = useMemo(() => {
 		return filteredActiveTickets
 			.filter((ticket) => {
-				if (!searchTicketsValue) return true;
+				// COME HERE TO FILTER WITH STRING if (!searchTicketsValue) return true;
 				return true;
 			})
 			.filter(ticket => {
@@ -72,7 +69,10 @@ const TicketsTableBody = () => {
 	const list = filteredSearchTickets
 		.slice(activeTicketsStartPoint, activeTicketsEndPoint)
 		.map((ticket, ind) => (
-			<tr key={`${ticket.id}_${ind}`} className="bg-white border-b hover:bg-gray-50">
+			<tr
+				key={`${ticket.id}${ticket.user_id}${ticket.customer_id}${ticket.workspace_id}`}
+				className="bg-white border-b hover:bg-gray-50"
+			>
 				<RecentTicketTableText>
 					{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}
 				</RecentTicketTableText>
