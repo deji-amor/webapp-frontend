@@ -45,6 +45,7 @@ const usersSlice = createSlice({
 			.addCase(fetchUsers.pending, (state, action) => {
 				state.loading = true
 			})
+
 			.addCase(fetchUsers.fulfilled, (state, action) => {
 				const {status, code, data} = action.payload
 				state.loading = false
@@ -58,12 +59,13 @@ const usersSlice = createSlice({
 					state.errorMessage = "Could not fetch all users"
 				}
 			})
-      .addCase(fetchUsers.rejected, (state, action) => {
+
+			.addCase(fetchUsers.rejected, (state, action) => {
 				state.loading = false;
-					state.users = []
-					state.successful = false;
-					state.error = true;
-					state.errorMessage = "Could not fetch all users";
+				state.users = []
+				state.successful = false;
+				state.error = true;
+				state.errorMessage = "Could not fetch all users";
 			})
   }
 });

@@ -6,38 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../../atoms/users/CustomerOnboarding/Schema";
 import SuccessModal from "../../../atoms/users/CustomerOnboarding/SuccessModal";
 import { useDispatch, useSelector } from "react-redux";
-import { createCustomer, SET_RESPONSE_NULL } from "../../../../state-manager/reducers/users/customers/customers";
+import {
+	createCustomer,
+	SET_RESPONSE_NULL,
+} from "../../../../state-manager/reducers/users/customers/customers";
+import { LoaderWrapper, LoaderContainerWrapper } from "../../../atoms/Password/wrappers";
 import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import { Triangle } from "react-loader-spinner";
 import ErrorCard from "../../../molecules/Password/customErrorCard";
-
-const LoaderWrapper = styled("div")(() => ({
-	width: "100%",
-	height: "100%",
-	position: "absolute",
-	top: "0",
-	left: "0",
-	zIndex: "100",
-	backgroundColor: "rgba(255, 255, 255, .15)",
-	backdropFilter: "blur(5px)",
-}));
-
-const LoaderContainerWrapper = styled("div")(() => ({
-	width: "100%",
-	height: "100%",
-	position: "absolute",
-	top: "0",
-	left: "0",
-	zIndex: "150",
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-
-	".loader": {
-		position: "absolute",
-		zIndex: "150",
-	},
-}))
 
 const CustomerForm = ({ open, onClose }) => {
 	const dispatch = useDispatch();
@@ -66,11 +42,22 @@ const CustomerForm = ({ open, onClose }) => {
 	const [loading, setLoading] = useState(false);
 	const [serverError, setServerError] = useState(false);
 
-
 	useEffect(() => {
+		dispatch(fetchCustomers());
+		
+		if (
+			response === "Email already been used by another user!" ||
+			response === "Company name already exist!"
+		) {
+			setLoading(false);
+			const values = getValues();
+			reset(values, { keepDefaultValues: true });
+			setServerError(true);
+			return;
+		}
+
 		const timeout = setTimeout(() => {
-			if (creationSuccess && loading && response === null) {
-				dispatch(fetchCustomers());
+			if (creationSuccess && loading) {
 				setLoading(false);
 				setSuccessModalOpen(true);
 				reset({});
@@ -78,25 +65,13 @@ const CustomerForm = ({ open, onClose }) => {
 		}, 2000);
 
 		return () => timeout;
-	}, [creationSuccess, dispatch, loading, reset]);
-
-	useEffect(() => {
-		if (response) setLoading(false)
-
-		if (
-			response === "Email already been used by another user!" ||
-			response === "Company name already exist!"
-		) {
-			const values = getValues();
-			reset(values, { keepDefaultValues: true });
-			setServerError(true);
-		}
-	}, [response, getValues, reset]);
+	}, [creationSuccess, dispatch, loading, reset, response, getValues]);
 
 	const handleClose = () => {
 		onClose();
 		setLoading(false);
 		reset();
+		setServerError(false);
 	};
 
 	const [successModalOpen, setSuccessModalOpen] = useState(false);
@@ -128,33 +103,34 @@ const CustomerForm = ({ open, onClose }) => {
 
 	return (
 		<>
-		{response === "Email already been used by another user!" && (
-				<ErrorCard
-					align="left"
-					error={serverError}
-					titleSize="16px"
-					size="14px"
-					titleColor="#D73D3D"
-					color="rgba(215, 61, 61, 0.50);"
-					title="Email has already been used"
-					style={{position: "absolute", top: "200px", width: "330px"}}
-					description="The Representative email you entered already exist."
-				/>
-			) || response === "Company name already exist!" && (
-				<ErrorCard
-					align="left"
-					error={serverError}
-					titleSize="16px"
-					size="14px"
-					titleColor="#D73D3D"
-					color="rgba(215, 61, 61, 0.50);"
-					title="Compnay name already exist"
-					style={{position: "absolute", top: "200px", width: "330px"}}
-					description="Company name has been used by another user."
-				/>
-			)}
 			{(!loading && (
 				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+					{(response === "Email already been used by another user!" && (
+						<ErrorCard
+							align="left"
+							error={serverError}
+							titleSize="16px"
+							size="14px"
+							titleColor="#D73D3D"
+							color="rgba(215, 61, 61, 0.50);"
+							title="Email has already been used"
+							style={{ zIndex: "100", top: "8px", right: "0" }}
+							description="The Representative email you entered already exist."
+						/>
+					)) ||
+						(response === "Company name already exist!" && (
+							<ErrorCard
+								align="left"
+								error={serverError}
+								titleSize="16px"
+								size="14px"
+								titleColor="#D73D3D"
+								color="rgba(215, 61, 61, 0.50);"
+								title="Company name already exist"
+								style={{ zIndex: "100", top: "8px", right: "0" }}
+								description="Company name has been used by another user."
+							/>
+						))}
 					{successModalOpen && !loading && creationSuccess ? (
 						<SuccessModal
 							open={successModalOpen}
@@ -284,8 +260,8 @@ const CustomerForm = ({ open, onClose }) => {
 					<LoaderWrapper></LoaderWrapper>
 					<LoaderContainerWrapper>
 						<Triangle
-							height="300"
-							width="300"
+							height="150"
+							width="150"
 							color="#2b2e72"
 							ariaLabel="triangle-loading"
 							wrapperStyle={{}}

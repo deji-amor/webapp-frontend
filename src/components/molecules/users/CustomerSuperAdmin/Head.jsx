@@ -12,6 +12,7 @@ const Head = () => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredCustomers, setFilteredCustomers] = useState([]);
 	const [customers, setCustomers] = useState([]);
+	const [isMenuOpen, setMenuOpen] = useState(false);
 
 	const dispatch = useDispatch();
 	const {
@@ -43,9 +44,9 @@ const Head = () => {
 		}
 	}, [filter, searchQuery, customers]);
 
-	useEffect(() => {
-		dispatch(fetchCustomers());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(fetchCustomers());
+	// }, [dispatch]);
 
 	useEffect(() => {
 		setCustomers(sampleCustomers);
@@ -64,6 +65,10 @@ const Head = () => {
 		setSearchQuery(searchQuery);
 	};
 
+	const handleMenuItemClick = () => {
+    setMenuOpen(false);
+  };
+
 	return (
 		<Grid container spacing={3}>
 			<Grid item xs>
@@ -74,7 +79,7 @@ const Head = () => {
 				<HeadSearch onSearch={handleSearch} />
 			</Grid>
 			<Grid item xs>
-				<DropdownButton />
+				<DropdownButton isMenuOpen={isMenuOpen} handleMenuItemClick={handleMenuItemClick} />
 			</Grid>
 			<BasicTabs
 				filteredCustomers={filteredCustomers}

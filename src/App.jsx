@@ -20,13 +20,13 @@ import Dashboard from "./pages/app/Dashboard";
 import Tickets from "./pages/app/Tickets";
 import Users from "./pages/app/Users";
 import Reports from "./pages/app/Reports";
+import CustomerDashboard from "./pages/customer/CustomerDashboard";
 import SuperAdminVerifyEmail from "./pages/SuperAdminVerifyEmail";
 import SuperAdminOnboardingSuccess from "./pages/SuperAdminOnboardingSuccess";
 import ErrorPage from "./pages/ErrorPage";
 import CustomerOnboarding from "./pages/CustomerOnboarding";
 import CustomerCreatePassword from "./pages/CustomerCreatePassword";
 import CustomerCreatePasswordSuccess from "./pages/CustomerCreatePasswordSuccess";
-import CustomerPasswordLinkExpired from "./pages/customerPasswordLinkExpired";
 
 const MemoizedProtectedRoute = memo(ProtectedRoute)
 
@@ -42,7 +42,6 @@ function App() {
 		{ path: "/recover-password/:email/:token", element: <RecoverPassword /> },
 		{ path: "/customer-onboarding/:email/:token", element: <CustomerCreatePassword /> },
 		{ path: "/customer-create-password-success", element: <CustomerCreatePasswordSuccess /> },
-		{ path: "/customer-token-expired", element: <CustomerPasswordLinkExpired /> },
 		{ path: "/password-expired", element: <PasswordExpired /> },
 		{ path: "/password-recovery-success", element: <PasswordRecoverySuccess /> },
 		{ path: "/customer-password", element: <CustomerForgotPasswordPage /> },
@@ -61,6 +60,13 @@ function App() {
 				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute> },
 				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute> },
 				{ path: "reports", element: <MemoizedProtectedRoute><Reports /></MemoizedProtectedRoute> },
+			],
+		},
+		{
+			path: "/customer",
+			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
+			children: [
+				{ path: "customer-dashboard", element:<MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute>, index: true },
 			],
 		},
 	]);

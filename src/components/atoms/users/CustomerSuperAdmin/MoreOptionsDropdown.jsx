@@ -78,13 +78,13 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 	const handleSuspend = (customerId) => {
 		setIsSuspendModalOpen(true);
 		setCurrentCustomerId(customerId);
-		dispatch(suspendUnsuspend(customerId));
+		dispatch(suspendUnsuspend({customerId, actionType: "suspend"}));
 		handleClose();
 	};
 
 	
-	const handleResendVerification = async (customerId) => {
-		dispatch(resendVerification(customerId));
+	const handleResendVerification = async (email) => {
+		dispatch(resendVerification(email));
     handleClose();
   };
 
@@ -154,7 +154,7 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 				onClose={handleSuspendModalClose}
 				suspendComment={suspendComment}
 				onSuspendCommentChange={handleSuspendCommentChange}
-				onSuspend={handleSuspend}
+				onSuspend={() => handleSuspend(customerId)}
 				onCancel={handleSuspendModalClose}
 			/>
 		</TableCell>
