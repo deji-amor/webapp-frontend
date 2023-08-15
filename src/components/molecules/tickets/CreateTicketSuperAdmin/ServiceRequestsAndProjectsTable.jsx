@@ -9,10 +9,9 @@ import StatusTab from '../../../atoms/tickets/CreateTicketSuperAdmin/StatusTab';
 import { useSelector } from 'react-redux';
 
 const ServiceRequestsAndProjectsTable = () => {
-	const { showServiceRequestsTab, showProjectsTab, allPossibleFields } = useSelector((state) => state.ticketCreation);
+	const { showServiceRequestsTab, showProjectsTab, customer } = useSelector((state) => state.ticketCreation);
 	const tickets = useSelector((state) => state.tickets.tickets);
 	const { customers} = useSelector((state) => state.customers);
-	const customerId = allPossibleFields
 
 	const filteredActiveTickets = useMemo(() => {
 		return tickets
@@ -29,9 +28,9 @@ const ServiceRequestsAndProjectsTable = () => {
 				return customerExist ? true : false;
 			})
 			.filter((ticket) => {
-				return +ticket.customer_id === +allPossibleFields.customerId
+				return +ticket.customer_id === +customer.id
 			});
-	}, [showServiceRequestsTab, showProjectsTab, tickets, customerId]);
+	}, [showServiceRequestsTab, showProjectsTab, tickets]);
 
 	const list = filteredActiveTickets.map((ticket, ind) => (
 		<tr key={`${ticket.id}_${ind}`}>

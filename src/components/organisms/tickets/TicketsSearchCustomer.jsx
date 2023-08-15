@@ -177,7 +177,7 @@ const TicketsSearchCustomer = () => {
 													active={searchCustomersValue === customer.email}
 													onClick={() => customersValueChange(customer.email)}
 												>
-													<h3>
+													<h3 className="truncate">
 														{customer.first_name} {customer.last_name}
 													</h3>
 													<p>{customer.email}</p>
