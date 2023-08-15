@@ -8,14 +8,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
 
 const TicketsTablePagination = () => {
-	const { loading: ticketsLoading, activeTickets } = useSelector((state) => state.tickets);
+	const {
+		loading: ticketsLoading,
+		activeTickets,
+		ticketsOnEachPage,
+		showServiceRequestsTab,
+		showProjectsTab,
+	} = useSelector((state) => state.tickets);
 
 	const {loading: customersLoading } = useSelector((state) => state.customers);
 
 	const dispatch = useDispatch()
 
 	const totalItems = activeTickets.length;
-	const itemsOnEachPage = 5;
+	const itemsOnEachPage = ticketsOnEachPage;
 	const maxNumberOfButtons = 5;
 	const {
 		currentPage,
@@ -27,7 +33,12 @@ const TicketsTablePagination = () => {
 		itemStartPoint,
 		newStartingPoint,
 		newEndingPoint,
+		reset
 	} = usePagination(totalItems, itemsOnEachPage, maxNumberOfButtons);
+
+	useEffect(() => {
+		reset()
+	}, [showServiceRequestsTab, showProjectsTab]);
 
 	useEffect(() => {
 		dispatch(
@@ -36,9 +47,11 @@ const TicketsTablePagination = () => {
 		dispatch(
 			ticketsActions.updateField({ key: "activeTicketsEndPoint", value: itemEndPoint })
 		);
-	}, [itemStartPoint, itemStartPoint, totalItems])
+	}, [itemStartPoint, itemEndPoint, totalItems,dispatch])
 
 	if(ticketsLoading || customersLoading) return <></>
+
+	if(totalItems.length === 0) return <></>;
 
 	return (
 		<div className="bg-white p-[0.8rem] rounded-b-[0.75rem] border-t-2 border-b-[#ECECEC] flex items-center justify-between">
@@ -48,25 +61,28 @@ const TicketsTablePagination = () => {
 					Showing {itemStartPoint} - {itemEndPoint} of {totalItems} Results{" "}
 				</PaginationText>
 			</div>
-			<div className="flex items-center gap-[0.2rem]">
-				<ChevronLeftIcon
-					onClick={goBackward}
-					className="text-[#2B2E72] cursor-pointer"
-					style={{ fontSize: 20 }}
-				/>{" "}
-				<PaginationButtonList
-					onClick={goToPage}
-					currentPage={currentPage}
-					numberOfButtons={pages}
-					newStartingPoint={newStartingPoint}
-					newEndingPoint={newEndingPoint}
-				/>
-				<ChevronRightIcon
-					onClick={goForward}
-					className="text-[#2B2E72] cursor-pointer"
-					style={{ fontSize: 20 }}
-				/>{" "}
-			</div>
+			{
+				(itemsOnEachPage < totalItems) &&
+				<div className="flex items-center gap-[0.2rem]">
+					<ChevronLeftIcon
+						onClick={goBackward}
+						className="text-[#2B2E72] cursor-pointer"
+						style={{ fontSize: 20 }}
+					/>{" "}
+					<PaginationButtonList
+						onClick={goToPage}
+						currentPage={currentPage}
+						numberOfButtons={pages}
+						newStartingPoint={newStartingPoint}
+						newEndingPoint={newEndingPoint}
+					/>
+					<ChevronRightIcon
+						onClick={goForward}
+						className="text-[#2B2E72] cursor-pointer"
+						style={{ fontSize: 20 }}
+					/>{" "}
+				</div>
+			}
 		</div>
 	);
 }

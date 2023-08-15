@@ -6,6 +6,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { styled } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets";
+import { getDateFromDateTime } from "../../../helpers/date-manipulation";
 
 const Edit = styled("p")`
 	color: #2b2e72;
@@ -49,12 +50,18 @@ const TicketsTableBody = () => {
 	}, [showServiceRequestsTab, showProjectsTab, tickets]);
 
 	const filteredSearchTickets = useMemo(() => {
-		return filteredActiveTickets.filter(ticket => {
-			if (!searchTicketsValue) return true;
-			return true;
-		});
+		return filteredActiveTickets
+			.filter((ticket) => {
+				if (!searchTicketsValue) return true;
+				return true;
+			})
+			.filter(ticket => {
+				const customerExist = customers.find(
+					(customer) => +customer.id === +ticket.customer_id
+				);
+				return customerExist ? true : false
+			});
 	}, [searchTicketsValue, filteredActiveTickets]);
-	// console.log({filteredActiveTickets});
 
 	useEffect(() => {
 		dispatch(ticketsActions.updateField({ key: "activeTickets", value: filteredSearchTickets }));
@@ -62,25 +69,26 @@ const TicketsTableBody = () => {
 
 	if(customersLoading || ticketsLoading) return <tbody></tbody>
 
-	const list = filteredSearchTickets.slice(activeTicketsStartPoint, activeTicketsEndPoint).map((ticket, ind) => (
-		<tr key={`${ticket.id}_${ind}`} className="bg-white border-b hover:bg-gray-50">
-			<RecentTicketTableText>
-				{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name ||
-					"-----"}
-			</RecentTicketTableText>
-			<RecentTicketTableText>{ticket.ticket_form}</RecentTicketTableText>
-			<RecentTicketTableText>ASchevchenko@Servirox...</RecentTicketTableText>
-			<RecentTicketTableText>
-				<StatusTab />
-			</RecentTicketTableText>
-			<RecentTicketTableText>12/06/2023</RecentTicketTableText>
-			<RecentTicketTableText>
-				<Edit className="justify-center items-center">
-					Edit Ticket <EditIcon fontSize="small" /> <MoreVertIcon fontSize="small"></MoreVertIcon>{" "}
-				</Edit>
-			</RecentTicketTableText>
-		</tr>
-	));
+	const list = filteredSearchTickets
+		.slice(activeTicketsStartPoint, activeTicketsEndPoint)
+		.map((ticket, ind) => (
+			<tr key={`${ticket.id}_${ind}`} className="bg-white border-b hover:bg-gray-50">
+				<RecentTicketTableText>
+					{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}
+				</RecentTicketTableText>
+				<RecentTicketTableText>{ticket.ticket_form}</RecentTicketTableText>
+				<RecentTicketTableText>ASchevchenko@Servirox...</RecentTicketTableText>
+				<RecentTicketTableText>
+					<StatusTab />
+				</RecentTicketTableText>
+				<RecentTicketTableText>{getDateFromDateTime(ticket.created_at)}</RecentTicketTableText>
+				<RecentTicketTableText>
+					<Edit className="justify-center items-center">
+						Edit Ticket <EditIcon fontSize="small" /> <MoreVertIcon fontSize="small"></MoreVertIcon>{" "}
+					</Edit>
+				</RecentTicketTableText>
+			</tr>
+		));
 	return <tbody>{list}</tbody>;
 };
 

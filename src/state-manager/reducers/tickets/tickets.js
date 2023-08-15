@@ -37,6 +37,7 @@ const initialState = {
 	activeTickets: [],
 	activeTicketsStartPoint: 0,
 	activeTicketsEndPoint: 0,
+	ticketsOnEachPage: 5,
 };
 
 const ticketsSlice = createSlice({

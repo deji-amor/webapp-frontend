@@ -205,11 +205,14 @@ const initialState = {
 	showAddTicketModal: false,
 	showTemplateModal: false,
 	pathToTemplate: [],
+	showServiceRequestsTab: true,
+	showProjectsTab: false,
 	level: 0,
 	mode: "creation",
 	chosenTemplate: [],
 	allPossibleFields: allPossibleFields,
 	data: null,
+	customer: {},
 };
 
 const createTicketSlice = createSlice({
@@ -243,6 +246,7 @@ const createTicketSlice = createSlice({
 			if(window.location.pathname.includes("/tickets")){
 				return initialState
 			}else {
+				state.customer = action.payload
 				state.chosenTemplate = [];
 				state.showAddTicketModal = true;
 				state.showTemplateModal = false;
