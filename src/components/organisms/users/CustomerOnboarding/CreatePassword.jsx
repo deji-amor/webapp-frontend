@@ -47,7 +47,7 @@ const CreatePassword = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { email, token } = useParams();
-	const { validationResponse, response } = useSelector((state) => state.customers);
+	const { validationResponse, passwordResponse } = useSelector((state) => state.customers);
 
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
@@ -67,7 +67,7 @@ const CreatePassword = () => {
 
 	useEffect(() => {
 		dispatch(validateToken({ email, token }));
-	}, [validationResponse, dispatch, email, token]);
+	}, [dispatch, email, token]);
 
 	useEffect(() => {
 		validatePassword(
@@ -89,8 +89,9 @@ const CreatePassword = () => {
 
 		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
 
-		if (response === "Your password has been set successfully! You can login now")
-			return navigate("/customer-create-password-success");
+		if (passwordResponse) setLoading(false)
+
+		if (passwordResponse === "Your password has been set successfully! You can login now") return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -103,8 +104,7 @@ const CreatePassword = () => {
 		match,
 		dispatch,
 		navigate,
-		validationResponse,
-		response,
+		passwordResponse,
 	]);
 
 	const handleSubmit = (e) => {

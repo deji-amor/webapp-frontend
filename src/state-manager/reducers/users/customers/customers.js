@@ -201,6 +201,7 @@ const initialState = {
 	creationSuccess: false,
 	customers: [],
 	response: null,
+	passwordResponse: null,
 	validationResponse: null
 };
 
@@ -295,8 +296,7 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(validateToken.rejected, (state, {payload}) => {
-				const {message, data} = payload
-				console.log(data)
+				const {message} = payload
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false
@@ -309,7 +309,7 @@ const customersSlice = createSlice({
 				state.loading = true;
 				state.successful = false;
 				state.error = false;
-				state.response = null
+				state.passwordResponse = null
 			})
 
 			.addCase(setCustomerPassword.fulfilled, (state, action, {payload}) => {
@@ -317,7 +317,7 @@ const customersSlice = createSlice({
 				state.loading = false;
 				state.error = false;
 				state.successful = true;
-				state.response = message ? message : null;
+				state.passwordResponse = message ? message : null;
 			})
 
 			.addCase(setCustomerPassword.rejected, (state, {payload}) => {
@@ -325,7 +325,7 @@ const customersSlice = createSlice({
 				state.error = true;
 				state.loading = false;
 				state.successful = false;
-				state.response = message ? message : null;
+				state.passwordResponse = message ? message : null;
 			})
 
 			// ADDCASE FOR SUSPEND-UNSUSPEND CUSTOMER
