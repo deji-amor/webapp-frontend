@@ -30,6 +30,7 @@ import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/Horizo
 const MainTicketCreationForm = () => {
 	const requiredFields = useCreateTicketFields();
 	const dispatch = useDispatch();
+	const customer = useSelector((state) => state.ticketCreation.customer);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -37,7 +38,7 @@ const MainTicketCreationForm = () => {
 	};
 
 	const goBackHandler = () => {
-		dispatch(createTicketActions.goBackToAddTicketModal());
+		dispatch(createTicketActions.goBackToAddTicketModal(customer));
 	};
 
 	const {loading, error, errorMessage, successful } = useSelector(
@@ -92,7 +93,10 @@ const MainTicketCreationForm = () => {
 
 	return (
 		<form onSubmit={submitHandler}>
-			<div className="max-h-[26rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem] mb-[1rem]">
+			<div
+				id="ticket-creation-form-sections"
+				className="max-h-[26rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem] mb-[1rem]"
+			>
 				<div className="">
 					<GrayThemedLightText>Ticket Details:</GrayThemedLightText>
 				</div>
@@ -124,6 +128,7 @@ const MainTicketCreationForm = () => {
 					<div className="">{dropOffLocation && <DropOffLocation />}</div>
 					<div className="">{location && <Location />}</div>
 					<div className="">{additionalFields && <AddExtraFields />}</div>
+					<div id="ticket-creation-form-sections"></div>
 				</div>
 			</div>
 			<div className="flex items-center justify-end gap-[1rem]">

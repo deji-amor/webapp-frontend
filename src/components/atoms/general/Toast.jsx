@@ -12,7 +12,7 @@ const Container = styled("div")`
 	align-items: center;
 	gap: 0.75rem;
 	border-radius: 0.5rem;
-	background: ${({ type }) => (type === "successful" ? "#D3DED4" : "rgb(238,6,6)")};
+	background: ${({ type }) => (type === "successful" ? "#D3DED4" : "#D3DED4")};
 	z-index: 110;
 	.error-icon {
 		width: 1.5rem;

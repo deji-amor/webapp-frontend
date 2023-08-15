@@ -18,17 +18,12 @@ const ProductDetails = () => {
 	const customer = useSelector((state) => state.ticketCreation.customer);
 	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
 
-	const initialFields = [
-		{ label: "Company Name*", name: "company_name", type: "text", editable: false },
-		{ label: "Representative Name*", name: "full_name", type: "text", editable: false },
-		{ label: "Representative Email*", name: "email", type: "email", editable: false },
-	];
+	
 
 	const handleEditIconClick = () => {
 		setSelectedCustomer(customer);
 		setShowEditableFields(true);
 	};
-	const fullName = `${first_name} ${last_name}`;
 
 	return (
 		<>
@@ -76,11 +71,7 @@ const ProductDetails = () => {
 				<EditableFields
 					open={true}
 					onClose={() => console.log("Closed")}
-					initialFields={initialFields}
-					customer={{
-						...selectedCustomer,
-						full_name: fullName,
-					}}
+					customer={selectedCustomer}
 					onClick={() => console.log("Clicked")}
 				/>
 			)}
