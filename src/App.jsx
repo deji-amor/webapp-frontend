@@ -26,7 +26,7 @@ import ErrorPage from "./pages/ErrorPage";
 import CustomerOnboarding from "./pages/CustomerOnboarding";
 import CustomerCreatePassword from "./pages/CustomerCreatePassword";
 import CustomerCreatePasswordSuccess from "./pages/CustomerCreatePasswordSuccess";
-import CustomerPasswordLinkExpired from "./pages/customerPasswordLinkExpired";
+import CustomerPasswordLinkExpired from "./pages/CustomerPasswordLinkExpired";
 
 const MemoizedProtectedRoute = memo(ProtectedRoute)
 
