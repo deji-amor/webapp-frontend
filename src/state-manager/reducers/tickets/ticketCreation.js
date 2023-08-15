@@ -70,6 +70,7 @@ export const allRequiredFields = {
 	startDateTime: getTodayAndTomorrow().today,
 	endDateTime: getTodayAndTomorrow().tomorrow,
 	hardwareComponentTypeList: [],
+	hardwareComponentTypeQuantity: "1",
 	hardwareQuantity: "1",
 	hardwareName: "",
 	// hardwareComponentTypeQuantityValue: "1",

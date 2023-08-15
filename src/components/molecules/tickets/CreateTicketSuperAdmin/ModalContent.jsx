@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductDetails from "./ProductDetails";
 import ServiceRequestsAndProjectsTable from "./ServiceRequestsAndProjectsTable";
 import CompanyName from "../../../atoms/tickets/CreateTicketSuperAdmin/CompanyName";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
 
 const ModalContent = () => {
 	const customer = useSelector((state) => state.ticketCreation.customer);
 	const { company_name} = customer;
+
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if(!company_name){
+			dispatch(createTicketActions.toggleTemplateModal())
+		}
+	}, [dispatch])
 
 	return (
 		<div>
