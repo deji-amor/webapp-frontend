@@ -45,7 +45,7 @@ const CreatePassword = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { email, token } = useParams();
-	const response = useSelector((state) => state.setCustomerPassword);
+	const { response } = useSelector((state) => state.customers);
 
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
@@ -85,9 +85,8 @@ const CreatePassword = () => {
 
 		if (response) setLoading(false)
 
-		// CONDITION if (response === "Invalid request!") return navigate("/password-expired")
+		if (response === "Invalid verification link!") return navigate("/password-expired")
 
-		// CONDITION if (response === "You can not use your previous password!") return setServerError(true);
 
 		if (response === "Your password created successfully!") return navigate("/customer-create-password-success");
 	}, [
