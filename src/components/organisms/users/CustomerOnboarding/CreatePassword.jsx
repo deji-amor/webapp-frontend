@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ForgotEmailWrapper as ForgotPasswordResetWrapper } from "../../../atoms/Password/wrappers";
-import { setCustomerPassword, SET_ERROR_NULL, validateToken } from "../../../../state-manager/reducers/users/customers/customers";
+import {
+	setCustomerPassword,
+	SET_ERROR_NULL,
+	validateToken,
+} from "../../../../state-manager/reducers/users/customers/customers";
 import ErrorCard from "../../../molecules/Password/customErrorCard";
 import CustomButton from "../../../atoms/Password/customButton";
 import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
+import PasswordLinkExp from "./passwordLinkExp";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
 import { Typography, styled } from "@mui/material";
 
 const CreatePassword = () => {
-
 	const Typography = styled("h3")`
-		color: #2B2E72;
+		color: #2b2e72;
 		text-align: center;
 		font-family: Poppins;
 		font-size: 35px;
@@ -24,15 +28,13 @@ const CreatePassword = () => {
 	const Text = styled("p")`
 		color: #828282;
 		text-align: center;
-		font-feature-settings: 'salt' on;
+		font-feature-settings: "salt" on;
 		font-family: Poppins;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 500;
 		line-height: 162.023%; /* 22.683px */
 	`;
-
-
 
 	const [error, setError] = useState(false);
 	const [validationError, setValidationError] = useState(false);
@@ -60,20 +62,12 @@ const CreatePassword = () => {
 		setServerError(false);
 		setValidationError(false);
 		dispatch(SET_ERROR_NULL());
-		setEmpty(false)
+		setEmpty(false);
 	};
 
 	useEffect(() => {
-		console.log({email, token})
-
-		dispatch(validateToken({email, token}))
-
-		console.log(validationResponse)
-
-		if (validationResponse) setLoading(false)
-
-		if (validationResponse === "Invalid verification link!") return navigate("/customer-token-expired")
-	}, [validationResponse, dispatch, email, token, navigate])
+		dispatch(validateToken({ email, token }));
+	}, [validationResponse, dispatch, email, token]);
 
 	useEffect(() => {
 		validatePassword(
@@ -95,7 +89,8 @@ const CreatePassword = () => {
 
 		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
 
-		if (response === "Your password has been set successfully! You can login now") return navigate("/customer-create-password-success");
+		if (response === "Your password has been set successfully! You can login now")
+			return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -117,11 +112,11 @@ const CreatePassword = () => {
 
 		dispatch(SET_ERROR_NULL());
 
-		if ((!password && !confirmPassword) || (!password || !confirmPassword)) return setEmpty(true);
+		if ((!password && !confirmPassword) || !password || !confirmPassword) return setEmpty(true);
 
 		if (!validators.every((each) => each === true)) return setValidationError(true);
 
-		setLoading(true)
+		setLoading(true);
 
 		try {
 			dispatch(setCustomerPassword({ email, token, password, confirmPassword }));
@@ -132,67 +127,70 @@ const CreatePassword = () => {
 
 	return (
 		<ForgotPasswordResetWrapper>
-			<ErrorCard
-				align="left"
-				error={serverError}
-				titleSize="16px"
-				size="14px"
-				titleColor="#D73D3D"
-				color="rgba(215, 61, 61, 0.50);"
-				title="Password already used"
-				description="The password you entered has already been used by you. Please enter a new one."
-			/>
-			<div style={{ display: "flex", justifyContent: "center"  }}>
-				<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
-			</div>
-				<div>
-					<Typography component={"h3"}>
-						Create Your Password 
-					</Typography>
-					<Text>
-						Hello <span style={{ color: '#2b2e72', fontWeight: '600' }}>{email}</span>, please create your password to activate your account and login.
-					</Text>
-				</div>
-			
-			<ForgotPasswordRecoveryInput
-				label="Enter New Password"
-				placeholder="Password"
-				name="password"
-				type="password"
-				empty={empty}
-				validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
-				match={match}
-				value={password}
-				confirm={confirmPassword}
-				validationError={validationError}
-				handleChange={handleChange}
-			/>
+			{(validationResponse === "Invalid verification link!" && <PasswordLinkExp />) || (
+				<>
+					<ErrorCard
+						align="left"
+						error={serverError}
+						titleSize="16px"
+						size="14px"
+						titleColor="#D73D3D"
+						color="rgba(215, 61, 61, 0.50);"
+						title="Password already used"
+						description="The password you entered has already been used by you. Please enter a new one."
+					/>
+					<div style={{ display: "flex", justifyContent: "center" }}>
+						<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
+					</div>
+					<div>
+						<Typography component={"h3"}>Create Your Password</Typography>
+						<Text>
+							Hello <span style={{ color: "#2b2e72", fontWeight: "600" }}>{email}</span>, please
+							create your password to activate your account and login.
+						</Text>
+					</div>
 
-			<ForgotPasswordRecoveryInput
-				type="password"
-				empty={empty}
-				name="confirmPassword"
-				placeholder="Password"
-				label="Confirm New Password"
-				validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
-				single={true}
-				forgotPasswordRecoveryError={error && confirmPassword.length > 0}
-				match={match}
-				value={password}
-				validationError={validationError}
-				confirm={confirmPassword}
-				handleChange={handleChange}
-			/>
+					<ForgotPasswordRecoveryInput
+						label="Enter New Password"
+						placeholder="Password"
+						name="password"
+						type="password"
+						empty={empty}
+						validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
+						match={match}
+						value={password}
+						confirm={confirmPassword}
+						validationError={validationError}
+						handleChange={handleChange}
+					/>
 
-			<CustomButton
-				butText="Confirm"
-				butType="button"
-				onClick={handleSubmit}
-				loading={loading}
-				error={error}
-				serverError={serverError}
-				// defaultCursor={serverError || error || validationError || !password || !confirmPassword}
-			/>
+					<ForgotPasswordRecoveryInput
+						type="password"
+						empty={empty}
+						name="confirmPassword"
+						placeholder="Password"
+						label="Confirm New Password"
+						validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
+						single={true}
+						forgotPasswordRecoveryError={error && confirmPassword.length > 0}
+						match={match}
+						value={password}
+						validationError={validationError}
+						confirm={confirmPassword}
+						handleChange={handleChange}
+					/>
+
+					<CustomButton
+						butText="Confirm"
+						butType="button"
+						onClick={handleSubmit}
+						loading={loading}
+						error={error}
+						serverError={serverError}
+						// defaultCursor={serverError || error || validationError || !password || !confirmPassword}
+					/>
+				</>
+			)}
 		</ForgotPasswordResetWrapper>
 	);
 };

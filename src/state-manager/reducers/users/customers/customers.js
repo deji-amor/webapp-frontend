@@ -2,7 +2,6 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../../utilis";
 import {encrypt} from "n-krypta";
 
-
 export const fetchCustomers = createAsyncThunk("customers", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
