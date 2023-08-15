@@ -72,18 +72,21 @@ export default function BasicTabs({ filteredCustomers }) {
 		setSortedCustomers(filteredCustomers);
 	}, [filteredCustomers]);
 
+	console.log(filteredCustomers);
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 
 	const handleSort = (ascending) => {
 		const sorted = [...sortedCustomers].sort((a, b) => {
-			const nameA = a.companyName.toLowerCase();
-			const nameB = b.companyName.toLowerCase();
+			const nameA = a.company_name.toLowerCase();
+			const nameB = b.company_name.toLowerCase();
 			return ascending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
 		});
 		setSortedCustomers(sorted);
 	};
+	console.log(sortedCustomers);
 
 	const handleUpdateStatus = (customerId, newStatus, comment) => {
 		console.log("ACTIVE");

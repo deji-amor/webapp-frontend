@@ -32,10 +32,11 @@ const Head = () => {
 				return (
 					(filter === "All" || customer.status === filter) &&
 					(searchQuery === "" ||
-						customer.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.representativeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						customer.company_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						customer.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						customer.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 						customer.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.representativeEmail.toLowerCase().includes(searchQuery.toLowerCase()))
+						customer.email.toLowerCase().includes(searchQuery.toLowerCase()))
 				);
 			});
 			setFilteredCustomers(filtered);

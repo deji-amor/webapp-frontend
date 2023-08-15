@@ -6,9 +6,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../../atoms/users/CustomerOnboarding/Schema";
 import SuccessModal from "../../../atoms/users/CustomerOnboarding/SuccessModal";
 import { useDispatch, useSelector } from "react-redux";
-import { createCustomer } from "../../../../state-manager/reducers/users/customers/customers";
+import {
+	createCustomer,
+	SET_RESPONSE_NULL,
+} from "../../../../state-manager/reducers/users/customers/customers";
 import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import { Triangle } from "react-loader-spinner";
+import ErrorCard from "../../../molecules/Password/customErrorCard";
 
 const LoaderWrapper = styled("div")(() => ({
 	width: "100%",
@@ -36,7 +40,7 @@ const LoaderContainerWrapper = styled("div")(() => ({
 		position: "absolute",
 		zIndex: "150",
 	},
-}))
+}));
 
 const CustomerForm = ({ open, onClose }) => {
 	const dispatch = useDispatch();
@@ -46,6 +50,7 @@ const CustomerForm = ({ open, onClose }) => {
 		control,
 		formState: { errors, isValid },
 		reset,
+		getValues,
 	} = useForm({
 		defaultValues: {
 			companyName: "",
@@ -59,11 +64,23 @@ const CustomerForm = ({ open, onClose }) => {
 		resolver: yupResolver(schema),
 	});
 
+	const { response } = useSelector((state) => state.customers);
 	const { creationSuccess } = useSelector((state) => state.customers);
 	const [loading, setLoading] = useState(false);
-
+	const [serverError, setServerError] = useState(false);
 
 	useEffect(() => {
+		if (
+			response === "Email already been used by another user!" ||
+			response === "Company name already exist!"
+		) {
+			setLoading(false);
+			const values = getValues();
+			reset(values, { keepDefaultValues: true });
+			setServerError(true);
+			return;
+		}
+
 		const timeout = setTimeout(() => {
 			if (creationSuccess && loading) {
 				dispatch(fetchCustomers());
@@ -74,7 +91,7 @@ const CustomerForm = ({ open, onClose }) => {
 		}, 2000);
 
 		return () => timeout;
-	}, [creationSuccess, dispatch, loading, reset]);
+	}, [creationSuccess, dispatch, loading, reset, response, getValues]);
 
 	const handleClose = () => {
 		onClose();
@@ -85,7 +102,8 @@ const CustomerForm = ({ open, onClose }) => {
 	const [successModalOpen, setSuccessModalOpen] = useState(false);
 
 	const handleFormSubmit = async (data) => {
-		console.log("Form data:", data);
+		dispatch(SET_RESPONSE_NULL());
+		setServerError(false);
 		setLoading(true);
 		dispatch(createCustomer(data));
 	};
@@ -112,6 +130,32 @@ const CustomerForm = ({ open, onClose }) => {
 		<>
 			{(!loading && (
 				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+					{(response === "Email already been used by another user!" && (
+						<ErrorCard
+							align="left"
+							error={serverError}
+							titleSize="16px"
+							size="14px"
+							titleColor="#D73D3D"
+							color="rgba(215, 61, 61, 0.50);"
+							title="Email has already been used"
+							style={{ zIndex: "100", top: "8px", right: "0" }}
+							description="The Representative email you entered already exist."
+						/>
+					)) ||
+						(response === "Company name already exist!" && (
+							<ErrorCard
+								align="left"
+								error={serverError}
+								titleSize="16px"
+								size="14px"
+								titleColor="#D73D3D"
+								color="rgba(215, 61, 61, 0.50);"
+								title="Compnay name already exist"
+								style={{ zIndex: "100", top: "8px", right: "0" }}
+								description="Company name has been used by another user."
+							/>
+						))}
 					{successModalOpen && !loading && creationSuccess ? (
 						<SuccessModal
 							open={successModalOpen}

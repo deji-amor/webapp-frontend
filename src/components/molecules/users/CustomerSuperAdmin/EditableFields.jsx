@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Button,
 	Dialog,
@@ -13,19 +13,11 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
+import { isEqual } from 'lodash'
 
-function EditableFields() {
+function EditableFields({ open, onClose, initialFields, customer }) {
 	const [openModal, setOpenModal] = useState(false);
-	const [fields, setFields] = useState([
-		{ label: "Company Name*", type: "text", required: true },
-		{ label: "Representative first Name*", type: "text", required: true },
-		{ label: "Company representative last name*", type: "text", required: true },
-		{ label: "Company representative email*", type: "text", required: true },
-		{ label: "Company representative phone number", type: "text", required: false },
-		{ label: "Company finance team email", type: "text", required: false },
-		{ label: "Company official email", type: "text", required: false },
-	]);
-
+	const [fields, setFields] = useState(initialFields);
 	const [newField, setNewField] = useState("");
 	const [addingNewField, setAddingNewField] = useState(false);
 	const [isFormEdited, setIsFormEdited] = useState(false);
@@ -39,9 +31,19 @@ function EditableFields() {
 		setNewField("");
 		setAddingNewField(false);
 		setIsFormEdited(false);
-		const resetFields = fields.map((field) => ({ ...field, editable: false }));
-		setFields(resetFields);
-	};
+	  };
+
+	  useEffect(() => {
+		if (customer && !isEqual(fields.map((f) => (f.name && customer[f.name] ?  f.value : '') ), fields.map(f => f.value) )) {
+			const populatedFields = fields.map((field) => ({
+			...field,
+			value: customer[field.name] || "",
+			}));
+			
+			 setFields(populatedFields);
+		}
+	}, [customer]);
+	
 
 	const handleAddNewField = () => {
 		setAddingNewField(true);
@@ -89,9 +91,6 @@ function EditableFields() {
 
 	return (
 		<div>
-			<Button variant="outlined" onClick={handleOpenModal}>
-				Open Modal
-			</Button>
 			<Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="md">
 				<DialogTitle>
 					Edit Profile Fields
@@ -107,9 +106,9 @@ function EditableFields() {
 						gap: "20px",
 					}}
 				>
-					{fields.map((field) => (
+					{fields.map((field, index) => (
 						<FormControl
-							key={field.id}
+							key={index}
 							fullWidth
 							sx={{
 								mb: "0.5rem",
@@ -138,6 +137,7 @@ function EditableFields() {
 							{field.label}
 							<TextField
 								type={field.type}
+								value={field.value}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
