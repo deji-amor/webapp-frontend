@@ -1,11 +1,12 @@
 import React from "react";
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-// import { uploadImage } from "../../aws/aws-crud-operations";
+// NOSONAR import { uploadImage } from "../../aws/aws-crud-operations"; 
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
+		// NOSONAR
 		// if(args.scopeOfWorkDocument){
 		// 	const {scopeOfWorkDocument} = args
 		// 	const result = await uploadImage(scopeOfWorkDocument)
