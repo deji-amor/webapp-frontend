@@ -98,6 +98,7 @@ const CustomerForm = ({ open, onClose }) => {
 		onClose();
 		setLoading(false);
 		reset();
+		setServerError(false);
 	};
 
 	const [successModalOpen, setSuccessModalOpen] = useState(false);
@@ -152,7 +153,7 @@ const CustomerForm = ({ open, onClose }) => {
 								size="14px"
 								titleColor="#D73D3D"
 								color="rgba(215, 61, 61, 0.50);"
-								title="Compnay name already exist"
+								title="Company name already exist"
 								style={{ zIndex: "100", top: "8px", right: "0" }}
 								description="Company name has been used by another user."
 							/>

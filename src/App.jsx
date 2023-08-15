@@ -20,6 +20,7 @@ import Dashboard from "./pages/app/Dashboard";
 import Tickets from "./pages/app/Tickets";
 import Users from "./pages/app/Users";
 import Reports from "./pages/app/Reports";
+import CustomerDashboard from "./pages/customer/CustomerDashboard";
 import SuperAdminVerifyEmail from "./pages/SuperAdminVerifyEmail";
 import SuperAdminOnboardingSuccess from "./pages/SuperAdminOnboardingSuccess";
 import ErrorPage from "./pages/ErrorPage";
@@ -59,6 +60,13 @@ function App() {
 				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute> },
 				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute> },
 				{ path: "reports", element: <MemoizedProtectedRoute><Reports /></MemoizedProtectedRoute> },
+			],
+		},
+		{
+			path: "/customer",
+			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
+			children: [
+				{ path: "customer-dashboard", element:<MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute>, index: true },
 			],
 		},
 	]);
