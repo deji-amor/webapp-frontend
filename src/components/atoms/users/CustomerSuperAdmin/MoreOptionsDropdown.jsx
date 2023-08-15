@@ -83,8 +83,8 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 	};
 
 	
-	const handleResendVerification = async (customerId) => {
-		dispatch(resendVerification(customerId));
+	const handleResendVerification = async (email) => {
+		dispatch(resendVerification(email));
     handleClose();
   };
 
