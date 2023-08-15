@@ -6,14 +6,13 @@ import {
 	SET_ERROR_NULL,
 	validateToken,
 } from "../../../../state-manager/reducers/users/customers/customers";
-import ErrorCard from "../../../molecules/Password/customErrorCard";
 import CustomButton from "../../../atoms/Password/customButton";
 import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
 import PasswordLinkExp from "./passwordLinkExp";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
-import { Typography, styled } from "@mui/material";
+import { styled } from "@mui/material";
 
 const CreatePassword = () => {
 	const Typography = styled("h3")`
@@ -38,7 +37,6 @@ const CreatePassword = () => {
 
 	const [error, setError] = useState(false);
 	const [validationError, setValidationError] = useState(false);
-	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
 	const [empty, setEmpty] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -59,7 +57,6 @@ const CreatePassword = () => {
 
 	const handleChange = (e) => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
-		setServerError(false);
 		setValidationError(false);
 		dispatch(SET_ERROR_NULL());
 		setEmpty(false);
@@ -129,16 +126,6 @@ const CreatePassword = () => {
 		<ForgotPasswordResetWrapper>
 			{(validationResponse === "Invalid verification link!" && <PasswordLinkExp email={email} />) || (
 				<>
-					<ErrorCard
-						align="left"
-						error={serverError}
-						titleSize="16px"
-						size="14px"
-						titleColor="#D73D3D"
-						color="rgba(215, 61, 61, 0.50);"
-						title="Password already used"
-						description="The password you entered has already been used by you. Please enter a new one."
-					/>
 					<div style={{ display: "flex", justifyContent: "center" }}>
 						<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
 					</div>
@@ -186,8 +173,6 @@ const CreatePassword = () => {
 						onClick={handleSubmit}
 						loading={loading}
 						error={error}
-						serverError={serverError}
-						// defaultCursor={serverError || error || validationError || !password || !confirmPassword}
 					/>
 				</>
 			)}
