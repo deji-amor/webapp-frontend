@@ -1,5 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../../utilis";
+import {encrypt} from "n-krypta";
+
 
 export const fetchCustomers = createAsyncThunk("customers", async (args, {rejectWithValue}) => {
 	try {
@@ -27,7 +29,6 @@ export const fetchCustomers = createAsyncThunk("customers", async (args, {reject
 export const createCustomer = createAsyncThunk(
 	"createCustomer",
 	async (args, {rejectWithValue}) => {
-		console.log(args);
 		try {
 			const token = await getAuthToken();
 			const config = {
@@ -41,7 +42,7 @@ export const createCustomer = createAsyncThunk(
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/create-account`;
 			const response = await fetch(url, config);
 			const data = response.json();
-			return data.message;
+			return data;
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -52,11 +53,9 @@ export const createCustomer = createAsyncThunk(
 	}
 );
 
-// CUSTOMER PASSWORD
-export const setCustomerPassword = createAsyncThunk(
-	"setCustomerPassword",
+export const validateToken = createAsyncThunk(
+	"validateToken",
 	async (args, {rejectWithValue}) => {
-		console.log(args);
 		try {
 			const config = {
 				method: "POST",
@@ -65,10 +64,45 @@ export const setCustomerPassword = createAsyncThunk(
 				},
 				body: JSON.stringify(args),
 			};
+			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/check-verification-link`;
+			const response = await fetch(url, config);
+			const data = await response.json()
+			return data.message
+		} catch (err) {
+			if (err.response && err.response.data.message) {
+				return rejectWithValue(err.response.data.message);
+			} else {
+				return rejectWithValue(err.message);
+			}
+		}
+	}
+);
+
+
+// CUSTOMER PASSWORD
+export const setCustomerPassword = createAsyncThunk(
+	"setCustomerPassword",
+	async (args, {rejectWithValue}) => {
+		const { email, token, password, confirmPassword } = args
+		
+		try {
+			const config = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email,
+					token,
+					password: encrypt(password, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+					confirmPassword: encrypt(confirmPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`)
+				})
+			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/onboarding`;
 			const response = await fetch(url, config);
 			const data = response.json();
 			return data.message;
+
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -171,6 +205,7 @@ const initialState = {
 	creationSuccess: false,
 	customers: [],
 	response: null,
+	validationResponse: null
 };
 
 const customersSlice = createSlice({
@@ -181,15 +216,21 @@ const customersSlice = createSlice({
 			state.users = [];
 		},
 
+		SET_ERROR_NULL: (state, {paload}) => {
+            state.validationResponse = null
+        },
+		
 		SET_RESPONSE_NULL: (state, action) => {
 			state.response = null;
 		},
 	},
 	extraReducers: builder => {
 		builder
+			// Fetch Customers
 			.addCase(fetchCustomers.pending, (state, action) => {
 				state.loading = true;
 			})
+
 			.addCase(fetchCustomers.fulfilled, (state, action) => {
 				const {status, code, data} = action.payload;
 				state.loading = false;
@@ -203,6 +244,7 @@ const customersSlice = createSlice({
 					state.errorMessage = "Could not fetch all customers";
 				}
 			})
+
 			.addCase(fetchCustomers.rejected, (state, action) => {
 				state.loading = false;
 				state.customers = [];
@@ -221,18 +263,44 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(createCustomer.fulfilled, (state, {payload}) => {
+				const {code, status, message} = payload
+				console.log({code, status, message})
 				state.loading = false;
 				state.error = false;
 				state.creationSuccess = true;
-				state.response = payload;
+				state.response = message ? message : null;
 			})
 
 			.addCase(createCustomer.rejected, (state, {payload}) => {
+				const {code, status, message} = payload
+				console.log({code, status, message})
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false;
 				state.successful = false;
-				state.response = payload;
+				state.response = message ? message : null;
+			})
+
+			// ADDCASE FOR VALIDATE TOKEN
+			.addCase(validateToken.pending, (state, action) => {
+				state.loading = true;
+				state.successful = false;
+				state.error = false;
+				state.creationSuccess = false
+			})
+
+			.addCase(validateToken.fulfilled, (state, {payload}) => {
+				state.loading = false;
+				state.error = false;
+				state.validationResponse = payload
+			})
+
+			.addCase(validateToken.rejected, (state, {payload}) => {
+				state.error = true;
+				state.loading = false;
+				state.creationSuccess = false
+				state.validationResponse = payload
+				state.successful = false;
 			})
 
 			// ADDCASE CUSTOMER SET PASSWORD
@@ -248,6 +316,7 @@ const customersSlice = createSlice({
 				state.successful = true;
 				state.response = payload;
 			})
+
 			.addCase(setCustomerPassword.rejected, (state, action) => {
 				state.error = true;
 				state.loading = false;
@@ -258,11 +327,13 @@ const customersSlice = createSlice({
 			.addCase(suspendUnsuspend.pending, (state, action) => {
 				state.loading = true;
 			})
+
 			.addCase(suspendUnsuspend.fulfilled, (state, action) => {
 				state.loading = false;
 				state.error = false;
 				state.successful = true;
 			})
+
 			.addCase(suspendUnsuspend.rejected, (state, action) => {
 				state.error = true;
 				state.loading = false;
@@ -272,9 +343,11 @@ const customersSlice = createSlice({
 			.addCase(resendVerification.pending, (state, action) => {
 				state.loading = true;
 			})
+
 			.addCase(resendVerification.fulfilled, (state, action) => {
 				state.loading = false;
 			})
+
 			.addCase(resendVerification.rejected, (state, action) => {
 				state.loading = false;
 			})
@@ -283,9 +356,11 @@ const customersSlice = createSlice({
 			.addCase(resendMyVerificationLink.pending, (state, action) => {
 				state.loading = true;
 			})
+
 			.addCase(resendMyVerificationLink.fulfilled, (state, action) => {
 				state.loading = false;
 			})
+
 			.addMatcher(resendMyVerificationLink.rejected, (state, action) => {
 				state.loading = false;
 			});
@@ -293,5 +368,6 @@ const customersSlice = createSlice({
 });
 
 export default customersSlice.reducer;
+export const { SET_ERROR_NULL } = customersSlice.actions
 export const customerActions = customersSlice.actions;
 export const {SET_RESPONSE_NULL} = customersSlice.actions;
