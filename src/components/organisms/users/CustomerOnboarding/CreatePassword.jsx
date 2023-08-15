@@ -67,7 +67,7 @@ const CreatePassword = () => {
 	}, [dispatch, email, token]);
 
 	useEffect(() => {
-		console.log(passwordResponse)
+		console.log(passwordResponse);
 		validatePassword(
 			password,
 			setHasUpper,
@@ -113,12 +113,11 @@ const CreatePassword = () => {
 		setLoading(true);
 
 		try {
-			dispatch(setCustomerPassword({ email, token, password, confirmPassword }))
-			.then(() => {
+			dispatch(setCustomerPassword({ email, token, password, confirmPassword })).then(() => {
 				setTimeout(() => {
-					setLoading(false)
-					navigate("/customer-create-password-success")
-				}, 1000)
+					setLoading(false);
+					navigate("/customer-create-password-success");
+				}, 1000);
 			});
 		} catch (err) {
 			// CONSOLE console.log(err);
@@ -127,58 +126,54 @@ const CreatePassword = () => {
 
 	return (
 		<ForgotPasswordResetWrapper>
-			{(validationResponse === "Invalid verification link!" && <PasswordLinkExp email={email} />) || (
-				<>
-					<div style={{ display: "flex", justifyContent: "center" }}>
-						<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
-					</div>
-					<div>
-						<Typography component={"h3"}>Create Your Password</Typography>
-						<Text>
-							Hello <span style={{ color: "#2b2e72", fontWeight: "600" }}>{email}</span>, please
-							create your password to activate your account and login.
-						</Text>
-					</div>
+			<div style={{ display: "flex", justifyContent: "center" }}>
+				<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
+			</div>
+			<div>
+				<Typography component={"h3"}>Create Your Password</Typography>
+				<Text>
+					Hello <span style={{ color: "#2b2e72", fontWeight: "600" }}>{email}</span>, please create
+					your password to activate your account and login.
+				</Text>
+			</div>
 
-					<ForgotPasswordRecoveryInput
-						label="Enter New Password"
-						placeholder="Password"
-						name="password"
-						type="password"
-						empty={empty}
-						validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
-						match={match}
-						value={password}
-						confirm={confirmPassword}
-						validationError={validationError}
-						handleChange={handleChange}
-					/>
+			<ForgotPasswordRecoveryInput
+				label="Enter New Password"
+				placeholder="Password"
+				name="password"
+				type="password"
+				empty={empty}
+				validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
+				match={match}
+				value={password}
+				confirm={confirmPassword}
+				validationError={validationError}
+				handleChange={handleChange}
+			/>
 
-					<ForgotPasswordRecoveryInput
-						type="password"
-						empty={empty}
-						name="confirmPassword"
-						placeholder="Password"
-						label="Confirm New Password"
-						validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
-						single={true}
-						forgotPasswordRecoveryError={error && confirmPassword.length > 0}
-						match={match}
-						value={password}
-						validationError={validationError}
-						confirm={confirmPassword}
-						handleChange={handleChange}
-					/>
+			<ForgotPasswordRecoveryInput
+				type="password"
+				empty={empty}
+				name="confirmPassword"
+				placeholder="Password"
+				label="Confirm New Password"
+				validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
+				single={true}
+				forgotPasswordRecoveryError={error && confirmPassword.length > 0}
+				match={match}
+				value={password}
+				validationError={validationError}
+				confirm={confirmPassword}
+				handleChange={handleChange}
+			/>
 
-					<CustomButton
-						butText="Confirm"
-						butType="button"
-						onClick={handleSubmit}
-						loading={loading}
-						error={error}
-					/>
-				</>
-			)}
+			<CustomButton
+				butText="Confirm"
+				butType="button"
+				onClick={handleSubmit}
+				loading={loading}
+				error={error}
+			/>
 		</ForgotPasswordResetWrapper>
 	);
 };
