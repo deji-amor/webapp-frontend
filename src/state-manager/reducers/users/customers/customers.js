@@ -115,6 +115,7 @@ export const setCustomerPassword = createAsyncThunk(
 export const suspendUnsuspend = createAsyncThunk(
 	"suspendUnsuspend",
 	async (args, {rejectWithValue}) => {
+		console.log(args);
 		try {
 			const token = await getAuthToken();
 			const config = {
@@ -124,6 +125,7 @@ export const suspendUnsuspend = createAsyncThunk(
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(args),
+				
 			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/suspend-unsuspend`;
 			const response = await fetch(url, config);
