@@ -91,6 +91,9 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 
 	return (
 		<div>
+			<Button variant="outlined" onClick={handleOpenModal}>
+				Open Modal
+			</Button>
 			<Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="md">
 				<DialogTitle>
 					Edit Profile Fields
