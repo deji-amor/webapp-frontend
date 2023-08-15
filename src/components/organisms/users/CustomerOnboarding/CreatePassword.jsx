@@ -86,10 +86,6 @@ const CreatePassword = () => {
 		}
 
 		if (!password && !confirmPassword) dispatch(SET_ERROR_NULL());
-
-		if (passwordResponse) setLoading(false)
-
-		if (passwordResponse === "Your password has been set successfully! You can login now") return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -117,7 +113,13 @@ const CreatePassword = () => {
 		setLoading(true);
 
 		try {
-			dispatch(setCustomerPassword({ email, token, password, confirmPassword }));
+			dispatch(setCustomerPassword({ email, token, password, confirmPassword }))
+			.then(() => {
+				setTimeout(() => {
+					setLoading(false)
+					navigate("/customer-create-password-success")
+				}, 1000)
+			});
 		} catch (err) {
 			// CONSOLE console.log(err);
 		}
