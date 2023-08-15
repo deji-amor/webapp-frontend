@@ -10,6 +10,7 @@ const useCreateTicketFormValidator = () => {
 		pointOfContactPhoneNumberIsValid,
 		pointOfContactAddressIsValid,
 		scopeOfWorkDescriptionIsValid,
+		durationIsValid,
 		hardwareComponentTypeQuantityNameIsValid,
 		hardwareComponentTypeListIsValid,
 		locationsAddressIsValid,
@@ -31,10 +32,12 @@ const useCreateTicketFormValidator = () => {
 				);
 
 			case "numberOfTechniciansNeeded":
-			case "duration":
 			case "numberOfWorkStation":
 			case "numberOfWorkSystems":
 				return true;
+
+			case "duration":
+					return durationIsValid;
 
 			case "scopeOfWork":
 				return scopeOfWorkDescriptionIsValid;

@@ -1,18 +1,18 @@
 import React from "react";
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-import { uploadImage } from "../../aws/aws-crud-operations";
+// import { uploadImage } from "../../aws/aws-crud-operations";
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
-		if(args.scopeOfWorkDocument){
-			const {scopeOfWorkDocument} = args
-			const result = await uploadImage(scopeOfWorkDocument)
-			console.log(result)
-			const {Location: scopeOfWorkDocumentUrl} = result;
-			args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
-		}
+		// if(args.scopeOfWorkDocument){
+		// 	const {scopeOfWorkDocument} = args
+		// 	const result = await uploadImage(scopeOfWorkDocument)
+		// 	console.log(result)
+		// 	const {Location: scopeOfWorkDocumentUrl} = result;
+		// 	args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+		// }
 		const config = {
 			method: "POST",
 			headers: {
@@ -117,6 +117,7 @@ const allPossibleFields = {
 		
 		"scopeOfWorkDocumentIsValid": false, // might not be need for this
 		// DURATION
+		"durationIsValid": true,
 
 		//HARDWARE COMPONENT TYPE
 		"hardwareInputTypeCurrentValue": "",

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // IMPORT DATEINPUT
 // import DateInput from '../general/DateInput'
+import { createTicketActions } from '../../../../../../state-manager/reducers/tickets/ticketCreation'
 import DateInput from '../general/DateInput'
 import ValidationErrorText from '../../../../Login/ValidationErrorText'
 import BlueThemedXtraSm from '../../BlueThemedXtraSm'
 import { isValidDateTimeLocal } from '../../../../../../helpers/validation'
 import useCreateTicketInput from '../../../../../../hooks/useCreateTicketInput'
+import { useDispatch } from 'react-redux'
 
 function getTodayAndTomorrow() {
 	const today = new Date();
@@ -67,6 +69,20 @@ const Duration = () => {
 			// END DATE
 			// reset: endDateReset,
 		} = useCreateTicketInput("endDateTime", isValidDateTimeLocal);
+
+		const dispatch = useDispatch()
+
+		useEffect(() => {
+			if(startDateIsValid && endDateIsValid){
+				dispatch(
+					createTicketActions.updateField({ key: "durationIsValid", value: true })
+				);
+			}else {
+				dispatch(
+					createTicketActions.updateField({ key: "durationIsValid", value: false })
+				);
+			}
+		}, [startDateIsValid, endDateIsValid])
 
   return (
 		<div className="flex items-start justify-start gap-[2.5rem]">

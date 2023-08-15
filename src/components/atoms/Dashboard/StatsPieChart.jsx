@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Pie } from "react-chartjs-2";
-// IMPORT import { Chart as ChartJS } from "chart.js/auto";
+import { Chart as ChartJS } from "chart.js/auto"; // NOSONAR
 import ChartDataLabel from "chartjs-plugin-datalabels";
 
 const StatsPieChart = ({ data }) => {

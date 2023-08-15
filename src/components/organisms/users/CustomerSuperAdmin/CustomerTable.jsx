@@ -22,21 +22,21 @@ import { createTicketActions } from "../../../../state-manager/reducers/tickets/
 import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 
 const statusColors = {
-	Active: "rgba(18, 133, 26, 0.20)",
-	Inactive: "rgba(237, 117, 56, 0.20)",
-	Suspended: "rgba(204, 150, 29, 0.20)",
+	active: "rgba(18, 133, 26, 0.20)",
+	inactive: "rgba(237, 117, 56, 0.20)",
+	suspended: "rgba(204, 150, 29, 0.20)",
 };
 
 const statusStyles = {
-	Active: {
+	active: {
 		color: "#04850D",
 		fontWeight: "600",
 	},
-	Inactive: {
+	inactive: {
 		color: "#ED5A11",
 		fontWeight: "600",
 	},
-	Suspended: {
+	suspended: {
 		color: "#CC961D",
 		fontWeight: "600",
 	},
@@ -90,11 +90,6 @@ const CustomTableCell = ({ children, status }) => {
 
 const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	dispatch(fetchCustomers());
-	// }, [dispatch]);
-	console.log(filteredCustomers);
 
 	const [filter, setFilter] = useState("All");
 	const [page, setPage] = useState(1);
@@ -181,9 +176,9 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 											}}
 										>
 											<MenuItem value="All">All</MenuItem>
-											<MenuItem value="Active">Active</MenuItem>
-											<MenuItem value="Inactive">Inactive</MenuItem>
-											<MenuItem value="Suspended">Suspended</MenuItem>
+											<MenuItem value="active">active</MenuItem>
+											<MenuItem value="inactive">inactive</MenuItem>
+											<MenuItem value="suspended">suspended</MenuItem>
 										</Select>
 									</FormControl>
 								</Box>
@@ -193,9 +188,11 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 					<TableBody>
 						{filteredCustomersByStatus.map((customer) => (
 							<TableRow key={customer.id}>
-								<CustomTableCell>{customer.companyName}</CustomTableCell>
-								<CustomTableCell>{customer.representativeName}</CustomTableCell>
-								<CustomTableCell>{customer.representativeEmail}</CustomTableCell>
+								<CustomTableCell>{customer.company_name}</CustomTableCell>
+								<CustomTableCell>
+									{customer.first_name} {customer.last_name}
+								</CustomTableCell>
+								<CustomTableCell>{customer.email}</CustomTableCell>
 								<CustomTableCell status={customer.status}>{customer.status}</CustomTableCell>
 								<CustomTableCell>
 									<Box sx={{ display: "flex", alignItems: "center", gap: "1", flex: "1 0 0" }}>
@@ -212,7 +209,7 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 											</IconButton>
 											Edit Customer Profile
 										</Link>
-										{customer.status !== "Inactive" && (
+										{/* {customer.status !== "inactive" && ( */}
 											<MoreOptionsDropdown
 												status={customer.status}
 												customerId={customer.id}
@@ -220,7 +217,7 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 													handleUpdateStatus(customer.id, newStatus, comment)
 												}
 											/>
-										)}
+										{/* // )} */}
 									</Box>
 								</CustomTableCell>
 							</TableRow>

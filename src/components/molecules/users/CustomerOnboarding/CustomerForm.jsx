@@ -1,12 +1,43 @@
-import React, { useState } from "react";
-import { Box, Button, Typography, Dialog, DialogContent } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Button, Typography, Dialog, DialogContent, styled } from "@mui/material";
 import { useForm } from "react-hook-form";
 import TextFields from "../../users/CustomerOnboarding/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../../atoms/users/CustomerOnboarding/Schema";
 import SuccessModal from "../../../atoms/users/CustomerOnboarding/SuccessModal";
 import { useDispatch, useSelector } from "react-redux";
-import { createCustomer } from "../../../../state-manager/reducers/users/customers/customers";
+import { createCustomer, SET_RESPONSE_NULL } from "../../../../state-manager/reducers/users/customers/customers";
+import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
+import { Triangle } from "react-loader-spinner";
+import ErrorCard from "../../../molecules/Password/customErrorCard";
+
+const LoaderWrapper = styled("div")(() => ({
+	width: "100%",
+	height: "100%",
+	position: "absolute",
+	top: "0",
+	left: "0",
+	zIndex: "100",
+	backgroundColor: "rgba(255, 255, 255, .15)",
+	backdropFilter: "blur(5px)",
+}));
+
+const LoaderContainerWrapper = styled("div")(() => ({
+	width: "100%",
+	height: "100%",
+	position: "absolute",
+	top: "0",
+	left: "0",
+	zIndex: "150",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+
+	".loader": {
+		position: "absolute",
+		zIndex: "150",
+	},
+}))
 
 const CustomerForm = ({ open, onClose }) => {
 	const dispatch = useDispatch();
@@ -16,6 +47,7 @@ const CustomerForm = ({ open, onClose }) => {
 		control,
 		formState: { errors, isValid },
 		reset,
+		getValues,
 	} = useForm({
 		defaultValues: {
 			companyName: "",
@@ -29,24 +61,58 @@ const CustomerForm = ({ open, onClose }) => {
 		resolver: yupResolver(schema),
 	});
 
+	const { response } = useSelector((state) => state.customers);
+	const { creationSuccess } = useSelector((state) => state.customers);
+	const [loading, setLoading] = useState(false);
+	const [serverError, setServerError] = useState(false);
+
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			if (creationSuccess && loading && response === null) {
+				dispatch(fetchCustomers());
+				setLoading(false);
+				setSuccessModalOpen(true);
+				reset({});
+			}
+		}, 2000);
+
+		return () => timeout;
+	}, [creationSuccess, dispatch, loading, reset]);
+
+	useEffect(() => {
+		if (response) setLoading(false)
+
+		if (
+			response === "Email already been used by another user!" ||
+			response === "Company name already exist!"
+		) {
+			const values = getValues();
+			reset(values, { keepDefaultValues: true });
+			setServerError(true);
+		}
+	}, [response, getValues, reset]);
+
 	const handleClose = () => {
 		onClose();
+		setLoading(false);
 		reset();
 	};
+
 	const [successModalOpen, setSuccessModalOpen] = useState(false);
 
 	const handleFormSubmit = async (data) => {
-		console.log("Form data:", data);
-
+		dispatch(SET_RESPONSE_NULL());
+		setServerError(false);
+		setLoading(true);
 		dispatch(createCustomer(data));
-
-		setSuccessModalOpen(true);
-		reset({});
 	};
 
 	const closeSuccessModal = () => {
 		setSuccessModalOpen(false);
+		setLoading(false);
 	};
+
 	const saveButtonStyles = {
 		background: "#2b2e72",
 		textTransform: "none",
@@ -62,131 +128,173 @@ const CustomerForm = ({ open, onClose }) => {
 
 	return (
 		<>
-			<Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-				{successModalOpen ? (
-					<SuccessModal
-						open={successModalOpen}
-						onClose={closeSuccessModal}
-						onBackToCustomerTable={handleClose}
-					/>
-				) : (
-					<DialogContent sx={{ padding: "40px" }}>
-						<Typography
-							component="h1"
-							sx={{
-								color: "#2B2E72",
-								fontSize: "20px",
-								fontWeight: "600",
-								marginBottom: "18px",
-								fontFamily: "Poppins",
-							}}
-						>
-							Create New Customer
-						</Typography>
+		{response === "Email already been used by another user!" && (
+				<ErrorCard
+					align="left"
+					error={serverError}
+					titleSize="16px"
+					size="14px"
+					titleColor="#D73D3D"
+					color="rgba(215, 61, 61, 0.50);"
+					title="Email has already been used"
+					style={{position: "absolute", top: "200px", width: "330px"}}
+					description="The Representative email you entered already exist."
+				/>
+			) || response === "Company name already exist!" && (
+				<ErrorCard
+					align="left"
+					error={serverError}
+					titleSize="16px"
+					size="14px"
+					titleColor="#D73D3D"
+					color="rgba(215, 61, 61, 0.50);"
+					title="Compnay name already exist"
+					style={{position: "absolute", top: "200px", width: "330px"}}
+					description="Company name has been used by another user."
+				/>
+			)}
+			{(!loading && (
+				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+					{successModalOpen && !loading && creationSuccess ? (
+						<SuccessModal
+							open={successModalOpen}
+							onClose={closeSuccessModal}
+							onBackToCustomerTable={handleClose}
+						/>
+					) : (
+						<DialogContent sx={{ padding: "40px" }}>
+							<Typography
+								component="h1"
+								sx={{
+									color: "#2B2E72",
+									fontSize: "20px",
+									fontWeight: "600",
+									marginBottom: "18px",
+									fontFamily: "Poppins",
+								}}
+							>
+								Create New Customer
+							</Typography>
 
-						<form
-							onSubmit={handleSubmit((data) => handleFormSubmit({ ...data }))}
-							sx={{
-								display: "flex",
-								flexDirection: "column",
-								fontFamily: "Poppins",
-								alignItems: "center",
-								justifyContent: "center",
-								pb: "0",
-								flexShrink: "0",
-							}}
-						>
-							<Box sx={{ marginBottom: "10px" }}>
-								<TextFields
-									errors={errors}
-									control={control}
-									type="text"
-									name="companyName"
-									label="Company name*"
-									placeholder="Enter Company name"
-								/>
-							</Box>
-							<Box sx={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
-								<TextFields
-									errors={errors}
-									control={control}
-									type="text"
-									name="representativeFirstName"
-									label="Company representative first name*"
-									placeholder="Enter Company representative first name"
-								/>
-								<TextFields
-									errors={errors}
-									control={control}
-									type="text"
-									name="representativeLastName"
-									label="Company representative last name*"
-									placeholder="Enter Company representative last name"
-								/>
-							</Box>
-							<Box sx={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
-								<TextFields
-									errors={errors}
-									control={control}
-									name="representativeEmail"
-									label="Company representative email*"
-									placeholder="Enter Company representative email"
-									type="text"
-								/>
-								<TextFields
-									errors={errors}
-									control={control}
-									name="representativePhoneNumber"
-									label="Company representative phone number"
-									placeholder=" Enter Company representative phone number"
-									type="tel"
-									inputProps={{
-										type: "phone",
-									}}
-								/>
-							</Box>
-							<Box sx={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
-								<TextFields
-									errors={errors}
-									control={control}
-									name="companyFinanceEmail"
-									label="Company finance team email"
-									placeholder="Enter Company finance team email"
-									type="text"
-								/>
-								<TextFields
-									errors={errors}
-									control={control}
-									name="companyEmail"
-									label="Company official email"
-									placeholder="Enter Company official email"
-									type="text"
-								/>
-							</Box>
-							<Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: "16px" }}>
-								<Button
-									onClick={handleClose}
-									sx={{
-										color: "#2b2e72",
-										borderColor: "#2b2e72",
-										textTransform: "none",
-										"&:hover": {
-											backgroundColor: "transparent",
+							<form
+								onSubmit={handleSubmit((data) => handleFormSubmit({ ...data }))}
+								sx={{
+									display: "flex",
+									flexDirection: "column",
+									fontFamily: "Poppins",
+									alignItems: "center",
+									justifyContent: "center",
+									pb: "0",
+									flexShrink: "0",
+								}}
+							>
+								<Box sx={{ marginBottom: "10px" }}>
+									<TextFields
+										errors={errors}
+										control={control}
+										type="text"
+										name="companyName"
+										label="Company name*"
+										placeholder="Enter Company name"
+									/>
+								</Box>
+								<Box sx={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
+									<TextFields
+										errors={errors}
+										control={control}
+										type="text"
+										name="representativeFirstName"
+										label="Company representative first name*"
+										placeholder="Enter Company representative first name"
+									/>
+									<TextFields
+										errors={errors}
+										control={control}
+										type="text"
+										name="representativeLastName"
+										label="Company representative last name*"
+										placeholder="Enter Company representative last name"
+									/>
+								</Box>
+								<Box sx={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
+									<TextFields
+										errors={errors}
+										control={control}
+										name="representativeEmail"
+										label="Company representative email*"
+										placeholder="Enter Company representative email"
+										type="text"
+									/>
+									<TextFields
+										errors={errors}
+										control={control}
+										name="representativePhoneNumber"
+										label="Company representative phone number"
+										placeholder=" Enter Company representative phone number"
+										type="tel"
+										inputProps={{
+											type: "phone",
+										}}
+									/>
+								</Box>
+								<Box sx={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
+									<TextFields
+										errors={errors}
+										control={control}
+										name="companyFinanceEmail"
+										label="Company finance team email"
+										placeholder="Enter Company finance team email"
+										type="text"
+									/>
+									<TextFields
+										errors={errors}
+										control={control}
+										name="companyEmail"
+										label="Company official email"
+										placeholder="Enter Company official email"
+										type="text"
+									/>
+								</Box>
+								<Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: "16px" }}>
+									<Button
+										onClick={handleClose}
+										sx={{
 											color: "#2b2e72",
 											borderColor: "#2b2e72",
-										},
-									}}
-								>
-									Cancel
-								</Button>
-								<Button type="submit" variant="contained" sx={saveButtonStyles}>
-									Save And Send Link
-								</Button>
-							</Box>
-						</form>
-					</DialogContent>
-				)}
-			</Dialog>
+											textTransform: "none",
+											"&:hover": {
+												backgroundColor: "transparent",
+												color: "#2b2e72",
+												borderColor: "#2b2e72",
+											},
+										}}
+									>
+										Cancel
+									</Button>
+									<Button type="submit" variant="contained" sx={saveButtonStyles}>
+										Save And Send Link
+									</Button>
+								</Box>
+							</form>
+						</DialogContent>
+					)}
+				</Dialog>
+			)) || (
+				<div>
+					<LoaderWrapper></LoaderWrapper>
+					<LoaderContainerWrapper>
+						<Triangle
+							height="300"
+							width="300"
+							color="#2b2e72"
+							ariaLabel="triangle-loading"
+							wrapperStyle={{}}
+							wrapperClassName="loader"
+							visible={true}
+						/>
+					</LoaderContainerWrapper>
+				</div>
+			)}
 		</>
 	);
 };

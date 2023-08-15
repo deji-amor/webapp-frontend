@@ -4,8 +4,23 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SuspendModal from "./SuspendModal";
 import SuspendConfirmationModal from "./SuspendConfirmationModal";
 import UnsuspendConfirmationModal from "./UnsuspendConfirmationModal";
+import { resendVerification, suspendUnsuspend } from "../../../../state-manager/reducers/users/customers/customers";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
+
+	const dispatch = useDispatch();
+
+	const {
+		loading: customersLoading,
+		customers: allCustomers,
+		successful,
+		error,
+		errorMessage,
+	} = useSelector((state) => state.customers);
+
+
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isSuspendConfirmationModalOpen, setIsSuspendConfirmationModalOpen] = useState(false);
 	const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
@@ -31,8 +46,9 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 		setIsUnsuspendConfirmationModalOpen(false);
 	};
 
-	const handleUnsuspendConfirmationYes = () => {
-		onUpdateStatus(currentCustomerId, "Active");
+	const handleUnsuspendConfirmationYes = (customerId) => {
+		dispatch(suspendUnsuspend(customerId));
+		onUpdateStatus(currentCustomerId, "active");
 		setIsUnsuspendConfirmationModalOpen(false);
 	};
 
@@ -59,14 +75,16 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 		setSuspendComment(event.target.value);
 	};
 
-	const handleSuspend = () => {
+	const handleSuspend = (customerId) => {
 		setIsSuspendModalOpen(true);
 		setCurrentCustomerId(customerId);
+		dispatch(suspendUnsuspend(customerId));
 		handleClose();
 	};
 
-	const handleResendVerification = () => {
-
+	
+	const handleResendVerification = async (customerId) => {
+		dispatch(resendVerification(customerId));
     handleClose();
   };
 
@@ -95,7 +113,7 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 						},
 					}}
 				>
-					{status === "Active" && (
+					{status === "active" && (
 						<MenuItem
 							sx={{ borderRadius: "5px", padding: "12px 16px" }}
 							onClick={handleSuspendClick}
@@ -103,7 +121,7 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 							Suspend
 						</MenuItem>
 					)}
-					{status === "Suspended" && (
+					{status === "suspended" && (
 						<MenuItem
 							sx={{ borderRadius: "5px", padding: "12px 16px" }}
 							onClick={handleUnsuspendClick}
@@ -111,7 +129,7 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 							Unsuspend
 						</MenuItem>
 					)}
-						{status === "Inactive" && (
+						{status === "inactive" && (
 					<MenuItem
 					sx={{ borderRadius: "5px", padding: "12px 16px" }}
 					onClick={handleResendVerification}
