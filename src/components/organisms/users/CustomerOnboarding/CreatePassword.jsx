@@ -15,6 +15,14 @@ import PasswordLinkExp from "./passwordLinkExp";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
 import { Typography, styled } from "@mui/material";
 
+const loadWrapper = styled("div")(() => ({
+	width: "100%",
+	height: "100%",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center"
+}))
+
 const CreatePassword = () => {
 	const Typography = styled("h3")`
 		color: #2b2e72;
@@ -25,6 +33,7 @@ const CreatePassword = () => {
 		font-weight: 600;
 		line-height: 136.023%; /* 54.409px */
 	`;
+
 	const Text = styled("p")`
 		color: #828282;
 		text-align: center;
@@ -42,6 +51,7 @@ const CreatePassword = () => {
 	const [match, setMatch] = useState(false);
 	const [empty, setEmpty] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [load, setLoad] = useState(false);
 	const [passwords, setPasswords] = useState({ password: "", confirmPassword: "" });
 	const { password, confirmPassword } = passwords;
 	const navigate = useNavigate();
@@ -66,8 +76,16 @@ const CreatePassword = () => {
 	};
 
 	useEffect(() => {
+		setLoad(true)
+
 		dispatch(validateToken({ email, token }));
-	}, [dispatch, email, token]);
+
+		const timeout = setTimeout(() => {
+			setLoad(false)
+		}, 2000)
+
+		return () => timeout()
+	}, [dispatch, email, token, passwordResponse]);
 
 	useEffect(() => {
 		validatePassword(
@@ -130,7 +148,7 @@ const CreatePassword = () => {
 		<>
 			{(validationResponse === "Invalid verification link!" && (
 				<PasswordLinkExp email={email} />
-			)) || (
+			)) || !load && (
 				<ForgotPasswordResetWrapper>
 					<div style={{ display: "flex", justifyContent: "center" }}>
 						<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
