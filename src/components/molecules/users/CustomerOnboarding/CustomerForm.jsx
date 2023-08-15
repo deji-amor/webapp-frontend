@@ -287,8 +287,8 @@ const CustomerForm = ({ open, onClose }) => {
 					<LoaderWrapper></LoaderWrapper>
 					<LoaderContainerWrapper>
 						<Triangle
-							height="300"
-							width="300"
+							height="150"
+							width="150"
 							color="#2b2e72"
 							ariaLabel="triangle-loading"
 							wrapperStyle={{}}
