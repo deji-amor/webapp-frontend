@@ -1,28 +1,45 @@
-import React from 'react'
-import MediumText from '../../../atoms/tickets/CreateTicketSuperAdmin/MediumText';
-import BlueThemedMediumText from '../../../atoms/tickets/CreateTicketSuperAdmin/BlueThemedMediumText';
+import React, { useState } from "react";
+import MediumText from "../../../atoms/tickets/CreateTicketSuperAdmin/MediumText";
+import BlueThemedMediumText from "../../../atoms/tickets/CreateTicketSuperAdmin/BlueThemedMediumText";
 import EditIcon from "@mui/icons-material/Edit";
-import HorizontalRule from '../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule';
-import SmallText from '../../../atoms/tickets/CreateTicketSuperAdmin/SmallText';
-import LightText from '../../../atoms/tickets/CreateTicketSuperAdmin/LightText';
-import UserActivity from '../../../atoms/tickets/CreateTicketSuperAdmin/UserActivity';
-import { useSelector } from 'react-redux';
-import { getDateFromDateTime } from '../../../../helpers/date-manipulation';
+import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule";
+import SmallText from "../../../atoms/tickets/CreateTicketSuperAdmin/SmallText";
+import LightText from "../../../atoms/tickets/CreateTicketSuperAdmin/LightText";
+import UserActivity from "../../../atoms/tickets/CreateTicketSuperAdmin/UserActivity";
+import { useSelector } from "react-redux";
+import { getDateFromDateTime } from "../../../../helpers/date-manipulation";
+import EditableFields from "../../users/CustomerSuperAdmin/EditableFields";
+import { Button } from "@mui/material";
 
 const ProductDetails = () => {
-	const customer = useSelector((state) => state.ticketCreation.customer);
-	const { company_name, first_name, last_name, email, phone_number, datetime, status  } = customer;
+	const [showEditableFields, setShowEditableFields] = useState(false);
+	const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-  return (
+	const customer = useSelector((state) => state.ticketCreation.customer);
+	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
+
+	const initialFields = [
+		{ label: "Company Name*", name: "company_name", type: "text", editable: false },
+		{ label: "Representative Name*", name: "full_name", type: "text", editable: false },
+		{ label: "Representative Email*", name: "email", type: "email", editable: false },
+	];
+
+	const handleEditIconClick = () => {
+		setSelectedCustomer(customer);
+		setShowEditableFields(true);
+	};
+	const fullName = `${first_name} ${last_name}`;
+
+	return (
 		<>
 			<div className="grid grid-cols-2 gap-x-[7rem]">
 				<div className="">
 					<MediumText>Profile Details</MediumText>
 				</div>
 				<div className="flex items-center justify-between gap-[1.25rem]">
-					<BlueThemedMediumText>
-						Edit Fields <EditIcon />{" "}
-					</BlueThemedMediumText>
+					<Button onClick={handleEditIconClick}>
+						Edit Fields <EditIcon />
+					</Button>
 					<></>
 				</div>
 			</div>
@@ -34,7 +51,9 @@ const ProductDetails = () => {
 				</div>
 				<div className="">
 					<LightText>Company Rep Full Name</LightText>
-					<SmallText>{first_name} {last_name}</SmallText>
+					<SmallText>
+						{first_name} {last_name}
+					</SmallText>
 				</div>
 				<div className="">
 					<LightText>Company Rep Email</LightText>
@@ -53,8 +72,20 @@ const ProductDetails = () => {
 					<UserActivity status={status} />
 				</div>
 			</div>
+			{showEditableFields && (
+				<EditableFields
+					open={true}
+					onClose={() => console.log("Closed")}
+					initialFields={initialFields}
+					customer={{
+						...selectedCustomer,
+						full_name: fullName,
+					}}
+					onClick={() => console.log("Clicked")}
+				/>
+			)}
 		</>
 	);
-}
+};
 
-export default ProductDetails
+export default ProductDetails;
