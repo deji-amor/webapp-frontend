@@ -3,11 +3,9 @@ import PasswordSuccess from "../../../molecules/Password/customPasswordEmailSucc
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { resendMyVerificationLink } from "../../../../state-manager/reducers/users/customers/customers";
 
-const PasswordLinkExp = () => {
-    const email = useParams();
+const PasswordLinkExp = ({ email }) => {
 
     const dispatch = useDispatch();
 

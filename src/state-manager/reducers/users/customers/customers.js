@@ -77,7 +77,6 @@ export const validateToken = createAsyncThunk(
 	}
 );
 
-
 // CUSTOMER PASSWORD
 export const setCustomerPassword = createAsyncThunk(
 	"setCustomerPassword",
@@ -156,8 +155,7 @@ export const resendVerification = createAsyncThunk(
 			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/resend-verification`;
 			const response = await fetch(url, config);
-			const data = await response.json();
-			return data.message;
+			console.log(encrypt(response, `${import.meta.env.VITE_ENCRYPT_KEY}`))
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -184,8 +182,7 @@ export const resendMyVerificationLink = createAsyncThunk(
 				import.meta.env.VITE_BASE_ACTIVITY_URL
 			}/api/v1/customer/resend-my-verification`;
 			const response = await fetch(url, config);
-			const result = await response.json();
-			return result;
+			console.log(encrypt(response, `${import.meta.env.VITE_ENCRYPT_KEY}`))
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);

@@ -127,7 +127,7 @@ const CreatePassword = () => {
 
 	return (
 		<ForgotPasswordResetWrapper>
-			{(validationResponse === "Invalid verification link!" && <PasswordLinkExp />) || (
+			{(validationResponse === "Invalid verification link!" && <PasswordLinkExp email={email} />) || (
 				<>
 					<ErrorCard
 						align="left"
