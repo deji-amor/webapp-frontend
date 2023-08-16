@@ -57,6 +57,7 @@ function App() {
 			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
 			children: [
 				{ path: "dashboard", element:<MemoizedProtectedRoute><Dashboard /></MemoizedProtectedRoute>, index: true },
+				{ path: "customer-dashboard", element: <MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute> },
 				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute> },
 				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute> },
 				{ path: "reports", element: <MemoizedProtectedRoute><Reports /></MemoizedProtectedRoute> },

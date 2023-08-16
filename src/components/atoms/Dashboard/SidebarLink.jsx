@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutActions } from "../../../state-manager/reducers/logout/logout";
 
-const SidebarLink = ({ link, icon }) => {
+const SidebarLink = ({ link, icon, name }) => {
 	const Link = styled("div")`
 		display: flex;
 		align-items: center;
@@ -69,7 +69,7 @@ const SidebarLink = ({ link, icon }) => {
 			<NavLink className={({ isActive }) => (isActive ? "active" : "")} to={link} end={link === "dashboard" ? true : false}>
 				<Link className="">
 					<span className="icon-span">{icon}</span>
-					<span className="label">{link}</span>
+					<span className="label">{name}</span>
 				</Link>
 			</NavLink>
 		</div>
@@ -78,6 +78,7 @@ const SidebarLink = ({ link, icon }) => {
 
 SidebarLink.propTypes = {
 	link: PropTypes.string,
+	name: PropTypes.string,
 	icon: PropTypes.node,
 	isActive: PropTypes.bool,
 };
