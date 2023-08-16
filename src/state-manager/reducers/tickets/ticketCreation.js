@@ -1,18 +1,18 @@
-import React from "react";
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-// NOSONAR import { uploadImage } from "../../aws/aws-crud-operations"; 
+// import { uploadImage } from "../../aws/aws-crud-operations"; 
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
-		// NOSONAR
 		// if(args.scopeOfWorkDocument){
 		// 	const {scopeOfWorkDocument} = args
 		// 	const result = await uploadImage(scopeOfWorkDocument)
 		// 	console.log(result)
-		// 	const {Location: scopeOfWorkDocumentUrl} = result;
-		// 	args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+		// 	if(result){
+		// 		const {Location: scopeOfWorkDocumentUrl} = result;
+		// 		args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+		// 	}
 		// }
 		const config = {
 			method: "POST",
@@ -24,7 +24,6 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 		};
 		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/create`;
 		const response = await fetch(url, config);
-		console.log({args, response})
 		const result = await response.json();
 		return result;
 	} catch (err) {
