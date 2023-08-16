@@ -16,7 +16,7 @@ const RecentTicketTableText = ({ children, isID }) => {
 		white-space: nowrap;
 	`;
 
-	return <Text>{children}</Text>;
+	return <Text className="max-w-[16rem]">{children}</Text>;
 };
 
 RecentTicketTableText.propTypes = {
