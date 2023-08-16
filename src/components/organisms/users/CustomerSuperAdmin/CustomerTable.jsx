@@ -220,6 +220,7 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 											<MoreOptionsDropdown
 												status={customer.status}
 												customerId={customer.user_id}
+												email={customer.email}
 												onUpdateStatus={(newStatus, comment) =>
 													handleUpdateStatus(customer.user_id, newStatus, comment)
 												}

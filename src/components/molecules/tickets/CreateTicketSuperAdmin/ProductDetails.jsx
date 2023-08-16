@@ -44,10 +44,13 @@ const ProductDetails = () => {
 						Edit Fields <EditIcon />
 					</Button>
 					<></>
-					<SplitButtonDropdown status={customer.status}
-												customerId={customer.user_id}
-												onUpdateStatus={(newStatus, comment) =>
-													handleUpdateStatus(customer.user_id, newStatus, comment) }/>
+					<SplitButtonDropdown
+						status={customer.status}
+						customerId={customer.user_id}
+						onUpdateStatus={(newStatus, comment) =>
+							handleUpdateStatus(customer.user_id, newStatus, comment)
+						}
+					/>
 				</div>
 			</div>
 			<HorizontalRule />

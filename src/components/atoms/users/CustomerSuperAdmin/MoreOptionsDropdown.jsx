@@ -18,6 +18,7 @@ const MoreOptionsDropdown = ({
 	onUpdateStatus,
 	onConfirm,
 	selectedCustomer,
+	email,
 }) => {
 	const dispatch = useDispatch();
 
@@ -99,7 +100,7 @@ const MoreOptionsDropdown = ({
 	};
 
 	const handleResendVerification = (email) => {
-		dispatch(resendVerification(email));
+		dispatch(resendVerification({representativeEmail: email}));
 		handleClose();
 		dispatch(
 			UIActions.showToasts({
@@ -156,7 +157,7 @@ const MoreOptionsDropdown = ({
 					{status === "inactive" && (
 						<MenuItem
 							sx={{ borderRadius: "5px", padding: "12px 16px" }}
-							onClick={handleResendVerification}
+							onClick={() => handleResendVerification(email)}
 						>
 							Resend Verification Link
 						</MenuItem>
