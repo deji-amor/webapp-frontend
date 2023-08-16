@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PaginationButton from "../../atoms/Dashboard/PaginationButton";
+import { v4 } from "uuid";
 
 const PaginationButtonList = ({
 	numberOfButtons,
@@ -11,7 +12,7 @@ const PaginationButtonList = ({
 }) => {
 	let List = Array.from(new Array(numberOfButtons))
 		.map((_, ind) => (
-			<PaginationButton key={ind + 1} onClick={onClick} isActive={currentPage === ind + 1}>
+			<PaginationButton key={v4()} onClick={onClick} isActive={currentPage === ind + 1}>
 				{ind + 1}
 			</PaginationButton>
 		))

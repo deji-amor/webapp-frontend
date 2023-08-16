@@ -19,5 +19,5 @@ input::-ms-clear {
 @tailwind utilities;
 
 .ppp {
-    @apply absolute flex items-center pr-4 right-0 inset-y-0;
+    @apply shadow-[0_2px_2px_rgb(0_0_0_/_0.2)];
 }

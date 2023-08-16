@@ -37,13 +37,15 @@ const CustomerForm = ({ open, onClose }) => {
 		resolver: yupResolver(schema),
 	});
 
-	const { response } = useSelector((state) => state.customers);
-	const { creationSuccess } = useSelector((state) => state.customers);
+	const { response, creationSuccess, customers } = useSelector((state) => state.customers);
 	const [loading, setLoading] = useState(false);
 	const [serverError, setServerError] = useState(false);
 
 	useEffect(() => {
 		dispatch(fetchCustomers());
+	}, [dispatch])
+
+	useEffect(() => {
 		
 		if (
 			response === "Email already been used by another user!" ||
@@ -64,8 +66,8 @@ const CustomerForm = ({ open, onClose }) => {
 			}
 		}, 2000);
 
-		return () => timeout;
-	}, [creationSuccess, dispatch, loading, reset, response, getValues]);
+		return () => clearTimeout(timeout);
+	}, [creationSuccess, loading, reset, response, getValues, customers]);
 
 	const handleClose = () => {
 		onClose();

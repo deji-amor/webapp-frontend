@@ -12,7 +12,7 @@ const Container = styled("div")`
 	align-items: center;
 	gap: 0.75rem;
 	border-radius: 0.5rem;
-	background: ${({ type }) => (type === "successful" ? "#D3DED4" : "#D3DED4")};
+	background: ${({ type }) => (type === "successful" ? "#D3DED4" : "rgb(254 226 226)")};
 	z-index: 110;
 	.error-icon {
 		width: 1.5rem;
@@ -50,18 +50,14 @@ const Toasts = ({ onClose, message, title, type }) => {
 
 	return (
 		<Container className="" type={type}>
-			{
-				type === "successful" ?
-				<CheckCircleIcon className="text-[#04850D]"/> :
-				<ErrorIcon
-					className="text-[#D73D3D]"
-				/>
-			}
+			{type === "successful" ? (
+				<CheckCircleIcon className="text-[#04850D]" />
+			) : (
+				<ErrorIcon className="text-[#D73D3D]" />
+			)}
 			<div className="border-none">
 				<p className="title">{title}</p>
-				<p className="message">
-					{message}
-				</p>
+				<p className="message">{message}</p>
 			</div>
 		</Container>
 	);

@@ -72,8 +72,6 @@ export default function BasicTabs({ filteredCustomers }) {
 		setSortedCustomers(filteredCustomers);
 	}, [filteredCustomers]);
 
-	console.log(filteredCustomers);
-
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -86,7 +84,6 @@ export default function BasicTabs({ filteredCustomers }) {
 		});
 		setSortedCustomers(sorted);
 	};
-	console.log(sortedCustomers);
 
 	const handleUpdateStatus = (customerId, newStatus, comment) => {
 		console.log("ACTIVE");

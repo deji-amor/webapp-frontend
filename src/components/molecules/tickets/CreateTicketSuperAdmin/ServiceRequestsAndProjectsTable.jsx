@@ -7,6 +7,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import LightText from '../../../atoms/tickets/CreateTicketSuperAdmin/LightText';
 import StatusTab from '../../../atoms/tickets/CreateTicketSuperAdmin/StatusTab';
 import { useSelector } from 'react-redux';
+import { v4 } from "uuid";
 
 const ServiceRequestsAndProjectsTable = () => {
 	const { showServiceRequestsTab, showProjectsTab, customer } = useSelector((state) => state.ticketCreation);
@@ -33,7 +34,7 @@ const ServiceRequestsAndProjectsTable = () => {
 	}, [showServiceRequestsTab, showProjectsTab, tickets]);
 
 	const list = filteredActiveTickets.map((ticket, ind) => (
-		<tr key={`${ticket.id}_${ind}`}>
+		<tr key={`${ticket.id}_${v4()}`}>
 			<td className="py-[0.4rem] pr-[1rem] text-left">
 				<BlueThemeSmall>{ticket.id}</BlueThemeSmall>
 			</td>

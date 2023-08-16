@@ -10,6 +10,7 @@ import useCreateTicketFormValidator from "../../../../hooks/useCreateTicketFormV
 import useCreateTicketFields from "../../../../hooks/useCreateTicketFields";
 import { useDispatch, useSelector } from "react-redux";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
+import { ticketsActions } from "../../../../state-manager/reducers/tickets/tickets";
 import PointOfContact from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/point-of-contact/PointOfContact";
 import MaterialsProcurement from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/materials-procurement/MaterialsProcurement";
 import ScopeOfWork from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/scope-of-work/ScopeOfWork";
@@ -29,8 +30,8 @@ import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/Horizo
 
 const MainTicketCreationForm = () => {
 	const requiredFields = useCreateTicketFields();
-	console.log({requiredFields});
 	const dispatch = useDispatch();
+	const {customer, data} = useSelector((state) => state.ticketCreation);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -38,7 +39,7 @@ const MainTicketCreationForm = () => {
 	};
 
 	const goBackHandler = () => {
-		dispatch(createTicketActions.goBackToAddTicketModal());
+		dispatch(createTicketActions.goBackToAddTicketModal(customer));
 	};
 
 	const {loading, error, errorMessage, successful } = useSelector(
@@ -46,6 +47,8 @@ const MainTicketCreationForm = () => {
 	);
 	useEffect(() => {
 		if (successful === true) {
+			console.log({data});
+			if(data) dispatch(ticketsActions.addNewTicket(data))
 			dispatch(
 				UIActions.showToasts({
 					message: "You have successfully created a new Ticket for the customer.",
@@ -53,7 +56,7 @@ const MainTicketCreationForm = () => {
 					type: "successful"
 				})
 			);
-			dispatch(createTicketActions.toggleTemplateModal());
+		dispatch(createTicketActions.toggleTemplateModal());
 		}
 		if (error === true) {
 				dispatch(
@@ -65,7 +68,7 @@ const MainTicketCreationForm = () => {
 				);
 			dispatch(createTicketActions.toggleTemplateModal());
 		}
-	}, [error, successful]);
+	}, [error, successful, data]);
 
 	const isFormValid = useCreateTicketFormValidator();
 	const isFormDisabled = !isFormValid;
@@ -93,7 +96,10 @@ const MainTicketCreationForm = () => {
 
 	return (
 		<form onSubmit={submitHandler}>
-			<div className="max-h-[26rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem] mb-[1rem]">
+			<div
+				id="ticket-creation-form-sections"
+				className="max-h-[26rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem] mb-[1rem]"
+			>
 				<div className="">
 					<GrayThemedLightText>Ticket Details:</GrayThemedLightText>
 				</div>
@@ -125,6 +131,7 @@ const MainTicketCreationForm = () => {
 					<div className="">{dropOffLocation && <DropOffLocation />}</div>
 					<div className="">{location && <Location />}</div>
 					<div className="">{additionalFields && <AddExtraFields />}</div>
+					<div id="ticket-creation-form-sections"></div>
 				</div>
 			</div>
 			<div className="flex items-center justify-end gap-[1rem]">

@@ -1,7 +1,6 @@
-import React from "react";
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-// import { uploadImage } from "../../aws/aws-crud-operations";
+// import { uploadImage } from "../../aws/aws-crud-operations"; 
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
 	try {
@@ -10,8 +9,10 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 		// 	const {scopeOfWorkDocument} = args
 		// 	const result = await uploadImage(scopeOfWorkDocument)
 		// 	console.log(result)
-		// 	const {Location: scopeOfWorkDocumentUrl} = result;
-		// 	args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+		// 	if(result){
+		// 		const {Location: scopeOfWorkDocumentUrl} = result;
+		// 		args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+		// 	}
 		// }
 		const config = {
 			method: "POST",
@@ -23,7 +24,6 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 		};
 		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/create`;
 		const response = await fetch(url, config);
-		console.log({args, response})
 		const result = await response.json();
 		return result;
 	} catch (err) {
@@ -70,6 +70,7 @@ export const allRequiredFields = {
 	startDateTime: getTodayAndTomorrow().today,
 	endDateTime: getTodayAndTomorrow().tomorrow,
 	hardwareComponentTypeList: [],
+	hardwareComponentTypeQuantity: "1",
 	hardwareQuantity: "1",
 	hardwareName: "",
 	// hardwareComponentTypeQuantityValue: "1",
@@ -128,10 +129,10 @@ const allPossibleFields = {
 		"hardwareComponentTypeListIsValid": false,
 		//HARDWARE COMPONENT QUANTITY
 		
-		
 		"hardwareQuantityIsValid": false,
-		"hardwareQuantityIsTouched": "",
-		"hardwareQuantityHasError": "",
+		"hardwareNameIsValid": false,
+		"hardwareNameIsTouched": "",
+		"hardwareNameHasError": "",
 		//SOFTWARE INSTALLATION
 
 		"softwareInstallationNameIsValid": false,
@@ -211,7 +212,7 @@ const initialState = {
 	mode: "creation",
 	chosenTemplate: [],
 	allPossibleFields: allPossibleFields,
-	data: null,
+	data: [],
 	customer: {},
 };
 

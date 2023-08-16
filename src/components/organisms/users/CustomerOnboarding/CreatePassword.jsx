@@ -6,14 +6,42 @@ import {
 	SET_ERROR_NULL,
 	validateToken,
 } from "../../../../state-manager/reducers/users/customers/customers";
-import ErrorCard from "../../../molecules/Password/customErrorCard";
 import CustomButton from "../../../atoms/Password/customButton";
 import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
 import PasswordLinkExp from "./passwordLinkExp";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
-import { Typography, styled } from "@mui/material";
+import { TailSpin } from "react-loader-spinner";
+import { styled } from "@mui/material";
+
+const LoadWrapper = styled("div")(() => ({
+	width: "100%",
+	height: "100%",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+
+	".tailspain": {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		gap: "10px",
+	},
+
+	".tailspain h2": {
+		color: "#2B2E72",
+		textAlign: "center",
+		fontFamily: "Poppins",
+		fontSize: "24px",
+		fontStyle: "normal",
+		fontWeight: "700",
+		lineHeight: "120%",
+		letterSpacing: "0.8px",
+		textTransform: "uppercase",
+	},
+}));
 
 const CreatePassword = () => {
 	const Typography = styled("h3")`
@@ -25,6 +53,7 @@ const CreatePassword = () => {
 		font-weight: 600;
 		line-height: 136.023%; /* 54.409px */
 	`;
+
 	const Text = styled("p")`
 		color: #828282;
 		text-align: center;
@@ -38,10 +67,10 @@ const CreatePassword = () => {
 
 	const [error, setError] = useState(false);
 	const [validationError, setValidationError] = useState(false);
-	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
 	const [empty, setEmpty] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [load, setLoad] = useState(true);
 	const [passwords, setPasswords] = useState({ password: "", confirmPassword: "" });
 	const { password, confirmPassword } = passwords;
 	const navigate = useNavigate();
@@ -59,17 +88,22 @@ const CreatePassword = () => {
 
 	const handleChange = (e) => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
-		setServerError(false);
 		setValidationError(false);
 		dispatch(SET_ERROR_NULL());
 		setEmpty(false);
 	};
 
 	useEffect(() => {
-		dispatch(validateToken({ email, token }));
-	}, [dispatch, email, token]);
+		const timeout = setTimeout(() => {
+			setLoad(false);
+		}, 5000);
+
+		return () => clearTimeout(timeout);
+	}, []);
 
 	useEffect(() => {
+		dispatch(validateToken({ email, token }));
+
 		validatePassword(
 			password,
 			setHasUpper,
@@ -91,8 +125,7 @@ const CreatePassword = () => {
 
 		if (passwordResponse) setLoading(false);
 
-		if (passwordResponse === "Your password has been set successfully! You can login now")
-			return navigate("/customer-create-password-success");
+		if (passwordResponse === "Your password has been set successfully! You can login now") return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -105,6 +138,8 @@ const CreatePassword = () => {
 		match,
 		dispatch,
 		navigate,
+		email,
+		token,
 		passwordResponse,
 	]);
 
@@ -128,60 +163,75 @@ const CreatePassword = () => {
 
 	return (
 		<>
-			{(validationResponse === "Invalid verification link!" && (
-				<PasswordLinkExp email={email} />
-			)) || (
-				<ForgotPasswordResetWrapper>
-					<div style={{ display: "flex", justifyContent: "center" }}>
-						<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
-					</div>
-					<div>
-						<Typography component={"h3"}>Create Your Password</Typography>
-						<Text>
-							Hello <span style={{ color: "#2b2e72", fontWeight: "600" }}>{email}</span>, please
-							create your password to activate your account and login.
-						</Text>
-					</div>
+			{((validationResponse === "Invalid verification link!" && passwordResponse != "Your password has been set successfully! You can login now") && <PasswordLinkExp email={email} />) ||
+				(load && (
+					<LoadWrapper>
+						<div className="tailspain">
+							<h2>Validating Token</h2>
+							<TailSpin
+								height="100"
+								width="100"
+								color="#2B2E72"
+								ariaLabel="tail-spin-loading"
+								radius="1"
+								wrapperStyle={{}}
+								wrapperClass=""
+								visible={true}
+							/>
+						</div>
+					</LoadWrapper>
+				)) || (
+					<ForgotPasswordResetWrapper>
+						<div style={{ display: "flex", justifyContent: "center" }}>
+							<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
+						</div>
+						<div>
+							<Typography component={"h3"}>Create Your Password</Typography>
+							<Text>
+								Hello <span style={{ color: "#2b2e72", fontWeight: "600" }}>{email}</span>, please
+								create your password to activate your account and login.
+							</Text>
+						</div>
 
-					<ForgotPasswordRecoveryInput
-						label="Enter New Password"
-						placeholder="Password"
-						name="password"
-						type="password"
-						empty={empty}
-						validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
-						match={match}
-						value={password}
-						confirm={confirmPassword}
-						validationError={validationError}
-						handleChange={handleChange}
-					/>
+						<ForgotPasswordRecoveryInput
+							label="Enter New Password"
+							placeholder="Password"
+							name="password"
+							type="password"
+							empty={empty}
+							validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
+							match={match}
+							value={password}
+							confirm={confirmPassword}
+							validationError={validationError}
+							handleChange={handleChange}
+						/>
 
-					<ForgotPasswordRecoveryInput
-						type="password"
-						empty={empty}
-						name="confirmPassword"
-						placeholder="Password"
-						label="Confirm New Password"
-						validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
-						single={true}
-						forgotPasswordRecoveryError={error && confirmPassword.length > 0}
-						match={match}
-						value={password}
-						validationError={validationError}
-						confirm={confirmPassword}
-						handleChange={handleChange}
-					/>
+						<ForgotPasswordRecoveryInput
+							type="password"
+							empty={empty}
+							name="confirmPassword"
+							placeholder="Password"
+							label="Confirm New Password"
+							validators={{ hasUpper, hasLower, hasSymbol, hasNumber, hasEightChar }}
+							single={true}
+							forgotPasswordRecoveryError={error && confirmPassword.length > 0}
+							match={match}
+							value={password}
+							validationError={validationError}
+							confirm={confirmPassword}
+							handleChange={handleChange}
+						/>
 
-					<CustomButton
-						butText="Confirm"
-						butType="button"
-						onClick={handleSubmit}
-						loading={loading}
-						error={error}
-					/>
-				</ForgotPasswordResetWrapper>
-			)}
+						<CustomButton
+							butText="Confirm"
+							butType="button"
+							onClick={handleSubmit}
+							loading={loading}
+							error={error}
+						/>
+					</ForgotPasswordResetWrapper>
+				)}
 		</>
 	);
 };

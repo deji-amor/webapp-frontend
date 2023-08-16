@@ -12,7 +12,7 @@ const TextArea = ({ placeholder, value, onChange, onBlur, hasError, id, resizabl
 			onChange={changeHandler}
 			onBlur={blurHandler}
 			value={value}
-			className={`w-full h-full min-h-full flex pl-4 pr-[50px] text-[0.875rem] py-3.5 rounded-md bg-[#eee] outline-none focus:border focus:border-[#2B2E72]  ${
+			className={`w-full h-full min-h-full flex px-4 text-[0.875rem] py-3.5 rounded-md bg-[#eee] outline-none focus:border focus:border-[#2B2E72]  ${
 				isValid && "border border-[#2B2E72]"
 			} ${resizable ? "resize" : "resize-none"} ${hasError ? "border border-[#D73D3D]" : ""}`}
 		/>
