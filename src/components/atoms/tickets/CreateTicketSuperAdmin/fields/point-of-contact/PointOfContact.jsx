@@ -11,60 +11,31 @@ const PointOfContact = (props) => {
 	const {
 		enteredValue: nameValue,
 		errorMessage: nameErrorMessage,
-// POINT
-		// setErrorMessage: nameSetErrorMessage,
 		hasError: nameHasError,
-// POINT
-		// setHasError: nameSetHasError,
 		valueChangeHandler: nameChangeHandler,
 		valueBlurHandler: nameBlurHandler,
 		valueIsValid: nameIsValid,
 		errorFromServer: nameErrFromServer,
-// POINT
-		// setErrorFromServer: nameSetErrorFromServer,
 		id: nameId,
-// POINT
-		// reset: nameReset,
 	} = useCreateTicketInput("pointOfContactName", isNameEmpty);
 
 	const {
 		enteredValue: numberValue,
 		errorMessage: numberErrorMessage,
-// POINT
-		// setErrorMessage: numberSetErrorMessage,
 		hasError: numberHasError,
-// POINT
-		// setHasError: numberSetHasError,
 		valueChangeHandler: numberChangeHandler,
 		valueBlurHandler: numberBlurHandler,
 		valueIsValid: numberIsValid,
 		errorFromServer: numberErrFromServer,
-// POINT
-		// setErrorFromServer: numberSetErrorFromServer,
 		id: numberId,
-// POINT
-		// reset: numberReset,
 	} = useCreateTicketInput("pointOfContactPhoneNumber", isPhoneNumber);
 
 	const {
 		enteredValue: addressValue,
-// POINT
-		// errorMessage: addressErrorMessage,
-// POINT
-		// setErrorMessage: addressSetErrorMessage,
-		// hasError: addressHasError,
-// POINT
-		// setHasError: addressSetHasError,
 		valueChangeHandler: addressChangeHandler,
 		valueBlurHandler: addressBlurHandler,
 		valueIsValid: addressIsValid,
-// POINT
-		// errorFromServer: addressErrFromServer,
-// POINT
-		// setErrorFromServer: addressSetErrorFromServer,
 		id: addressId,
-// POINT
-		// reset: addressReset,
 	} = useCreateTicketInput("pointOfContactAddress", isAddressEmpty);
 
 	return (

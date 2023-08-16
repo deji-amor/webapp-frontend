@@ -66,7 +66,7 @@ const MainTicketCreationForm = () => {
 						type: "error",
 					})
 				);
-			dispatch(createTicketActions.toggleTemplateModal());
+			// dispatch(createTicketActions.toggleTemplateModal());
 		}
 	}, [error, successful, data]);
 
