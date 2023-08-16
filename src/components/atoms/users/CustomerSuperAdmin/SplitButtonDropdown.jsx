@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import { KeyboardArrowDown } from "@mui/icons-material";
 import SuspendModal from "./SuspendModal";
+import { UIActions } from "../../../../state-manager/reducers/UI/ui";
 
 const SplitButtonDropdown = ({
 	status,
@@ -19,14 +20,6 @@ const SplitButtonDropdown = ({
 	selectedCustomer,
 }) => {
 	const dispatch = useDispatch();
-
-	const {
-		loading: customersLoading,
-		customers: allCustomers,
-		successful,
-		error,
-		errorMessage,
-	} = useSelector((state) => state.customers);
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isSuspendConfirmationModalOpen, setIsSuspendConfirmationModalOpen] = useState(false);
@@ -54,11 +47,12 @@ const SplitButtonDropdown = ({
 	};
 
 	const handleUnsuspendConfirmationYes = (selectedCustomer, customerId) => {
-		dispatch(suspendUnsuspend({ customerId, actionType: "unsuspend" }));
-		onUpdateStatus(currentCustomerId, "active");
+		dispatch(suspendUnsuspend({ customerId, actionType: "unsuspend" })).then(() =>
+			dispatch(fetchCustomers)
+		);
 		setIsUnsuspendConfirmationModalOpen(false);
 		onConfirm(selectedCustomer);
-		dispatch(fetchCustomers());
+		onUpdateStatus(currentCustomerId, "active");
 	};
 
 	const handleUnsuspendClick = () => {
@@ -93,8 +87,17 @@ const SplitButtonDropdown = ({
 	};
 
 	const handleResendVerification = (email) => {
-		dispatch(resendVerification(email));
+		dispatch(resendVerification({ representativeEmail: email }));
 		handleClose();
+		dispatch(
+			UIActions.showToasts({
+				message: "Verification link has been resent.",
+
+				title: "Successfully sent",
+
+				type: "successful",
+			})
+		);
 	};
 
 	const saveButtonStyles = {
