@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
 	Table,
 	TableBody,
@@ -17,9 +17,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Pagination from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 import MoreOptionsDropdown from "../../../atoms/users/CustomerSuperAdmin/MoreOptionsDropdown";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
-import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
+// IMPORT import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import Placeholder from "../../../molecules/general/Placeholder";
 
 const statusColors = {

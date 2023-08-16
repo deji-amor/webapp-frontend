@@ -13,12 +13,12 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
-import { isEqual } from "lodash";
+// IMPORT import { isEqual } from "lodash";
 import { useSelector } from "react-redux";
 
 const EditableFields = ({ open, onClose, customer }) => {
-	const [openModal, setOpenModal] = useState(false);
-	console.log(openModal)
+	// OPEN const [openModal, setOpenModal] = useState(false);
+	// OPEN console.log(openModal)
 	const [fields, setFields] = useState([
 		{ label: "Company Name*", name: "company_name", type: "text", editable: false, required: true },
 		{

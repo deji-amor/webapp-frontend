@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TableCell, Menu, MenuItem, IconButton, Box } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SuspendModal from "./SuspendModal";
@@ -7,9 +7,9 @@ import UnsuspendConfirmationModal from "./UnsuspendConfirmationModal";
 import {
 	resendVerification,
 	suspendUnsuspend,
+	fetchCustomers
 } from "../../../../state-manager/reducers/users/customers/customers";
 import { useDispatch } from "react-redux";
-import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
 
 const MoreOptionsDropdown = ({

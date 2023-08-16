@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { TableCell, Menu, MenuItem, IconButton, Box, Button } from "@mui/material";
+import { TableCell, Menu, MenuItem, Box, Button } from "@mui/material";
 import SuspendConfirmationModal from "./SuspendConfirmationModal";
 import UnsuspendConfirmationModal from "./UnsuspendConfirmationModal";
 import {
 	resendVerification,
 	suspendUnsuspend,
+	fetchCustomers
 } from "../../../../state-manager/reducers/users/customers/customers";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
+import { useDispatch } from "react-redux";
 import { KeyboardArrowDown } from "@mui/icons-material";
 import SuspendModal from "./SuspendModal";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";

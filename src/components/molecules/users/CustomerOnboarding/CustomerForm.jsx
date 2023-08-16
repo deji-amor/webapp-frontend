@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, Typography, Dialog, DialogContent, styled } from "@mui/material";
+import { Box, Button, Typography, Dialog, DialogContent } from "@mui/material";
 import { useForm } from "react-hook-form";
 import TextFields from "../../users/CustomerOnboarding/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	createCustomer,
 	SET_RESPONSE_NULL,
+	fetchCustomers
 } from "../../../../state-manager/reducers/users/customers/customers";
 import { LoaderWrapper, LoaderContainerWrapper } from "../../../atoms/Password/wrappers";
-import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import { Triangle } from "react-loader-spinner";
 import ErrorCard from "../../../molecules/Password/customErrorCard";
 
