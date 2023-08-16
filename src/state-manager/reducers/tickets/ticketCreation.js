@@ -130,10 +130,10 @@ const allPossibleFields = {
 		"hardwareComponentTypeListIsValid": false,
 		//HARDWARE COMPONENT QUANTITY
 		
-		
 		"hardwareQuantityIsValid": false,
-		"hardwareQuantityIsTouched": "",
-		"hardwareQuantityHasError": "",
+		"hardwareNameIsValid": false,
+		"hardwareNameIsTouched": "",
+		"hardwareNameHasError": "",
 		//SOFTWARE INSTALLATION
 
 		"softwareInstallationNameIsValid": false,
@@ -213,7 +213,7 @@ const initialState = {
 	mode: "creation",
 	chosenTemplate: [],
 	allPossibleFields: allPossibleFields,
-	data: null,
+	data: [],
 	customer: {},
 };
 

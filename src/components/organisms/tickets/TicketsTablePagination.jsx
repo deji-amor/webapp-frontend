@@ -51,7 +51,7 @@ const TicketsTablePagination = () => {
 
 	if(ticketsLoading || customersLoading) return <></>
 
-	if(totalItems.length === 0) return <></>;
+	if(totalItems === 0) return <></>;
 
 	return (
 		<div className="bg-white p-[0.8rem] rounded-b-[0.75rem] border-t-2 border-b-[#ECECEC] flex items-center justify-between">
