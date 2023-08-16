@@ -186,7 +186,7 @@ const CreatePassword = () => {
 					</LoadWrapper>
 				)) || passwordResponse === "Your password has been set successfully! You can login now" && (
 					<CreatePasswordSuccess />
-				) (
+				) || (
 					<ForgotPasswordResetWrapper>
 						<div style={{ display: "flex", justifyContent: "center" }}>
 							<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
