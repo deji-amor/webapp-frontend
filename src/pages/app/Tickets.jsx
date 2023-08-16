@@ -7,6 +7,8 @@ import TicketsTablePagination from '../../components/organisms/tickets/TicketsTa
 import { styled } from '@mui/material';
 import { useSelector } from 'react-redux';
 import Placeholder from '../../components/molecules/general/Placeholder';
+import { Triangle } from "react-loader-spinner";
+import { LoaderContainerWrapper, LoaderWrapper } from '../../components/atoms/Password/wrappers';
 
 const Wrapper = styled("div")`
   position: relative;
@@ -30,7 +32,23 @@ const Tickets = () => {
 		loading: ticketsLoading,
 	} = useSelector((state) => state.tickets);
 
-  if(ticketsLoading) return <></>
+  if(ticketsLoading) return (
+		<div>
+			<LoaderWrapper></LoaderWrapper>
+			<LoaderContainerWrapper>
+				<Triangle
+					height="150"
+					width="150"
+					color="#2b2e72"
+					ariaLabel="triangle-loading"
+					wrapperStyle={{}}
+					wrapperClassName="loader"
+					visible={true}
+				/>
+			</LoaderContainerWrapper>
+		</div>
+	);
+
   if(error) return <p>An error occurred please refresh</p>
   
   if(successful && tickets.length === 0) return <Placeholder messageHeader={"seems you don’t have anything here yet!"} messageParagraph={"No worries, you can start by creating your first user and adding some information about them."} isThereActionButton={true} buttonText={"Create customer"} onClick={() => {}}/>;
