@@ -1,21 +1,20 @@
-import React, { useEffect } from 'react'
-import GrayThemedLightText from '../../GrayThemedLightText';
+import React, { useEffect } from "react";
+import GrayThemedLightText from "../../GrayThemedLightText";
 import GrayThemedLighterText from "../../GrayThemedLighterText";
 import NumberDropDown from "../general/NumberDropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { createTicketActions } from "../../../../../../state-manager/reducers/tickets/ticketCreation";
-import useCreateTicketInput from '../../../../../../hooks/useCreateTicketInput';
-import ValidationErrorText from '../../../../Login/ValidationErrorText';
-import TextArea from '../general/TextArea';
-import LocationTab from '../general/LocationTab';
-import Checkbox from '../general/Checkbox';
-import { isAddressEmpty } from '../../../../../../helpers/validation';
+import useCreateTicketInput from "../../../../../../hooks/useCreateTicketInput";
+import ValidationErrorText from "../../../../Login/ValidationErrorText";
+import TextArea from "../general/TextArea";
+import LocationTab from "../general/LocationTab";
+import Checkbox from "../general/Checkbox";
+import { isAddressEmpty } from "../../../../../../helpers/validation";
 
 const Location = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const numberOfLocation = allPossibleFields.numberOfLocation;
 	const locations = allPossibleFields.locations;
-	// LOCATION const locationsAddressIsValid = allPossibleFields.locationsAddressIsValid;
 	const activeLocationAddress = allPossibleFields.activeLocationAddress;
 	const activeLocationType = allPossibleFields.activeLocationType;
 	const dispatch = useDispatch();
@@ -23,17 +22,11 @@ const Location = () => {
 	const {
 		enteredValue: locationAddressValue,
 		errorMessage: locationAddressErrorMessage,
-	// LOCATION
-		// setErrorMessage: locationAddressSetErrorMessage,
 		hasError: locationAddressHasError,
-	// LOCATION
-		// setHasError: locationAddressSetHasError,
 		valueChangeHandler: locationAddressChangeHandler,
 		valueBlurHandler: locationAddressBlurHandler,
 		valueIsValid: locationAddressIsValid,
 		errorFromServer: locationAddressErrFromServer,
-	// LOCATION
-		// setErrorFromServer: locationAddressSetErrorFromServer,
 		id: locationAddressId,
 		reset: locationAddressReset,
 	} = useCreateTicketInput("locationAddress", isAddressEmpty);
@@ -43,14 +36,17 @@ const Location = () => {
 	};
 
 	useEffect(() => {
-		const newLocations = Array.from({length: numberOfLocation}, () => ({address: "", type: "governmental"}))
+		const newLocations = Array.from({ length: numberOfLocation }, () => ({
+			address: "",
+			type: "governmental",
+		}));
 		dispatch(createTicketActions.updateField({ key: "locations", value: newLocations }));
 		dispatch(createTicketActions.updateField({ key: "activeLocationAddress", value: 0 }));
 		dispatch(createTicketActions.updateField({ key: "activeLocationType", value: 0 }));
 		dispatch(createTicketActions.updateField({ key: "locationType", value: "governmental" }));
-		locationAddressReset()
-	}, [numberOfLocation, dispatch])
-	
+		locationAddressReset();
+	}, [numberOfLocation]);
+
 	const changeActiveLocationAddressHandler = (location) => {
 		dispatch(createTicketActions.updateField({ key: "activeLocationAddress", value: location }));
 		dispatch(createTicketActions.updateField({ key: "activeLocationType", value: location }));
@@ -62,17 +58,22 @@ const Location = () => {
 		const newItem = { ...item, address: locationAddressValue };
 		newLocations.splice(activeLocationAddress, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "locations", value: newLocations }));
-		if(newLocations.every(({address}) => isAddressEmpty(address)[0])){
+		if (newLocations.every(({ address }) => isAddressEmpty(address)[0])) {
 			dispatch(createTicketActions.updateField({ key: "locationsAddressIsValid", value: true }));
-		}else {
+		} else {
 			dispatch(createTicketActions.updateField({ key: "locationsAddressIsValid", value: false }));
 		}
 	}, [locationAddressValue]);
 
 	useEffect(() => {
-		locationAddressReset()
-		dispatch(createTicketActions.updateField({ key: "locationAddress", value: locations[activeLocationAddress].address }));
-	}, [activeLocationAddress])
+		locationAddressReset();
+		dispatch(
+			createTicketActions.updateField({
+				key: "locationAddress",
+				value: locations[activeLocationAddress].address,
+			})
+		);
+	}, [activeLocationAddress]);
 
 	const tablet = (
 		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
@@ -96,13 +97,16 @@ const Location = () => {
 		const newItem = { ...item, type: type };
 		newLocations.splice(activeLocationType, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "locations", value: newLocations }));
-		// LOCATION dispatch(createTicketActions.updateField({ ey: "activeLocationType",  }));
-	}
+	};
 
 	const boxes = (
 		<div className="flex items-center gap-[1.5rem]">
 			{["governmental", "commercial", "residential"].map((type, ind) => (
-				<Checkbox key={type} onChange={boxesChangeHandler} isActive={type === locations[activeLocationType].type}>
+				<Checkbox
+					key={type}
+					onChange={boxesChangeHandler}
+					isActive={type === locations[activeLocationType].type}
+				>
 					{type}
 				</Checkbox>
 			))}
@@ -154,6 +158,6 @@ const Location = () => {
 			</div>
 		</div>
 	);
-}
+};
 
-export default Location
+export default Location;
