@@ -38,10 +38,6 @@ const MoreOptionsDropdown = ({
 
 	const [currentCustomerId, setCurrentCustomerId] = useState(null);
 
-	// useEffect(() => {
-	// 		dispatch(fetchCustomers());
-	// 	}, [dispatch]);
-
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};

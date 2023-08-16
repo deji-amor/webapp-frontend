@@ -44,16 +44,18 @@ const EditableFields = ({ open, onClose, customer }) => {
 		{
 			label: "Company representative phone number",
 			name: "phone_number",
-			type: "tel",
+			type: "text",
 			editable: false,
+			required: false,
 		},
 		{
 			label: "Company finance team email",
 			name: "company_finance_email",
 			type: "email",
 			editable: false,
+			required: false,
 		},
-		{ label: "Company official email", name: "company_email", type: "email", editable: false },
+		{ label: "Company official email", name: "company_email", type: "email", editable: false, required: false, },
 	]);
 	const [newField, setNewField] = useState("");
 	const [addingNewField, setAddingNewField] = useState(false);
@@ -70,14 +72,14 @@ const EditableFields = ({ open, onClose, customer }) => {
 				value: selectedCustomer[field.name] || "",
 			}));
 			setFields(populatedFields);
-	
+
 			const initialFieldValues = {};
 			fields.forEach((field) => {
 				initialFieldValues[field.name] = selectedCustomer[field.name] || "";
 			});
 			setFieldValues(initialFieldValues);
 		}
-	}, [selectedCustomer, fields]);	
+	}, [selectedCustomer]);
 
 	const handleOpenModal = () => {
 		setOpenModal(true);
@@ -119,8 +121,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 			});
 			setFields(updatedFields);
 		}
-	};	
-	
+	};
 
 	const handleSaveField = (index) => {
 		const updatedFields = fields.map((field, i) => {
@@ -141,20 +142,25 @@ const EditableFields = ({ open, onClose, customer }) => {
 		}
 	};
 
-	const handleInputChange = (name, value) => {
-		setFieldValues((prevFieldValues) => ({
-			...prevFieldValues,
-			[name]: value,
-		}));
+	const handleInputChange = (index, value) => {
+		setFields((prevFields) => {
+			const updatedFields = [...prevFields];
+			updatedFields[index].value = value;
+			return updatedFields;
+		});
+		setIsFormEdited(true);
 	};
-	
+
+	const updateCustomerData = () => {
+		const updatedData = {};
+		fields.forEach((field) => {
+			updatedData[field.name] = field.value;
+		});
+	};
 
 	return (
 		<div>
-			<Button variant="outlined" onClick={handleOpenModal}>
-				Open Modal
-			</Button>
-			<Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="md">
+			<Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
 				<DialogTitle>
 					Edit Profile Fields
 					<hr style={{ width: "322.337px", borderColor: "#4F4F4F", marginTop: "15px" }} />
@@ -200,19 +206,23 @@ const EditableFields = ({ open, onClose, customer }) => {
 							{field.label}
 							<TextField
 								type={field.type}
-								value={fieldValues[field.name] || ""}
+								value={field.value || ""}
 								required={field.required}
 								id={`field-${index}`}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
 											{field.editable && (
-												<IconButton onClick={() => handleSaveField(index)}>
+												<IconButton
+													onClick={() => handleSaveField(index)}
+													disabled={field.required && isCustomerActive}
+												>
 													<CheckIcon sx={{ color: "green" }} />
 												</IconButton>
 											)}
-											{!field.editable && (
-												<IconButton onClick={() => handleEditField(index)}>
+											{!field.editable && !isCustomerActive &&(
+												<IconButton onClick={() => handleEditField(index)}
+												>
 													<EditIcon sx={{ color: "#2b2e72" }} />
 												</IconButton>
 											)}
@@ -225,7 +235,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 									),
 								}}
 								disabled={!field.editable}
-								onChange={(event) => handleInputChange(field.name, event.target.value)}
+								onChange={(event) => handleInputChange(index, event.target.value)}
 							/>
 						</FormControl>
 					))}
@@ -295,7 +305,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 				</DialogContent>
 				<DialogActions sx={{ padding: "30px" }}>
 					<Button
-						onClick={handleCloseModal}
+						onClick={onClose}
 						sx={{
 							color: "#2b2e72",
 							borderColor: "#2b2e72",
@@ -322,6 +332,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 							},
 						}}
 						disabled={!isFormEdited}
+						onClick={updateCustomerData}
 					>
 						Save Changes
 					</Button>
