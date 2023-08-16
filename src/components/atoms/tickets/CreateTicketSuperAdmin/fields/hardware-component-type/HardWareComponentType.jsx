@@ -47,7 +47,6 @@ const HardWareComponentType = () => {
 	};
 
 	const addTypeHandler = () => {
-		console.log("add");
 		const newList = [...hardwareComponentTypeList, hardwareInputTypeCurrentValue]
 		dispatch(createTicketActions.updateField({ key: "hardwareComponentTypeList", value: newList }));
 		dispatch(createTicketActions.updateField({ key: "hardwareInputTypeCurrentValue", value: "" }));
@@ -55,7 +54,6 @@ const HardWareComponentType = () => {
 	}
 
 	const cancelTypeHandler = () => {
-		console.log("remove");
 		typeReset()
 		dispatch(createTicketActions.updateField({ key: "hardwareInputTypeCurrentValue", value: "" }));
 		setShowInput(false)

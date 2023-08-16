@@ -59,15 +59,16 @@ export function isScopeOfWorkEmpty(value) {
 }
 
 export function isValidFile(file) {
-	// Check if the object is a file
-	if (!(file instanceof File)) return false;
-
-	// Validate if the file has a valid name and extension (optional but recommended)
-	// And Ensure that the file has content (not empty)
-	const filename = file.name.trim();
-  // console.log(filename)
-
-	return (file.size != "" || file.size != 0);
+  const filename = file.name.trim();
+	if (!(file instanceof File)) {
+		return false;
+	}else if(filename === "") {
+		return false;
+	}else if (file.size === 0) {
+		return false;
+	}else {
+    return true;
+  }
 }
 
 export function isValidDateTimeLocal(inputString) {

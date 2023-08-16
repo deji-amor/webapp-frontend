@@ -8,6 +8,7 @@ import InitialAdminCreationFormAndModal from '../components/organisms/tickets/Cr
 import TicketTemplateCreationOrEditionForm from '../components/organisms/tickets/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm';
 import { fetchUsers } from '../state-manager/reducers/users/users';
 import { fetchCustomers } from '../state-manager/reducers/users/customers/customers';
+import { fetchTickets } from '../state-manager/reducers/tickets/tickets';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
@@ -52,7 +53,6 @@ const AppLayout = () => {
 				dispatch(logout({ deviceName: deviceName }));
 			}
 			if (!token) {
-				console.log("Bube")
 				navigate("/");
 			}
 		};
@@ -72,6 +72,7 @@ const AppLayout = () => {
 	useEffect(() => {
 		dispatch(fetchUsers())
 		dispatch(fetchCustomers())
+		dispatch(fetchTickets())
 	}, [])
 
 	return (

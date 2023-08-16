@@ -74,7 +74,6 @@ const Location = () => {
 		dispatch(createTicketActions.updateField({ key: "locationAddress", value: locations[activeLocationAddress].address }));
 	}, [activeLocationAddress])
 
-
 	const tablet = (
 		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
 			{locations.map(({ address, type }, ind) => (
