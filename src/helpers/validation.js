@@ -59,7 +59,7 @@ export function isScopeOfWorkEmpty(value) {
 }
 
 export function isValidFile(file) {
-  const filename = file.name.trim();
+  const filename = file?.name?.trim();
 	if (!(file instanceof File)) {
 		return false;
 	}else if(filename === "") {
