@@ -99,7 +99,7 @@ const CreatePassword = () => {
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setLoad(false);
-		}, 5000);
+		}, 10000);
 
 		return () => timeout();
 	}, []);
