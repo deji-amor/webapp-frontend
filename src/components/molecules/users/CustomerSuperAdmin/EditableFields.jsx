@@ -16,21 +16,50 @@ import CheckIcon from "@mui/icons-material/Check";
 import { isEqual } from "lodash";
 import { useSelector } from "react-redux";
 
-const EditableFields = ({ open, onClose, initialFields, customer }) => {
+const EditableFields = ({ open, onClose, customer }) => {
 	const [openModal, setOpenModal] = useState(false);
 	const [fields, setFields] = useState([
 		{ label: "Company Name*", name: "company_name", type: "text", editable: false, required: true },
-		{ label: "Company representative first name*", name: "first_name", type: "text", editable: false, required: true },
-		{ label: "Company representative last name*", name: "last_name", type: "text", editable: false, required: true },
-		{ label: "Representative Email*", name: "email", type: "email", editable: false, required: true },
-		{ label: "Company representative phone number", name: "phone_number", type: "tel", editable: false },
-		{ label: "Company finance team email", name: "company_finance_email", type: "email", editable: false },
+		{
+			label: "Company representative first name*",
+			name: "first_name",
+			type: "text",
+			editable: false,
+			required: true,
+		},
+		{
+			label: "Company representative last name*",
+			name: "last_name",
+			type: "text",
+			editable: false,
+			required: true,
+		},
+		{
+			label: "Representative Email*",
+			name: "email",
+			type: "email",
+			editable: false,
+			required: true,
+		},
+		{
+			label: "Company representative phone number",
+			name: "phone_number",
+			type: "tel",
+			editable: false,
+		},
+		{
+			label: "Company finance team email",
+			name: "company_finance_email",
+			type: "email",
+			editable: false,
+		},
 		{ label: "Company official email", name: "company_email", type: "email", editable: false },
 	]);
 	const [newField, setNewField] = useState("");
 	const [addingNewField, setAddingNewField] = useState(false);
 	const [isFormEdited, setIsFormEdited] = useState(false);
-	
+	const [fieldValues, setFieldValues] = useState({});
+
 	const selectedCustomer = useSelector((state) => state.ticketCreation.customer);
 	const isCustomerActive = selectedCustomer?.status === "active";
 
@@ -41,8 +70,14 @@ const EditableFields = ({ open, onClose, initialFields, customer }) => {
 				value: selectedCustomer[field.name] || "",
 			}));
 			setFields(populatedFields);
+	
+			const initialFieldValues = {};
+			fields.forEach((field) => {
+				initialFieldValues[field.name] = selectedCustomer[field.name] || "";
+			});
+			setFieldValues(initialFieldValues);
 		}
-	}, [selectedCustomer, fields]);
+	}, [selectedCustomer, fields]);	
 
 	const handleOpenModal = () => {
 		setOpenModal(true);
@@ -105,6 +140,14 @@ const EditableFields = ({ open, onClose, initialFields, customer }) => {
 		}
 	};
 
+	const handleInputChange = (name, value) => {
+		setFieldValues((prevFieldValues) => ({
+			...prevFieldValues,
+			[name]: value,
+		}));
+	};
+	
+
 	return (
 		<div>
 			<Button variant="outlined" onClick={handleOpenModal}>
@@ -127,7 +170,7 @@ const EditableFields = ({ open, onClose, initialFields, customer }) => {
 				>
 					{fields.map((field, index) => (
 						<FormControl
-							key={index}
+							key={field.id}
 							fullWidth
 							sx={{
 								mb: "0.5rem",
@@ -156,9 +199,8 @@ const EditableFields = ({ open, onClose, initialFields, customer }) => {
 							{field.label}
 							<TextField
 								type={field.type}
-								value={field.value}
+								value={fieldValues[field.name] || ""}
 								required={field.required}
-								disabled={!field.editable}
 								id={`field-${index}`}
 								InputProps={{
 									endAdornment: (
@@ -182,15 +224,16 @@ const EditableFields = ({ open, onClose, initialFields, customer }) => {
 									),
 								}}
 								disabled={!field.editable}
+								onChange={(event) => handleInputChange(field.name, event.target.value)}
 							/>
 						</FormControl>
 					))}
 
 					{addingNewField ? (
 						<TextField
-						placeholder="Enter Field Name"
-						value={newField}
-						onChange={handleNewFieldChange}
+							placeholder="Enter Field Name"
+							value={newField}
+							onChange={handleNewFieldChange}
 							fullWidth
 							sx={{
 								mb: "0.5rem",
@@ -270,7 +313,7 @@ const EditableFields = ({ open, onClose, initialFields, customer }) => {
 					<Button
 						variant="contained"
 						sx={{
-							background: isFormEdited ? "rgba(43, 46, 114, 0.5)" : "#2b2e72",
+							background: "#2b2e72",
 							textTransform: "none",
 							fontFamily: "Poppins",
 							"&:hover": {

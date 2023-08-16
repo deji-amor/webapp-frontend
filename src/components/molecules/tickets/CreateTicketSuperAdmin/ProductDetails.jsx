@@ -18,7 +18,14 @@ const ProductDetails = () => {
 	const customer = useSelector((state) => state.ticketCreation.customer);
 	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
 
-	
+	const saveButtonStyles = {
+		color: "#2b2e72",
+		textTransform: "none",
+		"&:hover": {
+			color: "#2b2e72",
+			background: "transparent",
+		},
+	};
 
 	const handleEditIconClick = () => {
 		setSelectedCustomer(customer);
@@ -32,7 +39,7 @@ const ProductDetails = () => {
 					<MediumText>Profile Details</MediumText>
 				</div>
 				<div className="flex items-center justify-between gap-[1.25rem]">
-					<Button onClick={handleEditIconClick}>
+					<Button onClick={handleEditIconClick} sx={saveButtonStyles}>
 						Edit Fields <EditIcon />
 					</Button>
 					<></>
