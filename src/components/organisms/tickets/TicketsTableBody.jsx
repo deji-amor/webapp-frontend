@@ -7,6 +7,7 @@ import { styled } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
+import { v4 } from "uuid";
 
 const Edit = styled("p")`
 	color: #2b2e72;
@@ -70,13 +71,13 @@ const TicketsTableBody = () => {
 		.slice(activeTicketsStartPoint, activeTicketsEndPoint)
 		.map((ticket, ind) => (
 			<tr
-				key={`${ticket.id}${ticket.user_id}${ticket.customer_id}${ticket.workspace_id}`}
+				key={`${ticket.id}${ticket.user_id}${ticket.customer_id}${ticket.workspace_id}${v4()}`}
 				className="bg-white border-b hover:bg-gray-50"
 			>
 				<RecentTicketTableText>
 					{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}
 				</RecentTicketTableText>
-				<RecentTicketTableText>{ticket.ticket_form}</RecentTicketTableText>
+				<RecentTicketTableText className="max-w-[10rem] border truncate">{ticket.ticket_form}</RecentTicketTableText>
 				<RecentTicketTableText>ASchevchenko@Servirox...</RecentTicketTableText>
 				<RecentTicketTableText>
 					<StatusTab />

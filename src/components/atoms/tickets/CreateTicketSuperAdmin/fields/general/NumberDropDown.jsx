@@ -29,7 +29,6 @@ const NumberDropDown = ({min, max, value, onChange}) => {
 	}
 
 	const handleChange = (value) => {
-		console.log(value);
 		onChange(value)
 		setShowDropDown(false)
 	}
