@@ -15,8 +15,7 @@ import { suspendUnsuspend } from "../../../../state-manager/reducers/users/custo
 const ProductDetails = () => {
 	const dispatch = useDispatch();
 
-	const [showEditableFields, setShowEditableFields] = useState(false);
-	console.log(setShowEditableFields(false))
+	// EDITABLE const [showEditableFields, setShowEditableFields] = useState(false);
 	const [selectedCustomer, setSelectedCustomer] = useState(null);
 
 	const customer = useSelector((state) => state.ticketCreation.customer);
@@ -94,14 +93,14 @@ const ProductDetails = () => {
 					<UserActivity status={status} />
 				</div>
 			</div>
-			{showEditableFields && (
+			{/* {showEditableFields && (
 				<EditableFields
 					open={true}
 					onClose={() => console.log("Closed")}
 					customer={selectedCustomer}
 					onClick={() => console.log("Clicked")}
 				/>
-			)}
+			)} */}
 		</>
 	);
 };
