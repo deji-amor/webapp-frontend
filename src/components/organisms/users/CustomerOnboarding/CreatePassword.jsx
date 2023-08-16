@@ -6,15 +6,15 @@ import {
 	SET_ERROR_NULL,
 	validateToken,
 } from "../../../../state-manager/reducers/users/customers/customers";
-import ErrorCard from "../../../molecules/Password/customErrorCard";
 import CustomButton from "../../../atoms/Password/customButton";
+import CreatePasswordSuccess from "./CreatePasswordSuccess"
 import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
 import PasswordLinkExp from "./passwordLinkExp";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
 import { TailSpin } from "react-loader-spinner";
-import { Typography, styled } from "@mui/material";
+import { styled } from "@mui/material";
 
 const LoadWrapper = styled("div")(() => ({
 	width: "100%",
@@ -126,10 +126,10 @@ const CreatePassword = () => {
 
 		if (passwordResponse) setLoading(false);
 
-		if (passwordResponse === "Your password has been set successfully! You can login now") {
-			navigate("/customer-create-password-success");
-			return window.location.reload()
-		}
+		// if (passwordResponse === "Your password has been set successfully! You can login now") {
+		// 	navigate("/customer-create-password-success");
+		// 	return window.location.reload()
+		// }
 	}, [
 		password,
 		confirmPassword,
@@ -184,7 +184,9 @@ const CreatePassword = () => {
 							/>
 						</div>
 					</LoadWrapper>
-				)) || (
+				)) || passwordResponse === "Your password has been set successfully! You can login now" && (
+					<CreatePasswordSuccess />
+				) (
 					<ForgotPasswordResetWrapper>
 						<div style={{ display: "flex", justifyContent: "center" }}>
 							<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
