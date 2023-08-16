@@ -16,6 +16,14 @@ const ProductDetails = () => {
 	const dispatch = useDispatch();
 
 	// EDITABLE const [showEditableFields, setShowEditableFields] = useState(false);
+	// EDITABLE ELEMENT {showEditableFields && (
+	// EDITABLE ELEMENT 			<EditableFields
+	// EDITABLE ELEMENT 				open={true}
+	// EDITABLE ELEMENT 				onClose={() => console.log("Closed")}
+	// EDITABLE ELEMENT 				customer={selectedCustomer}
+	// EDITABLE ELEMENT 				onClick={() => console.log("Clicked")}
+	// EDITABLE ELEMENT 			/>
+	// EDITABLE ELEMENT 		)}
 	const [selectedCustomer, setSelectedCustomer] = useState(null);
 
 	const customer = useSelector((state) => state.ticketCreation.customer);
@@ -93,14 +101,7 @@ const ProductDetails = () => {
 					<UserActivity status={status} />
 				</div>
 			</div>
-			{/* {showEditableFields && (
-				<EditableFields
-					open={true}
-					onClose={() => console.log("Closed")}
-					customer={selectedCustomer}
-					onClick={() => console.log("Clicked")}
-				/>
-			)} */}
+			
 		</>
 	);
 };

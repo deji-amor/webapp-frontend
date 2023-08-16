@@ -22,14 +22,13 @@ const MoreOptionsDropdown = ({
 }) => {
 	const dispatch = useDispatch();
 
-	// USESELECTOR
-	// const {
-	// 	loading: customersLoading,
-	// 	customers: allCustomers,
-	// 	successful,
-	// 	error,
-	// 	errorMessage,
-	// } = useSelector((state) => state.customers);
+	// USESELECTOR const {
+	// USESELECTOR 	loading: customersLoading,
+	// USESELECTOR 	customers: allCustomers,
+	// USESELECTOR 	successful,
+	// USESELECTOR 	error,
+	// USESELECTOR 	errorMessage,
+	// USESELECTOR } = useSelector((state) => state.customers);
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isSuspendConfirmationModalOpen, setIsSuspendConfirmationModalOpen] = useState(false);

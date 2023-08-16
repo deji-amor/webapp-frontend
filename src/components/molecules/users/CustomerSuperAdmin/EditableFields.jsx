@@ -83,18 +83,16 @@ const EditableFields = ({ open, onClose, customer }) => {
 		}
 	}, [selectedCustomer]);
 
-	// HANDLE
-	// const handleOpenModal = () => {
-	// 	setOpenModal(true);
-	// };
+	// HANDLE const handleOpenModal = () => {
+	// HANDLE  	setOpenModal(true);
+	// HANDLE };
 
-	// HANDLE
-	// const handleCloseModal = () => {
-	// 	setOpenModal(false);
-	// 	setNewField("");
-	// 	setAddingNewField(false);
-	// 	setIsFormEdited(false);
-	// };
+	// HANDLE const handleCloseModal = () => {
+	// HANDLE 	setOpenModal(false);
+	// HANDLE 	setNewField("");
+	// HANDLE 	setAddingNewField(false);
+	// HANDLE 	setIsFormEdited(false);
+	// HANDLE };
 
 	const handleAddNewField = () => {
 		setAddingNewField(true);
