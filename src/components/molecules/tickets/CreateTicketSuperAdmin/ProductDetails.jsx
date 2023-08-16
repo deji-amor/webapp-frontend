@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { getDateFromDateTime } from "../../../../helpers/date-manipulation";
 import EditableFields from "../../users/CustomerSuperAdmin/EditableFields";
 import { Button } from "@mui/material";
+import SplitButtonDropdown from "../../../atoms/users/CustomerSuperAdmin/SplitButtonDropdown";
 
 const ProductDetails = () => {
 	const [showEditableFields, setShowEditableFields] = useState(false);
@@ -43,6 +44,10 @@ const ProductDetails = () => {
 						Edit Fields <EditIcon />
 					</Button>
 					<></>
+					<SplitButtonDropdown status={customer.status}
+												customerId={customer.user_id}
+												onUpdateStatus={(newStatus, comment) =>
+													handleUpdateStatus(customer.user_id, newStatus, comment) }/>
 				</div>
 			</div>
 			<HorizontalRule />

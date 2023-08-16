@@ -110,7 +110,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 	};
 
 	const handleEditField = (index) => {
-		if (!isCustomerActive) {
+		if (!fields[index].required || !isCustomerActive) {
 			const updatedFields = fields.map((field, i) => {
 				if (i === index) {
 					field.editable = true;
@@ -119,7 +119,8 @@ const EditableFields = ({ open, onClose, customer }) => {
 			});
 			setFields(updatedFields);
 		}
-	};
+	};	
+	
 
 	const handleSaveField = (index) => {
 		const updatedFields = fields.map((field, i) => {

@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import SortBy from "../../../atoms/users/CustomerSuperAdmin/SortBy";
 import CustomerTable from "./CustomerTable";
 import { useEffect } from "react";
+import Placeholder from "../../../molecules/general/Placeholder";
 
 const CustomTab = (props) => {
 	const { label, ...other } = props;
@@ -136,10 +137,10 @@ export default function BasicTabs({ filteredCustomers }) {
 				/>
 			</UserTabs>
 			<UserTabs value={value} index={1}>
-				Item Two
+				<Placeholder messageHeader="seems you don’t have anything here yet!" messageParagraph="Once a technician has been created for you, you will be able to view the data here." />
 			</UserTabs>
 			<UserTabs value={value} index={2}>
-				Item Three
+				<Placeholder messageHeader="seems you don’t have anything here yet!" messageParagraph="Once an admin has been created for you, you will be able to view the data here." />
 			</UserTabs>
 		</Box>
 	);

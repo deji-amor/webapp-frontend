@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { TableCell, Menu, MenuItem, IconButton, Box } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import SuspendModal from "./SuspendModal";
+import React, { useState } from "react";
+import { TableCell, Menu, MenuItem, IconButton, Box, Button } from "@mui/material";
 import SuspendConfirmationModal from "./SuspendConfirmationModal";
 import UnsuspendConfirmationModal from "./UnsuspendConfirmationModal";
 import {
@@ -10,9 +8,10 @@ import {
 } from "../../../../state-manager/reducers/users/customers/customers";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
-import { UIActions } from "../../../../state-manager/reducers/UI/ui";
+import { KeyboardArrowDown } from "@mui/icons-material";
+import SuspendModal from "./SuspendModal";
 
-const MoreOptionsDropdown = ({
+const SplitButtonDropdown = ({
 	status,
 	customerId,
 	onUpdateStatus,
@@ -37,10 +36,6 @@ const MoreOptionsDropdown = ({
 
 	const [currentCustomerId, setCurrentCustomerId] = useState(null);
 
-	// useEffect(() => {
-	// 		dispatch(fetchCustomers());
-	// 	}, [dispatch]);
-
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -59,12 +54,11 @@ const MoreOptionsDropdown = ({
 	};
 
 	const handleUnsuspendConfirmationYes = (selectedCustomer, customerId) => {
-		dispatch(suspendUnsuspend({ customerId, actionType: "unsuspend" })).then(() =>
-			dispatch(fetchCustomers)
-		);
+		dispatch(suspendUnsuspend({ customerId, actionType: "unsuspend" }));
+		onUpdateStatus(currentCustomerId, "active");
 		setIsUnsuspendConfirmationModalOpen(false);
 		onConfirm(selectedCustomer);
-		onUpdateStatus(currentCustomerId, "active");
+		dispatch(fetchCustomers());
 	};
 
 	const handleUnsuspendClick = () => {
@@ -101,23 +95,21 @@ const MoreOptionsDropdown = ({
 	const handleResendVerification = (email) => {
 		dispatch(resendVerification(email));
 		handleClose();
-		dispatch(
-			UIActions.showToasts({
-				message: "Verification link has been resent.",
-
-				title: "Successfully sent",
-
-				type: "successful",
-			})
-		);
 	};
 
 	return (
 		<TableCell sx={{ borderBottom: "none", padding: 0 }}>
 			<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-				<IconButton aria-label="more" onClick={handleClick}>
-					<MoreVertIcon />
-				</IconButton>
+				<Button
+					variant="outlined"
+					onClick={handleClick}
+					endIcon={<KeyboardArrowDown />}
+					sx={{
+						borderRadius: "10px",
+					}}
+				>
+					Actions
+				</Button>
 				<Menu
 					anchorEl={anchorEl}
 					open={Boolean(anchorEl)}
@@ -188,4 +180,4 @@ const MoreOptionsDropdown = ({
 	);
 };
 
-export default MoreOptionsDropdown;
+export default SplitButtonDropdown;
