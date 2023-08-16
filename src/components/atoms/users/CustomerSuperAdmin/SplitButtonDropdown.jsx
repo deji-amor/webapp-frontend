@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { TableCell, Menu, MenuItem, IconButton, Box } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import SuspendModal from "./SuspendModal";
+import React, { useState } from "react";
+import { TableCell, Menu, MenuItem, IconButton, Box, Button } from "@mui/material";
 import SuspendConfirmationModal from "./SuspendConfirmationModal";
 import UnsuspendConfirmationModal from "./UnsuspendConfirmationModal";
 import {
@@ -10,25 +8,18 @@ import {
 } from "../../../../state-manager/reducers/users/customers/customers";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
+import { KeyboardArrowDown } from "@mui/icons-material";
+import SuspendModal from "./SuspendModal";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
 
-const MoreOptionsDropdown = ({
+const SplitButtonDropdown = ({
 	status,
 	customerId,
 	onUpdateStatus,
 	onConfirm,
 	selectedCustomer,
-	email,
 }) => {
 	const dispatch = useDispatch();
-
-	const {
-		loading: customersLoading,
-		customers: allCustomers,
-		successful,
-		error,
-		errorMessage,
-	} = useSelector((state) => state.customers);
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isSuspendConfirmationModalOpen, setIsSuspendConfirmationModalOpen] = useState(false);
@@ -46,7 +37,11 @@ const MoreOptionsDropdown = ({
 		setAnchorEl(null);
 	};
 
-	// Unsuspend Area
+	const handleSuspendClick = () => {
+		setIsSuspendConfirmationModalOpen(true);
+		handleClose();
+	};
+
 	const handleUnsuspendConfirmationClose = () => {
 		setIsUnsuspendConfirmationModalOpen(false);
 	};
@@ -62,12 +57,6 @@ const MoreOptionsDropdown = ({
 
 	const handleUnsuspendClick = () => {
 		setIsUnsuspendConfirmationModalOpen(true);
-		handleClose();
-	};
-
-	// Suspend Area
-	const handleSuspendClick = () => {
-		setIsSuspendConfirmationModalOpen(true);
 		handleClose();
 	};
 
@@ -98,7 +87,7 @@ const MoreOptionsDropdown = ({
 	};
 
 	const handleResendVerification = (email) => {
-		dispatch(resendVerification({representativeEmail: email}));
+		dispatch(resendVerification({ representativeEmail: email }));
 		handleClose();
 		dispatch(
 			UIActions.showToasts({
@@ -111,12 +100,27 @@ const MoreOptionsDropdown = ({
 		);
 	};
 
+	const saveButtonStyles = {
+		background: "#2b2e72",
+		textTransform: "none",
+		fontFamily: "Poppins",
+		borderRadius: "10px",
+		"&:hover": {
+			backgroundColor: "#2b2e72",
+		},
+	};
+
 	return (
 		<TableCell sx={{ borderBottom: "none", padding: 0 }}>
 			<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-				<IconButton aria-label="more" onClick={handleClick}>
-					<MoreVertIcon />
-				</IconButton>
+				<Button
+					variant="contained"
+					onClick={handleClick}
+					endIcon={<KeyboardArrowDown />}
+					sx={saveButtonStyles}
+				>
+					Actions
+				</Button>
 				<Menu
 					anchorEl={anchorEl}
 					open={Boolean(anchorEl)}
@@ -155,7 +159,7 @@ const MoreOptionsDropdown = ({
 					{status === "inactive" && (
 						<MenuItem
 							sx={{ borderRadius: "5px", padding: "12px 16px" }}
-							onClick={() => handleResendVerification(email)}
+							onClick={handleResendVerification}
 						>
 							Resend Verification Link
 						</MenuItem>
@@ -187,4 +191,4 @@ const MoreOptionsDropdown = ({
 	);
 };
 
-export default MoreOptionsDropdown;
+export default SplitButtonDropdown;

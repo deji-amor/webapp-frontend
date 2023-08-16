@@ -10,6 +10,7 @@ import useCreateTicketFormValidator from "../../../../hooks/useCreateTicketFormV
 import useCreateTicketFields from "../../../../hooks/useCreateTicketFields";
 import { useDispatch, useSelector } from "react-redux";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
+import { ticketsActions } from "../../../../state-manager/reducers/tickets/tickets";
 import PointOfContact from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/point-of-contact/PointOfContact";
 import MaterialsProcurement from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/materials-procurement/MaterialsProcurement";
 import ScopeOfWork from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/scope-of-work/ScopeOfWork";
@@ -30,7 +31,7 @@ import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/Horizo
 const MainTicketCreationForm = () => {
 	const requiredFields = useCreateTicketFields();
 	const dispatch = useDispatch();
-	const customer = useSelector((state) => state.ticketCreation.customer);
+	const {customer, data} = useSelector((state) => state.ticketCreation);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -46,6 +47,8 @@ const MainTicketCreationForm = () => {
 	);
 	useEffect(() => {
 		if (successful === true) {
+			console.log({data});
+			if(data) dispatch(ticketsActions.addNewTicket(data))
 			dispatch(
 				UIActions.showToasts({
 					message: "You have successfully created a new Ticket for the customer.",
@@ -53,7 +56,7 @@ const MainTicketCreationForm = () => {
 					type: "successful"
 				})
 			);
-			dispatch(createTicketActions.toggleTemplateModal());
+		dispatch(createTicketActions.toggleTemplateModal());
 		}
 		if (error === true) {
 				dispatch(
@@ -65,7 +68,7 @@ const MainTicketCreationForm = () => {
 				);
 			dispatch(createTicketActions.toggleTemplateModal());
 		}
-	}, [error, successful]);
+	}, [error, successful, data]);
 
 	const isFormValid = useCreateTicketFormValidator();
 	const isFormDisabled = !isFormValid;

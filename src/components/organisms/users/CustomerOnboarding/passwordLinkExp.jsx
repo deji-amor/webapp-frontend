@@ -11,7 +11,7 @@ const PasswordLinkExp = () => {
 
     const dispatch = useDispatch();
 
-    const handleResendClick = () => {
+    const handleResendClick = (email) => {
         dispatch(resendMyVerificationLink({ email }));
       };
 
@@ -33,7 +33,7 @@ const PasswordLinkExp = () => {
             <div style={{ display: 'flex', fontFamily: 'Poppins', textAlign: "center",
                     justifyContent: "center", }}>
 			<Button
-                onClick={handleResendClick}
+                onClick={() => handleResendClick(email)}
 				variant="contained"
 				sx={{
 					background: "#2b2e72",
