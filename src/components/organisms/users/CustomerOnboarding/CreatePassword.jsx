@@ -7,7 +7,6 @@ import {
 	validateToken,
 } from "../../../../state-manager/reducers/users/customers/customers";
 import CustomButton from "../../../atoms/Password/customButton";
-import CreatePasswordSuccess from "./CreatePasswordSuccess";
 import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
@@ -99,7 +98,7 @@ const CreatePassword = () => {
 			setLoad(false);
 		}, 5000);
 
-		return () => timeout();
+		return () => clearTimeout(timeout);
 	}, []);
 
 	useEffect(() => {
@@ -126,10 +125,7 @@ const CreatePassword = () => {
 
 		if (passwordResponse) setLoading(false);
 
-		// if (passwordResponse === "Your password has been set successfully! You can login now") {
-		// 	navigate("/customer-create-password-success");
-		// 	return window.location.reload()
-		// }
+		if (passwordResponse === "Your password has been set successfully! You can login now") return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -184,9 +180,6 @@ const CreatePassword = () => {
 							/>
 						</div>
 					</LoadWrapper>
-				)) ||
-				(passwordResponse === "Your password has been set successfully! You can login now" && (
-					<CreatePasswordSuccess />
 				)) || (
 					<ForgotPasswordResetWrapper>
 						<div style={{ display: "flex", justifyContent: "center" }}>
