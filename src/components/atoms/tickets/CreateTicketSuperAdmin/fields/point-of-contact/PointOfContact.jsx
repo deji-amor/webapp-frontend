@@ -119,11 +119,6 @@ const PointOfContact = (props) => {
 						isValid={addressIsValid}
 					/>
 				</div>
-				{addressHasError && (
-					<ValidationErrorText errorFromServer={addressErrFromServer}>
-						{addressErrorMessage}
-					</ValidationErrorText>
-				)}
 			</div>
 		</div>
 	);
