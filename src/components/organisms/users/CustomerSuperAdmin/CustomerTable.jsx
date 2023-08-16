@@ -117,13 +117,14 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 		dispatch(createTicketActions.goBackToAddTicketModal(customer));
 	};
 
-	const {
-		loading: customersLoading,
-		customers,
-		successful,
-		error,
-		errorMessage,
-	} = useSelector((state) => state.customers);
+	// USESELECTOR
+	// const {
+	// 	loading: customersLoading,
+	// 	customers,
+	// 	successful,
+	// 	error,
+	// 	errorMessage,
+	// } = useSelector((state) => state.customers);
 
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;

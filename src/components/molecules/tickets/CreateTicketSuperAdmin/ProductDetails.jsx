@@ -16,12 +16,13 @@ const ProductDetails = () => {
 	const dispatch = useDispatch();
 
 	const [showEditableFields, setShowEditableFields] = useState(false);
+	console.log(setShowEditableFields(false))
 	const [selectedCustomer, setSelectedCustomer] = useState(null);
 
 	const customer = useSelector((state) => state.ticketCreation.customer);
 	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
 
-	const handleUpdateStatus = (customerId, newStatus, comment, email) => {
+	const handleUpdateStatus = (customerId, newStatus, comment) => {
 		dispatch(suspendUnsuspend(customerId, newStatus, comment));
 	};
 	

@@ -8,7 +8,7 @@ import {
 	resendVerification,
 	suspendUnsuspend,
 } from "../../../../state-manager/reducers/users/customers/customers";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
 
@@ -22,13 +22,14 @@ const MoreOptionsDropdown = ({
 }) => {
 	const dispatch = useDispatch();
 
-	const {
-		loading: customersLoading,
-		customers: allCustomers,
-		successful,
-		error,
-		errorMessage,
-	} = useSelector((state) => state.customers);
+	// USESELECTOR
+	// const {
+	// 	loading: customersLoading,
+	// 	customers: allCustomers,
+	// 	successful,
+	// 	error,
+	// 	errorMessage,
+	// } = useSelector((state) => state.customers);
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isSuspendConfirmationModalOpen, setIsSuspendConfirmationModalOpen] = useState(false);

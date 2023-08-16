@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 
 const EditableFields = ({ open, onClose, customer }) => {
 	const [openModal, setOpenModal] = useState(false);
+	console.log(openModal)
 	const [fields, setFields] = useState([
 		{ label: "Company Name*", name: "company_name", type: "text", editable: false, required: true },
 		{
@@ -61,6 +62,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 	const [addingNewField, setAddingNewField] = useState(false);
 	const [isFormEdited, setIsFormEdited] = useState(false);
 	const [fieldValues, setFieldValues] = useState({});
+	console.log(fieldValues)
 
 	const selectedCustomer = useSelector((state) => state.ticketCreation.customer);
 	const isCustomerActive = selectedCustomer?.status === "active";
@@ -81,16 +83,18 @@ const EditableFields = ({ open, onClose, customer }) => {
 		}
 	}, [selectedCustomer]);
 
-	const handleOpenModal = () => {
-		setOpenModal(true);
-	};
+	// HANDLE
+	// const handleOpenModal = () => {
+	// 	setOpenModal(true);
+	// };
 
-	const handleCloseModal = () => {
-		setOpenModal(false);
-		setNewField("");
-		setAddingNewField(false);
-		setIsFormEdited(false);
-	};
+	// HANDLE
+	// const handleCloseModal = () => {
+	// 	setOpenModal(false);
+	// 	setNewField("");
+	// 	setAddingNewField(false);
+	// 	setIsFormEdited(false);
+	// };
 
 	const handleAddNewField = () => {
 		setAddingNewField(true);

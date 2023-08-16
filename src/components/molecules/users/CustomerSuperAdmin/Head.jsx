@@ -14,13 +14,11 @@ const Head = () => {
 	const [customers, setCustomers] = useState([]);
 	const [isMenuOpen, setMenuOpen] = useState(false);
 
-	const dispatch = useDispatch();
+
+	// DISPATCH const dispatch = useDispatch();
+
 	const {
-		loading: customersLoading,
 		customers: allCustomers,
-		successful,
-		error,
-		errorMessage,
 	} = useSelector((state) => state.customers);
 
 	const sampleCustomers = allCustomers;

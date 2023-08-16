@@ -48,16 +48,18 @@ const PointOfContact = (props) => {
 
 	const {
 		enteredValue: addressValue,
-		errorMessage: addressErrorMessage,
+// POINT
+		// errorMessage: addressErrorMessage,
 // POINT
 		// setErrorMessage: addressSetErrorMessage,
-		hasError: addressHasError,
+		// hasError: addressHasError,
 // POINT
 		// setHasError: addressSetHasError,
 		valueChangeHandler: addressChangeHandler,
 		valueBlurHandler: addressBlurHandler,
 		valueIsValid: addressIsValid,
-		errorFromServer: addressErrFromServer,
+// POINT
+		// errorFromServer: addressErrFromServer,
 // POINT
 		// setErrorFromServer: addressSetErrorFromServer,
 		id: addressId,
