@@ -13,14 +13,71 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
-import { isEqual } from 'lodash'
+import { isEqual } from "lodash";
+import { useSelector } from "react-redux";
 
-function EditableFields({ open, onClose, initialFields, customer }) {
+const EditableFields = ({ open, onClose, customer }) => {
 	const [openModal, setOpenModal] = useState(false);
-	const [fields, setFields] = useState(initialFields);
+	const [fields, setFields] = useState([
+		{ label: "Company Name*", name: "company_name", type: "text", editable: false, required: true },
+		{
+			label: "Company representative first name*",
+			name: "first_name",
+			type: "text",
+			editable: false,
+			required: true,
+		},
+		{
+			label: "Company representative last name*",
+			name: "last_name",
+			type: "text",
+			editable: false,
+			required: true,
+		},
+		{
+			label: "Representative Email*",
+			name: "email",
+			type: "email",
+			editable: false,
+			required: true,
+		},
+		{
+			label: "Company representative phone number",
+			name: "phone_number",
+			type: "tel",
+			editable: false,
+		},
+		{
+			label: "Company finance team email",
+			name: "company_finance_email",
+			type: "email",
+			editable: false,
+		},
+		{ label: "Company official email", name: "company_email", type: "email", editable: false },
+	]);
 	const [newField, setNewField] = useState("");
 	const [addingNewField, setAddingNewField] = useState(false);
 	const [isFormEdited, setIsFormEdited] = useState(false);
+	const [fieldValues, setFieldValues] = useState({});
+
+	const selectedCustomer = useSelector((state) => state.ticketCreation.customer);
+	const isCustomerActive = selectedCustomer?.status === "active";
+
+	useEffect(() => {
+		if (selectedCustomer) {
+			const populatedFields = fields.map((field) => ({
+				...field,
+				value: selectedCustomer[field.name] || "",
+			}));
+			setFields(populatedFields);
+	
+			const initialFieldValues = {};
+			fields.forEach((field) => {
+				initialFieldValues[field.name] = selectedCustomer[field.name] || "";
+			});
+			setFieldValues(initialFieldValues);
+		}
+	}, [selectedCustomer, fields]);	
 
 	const handleOpenModal = () => {
 		setOpenModal(true);
@@ -31,19 +88,7 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 		setNewField("");
 		setAddingNewField(false);
 		setIsFormEdited(false);
-	  };
-
-	  useEffect(() => {
-		if (customer && !isEqual(fields.map((f) => (f.name && customer[f.name] ?  f.value : '') ), fields.map(f => f.value) )) {
-			const populatedFields = fields.map((field) => ({
-			...field,
-			value: customer[field.name] || "",
-			}));
-			
-			 setFields(populatedFields);
-		}
-	}, [customer]);
-	
+	};
 
 	const handleAddNewField = () => {
 		setAddingNewField(true);
@@ -56,7 +101,8 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 
 	const handleConfirmNewField = () => {
 		if (newField.trim() !== "") {
-			setFields([...fields, { label: newField, type: "text", editable: false }]);
+			const newFieldObj = { label: newField, type: "text", editable: false };
+			setFields((prevFields) => [...prevFields, newFieldObj]);
 			setNewField("");
 			setAddingNewField(false);
 			setIsFormEdited(true);
@@ -64,30 +110,44 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 	};
 
 	const handleEditField = (index) => {
-		const updatedFields = fields.map((field, i) => {
-			if (i === index) {
-				field.editable = true;
-			}
-			return field;
-		});
-		setFields(updatedFields);
-	};
+		if (!fields[index].required || !isCustomerActive) {
+			const updatedFields = fields.map((field, i) => {
+				if (i === index) {
+					field.editable = true;
+				}
+				return field;
+			});
+			setFields(updatedFields);
+		}
+	};	
+	
 
 	const handleSaveField = (index) => {
 		const updatedFields = fields.map((field, i) => {
 			if (i === index) {
 				field.editable = false;
-				setIsFormEdited(true);
 			}
 			return field;
 		});
 		setFields(updatedFields);
+		setIsFormEdited(true);
 	};
 
 	const handleDeleteField = (index) => {
-		const updatedFields = fields.filter((_, i) => i !== index);
-		setFields(updatedFields);
+		if (!fields[index].required) {
+			const updatedFields = fields.filter((_, i) => i !== index);
+			setFields(updatedFields);
+			setIsFormEdited(true);
+		}
 	};
+
+	const handleInputChange = (name, value) => {
+		setFieldValues((prevFieldValues) => ({
+			...prevFieldValues,
+			[name]: value,
+		}));
+	};
+	
 
 	return (
 		<div>
@@ -111,7 +171,7 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 				>
 					{fields.map((field, index) => (
 						<FormControl
-							key={index}
+							key={field.id}
 							fullWidth
 							sx={{
 								mb: "0.5rem",
@@ -140,7 +200,9 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 							{field.label}
 							<TextField
 								type={field.type}
-								value={field.value}
+								value={fieldValues[field.name] || ""}
+								required={field.required}
+								id={`field-${index}`}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
@@ -163,9 +225,11 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 									),
 								}}
 								disabled={!field.editable}
+								onChange={(event) => handleInputChange(field.name, event.target.value)}
 							/>
 						</FormControl>
 					))}
+
 					{addingNewField ? (
 						<TextField
 							placeholder="Enter Field Name"
@@ -250,7 +314,7 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 					<Button
 						variant="contained"
 						sx={{
-							background: isFormEdited ? "rgba(43, 46, 114, 0.5)" : "#2b2e72",
+							background: "#2b2e72",
 							textTransform: "none",
 							fontFamily: "Poppins",
 							"&:hover": {
@@ -265,6 +329,6 @@ function EditableFields({ open, onClose, initialFields, customer }) {
 			</Dialog>
 		</div>
 	);
-}
+};
 
 export default EditableFields;

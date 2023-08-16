@@ -97,16 +97,24 @@ const SplitButtonDropdown = ({
 		handleClose();
 	};
 
+	const saveButtonStyles = {
+		background: "#2b2e72",
+		textTransform: "none",
+		fontFamily: "Poppins",
+		borderRadius: "10px",
+		"&:hover": {
+			backgroundColor: "#2b2e72",
+		},
+	};
+
 	return (
 		<TableCell sx={{ borderBottom: "none", padding: 0 }}>
 			<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
 				<Button
-					variant="outlined"
+					variant="contained"
 					onClick={handleClick}
 					endIcon={<KeyboardArrowDown />}
-					sx={{
-						borderRadius: "10px",
-					}}
+					sx={saveButtonStyles}
 				>
 					Actions
 				</Button>

@@ -172,6 +172,7 @@ export const resendVerification = createAsyncThunk(
 export const resendMyVerificationLink = createAsyncThunk(
 	"resendMyVerificationLink",
 	async (args, {rejectWithValue}) => {
+		console.log(args)
 		try {
 			const config = {
 				method: "POST",

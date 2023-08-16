@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, DialogContent, Button, Typography, Box, styled } from "@mui/material";
 import WarningIcon from "../../../../assets/user/CustomerOnboarding/warning.png";
 
-const UnsuspendConfirmationModal = ({ open, onClose, onConfirm }) => {
+const UnsuspendConfirmationModal = ({ open, onClose, onConfirm, selectedCustomer, customerId }) => {
 	const Typography = styled("h3")`
 		color: #2b2e72;
 		text-align: center;
@@ -70,7 +70,7 @@ const UnsuspendConfirmationModal = ({ open, onClose, onConfirm }) => {
 						No
 					</Button>
 					<Button
-						onClick={onConfirm}
+						onClick={() => onConfirm(selectedCustomer, customerId)}
 						variant="contained"
 						sx={{
 							background: "#2b2e72",

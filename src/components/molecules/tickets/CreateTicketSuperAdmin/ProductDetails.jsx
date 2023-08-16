@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { getDateFromDateTime } from "../../../../helpers/date-manipulation";
 import EditableFields from "../../users/CustomerSuperAdmin/EditableFields";
 import { Button } from "@mui/material";
+import SplitButtonDropdown from "../../../atoms/users/CustomerSuperAdmin/SplitButtonDropdown";
 
 const ProductDetails = () => {
 	const [showEditableFields, setShowEditableFields] = useState(false);
@@ -18,17 +19,19 @@ const ProductDetails = () => {
 	const customer = useSelector((state) => state.ticketCreation.customer);
 	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
 
-	const initialFields = [
-		{ label: "Company Name*", name: "company_name", type: "text", editable: false },
-		{ label: "Representative Name*", name: "full_name", type: "text", editable: false },
-		{ label: "Representative Email*", name: "email", type: "email", editable: false },
-	];
+	const saveButtonStyles = {
+		color: "#2b2e72",
+		textTransform: "none",
+		"&:hover": {
+			color: "#2b2e72",
+			background: "transparent",
+		},
+	};
 
 	const handleEditIconClick = () => {
 		setSelectedCustomer(customer);
 		setShowEditableFields(true);
 	};
-	const fullName = `${first_name} ${last_name}`;
 
 	return (
 		<>
@@ -37,10 +40,17 @@ const ProductDetails = () => {
 					<MediumText>Profile Details</MediumText>
 				</div>
 				<div className="flex items-center justify-between gap-[1.25rem]">
-					<Button onClick={handleEditIconClick}>
+					<Button onClick={handleEditIconClick} sx={saveButtonStyles}>
 						Edit Fields <EditIcon />
 					</Button>
 					<></>
+					<SplitButtonDropdown
+						status={customer.status}
+						customerId={customer.user_id}
+						onUpdateStatus={(newStatus, comment) =>
+							handleUpdateStatus(customer.user_id, newStatus, comment)
+						}
+					/>
 				</div>
 			</div>
 			<HorizontalRule />
@@ -76,11 +86,7 @@ const ProductDetails = () => {
 				<EditableFields
 					open={true}
 					onClose={() => console.log("Closed")}
-					initialFields={initialFields}
-					customer={{
-						...selectedCustomer,
-						full_name: fullName,
-					}}
+					customer={selectedCustomer}
 					onClick={() => console.log("Clicked")}
 				/>
 			)}
