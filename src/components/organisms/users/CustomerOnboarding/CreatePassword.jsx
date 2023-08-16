@@ -68,7 +68,6 @@ const CreatePassword = () => {
 
 	const [error, setError] = useState(false);
 	const [validationError, setValidationError] = useState(false);
-	const [serverError, setServerError] = useState(false);
 	const [match, setMatch] = useState(false);
 	const [empty, setEmpty] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -90,7 +89,6 @@ const CreatePassword = () => {
 
 	const handleChange = (e) => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value.trim() });
-		setServerError(false);
 		setValidationError(false);
 		dispatch(SET_ERROR_NULL());
 		setEmpty(false);
@@ -128,8 +126,10 @@ const CreatePassword = () => {
 
 		if (passwordResponse) setLoading(false);
 
-		if (passwordResponse === "Your password has been set successfully! You can login now")
-			return navigate("/customer-create-password-success");
+		if (passwordResponse === "Your password has been set successfully! You can login now") {
+			navigate("/customer-create-password-success");
+			return window.location.reload()
+		}
 	}, [
 		password,
 		confirmPassword,
