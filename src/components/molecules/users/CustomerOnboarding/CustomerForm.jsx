@@ -37,8 +37,7 @@ const CustomerForm = ({ open, onClose }) => {
 		resolver: yupResolver(schema),
 	});
 
-	const { response } = useSelector((state) => state.customers);
-	const { creationSuccess } = useSelector((state) => state.customers);
+	const { response, creationSuccess } = useSelector((state) => state.customers);
 	const [loading, setLoading] = useState(false);
 	const [serverError, setServerError] = useState(false);
 
@@ -64,7 +63,7 @@ const CustomerForm = ({ open, onClose }) => {
 			}
 		}, 2000);
 
-		return () => timeout;
+		return () => clearTimeout(timeout);
 	}, [creationSuccess, dispatch, loading, reset, response, getValues]);
 
 	const handleClose = () => {
