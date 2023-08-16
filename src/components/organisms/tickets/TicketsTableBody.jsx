@@ -7,6 +7,7 @@ import { styled } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
+import { v4 } from "uuid";
 
 const Edit = styled("p")`
 	color: #2b2e72;
@@ -24,9 +25,6 @@ const Edit = styled("p")`
 const TicketsTableBody = () => {
 	const {
 		tickets,
-		successful,
-		error,
-		errorMessage,
 		loading: ticketsLoading,
 		searchTicketsValue,
 		showServiceRequestsTab,
@@ -52,7 +50,7 @@ const TicketsTableBody = () => {
 	const filteredSearchTickets = useMemo(() => {
 		return filteredActiveTickets
 			.filter((ticket) => {
-				if (!searchTicketsValue) return true;
+				// COME HERE TO FILTER WITH STRING if (!searchTicketsValue) return true;
 				return true;
 			})
 			.filter(ticket => {
@@ -72,11 +70,14 @@ const TicketsTableBody = () => {
 	const list = filteredSearchTickets
 		.slice(activeTicketsStartPoint, activeTicketsEndPoint)
 		.map((ticket, ind) => (
-			<tr key={`${ticket.id}_${ind}`} className="bg-white border-b hover:bg-gray-50">
+			<tr
+				key={`${ticket.id}${ticket.user_id}${ticket.customer_id}${ticket.workspace_id}${v4()}`}
+				className="bg-white border-b hover:bg-gray-50"
+			>
 				<RecentTicketTableText>
 					{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}
 				</RecentTicketTableText>
-				<RecentTicketTableText>{ticket.ticket_form}</RecentTicketTableText>
+				<RecentTicketTableText className="max-w-[10rem] border truncate">{ticket.ticket_form}</RecentTicketTableText>
 				<RecentTicketTableText>ASchevchenko@Servirox...</RecentTicketTableText>
 				<RecentTicketTableText>
 					<StatusTab />

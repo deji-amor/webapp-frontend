@@ -9,10 +9,11 @@ const useCreateTicketFormValidator = () => {
 		pointOfContactNameIsValid,
 		pointOfContactPhoneNumberIsValid,
 		pointOfContactAddressIsValid,
+		pointOfContactAddress,
 		scopeOfWorkDescriptionIsValid,
 		durationIsValid,
-		hardwareComponentTypeQuantityNameIsValid,
 		hardwareComponentTypeListIsValid,
+		hardwareNameIsValid,
 		locationsAddressIsValid,
 		materialsDescriptionIsValid,
 		softwareInstallationNameIsValid,
@@ -28,7 +29,7 @@ const useCreateTicketFormValidator = () => {
 				return (
 					pointOfContactNameIsValid &&
 					pointOfContactPhoneNumberIsValid &&
-					pointOfContactAddressIsValid
+					(pointOfContactAddress ? pointOfContactAddressIsValid : true)
 				);
 
 			case "numberOfTechniciansNeeded":
@@ -43,7 +44,7 @@ const useCreateTicketFormValidator = () => {
 				return scopeOfWorkDescriptionIsValid;
 
 			case "hardwareComponentQuantity":
-				return hardwareComponentTypeQuantityNameIsValid;
+				return hardwareNameIsValid;
 
 			case "hardwareComponentType":
 				return hardwareComponentTypeListIsValid;

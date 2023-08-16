@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from "react";
 import GrayThemedLightText from "../../GrayThemedLightText";
 import GrayThemedLighterText from "../../GrayThemedLighterText";
 import NumberDropDown from "../general/NumberDropDown";
@@ -10,6 +10,7 @@ import TextArea from "../general/TextArea";
 import LocationTab from "../general/LocationTab";
 import Checkbox from "../general/Checkbox";
 import { isAddressEmpty } from "../../../../../../helpers/validation";
+import { v4 } from "uuid";
 
 const PickUpLocation = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
@@ -22,17 +23,11 @@ const PickUpLocation = () => {
 	const {
 		enteredValue: locationAddressValue,
 		errorMessage: locationAddressErrorMessage,
-		// LOCATION
-		// setErrorMessage: locationAddressSetErrorMessage,
 		hasError: locationAddressHasError,
-		// LOCATION
-		// setHasError: locationAddressSetHasError,
 		valueChangeHandler: locationAddressChangeHandler,
 		valueBlurHandler: locationAddressBlurHandler,
 		valueIsValid: locationAddressIsValid,
 		errorFromServer: locationAddressErrFromServer,
-		// LOCATION
-		// setErrorFromServer: locationAddressSetErrorFromServer,
 		id: locationAddressId,
 		reset: locationAddressReset,
 	} = useCreateTicketInput("pickLocationAddress", isAddressEmpty);
@@ -49,12 +44,16 @@ const PickUpLocation = () => {
 		dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
 		dispatch(createTicketActions.updateField({ key: "activePickLocationAddress", value: 0 }));
 		dispatch(createTicketActions.updateField({ key: "activePickLocationType", value: 0 }));
-		dispatch(createTicketActions.updateField({ key: "pickLocationAddress", value: "governmental" }));
+		dispatch(
+			createTicketActions.updateField({ key: "pickLocationAddress", value: "governmental" })
+		);
 		locationAddressReset();
 	}, [numberOfPickLocation, dispatch]);
 
 	const changePickLocationChangeHandler = (location) => {
-		dispatch(createTicketActions.updateField({ key: "activePickLocationAddress", value: location }));
+		dispatch(
+			createTicketActions.updateField({ key: "activePickLocationAddress", value: location })
+		);
 		dispatch(createTicketActions.updateField({ key: "activePickLocationType", value: location }));
 	};
 
@@ -65,9 +64,13 @@ const PickUpLocation = () => {
 		newLocations.splice(activePickLocationType, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
 		if (newLocations.every(({ address }) => isAddressEmpty(address)[0])) {
-			dispatch(createTicketActions.updateField({ key: "pickLocationsAddressIsValid", value: true }));
+			dispatch(
+				createTicketActions.updateField({ key: "pickLocationsAddressIsValid", value: true })
+			);
 		} else {
-			dispatch(createTicketActions.updateField({ key: "pickLocationsAddressIsValid", value: false }));
+			dispatch(
+				createTicketActions.updateField({ key: "pickLocationsAddressIsValid", value: false })
+			);
 		}
 	}, [locationAddressValue]);
 
@@ -81,43 +84,43 @@ const PickUpLocation = () => {
 		);
 	}, [activePickLocationAddress]);
 
-		const tablet = (
-			<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
-				{pickLocations.map(({ address, type }, ind) => (
-					<div key={`${address}${type}`} className="flex items-center gap-[0.5rem]">
-						{ind !== 0 && <div className="w-[2.5625rem] h-[0.0625rem] bg-[#000]"></div>}
-						<LocationTab
-							number={ind + 1}
-							isActive={activePickLocationAddress === ind}
-							onClick={changePickLocationChangeHandler}
-							isValid={isAddressEmpty(address)[0]}
-						/>
-					</div>
-				))}
-			</div>
-		);
+	const tablet = (
+		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
+			{pickLocations.map(({ address, type }, ind) => (
+				<div key={`${address}${type}${v4()}`} className="flex items-center gap-[0.5rem]">
+					{ind !== 0 && <div className="w-[2.5625rem] h-[0.0625rem] bg-[#000]"></div>}
+					<LocationTab
+						number={ind + 1}
+						isActive={activePickLocationAddress === ind}
+						onClick={changePickLocationChangeHandler}
+						isValid={isAddressEmpty(address)[0]}
+					/>
+				</div>
+			))}
+		</div>
+	);
 
-		const boxesChangeHandler = (type) => {
-			const newLocations = pickLocations.slice();
-			const item = newLocations.find((loc, ind) => ind === activePickLocationType);
-			const newItem = { ...item, type: type };
-			newLocations.splice(activePickLocationType, 1, newItem);
-			dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
-		};
+	const boxesChangeHandler = (type) => {
+		const newLocations = pickLocations.slice();
+		const item = newLocations.find((loc, ind) => ind === activePickLocationType);
+		const newItem = { ...item, type: type };
+		newLocations.splice(activePickLocationType, 1, newItem);
+		dispatch(createTicketActions.updateField({ key: "pickLocations", value: newLocations }));
+	};
 
-		const boxes = (
-			<div className="flex items-center gap-[1.5rem]">
-				{["governmental", "commercial", "residential"].map((type, ind) => (
-					<Checkbox
-						key={type}
-						onChange={boxesChangeHandler}
-						isActive={type === pickLocations[activePickLocationType].type}
-					>
-						{type}
-					</Checkbox>
-				))}
-			</div>
-		);
+	const boxes = (
+		<div className="flex items-center gap-[1.5rem]">
+			{["governmental", "commercial", "residential"].map((type, ind) => (
+				<Checkbox
+					key={type}
+					onChange={boxesChangeHandler}
+					isActive={type === pickLocations[activePickLocationType].type}
+				>
+					{type}
+				</Checkbox>
+			))}
+		</div>
+	);
 
 	return (
 		<div className="">
@@ -164,6 +167,6 @@ const PickUpLocation = () => {
 			</div>
 		</div>
 	);
-}
+};
 
-export default PickUpLocation
+export default PickUpLocation;

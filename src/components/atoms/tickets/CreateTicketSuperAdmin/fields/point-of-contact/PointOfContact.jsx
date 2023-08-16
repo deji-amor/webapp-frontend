@@ -107,7 +107,7 @@ const PointOfContact = (props) => {
 				</div>
 			</div>
 			<div className="">
-				<GrayThemedLighterText>Address of contact*</GrayThemedLighterText>
+				<GrayThemedLighterText>Address of contact</GrayThemedLighterText>
 				<div className="w-[30rem] h-[6.25rem]">
 					<TextArea
 						id={addressId}
@@ -119,11 +119,6 @@ const PointOfContact = (props) => {
 						isValid={addressIsValid}
 					/>
 				</div>
-				{addressHasError && (
-					<ValidationErrorText errorFromServer={addressErrFromServer}>
-						{addressErrorMessage}
-					</ValidationErrorText>
-				)}
 			</div>
 		</div>
 	);

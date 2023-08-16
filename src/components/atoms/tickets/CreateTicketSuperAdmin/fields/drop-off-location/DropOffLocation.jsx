@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from "react";
 import GrayThemedLightText from "../../GrayThemedLightText";
 import GrayThemedLighterText from "../../GrayThemedLighterText";
 import NumberDropDown from "../general/NumberDropDown";
@@ -10,6 +10,7 @@ import TextArea from "../general/TextArea";
 import LocationTab from "../general/LocationTab";
 import Checkbox from "../general/Checkbox";
 import { isAddressEmpty } from "../../../../../../helpers/validation";
+import { v4 } from "uuid";
 
 const DropOffLocation = () => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
@@ -22,17 +23,11 @@ const DropOffLocation = () => {
 	const {
 		enteredValue: locationAddressValue,
 		errorMessage: locationAddressErrorMessage,
-		// lOCATION ADDRESS COMMENTED
-		// setErrorMessage: locationAddressSetErrorMessage,
 		hasError: locationAddressHasError,
-		// lOCATION ADDRESS COMMENTED
-		// setHasError: locationAddressSetHasError,
 		valueChangeHandler: locationAddressChangeHandler,
 		valueBlurHandler: locationAddressBlurHandler,
 		valueIsValid: locationAddressIsValid,
 		errorFromServer: locationAddressErrFromServer,
-		// lOCATION ADDRESS COMMENTED
-		// setErrorFromServer: locationAddressSetErrorFromServer,
 		id: locationAddressId,
 		reset: locationAddressReset,
 	} = useCreateTicketInput("dropOffLocationAddress", isAddressEmpty);
@@ -42,34 +37,42 @@ const DropOffLocation = () => {
 	};
 
 	useEffect(() => {
-	const newLocations = Array.from({ length: numberOfDropLocation }, () => ({
-		address: "",
-		type: "governmental",
-	}));
-	dispatch(createTicketActions.updateField({ key: "dropOffLocations", value: newLocations }));
-	dispatch(createTicketActions.updateField({ key: "activeDropOffLocationAddress", value: 0 }));
-	dispatch(createTicketActions.updateField({ key: "activeDropOffLocationType", value: 0 }));
-	dispatch(createTicketActions.updateField({ key: "dropOffLocationAddress", value: "governmental" }));
-	locationAddressReset();
-}, [numberOfDropLocation, dispatch]);
+		const newLocations = Array.from({ length: numberOfDropLocation }, () => ({
+			address: "",
+			type: "governmental",
+		}));
+		dispatch(createTicketActions.updateField({ key: "dropOffLocations", value: newLocations }));
+		dispatch(createTicketActions.updateField({ key: "activeDropOffLocationAddress", value: 0 }));
+		dispatch(createTicketActions.updateField({ key: "activeDropOffLocationType", value: 0 }));
+		dispatch(
+			createTicketActions.updateField({ key: "dropOffLocationAddress", value: "governmental" })
+		);
+		locationAddressReset();
+	}, [numberOfDropLocation]);
 
 	const changeDropOffLocationChangeHandler = (location) => {
-		dispatch(createTicketActions.updateField({ key: "activeDropOffLocationAddress", value: location }));
-		dispatch(createTicketActions.updateField({ key: "activeDropOffLocationType", value: location }));
+		dispatch(
+			createTicketActions.updateField({ key: "activeDropOffLocationAddress", value: location })
+		);
+		dispatch(
+			createTicketActions.updateField({ key: "activeDropOffLocationType", value: location })
+		);
 	};
 
 	useEffect(() => {
-		// CONSOLE FIRED
-		// console.log("fired");
 		const newLocations = dropOffLocations.slice();
 		const item = newLocations.find((loc, ind) => ind === activeDropOffLocationAddress);
 		const newItem = { ...item, address: locationAddressValue };
 		newLocations.splice(activeDropOffLocationAddress, 1, newItem);
 		dispatch(createTicketActions.updateField({ key: "dropOffLocations", value: newLocations }));
 		if (newLocations.every(({ address }) => isAddressEmpty(address)[0])) {
-			dispatch(createTicketActions.updateField({ key: "dropOffLocationsAddressIsValid", value: true }));
+			dispatch(
+				createTicketActions.updateField({ key: "dropOffLocationsAddressIsValid", value: true })
+			);
 		} else {
-			dispatch(createTicketActions.updateField({ key: "dropOffLocationsAddressIsValid", value: false }));
+			dispatch(
+				createTicketActions.updateField({ key: "dropOffLocationsAddressIsValid", value: false })
+			);
 		}
 	}, [locationAddressValue]);
 
@@ -86,7 +89,7 @@ const DropOffLocation = () => {
 	const tablet = (
 		<div className="py-[0.375rem] border-b-[1px] border-[#000] inline-flex items-center gap-[0.5rem] mb-[1.12rem]">
 			{dropOffLocations.map(({ address, type }, ind) => (
-				<div key={`${address}${type}`} className="flex items-center gap-[0.5rem]">
+				<div key={`${address}${type}${v4()}`} className="flex items-center gap-[0.5rem]">
 					{ind !== 0 && <div className="w-[2.5625rem] h-[0.0625rem] bg-[#000]"></div>}
 					<LocationTab
 						number={ind + 1}
@@ -166,6 +169,6 @@ const DropOffLocation = () => {
 			</div>
 		</div>
 	);
-}
+};
 
-export default DropOffLocation
+export default DropOffLocation;

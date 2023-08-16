@@ -29,7 +29,6 @@ const NumberDropDown = ({min, max, value, onChange}) => {
 	}
 
 	const handleChange = (value) => {
-		console.log(value);
 		onChange(value)
 		setShowDropDown(false)
 	}
@@ -59,9 +58,15 @@ const NumberDropDown = ({min, max, value, onChange}) => {
 				</div>
 			</SelectDropdown>
 			{showDropdown && (
-				<ul  className="py-2 text-sm text-gray-700 cursor-pointer absolute w-full z-10 left-0 top-full bg-white max-h-[10rem] overflow-y-auto divide-y">
+				<ul className="py-2 text-sm text-gray-700 cursor-pointer absolute w-full z-10 left-0 top-full bg-white max-h-[10rem] overflow-y-auto divide-y shadow-[0_2px_2px_rgb(0_0_0_/_0.2)]">
 					{options.map((option) => (
-						<li key={option} onClick={() => handleChange(option)} className={`block px-4 py-2 hover:bg-gray-100 text-center ${+option === +value ? "bg-gray-100" : ""}`}>
+						<li
+							key={option}
+							onClick={() => handleChange(option)}
+							className={`block px-4 py-2 hover:bg-gray-100 text-center ${
+								+option === +value ? "bg-gray-100" : ""
+							}`}
+						>
 							{option}
 						</li>
 					))}

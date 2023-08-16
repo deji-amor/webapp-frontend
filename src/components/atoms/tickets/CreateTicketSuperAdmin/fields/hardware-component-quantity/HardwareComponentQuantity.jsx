@@ -12,20 +12,12 @@ const HardwareComponentQuantity = () => {
   const {
 		enteredValue: quantityValue,
 		errorMessage: quantityErrorMessage,
-		// QUANTITY
-		// setErrorMessage: quantitySetErrorMessage,
 		hasError: quantityHasError,
-		// QUANTITY
-		// setHasError: quantitySetHasError,
 		valueChangeHandler: quantityChangeHandler,
 		valueBlurHandler: quantityBlurHandler,
 		valueIsValid: quantityIsValid,
 		errorFromServer: quantityErrFromServer,
-		// QUANTITY
-		// setErrorFromServer: quantitySetErrorFromServer,
 		id: quantityId,
-		// QUANTITY
-		// reset: quantityReset,
 	} = useCreateTicketInput("hardwareName", isHardwareQuantityValid);
 
   const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);

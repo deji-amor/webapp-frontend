@@ -263,8 +263,7 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(createCustomer.fulfilled, (state, {payload}) => {
-				const {code, status, message} = payload
-				console.log({code, status, message})
+				const {message} = payload
 				state.loading = false;
 				state.error = false;
 				state.creationSuccess = true;
@@ -272,8 +271,7 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(createCustomer.rejected, (state, {payload}) => {
-				const {code, status, message} = payload
-				console.log({code, status, message})
+				const {message} = payload
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false;

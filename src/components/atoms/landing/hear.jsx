@@ -73,7 +73,7 @@ const Hear = ({ description, img, name, position }) => {
 
 Hear.propTypes = {
 	description: PropTypes.string,
-	img: PropTypes.element,
+	img: PropTypes.string,
 	name: PropTypes.string,
 	position: PropTypes.string,
 };

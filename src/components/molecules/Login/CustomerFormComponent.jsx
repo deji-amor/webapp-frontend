@@ -15,11 +15,20 @@ import {
 	loginCustomerActions,
 	loginCustomer,
 } from "../../../state-manager/reducers/login/loginCustomer";
+import { authUserActions } from "../../../state-manager/reducers/users/authUser";
 import { getAuthToken, getDeviceName } from "../../../utilis";
 
 const CustomerFormComponent = () => {
-	const { loading, token, errorMessage, errorTitle, clickIncrement, error, successful } =
-		useSelector((state) => state.loginCustomer);
+	const {
+		loading,
+		token,
+		errorMessage,
+		errorTitle,
+		clickIncrement,
+		error,
+		successful,
+		authUserData,
+	} = useSelector((state) => state.loginCustomer);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [wasSubmitted, setWasSubmitted] = useState(false);
@@ -54,14 +63,20 @@ const CustomerFormComponent = () => {
 		reset: passwordReset,
 	} = useBasicInput(isNotEmpty);
 
+		useEffect(() => {
+			if (Object.entries(authUserData).length !== 0) {
+				dispatch(authUserActions.setData(authUserData));
+			}
+		}, [authUserData, dispatch]);
+
 	useEffect(() => {
 		const getAuthTokenHandler = async () => {
 			const to = await getAuthToken();
 			if (successful && to && wasSubmitted) {
 				usernameReset();
 				passwordReset();
-				dispatch(loginCustomerActions.resetLoginAdmin());
-				return navigate("/customer/customer-dashboard");
+				dispatch(loginCustomerActions.resetLoginCustomer());
+				return navigate("/app/customer-dashboard");
 			}
 		};
 		getAuthTokenHandler();
@@ -135,7 +150,7 @@ const CustomerFormComponent = () => {
 		setWasSubmitted(true);
 		usernameSetHasError(false);
 		passwordSetHasError(false);
-		dispatch(loginCustomer.resetToasts());
+		dispatch(loginCustomerActions.resetToasts());
 		dispatch(
 			loginCustomer({
 				username: usernameValue,
