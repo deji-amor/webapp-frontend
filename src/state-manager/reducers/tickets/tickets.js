@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, current, createAsyncThunk} from "@reduxjs/toolkit";
 import { getAuthToken } from "../../../utilis";
 
 export const fetchTickets = createAsyncThunk("tickets", async (args, {rejectWithValue}) => {
@@ -56,18 +56,22 @@ const ticketsSlice = createSlice({
 				state[key] = value;
 			}
 		},
+		addNewTicket: (state, action) => {
+			const newTicket = action.payload
+			state.tickets = [newTicket, ...current(state).tickets]
+		}
 	},
 	extraReducers: builder => {
 		builder
 			.addCase(fetchTickets.pending, (state, action) => {
 				state.loading = true;
-				state.tickets = []
+				state.tickets = [];
 			})
 			.addCase(fetchTickets.fulfilled, (state, action) => {
 				const {status, code, data} = action.payload;
 				state.loading = false;
 				if (code === 200 && status === "OK") {
-					state.tickets = data;
+					state.tickets = data.slice().reverse();
 					state.successful = true;
 					state.error = false;
 				} else {

@@ -59,7 +59,7 @@ const Placeholder = ({ messageHeader, messageParagraph, buttonText, onClick, isT
 
 	return (
 		<div className="flex flex-col justify-center items-center">
-			<img src={placeholderImg} className="mb-[1rem]" />
+			<img src={placeholderImg} className="mb-[1rem] w-[17rem] h-[15rem]" />
 			<div className="space-y-[1.25rem] mb-[1rem] flex flex-col items-center">
 				<BigText>
 					Hi <span className="highlighted">{firstName},</span> {messageHeader}
