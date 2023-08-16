@@ -7,7 +7,7 @@ import {
 	validateToken,
 } from "../../../../state-manager/reducers/users/customers/customers";
 import CustomButton from "../../../atoms/Password/customButton";
-import CreatePasswordSuccess from "./CreatePasswordSuccess"
+import CreatePasswordSuccess from "./CreatePasswordSuccess";
 import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
@@ -28,7 +28,7 @@ const LoadWrapper = styled("div")(() => ({
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
-		gap: "10px"
+		gap: "10px",
 	},
 
 	".tailspain h2": {
@@ -41,7 +41,7 @@ const LoadWrapper = styled("div")(() => ({
 		lineHeight: "120%",
 		letterSpacing: "0.8px",
 		textTransform: "uppercase",
-	}
+	},
 }));
 
 const CreatePassword = () => {
@@ -167,7 +167,7 @@ const CreatePassword = () => {
 
 	return (
 		<>
-			{(validationResponse === "Invalid verification link!" && <PasswordLinkExp email={email} />) ||
+			{((validationResponse === "Invalid verification link!" && passwordResponse != "Your password has been set successfully! You can login now") && <PasswordLinkExp email={email} />) ||
 				(load && (
 					<LoadWrapper>
 						<div className="tailspain">
@@ -184,9 +184,10 @@ const CreatePassword = () => {
 							/>
 						</div>
 					</LoadWrapper>
-				)) || passwordResponse === "Your password has been set successfully! You can login now" && (
+				)) ||
+				(passwordResponse === "Your password has been set successfully! You can login now" && (
 					<CreatePasswordSuccess />
-				) || (
+				)) || (
 					<ForgotPasswordResetWrapper>
 						<div style={{ display: "flex", justifyContent: "center" }}>
 							<img src={lockmage} style={{ width: "30px", flexShrink: "0" }} />
