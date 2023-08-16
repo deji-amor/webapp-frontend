@@ -43,7 +43,7 @@ const CustomerForm = ({ open, onClose }) => {
 	const [serverError, setServerError] = useState(false);
 
 	useEffect(() => {
-		dispatch(fetchCustomers());
+		// dispatch(fetchCustomers());
 		
 		if (
 			response === "Email already been used by another user!" ||
