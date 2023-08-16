@@ -4,12 +4,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SuspendModal from "./SuspendModal";
 import SuspendConfirmationModal from "./SuspendConfirmationModal";
 import UnsuspendConfirmationModal from "./UnsuspendConfirmationModal";
-import { resendVerification, suspendUnsuspend } from "../../../../state-manager/reducers/users/customers/customers";
+import {
+	resendVerification,
+	suspendUnsuspend,
+} from "../../../../state-manager/reducers/users/customers/customers";
 import { useDispatch, useSelector } from "react-redux";
 
-
 const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
-
 	const dispatch = useDispatch();
 
 	const {
@@ -19,7 +20,6 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 		error,
 		errorMessage,
 	} = useSelector((state) => state.customers);
-
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isSuspendConfirmationModalOpen, setIsSuspendConfirmationModalOpen] = useState(false);
@@ -37,23 +37,25 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 		setAnchorEl(null);
 	};
 
-	const handleSuspendClick = () => {
-		setIsSuspendConfirmationModalOpen(true);
-		handleClose();
-	};
-
+	// Unsuspend Area
 	const handleUnsuspendConfirmationClose = () => {
 		setIsUnsuspendConfirmationModalOpen(false);
 	};
 
 	const handleUnsuspendConfirmationYes = (customerId) => {
-		dispatch(suspendUnsuspend(customerId));
+		dispatch(suspendUnsuspend({customerId, actionType: "unsuspend"}));
 		onUpdateStatus(currentCustomerId, "active");
 		setIsUnsuspendConfirmationModalOpen(false);
 	};
 
 	const handleUnsuspendClick = () => {
 		setIsUnsuspendConfirmationModalOpen(true);
+		handleClose();
+	};
+
+	// Suspend Area
+	const handleSuspendClick = () => {
+		setIsSuspendConfirmationModalOpen(true);
 		handleClose();
 	};
 
@@ -78,15 +80,14 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 	const handleSuspend = (customerId) => {
 		setIsSuspendModalOpen(true);
 		setCurrentCustomerId(customerId);
-		dispatch(suspendUnsuspend({customerId, actionType: "suspend"}));
+		dispatch(suspendUnsuspend({ customerId, actionType: "suspend" }));
 		handleClose();
 	};
 
-	
 	const handleResendVerification = async (email) => {
 		dispatch(resendVerification(email));
-    handleClose();
-  };
+		handleClose();
+	};
 
 	return (
 		<TableCell sx={{ borderBottom: "none", padding: 0 }}>
@@ -129,14 +130,14 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 							Unsuspend
 						</MenuItem>
 					)}
-						{status === "inactive" && (
-					<MenuItem
-					sx={{ borderRadius: "5px", padding: "12px 16px" }}
-					onClick={handleResendVerification}
-					>
-					Resend Verification Link
-					</MenuItem>
-				)}
+					{status === "inactive" && (
+						<MenuItem
+							sx={{ borderRadius: "5px", padding: "12px 16px" }}
+							onClick={handleResendVerification}
+						>
+							Resend Verification Link
+						</MenuItem>
+					)}
 				</Menu>
 			</Box>
 			<UnsuspendConfirmationModal
@@ -154,7 +155,8 @@ const MoreOptionsDropdown = ({ status, customerId, onUpdateStatus }) => {
 				onClose={handleSuspendModalClose}
 				suspendComment={suspendComment}
 				onSuspendCommentChange={handleSuspendCommentChange}
-				onSuspend={() => handleSuspend(customerId)}
+				customerId={customerId}
+				onSuspend={handleSuspend}
 				onCancel={handleSuspendModalClose}
 			/>
 		</TableCell>

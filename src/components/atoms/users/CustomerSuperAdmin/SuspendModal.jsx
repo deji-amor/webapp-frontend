@@ -7,6 +7,7 @@ const SuspendModal = ({
 	onClose,
 	suspendComment,
 	onSuspendCommentChange,
+	customerId,
 	onSuspend,
 	onCancel,
 }) => {
@@ -33,10 +34,10 @@ const SuspendModal = ({
 	const wordCount = suspendComment.trim().split(/\s+/).length;
 	const isSuspendButtonDisabled = wordCount <= 1;
 
-	const handleSuspend = () => {
+	const handleSuspend = (id) => {
 		if (!isSuspendButtonDisabled) {
 			console.log("SUSPENDED");
-			onSuspend();
+			onSuspend(id);
 			onClose();
 		}
 	};
@@ -128,10 +129,7 @@ const SuspendModal = ({
 						Cancel
 					</Button>
 					<Button
-						onClick={() => {
-							onSuspend
-							onClose()
-						}}
+						onClick={() => handleSuspend(customerId)}
 						variant="contained"
 						sx={suspendButtonStyles}
 						disabled={isSuspendButtonDisabled}
