@@ -40,11 +40,7 @@ const CustomerForm = ({ open, onClose }) => {
 	const { response, creationSuccess, customers } = useSelector((state) => state.customers);
 	const [loading, setLoading] = useState(false);
 	const [serverError, setServerError] = useState(false);
-
-	useEffect(() => {
-		dispatch(fetchCustomers());
-	}, [dispatch])
-
+	
 	useEffect(() => {
 		
 		if (

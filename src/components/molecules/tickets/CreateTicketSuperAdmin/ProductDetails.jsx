@@ -11,6 +11,7 @@ import EditableFields from "../../users/CustomerSuperAdmin/EditableFields";
 import { Button } from "@mui/material";
 import SplitButtonDropdown from "../../../atoms/users/CustomerSuperAdmin/SplitButtonDropdown";
 import { suspendUnsuspend, resendVerification } from "../../../../state-manager/reducers/users/customers/customers";
+import { isPhoneNumber } from "../../../../helpers/validation";
 
 const ProductDetails = () => {
 	const dispatch = useDispatch();
@@ -26,8 +27,11 @@ const ProductDetails = () => {
 	// EDITABLE ELEMENT 		)}
 	const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-	const customer = useSelector((state) => state.ticketCreation.customer);
+	const {customerId} = useSelector((state) => state.ticketCreation.allPossibleFields);
+	const customers = useSelector(state => state.customers.customers)
+	const customer = customers.find(customer => +customer.id === +customerId)
 	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
+	// console.log(customer);
 
 	const handleUpdateStatus = (customerId, newStatus, comment) => {
 		dispatch(suspendUnsuspend(customerId, newStatus, comment));
@@ -49,6 +53,8 @@ useEffect(() => {
 	const handleEditIconClick = () => {
 		setSelectedCustomer(customer);
 	};
+
+	if(!customer) return <p>An error occurred please reload</p>
 
 	return (
 		<>
@@ -93,7 +99,7 @@ useEffect(() => {
 				</div>
 				<div className="">
 					<LightText>Company Rep Phone Number</LightText>
-					<SmallText>{phone_number}</SmallText>
+					<SmallText>{isPhoneNumber(phone_number)[0] ? phone_number : "Not provided"}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Date Created</LightText>
