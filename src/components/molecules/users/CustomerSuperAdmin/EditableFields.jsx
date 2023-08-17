@@ -69,7 +69,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 	const [isFormEdited, setIsFormEdited] = useState(false);
 	const [fieldValues, setFieldValues] = useState({});
 	const [extraFieldValues, setExtraFieldValues] = useState({});
-	console.log(fieldValues)
+	console.log(fieldValues);
 
 	const selectedCustomer = useSelector((state) => state.ticketCreation.customer);
 	const isCustomerActive = selectedCustomer?.status === "active";
@@ -185,7 +185,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 			updatedData[field.name] = field.value;
 		});
 		dispatch(editCustomer(updatedData));
-	onClose()
+		onClose();
 	};
 
 	return (
