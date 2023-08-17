@@ -16,7 +16,6 @@ const SplitButtonDropdown = ({
 	status,
 	customerId,
 	onUpdateStatus,
-	onConfirm,
 	selectedCustomer,
 	email,
 }) => {
@@ -60,7 +59,7 @@ const SplitButtonDropdown = ({
 			dispatch(fetchCustomers)
 		);
 		setIsUnsuspendConfirmationModalOpen(false);
-		onConfirm(selectedCustomer);
+		// onConfirm(selectedCustomer);
 		onUpdateStatus(currentCustomerId, "active");
 	};
 

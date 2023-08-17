@@ -115,14 +115,14 @@ const TicketsSearchCustomer = () => {
 	const activeCustomer = useMemo(() => {
 		const activeCustomer = customers.find((customer) => customer.email === searchCustomersValue);
 		return activeCustomer;
-	}, [searchCustomersValue]);
+	}, [searchCustomersValue, customers]);
 
 	const filteredCustomers = useMemo(() => {
 		return customers.filter(({ first_name, last_name, email }) => {
 			const joined = ` ${first_name} ${last_name} ${email}`.toLocaleLowerCase();
 			return joined.includes(searchCustomersValue);
 		});
-	}, [searchCustomersValue]);
+	}, [searchCustomersValue, customers]);
 
 	useEffect(() => {
 		if(!activeCustomer){
