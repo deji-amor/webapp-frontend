@@ -4,8 +4,8 @@ import HeadSearch from "../../../atoms/users/CustomerSuperAdmin/HeadSearch";
 import DropdownButton from "../../../atoms/users/CustomerSuperAdmin/DropdownButton";
 import { Grid } from "@mui/material";
 import BasicTabs from "../../../organisms/users/CustomerSuperAdmin/UserTabs";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
+import { useSelector } from "react-redux";
+// IMPORT import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 
 const Head = () => {
 	const [filter, setFilter] = useState("All");
@@ -14,13 +14,11 @@ const Head = () => {
 	const [customers, setCustomers] = useState([]);
 	const [isMenuOpen, setMenuOpen] = useState(false);
 
-	const dispatch = useDispatch();
+
+	// DISPATCH const dispatch = useDispatch();
+
 	const {
-		loading: customersLoading,
 		customers: allCustomers,
-		successful,
-		error,
-		errorMessage,
 	} = useSelector((state) => state.customers);
 
 	const sampleCustomers = allCustomers;

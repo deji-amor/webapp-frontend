@@ -2,7 +2,7 @@ import Greeting from '../../components/molecules/Dashboard/Greeting'
 import StatsCardGroup from '../../components/organisms/Dashboard/StatsCardGroup'
 import RecentTickets from '../../components/organisms/Dashboard/RecentTickets'
 import RecentTicketTable from '../../components/organisms/Dashboard/RecentTicketTable'
-import CustomerDashboard from '../customer/CustomerDashboard'
+// IMPORT import CustomerDashboard from '../customer/CustomerDashboard'
 import { useSelector } from 'react-redux'
 
 const Dashboard = () => {

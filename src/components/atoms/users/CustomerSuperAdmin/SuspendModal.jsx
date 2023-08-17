@@ -7,9 +7,9 @@ const SuspendModal = ({
 	onClose,
 	suspendComment,
 	onSuspendCommentChange,
+	customerId,
 	onSuspend,
 	onCancel,
-	customerId,
 }) => {
 	const Typography = styled("h3")`
 		color: #2b2e72;

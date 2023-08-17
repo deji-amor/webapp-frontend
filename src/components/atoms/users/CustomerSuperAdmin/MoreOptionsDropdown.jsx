@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TableCell, Menu, MenuItem, IconButton, Box } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SuspendModal from "./SuspendModal";
@@ -7,9 +7,9 @@ import UnsuspendConfirmationModal from "./UnsuspendConfirmationModal";
 import {
 	resendVerification,
 	suspendUnsuspend,
+	fetchCustomers
 } from "../../../../state-manager/reducers/users/customers/customers";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
+import { useDispatch } from "react-redux";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
 
 const MoreOptionsDropdown = ({
@@ -23,13 +23,13 @@ const MoreOptionsDropdown = ({
 }) => {
 	const dispatch = useDispatch();
 
-	const {
-		loading: customersLoading,
-		customers: allCustomers,
-		successful,
-		error,
-		errorMessage,
-	} = useSelector((state) => state.customers);
+	// USESELECTOR const {
+	// USESELECTOR 	loading: customersLoading,
+	// USESELECTOR 	customers: allCustomers,
+	// USESELECTOR 	successful,
+	// USESELECTOR 	error,
+	// USESELECTOR 	errorMessage,
+	// USESELECTOR } = useSelector((state) => state.customers);
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isSuspendConfirmationModalOpen, setIsSuspendConfirmationModalOpen] = useState(false);
@@ -47,11 +47,7 @@ const MoreOptionsDropdown = ({
 		setAnchorEl(null);
 	};
 
-	const handleSuspendClick = () => {
-		setIsSuspendConfirmationModalOpen(true);
-		handleClose();
-	};
-
+	// Unsuspend Area
 	const handleUnsuspendConfirmationClose = () => {
 		setIsUnsuspendConfirmationModalOpen(false);
 	};
@@ -67,6 +63,12 @@ const MoreOptionsDropdown = ({
 
 	const handleUnsuspendClick = () => {
 		setIsUnsuspendConfirmationModalOpen(true);
+		handleClose();
+	};
+
+	// Suspend Area
+	const handleSuspendClick = () => {
+		setIsSuspendConfirmationModalOpen(true);
 		handleClose();
 	};
 

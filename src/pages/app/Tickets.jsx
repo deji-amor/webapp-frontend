@@ -27,7 +27,7 @@ const Wrapper = styled("div")`
 
 const Tickets = () => {
 	const {
-		tickets,
+		// TICKETS tickets,
 		successful: ticketsSuccessful,
 		error: ticketsError,
 		loading: ticketsLoading,
@@ -37,7 +37,7 @@ const Tickets = () => {
 		customers,
 		successful: customersSuccessful,
 		error: customersError,
-		loading: customersLoading,
+		// LOADING loading: customersLoading,
 	} = useSelector((state) => state.customers);
 
 	const navigate = useNavigate();

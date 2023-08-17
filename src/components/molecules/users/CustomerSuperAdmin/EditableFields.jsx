@@ -19,7 +19,6 @@ import { editCustomer } from "../../../../state-manager/reducers/users/customers
 const EditableFields = ({ open, onClose, customer }) => {
 	const dispatch = useDispatch();
 
-	// const [openModal, setOpenModal] = useState(false);
 	const [fields, setFields] = useState([
 		{ label: "Company Name*", name: "company_name", type: "text", editable: false, required: true },
 		{
@@ -70,6 +69,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 	const [isFormEdited, setIsFormEdited] = useState(false);
 	const [fieldValues, setFieldValues] = useState({});
 	const [extraFieldValues, setExtraFieldValues] = useState({});
+	console.log(fieldValues)
 
 	const selectedCustomer = useSelector((state) => state.ticketCreation.customer);
 	const isCustomerActive = selectedCustomer?.status === "active";

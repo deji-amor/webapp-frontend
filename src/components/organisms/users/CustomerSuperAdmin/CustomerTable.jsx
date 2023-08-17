@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
 	Table,
 	TableBody,
@@ -17,9 +17,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Pagination from "../../../atoms/users/CustomerSuperAdmin/UserPagination";
 import MoreOptionsDropdown from "../../../atoms/users/CustomerSuperAdmin/MoreOptionsDropdown";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
-import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
+// IMPORT import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import Placeholder from "../../../molecules/general/Placeholder";
 import CustomeTableRow from "../../../atoms/users/CustomerSuperAdmin/TableRow";
 
@@ -117,13 +117,13 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 		dispatch(createTicketActions.goBackToAddTicketModal(customer));
 	};
 
-	const {
-		loading: customersLoading,
-		customers,
-		successful,
-		error,
-		errorMessage,
-	} = useSelector((state) => state.customers);
+	// USESELECTOR const {
+	// USESELECTOR 	loading: customersLoading,
+	// USESELECTOR 	customers,
+	// USESELECTOR 	successful,
+	// USESELECTOR 	error,
+	// USESELECTOR 	errorMessage,
+	// USESELECTOR } = useSelector((state) => state.customers);
 
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;
