@@ -95,7 +95,7 @@ export const setCustomerPassword = createAsyncThunk(
 			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/onboarding`;
 			const response = await fetch(url, config);
-			const data = response.json();
+			const data = await response.json();
 			return data;
 		} catch (err) {
 			if (err.response && err.response.data.message) {
@@ -254,10 +254,10 @@ const customersSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		clearData: (state, action) => {
-			state.users = [];
+			state.customers = [];
 		},
 
-		SET_ERROR_NULL: (state, {paload}) => {
+		SET_ERROR_NULL: (state, {payload}) => {
 			state.validationResponse = null;
 		},
 
@@ -369,6 +369,7 @@ const customersSlice = createSlice({
 				state.error = false;
 				state.successful = true;
 				state.passwordResponse = message ? message : null;
+				state.errorMessage = null;
 			})
 
 			.addCase(setCustomerPassword.rejected, (state, {payload}) => {
@@ -377,6 +378,7 @@ const customersSlice = createSlice({
 				state.loading = false;
 				state.successful = false;
 				state.passwordResponse = message ? message : null;
+				state.errorMessage = null;
 			})
 
 			// ADDCASE FOR EDIT CUSTOMER

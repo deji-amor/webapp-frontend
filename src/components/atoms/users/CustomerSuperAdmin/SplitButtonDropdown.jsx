@@ -59,7 +59,6 @@ const SplitButtonDropdown = ({
 			dispatch(fetchCustomers)
 		);
 		setIsUnsuspendConfirmationModalOpen(false);
-		// onConfirm(selectedCustomer);
 		onUpdateStatus(currentCustomerId, "active");
 	};
 
@@ -91,7 +90,6 @@ const SplitButtonDropdown = ({
 		setCurrentCustomerId(customerId);
 		dispatch(suspendUnsuspend({ customerId, actionType: "suspend" }));
 		handleClose();
-		// dispatch(fetchCustomers());
 	};
 
 	const handleResendVerification = (email) => {

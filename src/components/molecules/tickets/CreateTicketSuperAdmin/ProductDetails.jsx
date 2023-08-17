@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MediumText from "../../../atoms/tickets/CreateTicketSuperAdmin/MediumText";
 import EditIcon from "@mui/icons-material/Edit";
 import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule";
@@ -31,15 +31,16 @@ const ProductDetails = () => {
 	const customers = useSelector(state => state.customers.customers)
 	const customer = customers.find(customer => +customer.id === +customerId)
 	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
-	// console.log(customer);
 
 	const handleUpdateStatus = (customerId, newStatus, comment) => {
 		dispatch(suspendUnsuspend(customerId, newStatus, comment));
 	};
 
-useEffect(() => {
-		dispatch(resendVerification({ representativeEmail: email }));
- }, [dispatch, email])
+	const memoizedEmail = useMemo(() => email, [email]);
+
+	useEffect(() => {
+		dispatch(resendVerification({ representativeEmail: memoizedEmail })); 
+	}, [dispatch, memoizedEmail]);
 
 	const saveButtonStyles = {
 		color: "#2b2e72",
@@ -73,12 +74,11 @@ useEffect(() => {
 			/>
 					<></>
 					<SplitButtonDropdown
-						status={customer.status}
-						customerId={customer.user_id}
-						onUpdateStatus={(newStatus, comment) =>
-							handleUpdateStatus(customer.user_id, newStatus, comment)
-						}
-					/>
+					status={customer.status}
+					customerId={customer.user_id}
+					onUpdateStatus={handleUpdateStatus}
+					email={customer.email}
+				/>
 				</div>
 			</div>
 			<HorizontalRule />
