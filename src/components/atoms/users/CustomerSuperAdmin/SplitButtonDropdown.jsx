@@ -7,7 +7,7 @@ import {
 	suspendUnsuspend,
 	fetchCustomers
 } from "../../../../state-manager/reducers/users/customers/customers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { KeyboardArrowDown } from "@mui/icons-material";
 import SuspendModal from "./SuspendModal";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
