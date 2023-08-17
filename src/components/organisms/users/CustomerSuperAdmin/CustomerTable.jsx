@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Table,
 	TableBody,
@@ -22,6 +22,7 @@ import { createTicketActions } from "../../../../state-manager/reducers/tickets/
 // IMPORT import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import Placeholder from "../../../molecules/general/Placeholder";
 import CustomeTableRow from "../../../atoms/users/CustomerSuperAdmin/TableRow";
+import { getAuthToken } from "../../../../utilis";
 
 const statusColors = {
 	active: "rgba(18, 133, 26, 0.20)",
@@ -114,16 +115,9 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 				value: customer.id,
 			})
 		);
+		console.log(customer);
 		dispatch(createTicketActions.goBackToAddTicketModal(customer));
 	};
-
-	// USESELECTOR const {
-	// USESELECTOR 	loading: customersLoading,
-	// USESELECTOR 	customers,
-	// USESELECTOR 	successful,
-	// USESELECTOR 	error,
-	// USESELECTOR 	errorMessage,
-	// USESELECTOR } = useSelector((state) => state.customers);
 
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;

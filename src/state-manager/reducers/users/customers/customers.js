@@ -158,8 +158,6 @@ export const editCustomer = createAsyncThunk("editCustomer", async (args, {rejec
 export const suspendUnsuspend = createAsyncThunk(
 	"suspendUnsuspend",
 	async (args, {rejectWithValue}) => {
-		const { customerId } = args
-		console.log(args);
 		try {
 			const token = await getAuthToken();
 			const config = {
@@ -173,7 +171,7 @@ export const suspendUnsuspend = createAsyncThunk(
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/suspend-unsuspend`;
 			const response = await fetch(url, config);
 			const data = await response.json();
-			return customerId;
+			return data;
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -307,10 +305,18 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(createCustomer.fulfilled, (state, {payload}) => {
-				const {message} = payload;
+				const {message, data, status, code} = payload;
+				if (status === "OK" && code === 200) {
+					const customers = current(state).customers.slice();
+					const newCustomers = [data, ...customers];
+					state.customers = newCustomers;
+				} else {
+					state.successful = false;
+					state.error = true;
+				}
 				state.loading = false;
-				state.error = false;
-				state.creationSuccess = true;
+				state.error = false
+				state.creationSuccess = true
 				state.response = message ? message : null;
 			})
 
@@ -379,18 +385,19 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(editCustomer.fulfilled, (state, {payload}) => {
-				const {data, status, code} = payload
-				if (status === "OK" && code === 200){
-					state.successful = true
-					state.error = false
-					const customers = current(state).customers.slice()
-					const customer = customers.find((c) => c.user_id === data.user_id)
-					const customerIndex = customers.findIndex((c) => c.user_id === data.user_id)
-					const updatedCustomer ={...customer}
-					customers.splice(customerIndex, 1, updatedCustomer)
-					state.customers = customers
+				const {status, code, data} = payload;
+				console.log(payload)
+				if (status === "OK" && code === 200) {
+					const customers = current(state).customers.slice();
+					const customerIndex = customers.findIndex(customer => customer.user_id === data.user_id);
+					customers.splice(customerIndex, 1, data);
+					state.customers = customers;
+					state.error = false;
+					state.successful = true;
+				} else {
+					state.successful = false;
+					state.error = true;
 				}
-				
 				state.loading = false;
 			})
 
@@ -405,25 +412,18 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(suspendUnsuspend.fulfilled, (state, {payload}) => {
-					state.successful = true
-					state.error = false
+				const {status, code, data} = payload
+				if(status === "OK" && code === 200){
 					const customers = current(state).customers.slice()
-					const customer = customers.find((c) => c.user_id === payload)
-					const customerIndex = customers.findIndex((c) => c.user_id === payload)
-					const updatedCustomer ={...customer}
-					if (customer.status === "active"){
-						updatedCustomer.status = "suspend"
-					} else{
-						updatedCustomer.status = "active"
-					}
-					customers.splice(customerIndex, 1, updatedCustomer)
+					const customerIndex = customers.findIndex(customer => customer.user_id === data.user_id)
+					customers.splice(customerIndex, 1, data)
 					state.customers = customers
-					// const customers = current(state).customers.slice()
-					// console.log(data, customers)
-					// const customerIndex = customers.findIndex((customer) => customer.id === data.id)
-					// customers.splice(customerIndex, 1, data)
-					// state.customers = customers
-
+					state.error = false
+					state.successful = true
+				}else {
+					state.successful = false
+					state.error = true
+				}
 				state.loading = false;
 			})
 
