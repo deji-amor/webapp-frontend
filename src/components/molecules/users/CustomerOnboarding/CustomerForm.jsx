@@ -41,9 +41,9 @@ const CustomerForm = ({ open, onClose }) => {
 	const [loading, setLoading] = useState(false);
 	const [serverError, setServerError] = useState(false);
 
-	// useEffect(() => {
-	// 	dispatch(fetchCustomers());
-	// }, [dispatch])
+	useEffect(() => {
+		dispatch(fetchCustomers());
+	}, [dispatch])
 
 	useEffect(() => {
 		
