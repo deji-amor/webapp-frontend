@@ -19,6 +19,7 @@ const MoreOptionsDropdown = ({
 	onConfirm,
 	selectedCustomer,
 	email,
+	handleUnsuspend,
 }) => {
 	const dispatch = useDispatch();
 
@@ -56,12 +57,12 @@ const MoreOptionsDropdown = ({
 	};
 
 	const handleUnsuspendConfirmationYes = (selectedCustomer, customerId) => {
-		dispatch(suspendUnsuspend({ customerId, actionType: "unsuspend" })).then(() =>
-			dispatch(fetchCustomers)
-		);
+		handleUnsuspend(selectedCustomer, customerId);
 		setIsUnsuspendConfirmationModalOpen(false);
 		onConfirm(selectedCustomer);
 		onUpdateStatus(currentCustomerId, "active");
+		// dispatch(fetchCustomers());
+
 	};
 
 	const handleUnsuspendClick = () => {
@@ -92,7 +93,7 @@ const MoreOptionsDropdown = ({
 		setCurrentCustomerId(customerId);
 		dispatch(suspendUnsuspend({ customerId, actionType: "suspend" }));
 		handleClose();
-		dispatch(fetchCustomers());
+		// dispatch(fetchCustomers());
 	};
 
 	const handleResendVerification = (email) => {

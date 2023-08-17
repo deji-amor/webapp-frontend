@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
 import { fetchCustomers } from "../../../../state-manager/reducers/users/customers/customers";
 import Placeholder from "../../../molecules/general/Placeholder";
+import CustomeTableRow from "../../../atoms/users/CustomerSuperAdmin/TableRow";
 
 const statusColors = {
 	active: "rgba(18, 133, 26, 0.20)",
@@ -107,7 +108,6 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 	};
 
 	const showEditUserHandler = (customer) => {
-		console.log(customer);
 		dispatch(
 			createTicketActions.updateField({
 				key: "customerId",
@@ -195,39 +195,7 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 							</TableRow>
 						) : (
 							filteredCustomersByStatus.map((customer) => (
-								<TableRow key={customer.id}>
-									<CustomTableCell>{customer.company_name}</CustomTableCell>
-									<CustomTableCell>
-										{customer.first_name} {customer.last_name}
-									</CustomTableCell>
-									<CustomTableCell>{customer.email}</CustomTableCell>
-									<CustomTableCell status={customer.status}>{customer.status}</CustomTableCell>
-									<CustomTableCell>
-										<Box sx={{ display: "flex", alignItems: "center", gap: "1", flex: "1 0 0" }}>
-											<Link
-												onClick={() => showEditUserHandler(customer)}
-												style={{
-													color: "#2B2E72",
-													fontWeight: "600",
-													textDecoration: "none",
-												}}
-											>
-												<IconButton aria-label="edit">
-													<EditIcon sx={{ color: "#2B2E72", fontWeight: "600" }} />
-												</IconButton>
-												Edit Customer Profile
-											</Link>
-											<MoreOptionsDropdown
-												status={customer.status}
-												customerId={customer.user_id}
-												email={customer.email}
-												onUpdateStatus={(newStatus, comment) =>
-													handleUpdateStatus(customer.user_id, newStatus, comment)
-												}
-											/>
-										</Box>
-									</CustomTableCell>
-								</TableRow>
+								<CustomeTableRow key={customer.id} customer={customer} showEditUserHandler={showEditUserHandler} handleUpdateStatus={handleUpdateStatus} />
 							))
 						)}
 					</TableBody>

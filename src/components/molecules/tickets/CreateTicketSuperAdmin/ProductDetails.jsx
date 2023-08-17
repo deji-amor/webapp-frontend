@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MediumText from "../../../atoms/tickets/CreateTicketSuperAdmin/MediumText";
 import EditIcon from "@mui/icons-material/Edit";
 import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule";
@@ -10,7 +10,7 @@ import { getDateFromDateTime } from "../../../../helpers/date-manipulation";
 import EditableFields from "../../users/CustomerSuperAdmin/EditableFields";
 import { Button } from "@mui/material";
 import SplitButtonDropdown from "../../../atoms/users/CustomerSuperAdmin/SplitButtonDropdown";
-import { suspendUnsuspend } from "../../../../state-manager/reducers/users/customers/customers";
+import { suspendUnsuspend, resendVerification } from "../../../../state-manager/reducers/users/customers/customers";
 
 const ProductDetails = () => {
 	const dispatch = useDispatch();
@@ -21,10 +21,13 @@ const ProductDetails = () => {
 	const customer = useSelector((state) => state.ticketCreation.customer);
 	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
 
-	const handleUpdateStatus = (customerId, newStatus, comment, email) => {
+	const handleUpdateStatus = (customerId, newStatus, comment) => {
 		dispatch(suspendUnsuspend(customerId, newStatus, comment));
 	};
-	
+
+useEffect(() => {
+		dispatch(resendVerification({ representativeEmail: email }));
+ }, [dispatch, email])
 
 	const saveButtonStyles = {
 		color: "#2b2e72",

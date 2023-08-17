@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../../utilis";
 import {encrypt} from "n-krypta";
 
@@ -52,37 +52,34 @@ export const createCustomer = createAsyncThunk(
 	}
 );
 
-export const validateToken = createAsyncThunk(
-	"validateToken",
-	async (args, {rejectWithValue}) => {
-		try {
-			const config = {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(args),
-			};
-			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/check-verification-link`;
-			const response = await fetch(url, config);
-			const data = await response.json()
-			return data
-		} catch (err) {
-			if (err.response && err.response.data.message) {
-				return rejectWithValue(err.response.data.message);
-			} else {
-				return rejectWithValue(err.message);
-			}
+export const validateToken = createAsyncThunk("validateToken", async (args, {rejectWithValue}) => {
+	try {
+		const config = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(args),
+		};
+		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/check-verification-link`;
+		const response = await fetch(url, config);
+		const data = await response.json();
+		return data;
+	} catch (err) {
+		if (err.response && err.response.data.message) {
+			return rejectWithValue(err.response.data.message);
+		} else {
+			return rejectWithValue(err.message);
 		}
 	}
-);
+});
 
 // CUSTOMER PASSWORD
 export const setCustomerPassword = createAsyncThunk(
 	"setCustomerPassword",
 	async (args, {rejectWithValue}) => {
-		const { email, token, password, confirmPassword } = args
-		
+		const {email, token, password, confirmPassword} = args;
+
 		try {
 			const config = {
 				method: "POST",
@@ -93,14 +90,13 @@ export const setCustomerPassword = createAsyncThunk(
 					email,
 					token,
 					password: encrypt(password, `${import.meta.env.VITE_ENCRYPT_KEY}`),
-					confirmPassword: encrypt(confirmPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`)
-				})
+					confirmPassword: encrypt(confirmPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+				}),
 			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/onboarding`;
 			const response = await fetch(url, config);
 			const data = response.json();
-			return data
-
+			return data;
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -111,10 +107,58 @@ export const setCustomerPassword = createAsyncThunk(
 	}
 );
 
+// EDIT CUSTOMER
+export const editCustomer = createAsyncThunk("editCustomer", async (args, {rejectWithValue}) => {
+	const {
+		company_name,
+		company_email,
+		company_finance_email,
+		customerId,
+		email,
+		first_name,
+		last_name,
+		phone_number,
+		extraFields,
+	} = args;
+	const theNewsArgs = {
+		customerId: customerId,
+		companyName: company_name,
+		representativeFirstName: first_name,
+		representativeLastName: last_name,
+		representativeEmail: email,
+		representativePhone: phone_number,
+		companyFinanceEmail: company_finance_email,
+		companyEmail: company_email,
+		extraFields: extraFields,
+	};
+	try {
+		const token = await getAuthToken();
+		const config = {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(theNewsArgs),
+		};
+		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/account-edit`;
+		const response = await fetch(url, config);
+		const data = await response.json();
+		return data;
+	} catch (err) {
+		if (err.response && err.response.data.message) {
+			return rejectWithValue(err.response.data.message);
+		} else {
+			return rejectWithValue(err.message);
+		}
+	}
+});
+
 // SUSPEND-UNSUSPEND
 export const suspendUnsuspend = createAsyncThunk(
 	"suspendUnsuspend",
 	async (args, {rejectWithValue}) => {
+		const { customerId } = args
 		console.log(args);
 		try {
 			const token = await getAuthToken();
@@ -125,12 +169,11 @@ export const suspendUnsuspend = createAsyncThunk(
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(args),
-				
 			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/suspend-unsuspend`;
 			const response = await fetch(url, config);
 			const data = await response.json();
-			return data.message;
+			return customerId;
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -157,7 +200,7 @@ export const resendVerification = createAsyncThunk(
 			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/customer/resend-verification`;
 			const response = await fetch(url, config);
-			console.log(encrypt(response, `${import.meta.env.VITE_ENCRYPT_KEY}`))
+			console.log(encrypt(response, `${import.meta.env.VITE_ENCRYPT_KEY}`));
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -172,7 +215,7 @@ export const resendVerification = createAsyncThunk(
 export const resendMyVerificationLink = createAsyncThunk(
 	"resendMyVerificationLink",
 	async (args, {rejectWithValue}) => {
-		console.log(args)
+		console.log(args);
 		try {
 			const config = {
 				method: "POST",
@@ -185,7 +228,7 @@ export const resendMyVerificationLink = createAsyncThunk(
 				import.meta.env.VITE_BASE_ACTIVITY_URL
 			}/api/v1/customer/resend-my-verification`;
 			const response = await fetch(url, config);
-			console.log(encrypt(response, `${import.meta.env.VITE_ENCRYPT_KEY}`))
+			console.log(encrypt(response, `${import.meta.env.VITE_ENCRYPT_KEY}`));
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -205,7 +248,7 @@ const initialState = {
 	customers: [],
 	response: null,
 	passwordResponse: null,
-	validationResponse: null
+	validationResponse: null,
 };
 
 const customersSlice = createSlice({
@@ -217,9 +260,9 @@ const customersSlice = createSlice({
 		},
 
 		SET_ERROR_NULL: (state, {paload}) => {
-            state.validationResponse = null
-        },
-		
+			state.validationResponse = null;
+		},
+
 		SET_RESPONSE_NULL: (state, action) => {
 			state.response = null;
 		},
@@ -229,14 +272,14 @@ const customersSlice = createSlice({
 			// Fetch Customers
 			.addCase(fetchCustomers.pending, (state, action) => {
 				state.loading = true;
-				state.customers = []
+				state.customers = [];
 			})
 
 			.addCase(fetchCustomers.fulfilled, (state, action) => {
 				const {status, code, data} = action.payload;
 				state.loading = false;
 				if (code === 200 && status === "OK") {
-					state.customers = data;
+					state.customers = data.slice().reverse();
 					state.successful = true;
 					state.error = false;
 				} else {
@@ -264,7 +307,7 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(createCustomer.fulfilled, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.loading = false;
 				state.error = false;
 				state.creationSuccess = true;
@@ -272,7 +315,7 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(createCustomer.rejected, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false;
@@ -285,24 +328,24 @@ const customersSlice = createSlice({
 				state.loading = true;
 				state.successful = false;
 				state.error = false;
-				state.creationSuccess = false
-				state.validationResponse = null
+				state.creationSuccess = false;
+				state.validationResponse = null;
 			})
 
 			.addCase(validateToken.fulfilled, (state, {payload}) => {
-				const {message, data} = payload
-				console.log(data)
+				const {message, data} = payload;
+				console.log(data);
 				state.loading = false;
 				state.error = false;
-				state.validationResponse = message ? message : null
+				state.validationResponse = message ? message : null;
 			})
 
 			.addCase(validateToken.rejected, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.error = true;
 				state.loading = false;
-				state.creationSuccess = false
-				state.validationResponse = message ? message : null
+				state.creationSuccess = false;
+				state.validationResponse = message ? message : null;
 				state.successful = false;
 			})
 
@@ -311,11 +354,11 @@ const customersSlice = createSlice({
 				state.loading = true;
 				state.successful = false;
 				state.error = false;
-				state.passwordResponse = null
+				state.passwordResponse = null;
 			})
 
 			.addCase(setCustomerPassword.fulfilled, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.loading = false;
 				state.error = false;
 				state.successful = true;
@@ -323,11 +366,37 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(setCustomerPassword.rejected, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.error = true;
 				state.loading = false;
 				state.successful = false;
 				state.passwordResponse = message ? message : null;
+			})
+
+			// ADDCASE FOR EDIT CUSTOMER
+			.addCase(editCustomer.pending, (state, action) => {
+				state.loading = true;
+			})
+
+			.addCase(editCustomer.fulfilled, (state, {payload}) => {
+				const {data, status, code} = payload
+				if (status === "OK" && code === 200){
+					state.successful = true
+					state.error = false
+					const customers = current(state).customers.slice()
+					const customer = customers.find((c) => c.user_id === data.user_id)
+					const customerIndex = customers.findIndex((c) => c.user_id === data.user_id)
+					const updatedCustomer ={...customer}
+					customers.splice(customerIndex, 1, updatedCustomer)
+					state.customers = customers
+				}
+				
+				state.loading = false;
+			})
+
+			.addCase(editCustomer.rejected, (state, action) => {
+				state.error = true;
+				state.loading = false;
 			})
 
 			// ADDCASE FOR SUSPEND-UNSUSPEND CUSTOMER
@@ -335,10 +404,27 @@ const customersSlice = createSlice({
 				state.loading = true;
 			})
 
-			.addCase(suspendUnsuspend.fulfilled, (state, action) => {
+			.addCase(suspendUnsuspend.fulfilled, (state, {payload}) => {
+					state.successful = true
+					state.error = false
+					const customers = current(state).customers.slice()
+					const customer = customers.find((c) => c.user_id === payload)
+					const customerIndex = customers.findIndex((c) => c.user_id === payload)
+					const updatedCustomer ={...customer}
+					if (customer.status === "active"){
+						updatedCustomer.status = "suspend"
+					} else{
+						updatedCustomer.status = "active"
+					}
+					customers.splice(customerIndex, 1, updatedCustomer)
+					state.customers = customers
+					// const customers = current(state).customers.slice()
+					// console.log(data, customers)
+					// const customerIndex = customers.findIndex((customer) => customer.id === data.id)
+					// customers.splice(customerIndex, 1, data)
+					// state.customers = customers
+
 				state.loading = false;
-				state.error = false;
-				state.successful = true;
 			})
 
 			.addCase(suspendUnsuspend.rejected, (state, action) => {
@@ -375,6 +461,6 @@ const customersSlice = createSlice({
 });
 
 export default customersSlice.reducer;
-export const { SET_ERROR_NULL } = customersSlice.actions
+export const {SET_ERROR_NULL} = customersSlice.actions;
 export const customerActions = customersSlice.actions;
 export const {SET_RESPONSE_NULL} = customersSlice.actions;

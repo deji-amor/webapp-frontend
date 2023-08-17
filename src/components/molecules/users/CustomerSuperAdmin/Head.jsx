@@ -27,9 +27,9 @@ const Head = () => {
 
 	const filterCustomers = useCallback(() => {
 		if (filter === "All" && searchQuery === "") {
-			setFilteredCustomers(customers);
+			setFilteredCustomers(sampleCustomers);
 		} else {
-			const filtered = customers.filter((customer) => {
+			const filtered = sampleCustomers.filter((customer) => {
 				return (
 					(filter === "All" || customer.status === filter) &&
 					(searchQuery === "" ||
@@ -42,16 +42,12 @@ const Head = () => {
 			});
 			setFilteredCustomers(filtered);
 		}
-	}, [filter, searchQuery, customers]);
+	}, [filter, searchQuery, sampleCustomers]);
+
 
 	useEffect(() => {
-		setCustomers(sampleCustomers);
-		setFilteredCustomers(sampleCustomers);
-	}, [sampleCustomers]);
-
-	useEffect(() => {
-		filterCustomers();
-	}, [filterCustomers]);
+		if (searchQuery || filter) filterCustomers();
+	}, [filterCustomers, searchQuery, filter]);
 
 	const handleFilterChange = (event) => {
 		setFilter(event.target.value);
@@ -78,7 +74,7 @@ const Head = () => {
 				<DropdownButton isMenuOpen={isMenuOpen} handleMenuItemClick={handleMenuItemClick} />
 			</Grid>
 			<BasicTabs
-				filteredCustomers={filteredCustomers}
+				filteredCustomers={sampleCustomers}
 				handleFilterChange={handleFilterChange}
 				filter={filter}
 			/>

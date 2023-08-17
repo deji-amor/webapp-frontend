@@ -13,11 +13,13 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
-import { isEqual } from "lodash";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { editCustomer } from "../../../../state-manager/reducers/users/customers/customers";
 
 const EditableFields = ({ open, onClose, customer }) => {
-	const [openModal, setOpenModal] = useState(false);
+	const dispatch = useDispatch();
+
+	// const [openModal, setOpenModal] = useState(false);
 	const [fields, setFields] = useState([
 		{ label: "Company Name*", name: "company_name", type: "text", editable: false, required: true },
 		{
@@ -55,12 +57,19 @@ const EditableFields = ({ open, onClose, customer }) => {
 			editable: false,
 			required: false,
 		},
-		{ label: "Company official email", name: "company_email", type: "email", editable: false, required: false, },
+		{
+			label: "Company official email",
+			name: "company_email",
+			type: "email",
+			editable: false,
+			required: false,
+		},
 	]);
 	const [newField, setNewField] = useState("");
 	const [addingNewField, setAddingNewField] = useState(false);
 	const [isFormEdited, setIsFormEdited] = useState(false);
 	const [fieldValues, setFieldValues] = useState({});
+	const [extraFieldValues, setExtraFieldValues] = useState({});
 
 	const selectedCustomer = useSelector((state) => state.ticketCreation.customer);
 	const isCustomerActive = selectedCustomer?.status === "active";
@@ -81,12 +90,7 @@ const EditableFields = ({ open, onClose, customer }) => {
 		}
 	}, [selectedCustomer]);
 
-	const handleOpenModal = () => {
-		setOpenModal(true);
-	};
-
 	const handleCloseModal = () => {
-		setOpenModal(false);
 		setNewField("");
 		setAddingNewField(false);
 		setIsFormEdited(false);
@@ -103,7 +107,17 @@ const EditableFields = ({ open, onClose, customer }) => {
 
 	const handleConfirmNewField = () => {
 		if (newField.trim() !== "") {
-			const newFieldObj = { label: newField, type: "text", editable: false };
+			setExtraFieldValues((prevValues) => ({
+				...prevValues,
+				[newField]: "",
+			}));
+
+			const newFieldObj = {
+				label: newField,
+				type: "text",
+				editable: false,
+				name: "extra_field",
+			};
 			setFields((prevFields) => [...prevFields, newFieldObj]);
 			setNewField("");
 			setAddingNewField(false);
@@ -148,14 +162,30 @@ const EditableFields = ({ open, onClose, customer }) => {
 			updatedFields[index].value = value;
 			return updatedFields;
 		});
+
+		if (fields[index].name === "extra_field") {
+			setExtraFieldValues((prevValues) => ({
+				...prevValues,
+				[fields[index].label]: value,
+			}));
+		}
+
 		setIsFormEdited(true);
 	};
 
 	const updateCustomerData = () => {
-		const updatedData = {};
+		const updatedData = {
+			customerId: customer?.user_id,
+			extraFields: Object.entries(extraFieldValues).map(([key, value]) => ({
+				[key]: value,
+			})),
+		};
+
 		fields.forEach((field) => {
 			updatedData[field.name] = field.value;
 		});
+		dispatch(editCustomer(updatedData));
+	onClose()
 	};
 
 	return (
@@ -200,6 +230,8 @@ const EditableFields = ({ open, onClose, customer }) => {
 								"& .MuiOutlinedInput-input": {
 									borderRadius: "6px",
 									color: "#2B2E72",
+									opacity: "1",
+									// WebkitTextFillColor: "rgba(0, 0, 0, 0.7)",
 								},
 							}}
 						>
@@ -212,25 +244,22 @@ const EditableFields = ({ open, onClose, customer }) => {
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
-											{field.editable && (
-												<IconButton
-													onClick={() => handleSaveField(index)}
-													disabled={field.required && isCustomerActive}
-												>
+											{(!field.required || isCustomerActive) && field.editable && (
+												<IconButton onClick={() => handleSaveField(index)}>
 													<CheckIcon sx={{ color: "green" }} />
 												</IconButton>
 											)}
-											{!field.editable && !isCustomerActive &&(
-												<IconButton onClick={() => handleEditField(index)}
-												>
+											{!field.editable && (!field.required || !isCustomerActive) && (
+												<IconButton onClick={() => handleEditField(index)}>
 													<EditIcon sx={{ color: "#2b2e72" }} />
 												</IconButton>
 											)}
-											{!field.required && !field.editable && (
-												<IconButton onClick={() => handleDeleteField(index)}>
-													<DeleteIcon sx={{ color: "#D73D3D" }} />
-												</IconButton>
-											)}
+											{!field.required &&
+												isCustomerActive | (!isCustomerActive || field.editable) && (
+													<IconButton onClick={() => handleDeleteField(index)}>
+														<DeleteIcon sx={{ color: "#D73D3D" }} />
+													</IconButton>
+												)}
 										</InputAdornment>
 									),
 								}}
