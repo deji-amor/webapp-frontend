@@ -11,41 +11,37 @@ const Head = () => {
 	const [filter, setFilter] = useState("All");
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredCustomers, setFilteredCustomers] = useState([]);
-	const [customers, setCustomers] = useState([]);
 	const [isMenuOpen, setMenuOpen] = useState(false);
 
-
-	// DISPATCH const dispatch = useDispatch();
-
-	const {
-		customers: allCustomers,
-	} = useSelector((state) => state.customers);
+	const { customers: allCustomers } = useSelector((state) => state.customers);
 
 	const sampleCustomers = allCustomers;
 
 	const filterCustomers = useCallback(() => {
-		if (filter === "All" && searchQuery === "") {
-			setFilteredCustomers(sampleCustomers);
-		} else {
-			const filtered = sampleCustomers.filter((customer) => {
+		let filtered = sampleCustomers;
+
+		if (searchQuery) {
+			filtered = filtered.filter((customer) => {
 				return (
-					(filter === "All" || customer.status === filter) &&
-					(searchQuery === "" ||
-						customer.company_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.email.toLowerCase().includes(searchQuery.toLowerCase()))
+					customer.company_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					customer.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					customer.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					customer.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					customer.email.toLowerCase().includes(searchQuery.toLowerCase())
 				);
 			});
-			setFilteredCustomers(filtered);
 		}
+
+		if (filter !== "All") {
+			filtered = filtered.filter((customer) => customer.status === filter);
+		}
+
+		setFilteredCustomers(filtered);
 	}, [filter, searchQuery, sampleCustomers]);
 
-
 	useEffect(() => {
-		if (searchQuery || filter) filterCustomers();
-	}, [filterCustomers, searchQuery, filter]);
+		filterCustomers();
+	}, [filterCustomers]);
 
 	const handleFilterChange = (event) => {
 		setFilter(event.target.value);
@@ -72,7 +68,7 @@ const Head = () => {
 				<DropdownButton isMenuOpen={isMenuOpen} handleMenuItemClick={handleMenuItemClick} />
 			</Grid>
 			<BasicTabs
-				filteredCustomers={sampleCustomers}
+				filteredCustomers={filteredCustomers}
 				handleFilterChange={handleFilterChange}
 				filter={filter}
 			/>
