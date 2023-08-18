@@ -45,8 +45,8 @@ const CustomerForm = ({ open, onClose }) => {
 
 	useEffect(() => {
 		if (
-			response === "Email already been used by another user!" ||
-			response === "Company name already exist!"
+			response === "Email already used by another user!" ||
+			response === "Company name already exists!"
 		) {
 			setLoading(false);
 			const values = getValues();
@@ -103,7 +103,7 @@ const CustomerForm = ({ open, onClose }) => {
 	return (
 		<>
 			<Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-				{(response === "Email already been used by another user!" && (
+				{(response === "Email already used by another user!" && (
 					<ErrorCard
 						align="left"
 						error={serverError}
@@ -116,7 +116,7 @@ const CustomerForm = ({ open, onClose }) => {
 						description="The Representative email you entered already exist."
 					/>
 				)) ||
-					(response === "Company name already exist!" && (
+					(response === "Company name already exists!" && (
 						<ErrorCard
 							align="left"
 							error={serverError}
@@ -261,19 +261,19 @@ export default CustomerForm;
 {/* <Button type="submit" variant="contained" sx={saveButtonStyles}>
 									Save And Send Link
 								</Button> */}
-// || (
-// 	<div>
-// 		<LoaderWrapper></LoaderWrapper>
-// 		<LoaderContainerWrapper>
-// 			<Triangle
-// 				height="150"
-// 				width="150"
-// 				color="#2b2e72"
-// 				ariaLabel="triangle-loading"
-// 				wrapperStyle={{}}
-// 				wrapperClassName="loader"
-// 				visible={true}
-// 			/>
-// 		</LoaderContainerWrapper>
-// 	</div>
-// )} */}
+// DIV || (
+// DIV 	<div>
+// DIV 		<LoaderWrapper></LoaderWrapper>
+// DIV 		<LoaderContainerWrapper>
+// DIV 			<Triangle
+// DIV 				height="150"
+// DIV 				width="150"
+// DIV 				color="#2b2e72"
+// DIV 				ariaLabel="triangle-loading"
+// DIV 				wrapperStyle={{}}
+// DIV 				wrapperClassName="loader"
+// DIV 				visible={true}
+// DIV 			/>
+// DIV 		</LoaderContainerWrapper>
+// DIV 	</div>
+// DIV )} */}
