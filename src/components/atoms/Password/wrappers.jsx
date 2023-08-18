@@ -70,6 +70,7 @@ export const ButtonWrapper = styled("div")(({ width, height, style }) => ({
 		fontSize: "18px",
 		letterSpacing: "1px",
 		cursor: 'pointer',
+		style
 	},
 
 	span: {
@@ -82,7 +83,6 @@ export const ButtonWrapper = styled("div")(({ width, height, style }) => ({
 		left: '0',
 		width: '100%',
 		height: '100%',
-		style
 	},
 
 	".icon": {
