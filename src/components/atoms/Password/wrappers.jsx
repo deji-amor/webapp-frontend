@@ -51,7 +51,7 @@ export const LogoWrapper = styled("span")(({color, style}) => ({
 	},
 }));
 
-export const ButtonWrapper = styled("div")(({ width, height, style }) => ({
+export const ButtonWrapper = styled("div")(({ width, height, style, fontSize }) => ({
 	maxWidth: "100%",
 	display: "flex",
 	justifyContent: "center",
@@ -67,7 +67,7 @@ export const ButtonWrapper = styled("div")(({ width, height, style }) => ({
 		textAlign: "center",
 		borderRadius: "6px",
 		fontWeight: "600",
-		fontSize: "18px",
+		fontSize: fontSize ? fontSize : "18px",
 		letterSpacing: "1px",
 		cursor: 'pointer',
 		style

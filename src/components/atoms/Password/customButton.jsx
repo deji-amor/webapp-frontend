@@ -15,6 +15,7 @@ const CustomButton = ({
 	currentError,
 	style,
 	onClick,
+	fontSize,
 	defaultCursor,
 }) => {
 	return (
@@ -22,6 +23,7 @@ const CustomButton = ({
 			width={butWidth}
 			height={butHeight}
 			style={style}
+			fontSize={fontSize}
 			error={serverError || validationError || currentError || error || defaultCursor}
 		>
 			<button
@@ -48,6 +50,7 @@ CustomButton.propTypes = {
 	butType: PropTypes.string,
 	butWidth: PropTypes.string,
 	butHeight: PropTypes.string,
+	fontSize: PropTypes.string,
 	name: PropTypes.string,
 	style: PropTypes.object,
 	backgroundColor: PropTypes.string,
