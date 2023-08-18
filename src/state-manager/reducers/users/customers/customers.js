@@ -342,7 +342,7 @@ const customersSlice = createSlice({
 				const {message, data: valid} = payload
 				state.loading = false;
 				state.error = false;
-				state.valid = valid
+				state.valid = valid.valid
 				state.validationResponse = message ? message : null;
 			})
 
@@ -351,7 +351,7 @@ const customersSlice = createSlice({
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false;
-				state.valid = valid
+				state.valid = valid.valid
 				state.validationResponse = message ? message : null;
 				state.successful = false;
 			})
