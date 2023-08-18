@@ -247,7 +247,7 @@ const initialState = {
 	response: null,
 	passwordResponse: null,
 	validationResponse: null,
-	valid:null
+	valid: null
 };
 
 const customersSlice = createSlice({
@@ -340,13 +340,8 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(validateToken.fulfilled, (state, {payload}) => {
-<<<<<<< HEAD
 				const {message, data} = payload
 				console.log({message, data})
-=======
-				const {message, data} = payload;
-				console.log(data);
->>>>>>> f4a99875624f06dc20e1be626fea7477e8426d3c
 				state.loading = false;
 				state.error = false;
 				state.validationResponse = message ? message : null;
@@ -379,12 +374,8 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(setCustomerPassword.rejected, (state, {payload}) => {
-<<<<<<< HEAD
 				const {message} = payload
 				console.log(message)
-=======
-				const {message} = payload;
->>>>>>> f4a99875624f06dc20e1be626fea7477e8426d3c
 				state.error = true;
 				state.loading = false;
 				state.successful = false;
