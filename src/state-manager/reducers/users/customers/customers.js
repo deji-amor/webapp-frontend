@@ -458,13 +458,13 @@ const customersSlice = createSlice({
 			.addCase(resendMyVerificationLink.fulfilled, (state, payload) => {
 				const {message} = payload
 				state.loading = false;
-				state.validationResponse = message
+				state.validationResponse = message ? message : null
 			})
 
 			.addCase(resendMyVerificationLink.rejected, (state, payload) => {
 				const {message} = payload
 				state.loading = false;
-				state.validationResponse = message
+				state.validationResponse = message ? message : null
 			});
 	},
 });
