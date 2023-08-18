@@ -226,7 +226,8 @@ export const resendMyVerificationLink = createAsyncThunk(
 				import.meta.env.VITE_BASE_ACTIVITY_URL
 			}/api/v1/customer/resend-my-verification`;
 			const response = await fetch(url, config);
-			console.log(encrypt(response, `${import.meta.env.VITE_ENCRYPT_KEY}`));
+			const data = await response.json();
+			return data
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -454,12 +455,16 @@ const customersSlice = createSlice({
 				state.loading = true;
 			})
 
-			.addCase(resendMyVerificationLink.fulfilled, (state, action) => {
+			.addCase(resendMyVerificationLink.fulfilled, (state, payload) => {
+				const {message} = payload
 				state.loading = false;
+				state.validationResponse = message
 			})
 
-			.addCase(resendMyVerificationLink.rejected, (state, action) => {
+			.addCase(resendMyVerificationLink.rejected, (state, payload) => {
+				const {message} = payload
 				state.loading = false;
+				state.validationResponse = message
 			});
 	},
 });
