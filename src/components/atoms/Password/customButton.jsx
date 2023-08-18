@@ -31,7 +31,7 @@ const CustomButton = ({
 			>
 				{loading ? (
 					<span>
-						<Oval height={30} width={30} wrapperClass="icon one" color="#fff" secondaryColor="#" />
+						<Oval height={25} width={25} wrapperClass="icon one" color="#fff" secondaryColor="#" />
 						{name === "button" ? "Sending" : "Submitting"}
 						<ThreeDots height={20} width={20} wrapperClass="icon two" color="#fff" secondaryColor="#" style={{position: 'absolute', top: '30rem'}} />
 					</span>
