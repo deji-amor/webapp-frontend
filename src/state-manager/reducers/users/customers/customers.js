@@ -247,7 +247,7 @@ const initialState = {
 	response: null,
 	passwordResponse: null,
 	validationResponse: null,
-	valid=null
+	valid:null
 };
 
 const customersSlice = createSlice({
