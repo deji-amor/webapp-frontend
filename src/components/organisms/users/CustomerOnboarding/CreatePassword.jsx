@@ -77,9 +77,6 @@ const CreatePassword = () => {
 	const dispatch = useDispatch();
 	const { email, token } = useParams();
 	const { validationResponse, passwordResponse } = useSelector((state) => state.customers);
-
-	console.log(email)
-
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
 	const [hasSymbol, setHasSymbol] = useState(false);
