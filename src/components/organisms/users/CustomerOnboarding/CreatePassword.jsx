@@ -142,7 +142,7 @@ const CreatePassword = () => {
 		navigate,
 		email,
 		token,
-		validationResponse,
+		// validationResponse,
 		passwordResponse,
 	]);
 

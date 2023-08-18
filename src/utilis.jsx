@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const addErrorIntoField = (errors) => (errors ? { error: true } : { error: false });
-export const phoneRegExp = /^(?:\+1)?[2-9]\d{2}-[2-9]\d{2}-\d{4}$/;
+export const phoneRegExp = /^(?:\+?\d{1,3}\s?)?(?:\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
 export const pawdRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 export const removeAuthToken = async () => {

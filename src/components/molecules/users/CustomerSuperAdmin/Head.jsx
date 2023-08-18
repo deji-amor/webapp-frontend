@@ -11,41 +11,33 @@ const Head = () => {
 	const [filter, setFilter] = useState("All");
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredCustomers, setFilteredCustomers] = useState([]);
-	const [customers, setCustomers] = useState([]);
 	const [isMenuOpen, setMenuOpen] = useState(false);
 
-
-	// DISPATCH const dispatch = useDispatch();
-
-	const {
-		customers: allCustomers,
-	} = useSelector((state) => state.customers);
+	const { customers: allCustomers } = useSelector((state) => state.customers);
 
 	const sampleCustomers = allCustomers;
 
 	const filterCustomers = useCallback(() => {
-		if (filter === "All" && searchQuery === "") {
-			setFilteredCustomers(customers);
-		} else {
-			const filtered = customers.filter((customer) => {
+		let filtered = sampleCustomers;
+
+		if (searchQuery) {
+			filtered = filtered.filter((customer) => {
 				return (
-					(filter === "All" || customer.status === filter) &&
-					(searchQuery === "" ||
-						customer.company_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
-						customer.email.toLowerCase().includes(searchQuery.toLowerCase()))
+					customer.company_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					customer.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					customer.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					customer.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					customer.email.toLowerCase().includes(searchQuery.toLowerCase())
 				);
 			});
-			setFilteredCustomers(filtered);
 		}
-	}, [filter, searchQuery, customers]);
 
-	useEffect(() => {
-		setCustomers(sampleCustomers);
-		setFilteredCustomers(sampleCustomers);
-	}, [sampleCustomers]);
+		if (filter !== "All") {
+			filtered = filtered.filter((customer) => customer.status === filter);
+		}
+
+		setFilteredCustomers(filtered);
+	}, [filter, searchQuery, sampleCustomers]);
 
 	useEffect(() => {
 		filterCustomers();

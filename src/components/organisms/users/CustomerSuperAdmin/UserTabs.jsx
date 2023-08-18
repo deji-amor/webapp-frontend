@@ -66,73 +66,88 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs({ filteredCustomers }) {
-	const [value, setValue] = React.useState(0);
-	const [sortedCustomers, setSortedCustomers] = React.useState(filteredCustomers);
+    const [value, setValue] = React.useState(0);
+    const [sortedCustomers, setSortedCustomers] = React.useState(filteredCustomers);
+    const [isFilteringOrSearching, setIsFilteringOrSearching] = React.useState(false);
 
-	useEffect(() => {
-		setSortedCustomers(filteredCustomers);
-	}, [filteredCustomers]);
+    useEffect(() => {
+        setSortedCustomers(filteredCustomers);
+    }, [filteredCustomers]);
 
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
-	const handleSort = (ascending) => {
-		const sorted = [...sortedCustomers].sort((a, b) => {
-			const nameA = a.company_name.toLowerCase();
-			const nameB = b.company_name.toLowerCase();
-			return ascending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-		});
-		setSortedCustomers(sorted);
-	};
+    const handleSort = (ascending) => {
+        const sorted = [...sortedCustomers].sort((a, b) => {
+            const nameA = a.company_name.toLowerCase();
+            const nameB = b.company_name.toLowerCase();
+            return ascending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+        });
+        setSortedCustomers(sorted);
+    };
 
-	const handleUpdateStatus = (customerId, newStatus, comment) => {
-		console.log("ACTIVE");
-	};
+    const handleUpdateStatus = (customerId, newStatus, comment) => {
+        console.log("ACTIVE");
+    };
 
-	return (
-		<Box
-			sx={{
-				width: "100%",
-				backgroundColor: "#fff",
-				color: "#2B2E72",
-				marginTop: "22px",
-				borderRadius: "12px 12px 0px 0px",
-			}}
-		>
-			<Box
-				sx={{
-					borderBottom: 1,
-					borderColor: "divider",
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "space-between",
-				}}
-			>
-				<Tabs
-					value={value}
-					onChange={handleChange}
-					TabIndicatorProps={{
-						style: {
-							backgroundColor: "#2B2E72",
-							height: "4px",
-							borderTopLeftRadius: "8px",
-							borderTopRightRadius: "8px",
-						},
-					}}
-				>
-					<CustomTab label="Customers" {...a11yProps(0)} />
-					<CustomTab label="Technicians" {...a11yProps(1)} />
-					<CustomTab label="Admin" {...a11yProps(2)} />
-				</Tabs>
-				<SortBy onSort={handleSort} />
-			</Box>
-			<UserTabs value={value} index={0}>
-				<CustomerTable
-					filteredCustomers={sortedCustomers}
-					handleUpdateStatus={handleUpdateStatus}
-				/>
-			</UserTabs>
+    const handleFilterOrSearch = () => {
+        setIsFilteringOrSearching(true);
+    };
+
+    return (
+        <Box
+            sx={{
+                width: "100%",
+                backgroundColor: "#fff",
+                color: "#2B2E72",
+                marginTop: "22px",
+                borderRadius: "12px 12px 0px 0px",
+            }}
+        >
+            <Box
+                sx={{
+                    borderBottom: 1,
+                    borderColor: "divider",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                }}
+            >
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    TabIndicatorProps={{
+                        style: {
+                            backgroundColor: "#2B2E72",
+                            height: "4px",
+                            borderTopLeftRadius: "8px",
+                            borderTopRightRadius: "8px",
+                        },
+                    }}
+                >
+                    <CustomTab label="Customers" {...a11yProps(0)} />
+                    <CustomTab label="Technicians" {...a11yProps(1)} />
+                    <CustomTab label="Admin" {...a11yProps(2)} />
+                </Tabs>
+                <SortBy onSort={handleSort} />
+            </Box>
+            <UserTabs value={value} index={0}>
+                {isFilteringOrSearching && sortedCustomers.length === 0 ? (
+                    <Typography variant="body1">No data found.</Typography>
+                ) : sortedCustomers.length === 0 ? (
+                    <Placeholder
+                        messageHeader="seems you don’t have anything here yet!"
+                        messageParagraph="Once a customer has been created for you, you will be able to view the data here."
+                    />
+                ) : (
+                    <CustomerTable
+                        filteredCustomers={sortedCustomers}
+                        handleUpdateStatus={handleUpdateStatus}
+                        onFilterOrSearch={handleFilterOrSearch}
+                    />
+                )}
+            </UserTabs>
 			<UserTabs value={value} index={1}>
 				<Placeholder messageHeader="seems you don’t have anything here yet!" messageParagraph="Once a technician has been created for you, you will be able to view the data here." />
 			</UserTabs>

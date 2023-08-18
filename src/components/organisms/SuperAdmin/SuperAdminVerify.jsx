@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { superAdminSendEmail } from "../../../state-manager/reducers/superAdminOnboarding/superadmin";
 import { useDispatch, useSelector } from "react-redux";
 import EmailIcon from "../../../assets/superAdminOnboading/Vector.png";
@@ -40,15 +40,15 @@ const SuperAdminVerify = () => {
 	`;
 
 	const [showToast, setShowToast] = useState(false);
-	const { email } = useSelector(state => state.superAdmin);
-	const dispatch = useDispatch()
+	const { email } = useSelector((state) => state.superAdmin);
+	const dispatch = useDispatch();
 
 	const handleResubmit = (e) => {
 		setShowToast(true);
 		e.preventDefault();
 
 		try {
-			dispatch(superAdminSendEmail(email.email))
+			dispatch(superAdminSendEmail(email.email));
 		} catch (err) {
 			// CONSOLE console.log(err);
 		}
@@ -91,10 +91,10 @@ const SuperAdminVerify = () => {
 					Resend Link
 				</Button>
 				<AutoShowToast
-				showToast={showToast}
-				message="Verification link sent successfully!"
-				autoHideDuration={5000}
-				onClose={handleToastClose}
+					showToast={showToast}
+					message="Verification link sent successfully!"
+					autoHideDuration={5000}
+					onClose={handleToastClose}
 				/>
 			</div>
 		</Box>

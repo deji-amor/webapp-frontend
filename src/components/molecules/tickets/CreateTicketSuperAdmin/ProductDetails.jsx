@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MediumText from "../../../atoms/tickets/CreateTicketSuperAdmin/MediumText";
 import EditIcon from "@mui/icons-material/Edit";
 import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule";
@@ -10,7 +10,8 @@ import { getDateFromDateTime } from "../../../../helpers/date-manipulation";
 import EditableFields from "../../users/CustomerSuperAdmin/EditableFields";
 import { Button } from "@mui/material";
 import SplitButtonDropdown from "../../../atoms/users/CustomerSuperAdmin/SplitButtonDropdown";
-import { suspendUnsuspend } from "../../../../state-manager/reducers/users/customers/customers";
+import { suspendUnsuspend, resendVerification } from "../../../../state-manager/reducers/users/customers/customers";
+import { isPhoneNumber } from "../../../../helpers/validation";
 
 const ProductDetails = () => {
 	const dispatch = useDispatch();
@@ -26,13 +27,20 @@ const ProductDetails = () => {
 	// EDITABLE ELEMENT 		)}
 	const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-	const customer = useSelector((state) => state.ticketCreation.customer);
+	const {customerId} = useSelector((state) => state.ticketCreation.allPossibleFields);
+	const customers = useSelector(state => state.customers.customers)
+	const customer = customers.find(customer => +customer.id === +customerId)
 	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
 
 	const handleUpdateStatus = (customerId, newStatus, comment) => {
 		dispatch(suspendUnsuspend(customerId, newStatus, comment));
 	};
-	
+
+	const memoizedEmail = useMemo(() => email, [email]);
+
+	useEffect(() => {
+		dispatch(resendVerification({ representativeEmail: memoizedEmail })); 
+	}, [dispatch, memoizedEmail]);
 
 	const saveButtonStyles = {
 		color: "#2b2e72",
@@ -46,6 +54,8 @@ const ProductDetails = () => {
 	const handleEditIconClick = () => {
 		setSelectedCustomer(customer);
 	};
+
+	if(!customer) return <p>An error occurred please reload</p>
 
 	return (
 		<>
@@ -64,12 +74,11 @@ const ProductDetails = () => {
 			/>
 					<></>
 					<SplitButtonDropdown
-						status={customer.status}
-						customerId={customer.user_id}
-						onUpdateStatus={(newStatus, comment) =>
-							handleUpdateStatus(customer.user_id, newStatus, comment)
-						}
-					/>
+					status={customer.status}
+					customerId={customer.user_id}
+					onUpdateStatus={handleUpdateStatus}
+					email={customer.email}
+				/>
 				</div>
 			</div>
 			<HorizontalRule />
@@ -90,7 +99,7 @@ const ProductDetails = () => {
 				</div>
 				<div className="">
 					<LightText>Company Rep Phone Number</LightText>
-					<SmallText>{phone_number}</SmallText>
+					<SmallText>{isPhoneNumber(phone_number)[0] ? phone_number : "Not provided"}</SmallText>
 				</div>
 				<div className="">
 					<LightText>Date Created</LightText>

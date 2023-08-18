@@ -120,7 +120,7 @@ const RegisterForm = () => {
 			setServerError(true);
 		}
 
-		if (response === "Register successfully, verification mail has been send to your email!") {
+		if (response === "Register successfully, verification mail has been sent to your email!") {
 			const email = getValues().companyEmail;
 			dispatch(SET_EMAIL_ADMIN({ email }));
 			reset();
