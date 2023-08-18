@@ -165,7 +165,7 @@ const CreatePassword = () => {
 
 	return (
 		<>
-			{((valid === true && passwordResponse != "Your password has been set successfully! You can login now") && <PasswordLinkExp email={email} />) ||
+			{((valid === false && passwordResponse != "Your password has been set successfully! You can login now") && <PasswordLinkExp email={email} />) ||
 				(load && (
 					<LoadWrapper>
 						<div className="tailspain">
