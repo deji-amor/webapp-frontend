@@ -127,7 +127,7 @@ const CreatePassword = () => {
 
 		if (passwordResponse) setLoading(false);
 
-		if (passwordResponse === "Your password has been set successfully! You can login now") return navigate("/customer-create-password-success");
+		if (passwordResponse === "Your password has been set successfully! You can log in now") return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -142,7 +142,6 @@ const CreatePassword = () => {
 		navigate,
 		email,
 		token,
-		// validationResponse,
 		passwordResponse,
 	]);
 
