@@ -14,6 +14,7 @@ import PasswordLinkExp from "./passwordLinkExp";
 import ErrorCard from "../../../molecules/Password/customErrorCard";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
 import { TailSpin } from "react-loader-spinner";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { styled } from "@mui/material";
 
 const LoadWrapper = styled("div")(() => ({
@@ -232,7 +233,7 @@ const CreatePassword = () => {
 						/>
 					</ForgotPasswordResetWrapper>
 				)}
-				{validationResponse === "Your account has already been verified!" && <ErrorCard backgroundColor={"#FFE28A"} title="Validation link used." description="Your account has already been verified!" />}
+				{validationResponse === "Your account has already been verified!" && <ErrorCard className="icon" icon={<WarningAmberIcon />} backgroundColor={"#FFE28A"} title="Validation link used." description="Your account has already been verified!" />}
 		</>
 	);
 };
