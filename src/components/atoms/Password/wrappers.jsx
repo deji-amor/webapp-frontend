@@ -224,7 +224,7 @@ export const TitleWrapper = styled("div")(({ size, color, align, padding }) => (
 	},
 }));
 
-export const ErrorCardWrapper = styled("div")(({ error, style, size, color }) => ({
+export const ErrorCardWrapper = styled("div")(({ error, style, size, bcolor }) => ({
 	display: error ? "flex" : "none",
 	width: "362px",
 	padding: "12px 16px",
@@ -236,7 +236,7 @@ export const ErrorCardWrapper = styled("div")(({ error, style, size, color }) =>
 	top: "20px",
 	right: "20px",
 	zIndex: "100",
-	background: "rgba(238, 6, 6, 0.10)",
+	background: bcolor || "rgba(238, 6, 6, 0.10)",
 	transition: "all 3s ease",
 	
 	style,

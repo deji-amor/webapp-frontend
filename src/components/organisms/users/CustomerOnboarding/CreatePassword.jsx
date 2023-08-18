@@ -11,6 +11,7 @@ import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
 import PasswordLinkExp from "./passwordLinkExp";
+import ErrorCard from "../../../molecules/Password/customErrorCard";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
 import { TailSpin } from "react-loader-spinner";
 import { styled } from "@mui/material";
@@ -76,7 +77,7 @@ const CreatePassword = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { email, token } = useParams();
-	const { validationResponse, passwordResponse } = useSelector((state) => state.customers);
+	const { validationResponse, passwordResponse, valid } = useSelector((state) => state.customers);
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
 	const [hasSymbol, setHasSymbol] = useState(false);
@@ -162,7 +163,7 @@ const CreatePassword = () => {
 
 	return (
 		<>
-			{((validationResponse === "Invalid verification link!" && passwordResponse != "Your password has been set successfully! You can login now") && <PasswordLinkExp email={email} />) ||
+			{((valid === true && passwordResponse != "Your password has been set successfully! You can login now") && <PasswordLinkExp email={email} />) ||
 				(load && (
 					<LoadWrapper>
 						<div className="tailspain">
@@ -231,6 +232,7 @@ const CreatePassword = () => {
 						/>
 					</ForgotPasswordResetWrapper>
 				)}
+				{validationResponse === "Your account has already been verified!" && <ErrorCard backgroundColor={"#FFE28A"} title="Validation link used." description="Your account has already been verified!" />}
 		</>
 	);
 };

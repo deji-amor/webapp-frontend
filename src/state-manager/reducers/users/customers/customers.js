@@ -247,6 +247,7 @@ const initialState = {
 	response: null,
 	passwordResponse: null,
 	validationResponse: null,
+	valid: null
 };
 
 const customersSlice = createSlice({
@@ -321,12 +322,13 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(createCustomer.rejected, (state, {payload}) => {
-				const {message} = payload;
+				const {message, data: valid} = payload;
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false;
 				state.successful = false;
 				state.response = message ? message : null;
+				state.valid = valid || null
 			})
 
 			// ADDCASE FOR VALIDATE TOKEN
