@@ -245,7 +245,7 @@ const CustomerForm = ({ open, onClose }) => {
 								>
 									Cancel
 								</Button>
-								<CustomButton butText="Save And Send Link" loading={loading} butType={"submit"} style={{fontSize: "12px", padding: "10px"}} />
+								<CustomButton butText="Save And Send Link" loading={loading} butType={"submit"} style={{width: "200px", fontSize: "8px", padding: "10px"}} />
 							</Box>
 						</form>
 					</DialogContent>
