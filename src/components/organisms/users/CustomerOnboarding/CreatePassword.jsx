@@ -93,6 +93,8 @@ const CreatePassword = () => {
 		setEmpty(false);
 	};
 
+	console.log({validationResponse, passwordResponse})
+
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setLoad(false);
@@ -140,6 +142,7 @@ const CreatePassword = () => {
 		navigate,
 		email,
 		token,
+		validationResponse,
 		passwordResponse,
 	]);
 

@@ -100,7 +100,6 @@ export const setCustomerPassword = createAsyncThunk(
 			const response = await fetch(url, config);
 			const data = response.json();
 			return data
-
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -205,7 +204,8 @@ const initialState = {
 	customers: [],
 	response: null,
 	passwordResponse: null,
-	validationResponse: null
+	validationResponse: null,
+	valid=null
 };
 
 const customersSlice = createSlice({
@@ -291,7 +291,7 @@ const customersSlice = createSlice({
 
 			.addCase(validateToken.fulfilled, (state, {payload}) => {
 				const {message, data} = payload
-				console.log(data)
+				console.log({message, data})
 				state.loading = false;
 				state.error = false;
 				state.validationResponse = message ? message : null
@@ -324,6 +324,7 @@ const customersSlice = createSlice({
 
 			.addCase(setCustomerPassword.rejected, (state, {payload}) => {
 				const {message} = payload
+				console.log(message)
 				state.error = true;
 				state.loading = false;
 				state.successful = false;
