@@ -78,6 +78,8 @@ const CreatePassword = () => {
 	const { email, token } = useParams();
 	const { validationResponse, passwordResponse } = useSelector((state) => state.customers);
 
+	console.log(email)
+
 	const [hasUpper, setHasUpper] = useState(false);
 	const [hasLower, setHasLower] = useState(false);
 	const [hasSymbol, setHasSymbol] = useState(false);
@@ -92,8 +94,6 @@ const CreatePassword = () => {
 		dispatch(SET_ERROR_NULL());
 		setEmpty(false);
 	};
-
-	console.log({validationResponse, passwordResponse})
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {

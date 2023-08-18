@@ -39,7 +39,6 @@ const CustomerForm = ({ open, onClose }) => {
 	});
 
 	const { response, creationSuccess, customers } = useSelector((state) => state.customers);
-	console.log(response)
 	const [loading, setLoading] = useState(false);
 	const [serverError, setServerError] = useState(false);
 
@@ -245,7 +244,7 @@ const CustomerForm = ({ open, onClose }) => {
 								>
 									Cancel
 								</Button>
-								<CustomButton butText="Save And Send Link" loading={loading} butType={"submit"} fontSize={"10px"} style={{width: "200px"}} />
+								<CustomButton butText="Save And Send Link" loading={loading} butType={"submit"} fontSize={"12px"} style={{width: "200px"}} />
 							</Box>
 						</form>
 					</DialogContent>
