@@ -455,13 +455,13 @@ const customersSlice = createSlice({
 				state.loading = true;
 			})
 
-			.addCase(resendMyVerificationLink.fulfilled, (state, payload) => {
+			.addCase(resendMyVerificationLink.fulfilled, (state, {payload}) => {
 				const {message} = payload
 				state.loading = false;
 				state.validationResponse = message ? message : null
 			})
 
-			.addCase(resendMyVerificationLink.rejected, (state, payload) => {
+			.addCase(resendMyVerificationLink.rejected, (state, {payload}) => {
 				const {message} = payload
 				state.loading = false;
 				state.validationResponse = message ? message : null
