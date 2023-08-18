@@ -94,7 +94,7 @@ const CreatePassword = () => {
 		setEmpty(false);
 	};
 
-	console.log(valid)
+	console.log(validationResponse)
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setLoad(false);
