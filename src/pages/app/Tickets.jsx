@@ -28,6 +28,7 @@ const Wrapper = styled("div")`
 const Tickets = () => {
 	const {
 		// TICKETS tickets,
+		tickets: tickets,
 		successful: ticketsSuccessful,
 		error: ticketsError,
 		loading: ticketsLoading,
@@ -37,8 +38,13 @@ const Tickets = () => {
 		customers,
 		successful: customersSuccessful,
 		error: customersError,
-		// LOADING loading: customersLoading,
 	} = useSelector((state) => state.customers);
+
+	const {
+		users,
+		successful: usersSuccessful,
+		error: usersError,
+	} = useSelector((state) => state.users);
 
 	const navigate = useNavigate();
 
@@ -60,13 +66,13 @@ const Tickets = () => {
 			</div>
 		);
 
-	if (ticketsError || customersError) return <p>An error occurred please refresh</p>;
+	if (ticketsError || customersError || usersError) return <p>An error occurred please refresh</p>;
 
 	const createCustomer = () => {
 		navigate("../users");
 	};
 
-	if (ticketsSuccessful && customersSuccessful && customers.length === 0)
+	if (ticketsSuccessful && customersSuccessful && tickets.length === 0)
 		return (
 			<Placeholder
 				messageHeader={"seems you don’t have anything here yet!"}

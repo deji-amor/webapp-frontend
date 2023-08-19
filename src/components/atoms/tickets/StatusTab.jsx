@@ -1,5 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material'
+import PropTypes from "prop-types";
 
 const Tab = styled("span")`
 	display: flex;
@@ -17,12 +18,14 @@ const Tab = styled("span")`
 	line-height: 1.25rem; /* 142.857% */
 `;
 
-const StatusTab = props => {
+const StatusTab = ({status}) => {
   return (
     <Tab>Done</Tab>
   )
 }
 
-StatusTab.propTypes = {}
+StatusTab.propTypes = {
+	status: PropTypes.string
+}
 
 export default StatusTab
