@@ -6,7 +6,7 @@ import { Box, Button, Typography, styled } from "@mui/material";
 import AutoShowToast from "../../atoms/SuperAdmin/AutoShowToast";
 
 const SuperAdminVerify = () => {
-	const CustomTypography = styled("h3")`
+	const Typography = styled("h3")`
 		color: #2b2e72;
 		text-align: center;
 		font-size: 32px;
@@ -22,7 +22,7 @@ const SuperAdminVerify = () => {
 		font-weight: 500;
 		line-height: normal;
 	`;
-	const CustomButton = styled("button")`
+	const Button = styled("button")`
 		display: flex;
 		padding: 16px 24px;
 		flex-direction: column;
@@ -41,7 +41,6 @@ const SuperAdminVerify = () => {
 
 	const [showToast, setShowToast] = useState(false);
 	const {email} = useSelector((state) => state.superAdmin);
-	// const {email} = useSelector((state) => state.authUser.data);
 	const dispatch = useDispatch();
 
 	const handleResubmit = (e) => {
@@ -54,6 +53,8 @@ const SuperAdminVerify = () => {
 			// CONSOLE console.log(err);
 		}
 	};
+
+	
 
 	const handleToastClose = () => {
 		setShowToast(false);
@@ -75,10 +76,10 @@ const SuperAdminVerify = () => {
 		>
 			<img src={EmailIcon} style={{ width: "56px", flexShrink: "0" }} />
 			<div>
-				<CustomTypography component={"h3"}>
+				<Typography component={"h3"}>
 					A Verification Email <br />
 					has been sent to your Inbox.
-				</CustomTypography>
+				</Typography>
 				<Text>
 					We sent an email to {email.email}, please click on <br />
 					the link in the email to complete your registration.
@@ -88,9 +89,9 @@ const SuperAdminVerify = () => {
 				<p sx={{ fontSize: "18px", color: "#282828", fontWeight: "400" }}>
 					Didn’t receive an email?
 				</p>
-				<CustomButton variant="contained" color="primary" onClick={handleResubmit}>
+				<Button variant="contained" color="primary" onClick={handleResubmit}>
 					Resend Link
-				</CustomButton>
+				</Button>
 				<AutoShowToast
 					showToast={showToast}
 					message="Verification link sent successfully!"
