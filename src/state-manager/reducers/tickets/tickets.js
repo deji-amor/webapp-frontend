@@ -61,7 +61,6 @@ const ticketsSlice = createSlice({
 		},
 		addNewTicket: (state, action) => {
 			const newTicket = action.payload
-			console.log({newTicket})
 			if(state.sortByAscending){
 				state.tickets = [newTicket, ...current(state).tickets]
 			}else{
