@@ -53,11 +53,10 @@ function App() {
 			element: <SuperAdminOnboardingSuccess />,
 		},
 		{
-			path: "/app",
+			path: "/admin",
 			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
 			children: [
 				{ path: "dashboard", element:<MemoizedProtectedRoute><Dashboard /></MemoizedProtectedRoute>, index: true },
-				{ path: "customer-dashboard", element: <MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute> },
 				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute> },
 				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute> },
 				{ path: "reports", element: <MemoizedProtectedRoute><Reports /></MemoizedProtectedRoute> },
@@ -67,7 +66,8 @@ function App() {
 			path: "/customer",
 			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
 			children: [
-				{ path: "customer-dashboard", element:<MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute>, index: true },
+				{ path: "dashboard", element:<MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute>, index: true },
+				{ path: "reports", element:<MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute>},
 			],
 		},
 	]);

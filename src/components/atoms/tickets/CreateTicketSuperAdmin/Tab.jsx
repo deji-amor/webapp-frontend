@@ -12,9 +12,10 @@ const Tab = ({ children, isActive, onClick }) => {
 		font-weight: 600;
 		line-height: 1.25rem; /* 125% */
 		padding-bottom: 1rem;
-		border-bottom-width: 2px;
-		border-bottom-color: ${isActive ? "#2b2e72" : "transparent"};
+		// border-bottom-width: 4px;
+		// border-bottom-color: ${isActive ? "#2b2e72" : "transparent"};
 		cursor: pointer;
+		text-align: center;
 	`;
 
 	return <Tablet onClick={onClick}>{children}</Tablet>;

@@ -32,7 +32,6 @@ const Sidebar = () => {
 			return state.authUser.data;
 		});
 		const userType = authUser.userType;
-		console.log(authUser);
 
 	return (
 		<Aside>

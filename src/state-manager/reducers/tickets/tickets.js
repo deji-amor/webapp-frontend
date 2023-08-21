@@ -38,6 +38,9 @@ const initialState = {
 	activeTicketsStartPoint: 0,
 	activeTicketsEndPoint: 0,
 	ticketsOnEachPage: 5,
+	sortByAscending: true,
+	filterByStatus: "All",
+	statuses: ["All", "Done", "Pending", "Inprogress", "Overdue"]
 };
 
 const ticketsSlice = createSlice({
@@ -58,7 +61,12 @@ const ticketsSlice = createSlice({
 		},
 		addNewTicket: (state, action) => {
 			const newTicket = action.payload
-			state.tickets = [newTicket, ...current(state).tickets]
+			console.log({newTicket})
+			if(state.sortByAscending){
+				state.tickets = [newTicket, ...current(state).tickets]
+			}else{
+				state.tickets = [...current(state).tickets, newTicket]
+			}
 		}
 	},
 	extraReducers: builder => {

@@ -8,8 +8,8 @@ const Tab = styled("span")`
 	justify-content: center;
 	align-items: center;
 	border-radius: 1rem;
-	background: rgba(4, 133, 13, 0.14);
-	color: #04850d;
+	color: ${({ color }) => color};
+	background: ${({ background }) => background};
 	text-align: center;
 	font-family: Poppins;
 	font-size: 0.875rem;
@@ -19,8 +19,37 @@ const Tab = styled("span")`
 `;
 
 const StatusTab = ({status}) => {
+	if (status === "pending" || status === "created") {
+		return (
+			<Tab className="capitalize" color={"#E2740F"} background={"rgba(226,116,15, 0.14)"}>
+				Pending
+			</Tab>
+		);
+	}
+	if(status === "done"){
+		return (
+			<Tab className="capitalize" color={"#04850d"} background={"rgba(4, 133, 13, 0.14)"}>
+				Done
+			</Tab>
+		);
+	}
+	if(status === "inprogress"){
+		return (
+			<Tab className="capitalize" color={"#AD9E01"} background={"rgba(173,158,1,0.14)"}>
+				Inprogress
+			</Tab>
+		);
+	}
+	if(status === "overdue"){
+		return (
+			<Tab className="capitalize" color={"#922D2D"} background={"rgba(146,45,45,0.14)"}>
+				Overdue
+			</Tab>
+		);
+	}
+
   return (
-    <Tab>Done</Tab>
+    <Tab className='capitalize'>Error</Tab>
   )
 }
 

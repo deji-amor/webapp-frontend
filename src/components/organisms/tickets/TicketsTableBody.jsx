@@ -31,22 +31,34 @@ const TicketsTableBody = () => {
 		showProjectsTab,
 		activeTicketsStartPoint,
 		activeTicketsEndPoint,
+		filterByStatus,
+		sortByAscending,
 	} = useSelector((state) => state.tickets);
 
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);
 	const {users, loading: usersLoading} = useSelector((state) => state.users)
 	const dispatch = useDispatch()
+
+	console.log({tickets});
 	
 	const filteredActiveTickets = useMemo(() => {
-		return tickets.filter((ticket) => {
-			if (showServiceRequestsTab) {
-				return ticket.ticket_type === "service ticket";
-			}
-			if (showProjectsTab) {
-				return ticket.ticket_type === "project ticket";
-			}
-		});
-	}, [showServiceRequestsTab, showProjectsTab, tickets]);
+		let filteredTickets = tickets
+			.filter((ticket) => {
+				if (showServiceRequestsTab) {
+					return ticket.ticket_type === "service ticket";
+				}
+				if (showProjectsTab) {
+					return ticket.ticket_type === "project ticket";
+				}
+			})
+			.filter(ticket => {
+				if(filterByStatus.toLowerCase() === "all") return true
+				return ticket.status.toLowerCase() === filterByStatus.toLowerCase()
+			});
+
+		if(!sortByAscending) filteredTickets = filteredTickets.reverse()
+		return filteredTickets
+	}, [showServiceRequestsTab, showProjectsTab, tickets, filterByStatus, sortByAscending]);
 
 	const filteredSearchTickets = useMemo(() => {
 		return filteredActiveTickets
@@ -94,8 +106,8 @@ const TicketsTableBody = () => {
 				</RecentTicketTableText>
 				<RecentTicketTableText>{getDateFromDateTime(ticket.created_at)}</RecentTicketTableText>
 				<RecentTicketTableText>
-					<Edit className="justify-center items-center">
-						Edit Ticket <EditIcon fontSize="small" /> <MoreVertIcon fontSize="small"></MoreVertIcon>{" "}
+					<Edit className="justify-center items-center cursor-pointer hover:underline">
+						<span>Edit Ticket</span> <EditIcon fontSize="small" />
 					</Edit>
 				</RecentTicketTableText>
 			</tr>

@@ -32,6 +32,7 @@ const MainTicketCreationForm = () => {
 	const requiredFields = useCreateTicketFields();
 	const dispatch = useDispatch();
 	const {customer, data} = useSelector((state) => state.ticketCreation);
+	console.log({requiredFields});
 
 	const submitHandler = (e) => {
 		e.preventDefault();
