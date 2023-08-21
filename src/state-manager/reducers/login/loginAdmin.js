@@ -15,7 +15,8 @@ export const loginAdmin = createAsyncThunk("auth/loginAdmin", async (args, {reje
 		body: JSON.stringify({
 			deviceName,
 			username,
-			password: encryptedPassword
+			password: encryptedPassword,
+			userType: "superadmin"
 		}),
 	};
 

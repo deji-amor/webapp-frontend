@@ -28,6 +28,8 @@ const AppLayout = () => {
 		(state) => state.logout.allowedTimeOfInactivityInSeconds
 	);
 	const logoutProcessLoading = useSelector((state) => state.logout.loading);
+	const authUser = useSelector((state) => state.authUser.data);
+
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -41,6 +43,12 @@ const AppLayout = () => {
 			});
 		});
 	}, [dispatch]);
+
+		useEffect(() => {
+			if(authUser.userType !== "superadmin" && authUser.userType !== "admin"){
+				console.log("logout");
+			}
+		}, [])
 
 	// checks if token doesnt exit and logs out else and logouts out on timer expiry
 	useEffect(() => {
@@ -84,12 +92,8 @@ const AppLayout = () => {
 			{showTemplateModal && <MemoizedTicketTemplateCreationOrEditionForm />}
 
 			<div className="flex h-screen max-h-screen">
-				{/* <Sidebar /> */}
-				{/* Memoized Sidebar */}
 				<MemoizedSidebar />
 				<div className="basis-[85%] flex flex-col max-w-[85%]">
-					{/* <Navbar /> */}
-					{/* Memoized Navbar */}
 					<MemoizedNavbar />
 					<div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] overflow-y-auto overflow-x-auto">
 						<Outlet />

@@ -14,7 +14,12 @@ export const loginCustomer = createAsyncThunk(
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({deviceName, username, password: encryptedPassword}),
+			body: JSON.stringify({
+				deviceName,
+				username,
+				password: encryptedPassword,
+				userType: "customer",
+			}),
 		};
 
 		try {

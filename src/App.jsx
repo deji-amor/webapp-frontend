@@ -16,11 +16,13 @@ import CustomerForgotPasswordPage from "./pages/CustomerForgotPassword";
 import SuperAdminOnboarding from "./pages/SuperAdminOnboarding";
 import { ProtectedRoute } from "./utilis";
 import AppLayout from "./pages/AppLayout";
+import CustomerAppLayout from "./pages/CustomerAppLayout";
 import Dashboard from "./pages/app/Dashboard";
+import CustomerDashboard from "./pages/customerApp/Dashboard";
 import Tickets from "./pages/app/Tickets";
 import Users from "./pages/app/Users";
 import Reports from "./pages/app/Reports";
-import CustomerDashboard from "./pages/customer/CustomerDashboard";
+import CustomerReports from "./pages/customerApp/Reports";
 import SuperAdminVerifyEmail from "./pages/SuperAdminVerifyEmail";
 import SuperAdminOnboardingSuccess from "./pages/SuperAdminOnboardingSuccess";
 import ErrorPage from "./pages/ErrorPage";
@@ -53,11 +55,10 @@ function App() {
 			element: <SuperAdminOnboardingSuccess />,
 		},
 		{
-			path: "/app",
+			path: "/admin",
 			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
 			children: [
 				{ path: "dashboard", element:<MemoizedProtectedRoute><Dashboard /></MemoizedProtectedRoute>, index: true },
-				{ path: "customer-dashboard", element: <MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute> },
 				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute> },
 				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute> },
 				{ path: "reports", element: <MemoizedProtectedRoute><Reports /></MemoizedProtectedRoute> },
@@ -65,9 +66,10 @@ function App() {
 		},
 		{
 			path: "/customer",
-			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
+			element: <ProtectedRoute><CustomerAppLayout /></ProtectedRoute>,
 			children: [
-				{ path: "customer-dashboard", element:<MemoizedProtectedRoute><CustomerDashboard /></MemoizedProtectedRoute>, index: true },
+				{ path: "dashboard", element:<MemoizedProtectedRoute> <CustomerDashboard/> </MemoizedProtectedRoute>, index: true },
+				{ path: "reports", element:<MemoizedProtectedRoute> <CustomerReports/> </MemoizedProtectedRoute>},
 			],
 		},
 	]);

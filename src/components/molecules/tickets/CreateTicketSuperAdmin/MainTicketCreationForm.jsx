@@ -47,7 +47,6 @@ const MainTicketCreationForm = () => {
 	);
 	useEffect(() => {
 		if (successful === true) {
-			console.log({data});
 			if(data) dispatch(ticketsActions.addNewTicket(data))
 			dispatch(
 				UIActions.showToasts({

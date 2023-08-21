@@ -32,7 +32,6 @@ const Sidebar = () => {
 			return state.authUser.data;
 		});
 		const userType = authUser.userType;
-		console.log(authUser);
 
 	return (
 		<Aside>
@@ -40,8 +39,6 @@ const Sidebar = () => {
 				<Logo />
 			</div>
 			<div className="flex flex-col gap-[1rem]">
-				{userType === "superadmin" && (
-					<>
 						<SidebarLink
 							link={"dashboard"}
 							name={"dashboard"}
@@ -66,24 +63,6 @@ const Sidebar = () => {
 							name={"reports"}
 							isActive={true}
 						/>
-					</>
-				)}
-				{userType === "customer" && (
-					<>
-						<SidebarLink
-							link={"customer-dashboard"}
-							icon={<DashboardIcon className="icon" />}
-							isActive={true}
-							name={"dashboard"}
-						/>
-						<SidebarLink
-							link={"reports"}
-							icon={<BarChartSharpIcon className="icon" />}
-							name={"reports"}
-							isActive={true}
-						/>
-					</>
-				)}
 			</div>
 			<div className="logout">
 				<SidebarLink link={"logout"} icon={<LogoutSharpIcon className="icon" />} />

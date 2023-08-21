@@ -1,7 +1,6 @@
 import React from "react";
 import NavBarSearch from "../../atoms/Dashboard/NavBarSearch";
 import NavBarIconList from "./NavBarIconList";
-
 import { styled } from "@mui/material";
 
 const Navbar = () => {
