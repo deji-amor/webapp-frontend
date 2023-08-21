@@ -31,8 +31,7 @@ const SuspendModal = ({
 		line-height: 20px; /* 142.857% */
 	`;
 
-	const wordCount = suspendComment.trim().split(/\s+/).length;
-	const isSuspendButtonDisabled = wordCount <= 1;
+	const isSuspendButtonDisabled = suspendComment.trim() === '';
 
 	const handleSuspend = (id) => {
 		if (!isSuspendButtonDisabled) {
