@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "@mui/material";
 import CustomerWelcomeHeader from "../../atoms/Login/CustomerWelcomeHeader";
 import CustomerWelcomeParagraph from "../../atoms/Login/CustomerWelcomeParagraph";
-import bgImage from "../../../assets/login/standard-quality-control-concept-m1.png";
+// import bgImage from "../../../assets/login/standard-quality-control-concept-m1.png";
 import Logo from "../../atoms/Login/Logo";
 import Chat from "../../atoms/Login/Chat";
 
@@ -10,7 +10,8 @@ const CustomerSide = () => {
 	const Wrapper = styled("div")`
 		height: 100%;
 		background: linear-gradient(180deg, rgba(43, 46, 114, 0.32) 0%, rgba(1, 1, 1, 0.32) 100%),
-			url(${bgImage}), lightgray 50% / cover no-repeat;
+			url(https://amoserv.s3.amazonaws.com/img/MicrosoftTeams-image.png),
+			lightgray 50% / cover no-repeat;
 		padding: 1.5rem;
 		display: flex;
 		flex-direction: column;
@@ -26,7 +27,7 @@ const CustomerSide = () => {
 			<div className="">
 				<Logo />
 			</div>
-			<div className="info -translate-y-6">
+			<div className="info -translate-y-6 space-y-[2.5rem]">
 				<CustomerWelcomeHeader>Streamlined IT Service Management.</CustomerWelcomeHeader>
 				<CustomerWelcomeParagraph>
 					Our robust solution is built and optimized specifically for IT teams and workflows,

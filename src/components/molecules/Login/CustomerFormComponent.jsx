@@ -76,7 +76,7 @@ const CustomerFormComponent = () => {
 				usernameReset();
 				passwordReset();
 				dispatch(loginCustomerActions.resetLoginCustomer());
-				return navigate("/app/customer-dashboard");
+				return navigate("/customer/dashboard");
 			}
 		};
 		getAuthTokenHandler();
@@ -121,6 +121,24 @@ const CustomerFormComponent = () => {
 			);
 			return;
 		}
+				if (error && errorMessage === "Kindly login as a super admin") {
+					dispatch(
+						loginCustomerActions.showToasts({
+							message: "Kindly login as a super admin",
+							title: "You are not a customer",
+						})
+					);
+					return;
+				}
+				if (error && errorMessage === "Kindly login as an admin") {
+					dispatch(
+						loginCustomerActions.showToasts({
+							message: "Kindly login as an admin",
+							title: "You are not a customer",
+						})
+					);
+					return;
+				}
 			if (error && errorMessage && errorTitle) {
 				dispatch(
 					loginCustomerActions.showToasts({

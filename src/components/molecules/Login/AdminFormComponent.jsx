@@ -73,7 +73,7 @@ const AdminFormComponent = () => {
 				usernameReset()
 				passwordReset()
 				dispatch(loginAdminActions.resetLoginAdmin());
-				return navigate("/app/dashboard");
+				return navigate("/admin/dashboard");
 			}
 		};
 
@@ -117,6 +117,20 @@ const AdminFormComponent = () => {
 					message:
 						"You account has been disabled temporarily for multiple login attempt! Try after 20 minutes",
 					title: "Temporarily been disabled",
+				})
+			);
+			return;
+		}
+
+		if (error && 
+			errorMessage ===
+			"Kindly login as a customer"
+		) {
+			dispatch(
+				loginAdminActions.showToasts({
+					message:
+						"Kindly login as a customer",
+					title: "You are not a superadmin/admin",
 				})
 			);
 			return;

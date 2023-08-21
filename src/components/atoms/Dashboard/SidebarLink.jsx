@@ -52,6 +52,7 @@ const SidebarLink = ({ link, icon, name }) => {
 
 	const dispatch = useDispatch();
 	const handleShowLogoutModal = () => {
+		console.log("7tr5ddd77dd57");
 		dispatch(logoutActions.toggleLogoutModal());
 	};
 
