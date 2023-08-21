@@ -27,6 +27,7 @@ const useBasicInput = (validateValue) => {
     setEnteredValue("")
     setIsTouched(false)
     setHasError(false)
+    setErrorMessage(false)
     setErrorFromServer(false)
   }
 

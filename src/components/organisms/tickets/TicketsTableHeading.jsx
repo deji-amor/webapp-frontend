@@ -5,7 +5,7 @@ const TicketsTableHeading = () => {
   return (
 		<thead className="border-b-2 border-b-[#ECECEC]">
 			<tr>
-				<RecentTicketsTableHeader>Customer Name</RecentTicketsTableHeader>
+				<RecentTicketsTableHeader>Company Name</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Ticket Type</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Created By</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Status</RecentTicketsTableHeader>

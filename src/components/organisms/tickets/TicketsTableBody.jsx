@@ -34,6 +34,7 @@ const TicketsTableBody = () => {
 	} = useSelector((state) => state.tickets);
 
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);
+	const {users, loading: usersLoading} = useSelector((state) => state.users)
 	const dispatch = useDispatch()
 	
 	const filteredActiveTickets = useMemo(() => {
@@ -49,27 +50,32 @@ const TicketsTableBody = () => {
 
 	const filteredSearchTickets = useMemo(() => {
 		return filteredActiveTickets
-			.filter((ticket) => {
-				// COME HERE TO FILTER WITH STRING if (!searchTicketsValue) return true;
-				return true;
-			})
-			.filter(ticket => {
-				const customerExist = customers.find(
-					(customer) => +customer.id === +ticket.customer_id
-				);
-				return customerExist ? true : false
-			});
-	}, [searchTicketsValue, filteredActiveTickets]);
+		.filter(ticket => {
+			const customerExist = customers.find(
+				(customer) => +customer.id === +ticket.customer_id
+			);
+			return customerExist ? true : false
+		})
+		.filter((ticket) => {
+			if(!searchTicketsValue) return true
+			const companyName = customers.find((customer) => +customer.id === +ticket.customer_id).company_name // FOR CUSTOMER
+			const superAdminOrAdminEmail = users.find((user) => +user.id === +ticket.user_id)?.email // FOR ADMINS
+			const ticketForm = ticket.ticket_form;
+			const searchString = ` ${companyName} ${superAdminOrAdminEmail} ${ticketForm}`.toLowerCase()
+			const includes = searchString.includes(searchTicketsValue.trim().toLowerCase());
+			return includes
+		})
+	}, [searchTicketsValue, filteredActiveTickets, customers, users]);
 
 	useEffect(() => {
 		dispatch(ticketsActions.updateField({ key: "activeTickets", value: filteredSearchTickets }));
-	}, [filteredSearchTickets])
+	}, [filteredSearchTickets, dispatch])
 
-	if(customersLoading || ticketsLoading) return <tbody></tbody>
+	if(customersLoading || ticketsLoading || usersLoading) return <tbody></tbody>
 
 	const list = filteredSearchTickets
 		.slice(activeTicketsStartPoint, activeTicketsEndPoint)
-		.map((ticket, ind) => (
+		.map((ticket) => (
 			<tr
 				key={`${ticket.id}${ticket.user_id}${ticket.customer_id}${ticket.workspace_id}${v4()}`}
 				className="bg-white border-b hover:bg-gray-50"
@@ -77,10 +83,14 @@ const TicketsTableBody = () => {
 				<RecentTicketTableText>
 					{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}
 				</RecentTicketTableText>
-				<RecentTicketTableText className="max-w-[10rem] border truncate">{ticket.ticket_form}</RecentTicketTableText>
-				<RecentTicketTableText>ASchevchenko@Servirox...</RecentTicketTableText>
+				<RecentTicketTableText className="max-w-[10rem] border truncate">
+					{ticket.ticket_form}
+				</RecentTicketTableText>
 				<RecentTicketTableText>
-					<StatusTab />
+					{users.find((user) => +user.id === +ticket.user_id)?.email}
+				</RecentTicketTableText>
+				<RecentTicketTableText>
+					<StatusTab status={ticket.status} />
 				</RecentTicketTableText>
 				<RecentTicketTableText>{getDateFromDateTime(ticket.created_at)}</RecentTicketTableText>
 				<RecentTicketTableText>

@@ -108,20 +108,36 @@ const TicketsSearchCustomer = () => {
 		dispatch(ticketsActions.updateField({ key: "searchCustomersValue", value: value }));
 	};
 
-	const customersValueChange = (email) => {
-		dispatch(ticketsActions.updateField({ key: "searchCustomersValue", value: email }));
+	const customersValueChange = (companyName) => {
+		dispatch(ticketsActions.updateField({ key: "searchCustomersValue", value: companyName }));
 	};
 
 	const activeCustomer = useMemo(() => {
-		const activeCustomer = customers.find((customer) => customer.email === searchCustomersValue);
+		const activeCustomer = customers.find(
+			(customer) => customer.company_name === searchCustomersValue
+		);
 		return activeCustomer;
 	}, [searchCustomersValue, customers]);
 
 	const filteredCustomers = useMemo(() => {
-		return customers.filter(({ first_name, last_name, email }) => {
-			const joined = ` ${first_name} ${last_name} ${email}`.toLocaleLowerCase();
-			return joined.includes(searchCustomersValue);
-		});
+		return customers
+			.filter(
+				({
+					first_name,
+					last_name,
+					email,
+					company_name,
+					company_finance_email,
+					company_email,
+					phone_number,
+				}) => {
+					if (!searchCustomersValue) return true;
+					const searchString = `${first_name} ${last_name} ${email} ${company_name} ${company_finance_email} ${company_email} ${phone_number}`;
+					const joined = searchString.toLocaleLowerCase();
+					return joined.includes(searchCustomersValue.toLocaleLowerCase().trim());
+				}
+			)
+			.filter(({status}) => status === "active")
 	}, [searchCustomersValue, customers]);
 
 	useEffect(() => {
@@ -172,13 +188,13 @@ const TicketsSearchCustomer = () => {
 												<Item
 													key={customer.id}
 													className=""
-													active={searchCustomersValue === customer.email}
-													onClick={() => customersValueChange(customer.email)}
+													active={searchCustomersValue === customer.company_name}
+													onClick={() => customersValueChange(customer.company_name)}
 												>
 													<h3 className="truncate">
-														{customer.first_name} {customer.last_name}
+														{customer.company_name}
 													</h3>
-													<p>{customer.email}</p>
+													<p>{customer.company_email}</p>
 												</Item>
 											))}
 										</ListWrapper>
