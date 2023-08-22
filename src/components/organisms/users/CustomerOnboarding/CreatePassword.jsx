@@ -94,7 +94,7 @@ const CreatePassword = () => {
 		setEmpty(false);
 	};
 
-	console.log(validationResponse)
+	console.log(validationResponse === "Your account has already been verified!")
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setLoad(false);
@@ -181,7 +181,11 @@ const CreatePassword = () => {
 								visible={true}
 							/>
 						</div>
-						{validationResponse === "Your account has already been verified!" && <ErrorCard icon={<WarningAmberIcon className="icon" />} backgroundColor={"#FFBF00"} iconColor="white" titleColor="white" color="white" title="Validation link used." description="Your account has already been verified!" />}
+						<div>
+						{
+							validationResponse === "Your account has already been verified!" && (<ErrorCard icon={<WarningAmberIcon className="icon" />} backgroundColor={"#FFBF00"} iconColor="white" titleColor="white" color="white" title="Validation link used." description="Your account has already been verified!" />)
+						}
+						</div>
 					</LoadWrapper>
 				)) || (
 					<ForgotPasswordResetWrapper>
