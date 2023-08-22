@@ -4,11 +4,11 @@ import HeadingGreeting from "../../atoms/Dashboard/HeadingGreeting";
 import { useSelector } from "react-redux";
 
 const Greeting = () => {
-	const {email} = useSelector((state) => state.authUser.data);
+	const {firstName} = useSelector((state) => state.authUser.data);
 
 	return (
-		<div className="">
-			<HeadingGreeting>Hi</HeadingGreeting> <HeadingEmail>{email}</HeadingEmail>
+		<div className="" style={{marginTop: "40px"}}>
+			<HeadingGreeting>Hi</HeadingGreeting> <HeadingEmail>{firstName},</HeadingEmail>
 		</div>
 	);
 };

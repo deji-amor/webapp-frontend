@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import StatsCardHeader from "../../atoms/Dashboard/StatsCardHeader";
 import StatsCardValue from "../../atoms/Dashboard/StatsCardValue";
-import StatsCardViewMore from "../../atoms/Dashboard/StatsCardViewMore";
 import StatsPieChart from "../../atoms/Dashboard/StatsPieChart";
 import { styled } from "@mui/material";
 
@@ -23,8 +22,7 @@ const StatsCard = ({ data, backgroundColor }) => {
 		<Card>
 			<div className="h-full">
 				<StatsCardHeader>Total Tickets</StatsCardHeader>
-				<StatsCardValue>280</StatsCardValue>
-				<StatsCardViewMore>View More</StatsCardViewMore>
+				<StatsCardValue>180</StatsCardValue>
 			</div>
 			<div className="w-[9rem] h-[8rem]">
 				<StatsPieChart data={data} />

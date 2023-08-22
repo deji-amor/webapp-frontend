@@ -8,8 +8,8 @@ const StatsCardGroup = () => {
 		datasets: [
 			{
 				label: "Users Gained",
-				data: [200, 80],
-				backgroundColor: ["#5057E5", "#CED0F0"],
+				data: [80, 100],
+				backgroundColor: ["#CEDFF0", "#5057E5"],
 				borderColor: "transparent", // Set border color to transparent to remove the border
 				borderWidth: 0, // Set borderWidth to 0 to remove the border
 				dataColors: ["#fff", "#000"],

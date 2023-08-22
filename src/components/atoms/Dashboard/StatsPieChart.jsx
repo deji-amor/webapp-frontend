@@ -45,8 +45,8 @@ const StatsPieChart = ({ data }) => {
 					font: {
 						size: 10,
 						family: "'Poppins', 'sans-serif'",
-						weight: 600,
-						color: "#252421",
+						weight: 500,
+						color: "#706E6E",
 					},
 					padding: 10,
 				},
