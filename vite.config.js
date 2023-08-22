@@ -6,7 +6,7 @@ import svgrPlugin from "vite-plugin-svgr";
 export default {
 	// https://github.com/vitejs/vite/issues/1973
 	define: {
-		...(import.meta.env.NODE_ENV === "development" ? {global: "window"} : {}),
+		...(import.meta.env?.NODE_ENV === "development" ? {global: "window"} : {}),
 	},
 	server: {
 		port: 3000,
