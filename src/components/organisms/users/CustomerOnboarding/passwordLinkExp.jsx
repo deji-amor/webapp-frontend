@@ -21,7 +21,7 @@ const PasswordLinkExp = () => {
 
 	return (
 		<PasswordExpireWrapper width="550px">
-			{validationResponse === "Your account has already been verified!" && (
+			{/* {validationResponse === "Your account has already been verified!" && ( */}
 				<ErrorCard
 					icon={<WarningAmberIcon className="icon" />}
 					backgroundColor={"#FFBF00"}
@@ -31,7 +31,7 @@ const PasswordLinkExp = () => {
 					title="Validation link used."
 					description="Your account has already been verified!"
 				/>
-			)}
+			{/* )} */}
 			<PasswordSuccess
 				icon={<ErrorOutlineIcon className="icon" />}
 				title="Oops! Password Creation Link Has Expired."
