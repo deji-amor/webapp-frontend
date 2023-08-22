@@ -7,11 +7,11 @@ export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithV
 		const token = await getAuthToken();
 			if(args.scopeOfWorkDocument){
 				const {scopeOfWorkDocument} = args
-				const result = await uploadFile(scopeOfWorkDocument)
-				console.log(result)
-				if(result){
-					const {Location: scopeOfWorkDocumentUrl} = result;
-					args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+				const fileUrl = await uploadFile(scopeOfWorkDocument)
+				console.log(fileUrl)
+				if(fileUrl){
+					// const {Location: scopeOfWorkDocumentUrl} = result;
+					args.scopeOfWorkDocumentUrl = fileUrl;
 				}
 			}
 		const config = {
