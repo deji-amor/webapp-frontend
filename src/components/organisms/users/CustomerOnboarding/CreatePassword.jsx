@@ -181,6 +181,7 @@ const CreatePassword = () => {
 								visible={true}
 							/>
 						</div>
+						{validationResponse === "Your account has already been verified!" && <ErrorCard icon={<WarningAmberIcon className="icon" />} backgroundColor={"#FFBF00"} iconColor="white" titleColor="white" color="white" title="Validation link used." description="Your account has already been verified!" />}
 					</LoadWrapper>
 				)) || (
 					<ForgotPasswordResetWrapper>
@@ -234,7 +235,6 @@ const CreatePassword = () => {
 						/>
 					</ForgotPasswordResetWrapper>
 				)}
-				{validationResponse === "Your account has already been verified!" && <ErrorCard className="icon" icon={<WarningAmberIcon />} backgroundColor={"#FFE28A"} title="Validation link used." description="Your account has already been verified!" />}
 		</>
 	);
 };

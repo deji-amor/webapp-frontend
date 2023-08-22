@@ -319,14 +319,16 @@ export const CustomerHeadingWrapper = styled("div")(() => ({
 	alignItems: "center",
 
 	div: {
-		width: "80%",
+		width: "100%",
 		display: "flex",
 		position: "relative",
+		left: "-30px",
 		bottom: "30px",
 		flexDirection: "column",
 		justifyContent: "center",
-		alignItems: "center",
+		alignItems: "end",
 		gap: "30px",
+		overflow: ""
 	},
 
 	"div h1": {

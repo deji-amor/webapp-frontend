@@ -1,26 +1,28 @@
-import React from 'react'
-import CustomerSide from '../components/molecules/Login/CustomerSide'
-import CustomerFormComponent from '../components/molecules/Login/CustomerFormComponent'
-import CustomerLoginToastContainer from '../components/molecules/Login/CustomerLoginToastContainer'
-import Logo from '../components/atoms/Login/Logo'
+import React from "react";
+import CustomerSide from "../components/molecules/Login/CustomerSide";
+import CustomerFormComponent from "../components/molecules/Login/CustomerFormComponent";
+import CustomerLoginToastContainer from "../components/molecules/Login/CustomerLoginToastContainer";
+import CustomerBanner from "../components/molecules/Password/customerpasswordbanner";
+import CustomLogo from "../components/atoms/Password/customLogo";
+import Logo from "../components/atoms/Login/Logo";
 
 const LoginCustomer = () => {
-  return (
+	return (
 		<div className="min-h-screen h-screen">
 			<CustomerLoginToastContainer />
-			<div className="px-[3rem] py-[0.5rem] mb-[1.5rem] lg:hidden">
-				<Logo />
-			</div>
+			<CustomLogo color="#E9E5E5" />
 			<div className="flex h-full">
-				<div className="h-full hidden lg:block lg:basis-[35%]">
-					<CustomerSide />
-				</div>
+				<CustomerBanner
+					title="Streamlined IT Service Management."
+					description="Our robust solution is built and optimized specifically for IT teams and workflows,
+					influenced by feedback, and centred around end-user and endpoint support.."
+				/>
 				<div className="basis-[100%] lg:basis-[65%] w-full h-full flex items-center justify-center">
 					<CustomerFormComponent />
 				</div>
 			</div>
 		</div>
 	);
-}
+};
 
-export default LoginCustomer
+export default LoginCustomer;
