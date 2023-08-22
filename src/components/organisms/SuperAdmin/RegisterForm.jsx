@@ -32,7 +32,7 @@ const RegisterForm = () => {
 			firstName: "",
 			lastName: "",
 			workspaceName: "",
-			workEmail: "",
+			companyEmail: "",
 			country: "",
 			city: "",
 			phoneNumber: "",
@@ -121,7 +121,7 @@ const RegisterForm = () => {
 		}
 
 		if (response === "Register successfully, verification mail has been sent to your email!") {
-			const email = getValues().workEmail;
+			const email = getValues().companyEmail;
 			dispatch(SET_EMAIL_ADMIN({ email }));
 			reset();
 			return navigate("/super-admin-verify");
@@ -256,7 +256,7 @@ const RegisterForm = () => {
 							errors={errors}
 							serverError=""
 							control={control}
-							name="workEmail"
+							name="companyEmail"
 							label="Work Email"
 							placeholder="Work Email"
 							type="text"
