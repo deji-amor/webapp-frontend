@@ -1,19 +1,19 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-// import IMPORT { uploadImage } from "../../aws/aws-crud-operations"; 
+import { uploadFile } from "../../../aws/aws-crud-operations";
 
 export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
-		// CONDITION if(args.scopeOfWorkDocument){
-		// CONDITION 	const {scopeOfWorkDocument} = args
-		// CONDITION 	const result = await uploadImage(scopeOfWorkDocument)
-		// CONDITION 	console.log(result)
-		// CONDITION 	if(result){
-		// CONDITION 		const {Location: scopeOfWorkDocumentUrl} = result;
-		// CONDITION 		args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
-		// CONDITION 	}
-		// CONDITION }
+			if(args.scopeOfWorkDocument){
+				const {scopeOfWorkDocument} = args
+				const result = await uploadFile(scopeOfWorkDocument)
+				console.log(result)
+				if(result){
+					const {Location: scopeOfWorkDocumentUrl} = result;
+					args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
+				}
+			}
 		const config = {
 			method: "POST",
 			headers: {
