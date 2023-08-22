@@ -12,33 +12,33 @@ const StatsCardGroup = () => {
 				backgroundColor: ["#CEDFF0", "#5057E5"],
 				borderColor: "transparent", // Set border color to transparent to remove the border
 				borderWidth: 0, // Set borderWidth to 0 to remove the border
-				dataColors: ["#fff", "#000"],
+				dataColors: ["#000", "#fff"],
 			},
 		],
 	};
 	const data2 = {
-		labels: ["Service", "Project"],
+		labels: ["Pending", "Technician en Route", "In Progress", "Done"],
 		datasets: [
 			{
 				label: "Users Gained",
-				data: [100, 50],
-				backgroundColor: ["#9265E5", "#E5DCF5"],
+				data: [30, 10, 10, 30],
+				backgroundColor: ["#2B2E72", "#5CE4FF", "#9265E5", "#5057E5"],
 				borderColor: "transparent", // Set border color to transparent to remove the border
 				borderWidth: 0, // Set borderWidth to 0 to remove the border
-				dataColors: ["#fff", "#000"],
+				dataColors: ["#fff", "#fff", "#fff", "#fff"],
 			},
 		],
 	};
 	const data3 = {
-		labels: ["Service", "Project"],
+		labels: ["Pending", "Technician en Route", "In Progress", "Done"],
 		datasets: [
 			{
 				label: "Users Gained",
-				data: [200, 300],
-				backgroundColor: ["#5057E5", "#CED0F0"],
+				data: [30, 10, 10, 30],
+				backgroundColor: ["#2B2E72", "#5CE4FF", "#9265E5", "#5057E5"],
 				borderColor: "transparent", // Set border color to transparent to remove the border
 				borderWidth: 0, // Set borderWidth to 0 to remove the border
-				dataColors: ["#fff", "#000"],
+				dataColors: ["#fff", "#fff", "#fff", "#fff"],
 			},
 		],
 	};
@@ -46,13 +46,13 @@ const StatsCardGroup = () => {
 	return (
 		<div className="flex gap-[1.8rem] justify-between max-w-full overflow-x-auto">
 			<div className="grow">
-				<StatsCard data={data1} backgroundColor={"#B8BAE5"} />
+				<StatsCard data={data1} backgroundColor={"rgba(80, 87, 229, 0.16)"} />
 			</div>
 			<div className="grow">
-				<StatsCard data={data2} backgroundColor={"#C8B8E5"} />
+				<StatsCard data={data2} backgroundColor={"rgba(146, 101, 229, 0.16)"} />
 			</div>
 			<div className="grow">
-				<StatsCard data={data3} backgroundColor={"#CEE8F5"} />
+				<StatsCard data={data3} backgroundColor={"rgba(101, 171, 229, 0.16)"} />
 			</div>
 		</div>
 	);
