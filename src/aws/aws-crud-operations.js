@@ -10,6 +10,9 @@ export const uploadFile = async file => {
 		Body: file,
 	};
 
+  const checker = params.Bucket
+  console.log({checker})
+
 	try {
 		await s3Client.send(new PutObjectCommand(params));
 		console.log("File uploaded successfully");
