@@ -11,10 +11,8 @@ import lockmage from "../../../../assets/password/lock.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { validatePassword } from "../../../atoms/Password/validators";
 import PasswordLinkExp from "./passwordLinkExp";
-import ErrorCard from "../../../molecules/Password/customErrorCard";
 import ForgotPasswordRecoveryInput from "../../../molecules/Password/customForgotPasswordRecoveryInput";
 import { TailSpin } from "react-loader-spinner";
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { styled } from "@mui/material";
 
 const LoadWrapper = styled("div")(() => ({
@@ -94,7 +92,7 @@ const CreatePassword = () => {
 		setEmpty(false);
 	};
 
-	console.log(validationResponse === "Your account has already been verified!")
+
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setLoad(false);
@@ -127,7 +125,8 @@ const CreatePassword = () => {
 
 		if (passwordResponse) setLoading(false);
 
-		if (passwordResponse === "Your password has been set successfully! You can log in now") return navigate("/customer-create-password-success");
+		if (passwordResponse === "Your password has been set successfully! You can log in now")
+			return navigate("/customer-create-password-success");
 	}, [
 		password,
 		confirmPassword,
@@ -165,7 +164,10 @@ const CreatePassword = () => {
 
 	return (
 		<>
-			{((valid === false && passwordResponse != "Your password has been set successfully! You can login now") && <PasswordLinkExp email={email} />) ||
+			{(valid === false &&
+				passwordResponse != "Your password has been set successfully! You can login now" && (
+					<PasswordLinkExp email={email} />
+				)) ||
 				(load && (
 					<LoadWrapper>
 						<div className="tailspain">
@@ -180,11 +182,6 @@ const CreatePassword = () => {
 								wrapperClass=""
 								visible={true}
 							/>
-						</div>
-						<div>
-						{
-							validationResponse === "Your account has already been verified!" && (<ErrorCard icon={<WarningAmberIcon className="icon" />} backgroundColor={"#FFBF00"} iconColor="white" titleColor="white" color="white" title="Validation link used." description="Your account has already been verified!" />)
-						}
 						</div>
 					</LoadWrapper>
 				)) || (
