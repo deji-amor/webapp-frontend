@@ -210,6 +210,7 @@ const initialState = {
 	mode: "creation",
 	chosenTemplate: [],
 	allPossibleFields: allPossibleFields,
+  originalTicket: {},
 	data: [],
 	customer: {},
 };
@@ -233,6 +234,7 @@ const editTicketSlice = createSlice({
 			// TICkET METADATA STARTS HERE
 			state.pathToTemplate = JSON.parse(ticketToEdit.ticket_path);
 			state.chosenTemplate = tree[ticketToEdit.ticket_form].fields;
+      state.allPossibleFields.customerId = ticketToEdit.customer_id;
 			// TICkET METADATA STARTS HERE
 
 			// POINT OF CONTACT SECTION STARTS HERE
@@ -340,8 +342,9 @@ const editTicketSlice = createSlice({
 			state.allPossibleFields.locationAddressIsValid = true;
 
 			// EXTRA WORk STARTS HERE
-      console.log({ticketToEdit})
+      // console.log({ticketToEdit})
       state.allPossibleFields.additionalFields = JSON.parse(ticketToEdit.additional_fields);
+      state.originalTicket = state.allPossibleFields
 		},
     reset: () => {
       return initialState

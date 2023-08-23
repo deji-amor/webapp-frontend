@@ -6,12 +6,14 @@ import {
 import FormButton from "../../../atoms/tickets/CreateTicketSuperAdmin/FormButton";
 import GrayThemedLightText from "../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightText";
 import Loader from "../../../organisms/tickets/Loader";
-import useCreateTicketFormValidator from "../../../../hooks/useCreateTicketFormValidator";
-import useCreateTicketFields from "../../../../hooks/useCreateTicketFields";
+import useEditTicketFormValidator from '../../../../hooks/useEditTicketFormValidator';
+import useEditTicketFields from '../../../../hooks/useEditTicketFields';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
 import { ticketsActions } from "../../../../state-manager/reducers/tickets/tickets";
+import useEditTicketIsAltered from '../../../../hooks/useEditTicketIsAltered';
+import { editTicketActions } from '../../../../state-manager/reducers/tickets/ticketEdition';
 import PointOfContact from '../../../atoms/tickets/EditTickets/fields/point-of-contact/PointOfContact';
 import MaterialsProcurement from "../../../atoms/tickets/EditTickets/fields/materials-procurement/MaterialsProcurement";
 import ScopeOfWork from "../../../atoms/tickets/EditTickets/fields/scope-of-work/ScopeOfWork";
@@ -30,10 +32,12 @@ import Location from "../../../atoms/tickets/EditTickets/fields/location/Locatio
 import HorizontalRule from '../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule';
 
 const MainTicketEditionForm = () => {
-		const requiredFields = useCreateTicketFields();
+		const requiredFields = useEditTicketFields();
+		const hasTicketHasChanged = useEditTicketIsAltered();
+		// console.log(requiredFields);
 		const dispatch = useDispatch();
 		const navigate = useNavigate()
-		const { customer, data } = useSelector((state) => state.ticketCreation);
+		const { customer, data} = useSelector((state) => state.ticketEdition);
 
 		const submitHandler = (e) => {
 			e.preventDefault();
@@ -47,33 +51,35 @@ const MainTicketEditionForm = () => {
 		};
 
 		const { loading, error, errorMessage, successful } = useSelector(
-			(state) => state.ticketCreation
+			(state) => state.ticketEdition
 		);
-		useEffect(() => {
-			if (successful === true) {
-				if (data) dispatch(ticketsActions.addNewTicket(data));
-				dispatch(
-					UIActions.showToasts({
-						message: "You have successfully created a new Ticket for the customer.",
-						title: "Ticket Created Successfully",
-						type: "successful",
-					})
-				);
-				dispatch(createTicketActions.toggleTemplateModal());
-			}
-			if (error === true) {
-				dispatch(
-					UIActions.showToasts({
-						message: errorMessage,
-						title: "Ticket Creation Unsuccessful",
-						type: "error",
-					})
-				);
-				// DISPATCH dispatch(createTicketActions.toggleTemplateModal());
-			}
-		}, [error, successful, data]);
+		
+		// useEffect(() => {
+		// 	if (successful === true) {
+		// 		if (data) dispatch(ticketsActions.addNewTicket(data));
+		// 		dispatch(
+		// 			UIActions.showToasts({
+		// 				message: "You have successfully edited the Ticket for the customer.",
+		// 				title: "Ticket edition successful",
+		// 				type: "successful",
+		// 			})
+		// 		);
+		// 		dispatch(createTicketActions.toggleTemplateModal());
+		// 	}
+		// 	if (error === true) {
+		// 		dispatch(
+		// 			UIActions.showToasts({
+		// 				message: errorMessage,
+		// 				title: "Ticket Edition Unsuccessful",
+		// 				type: "error",
+		// 			})
+		// 		);
+		// 		// DISPATCH dispatch(createTicketActions.toggleTemplateModal());
+		// 	}
+		// }, [error, successful, data]);
 
-    const isFormValid = useCreateTicketFormValidator();
+    const isFormValid = useEditTicketFormValidator() && !hasTicketHasChanged;
+		// console.log({isFormValid});
 		const isFormDisabled = !isFormValid;
 
 		const chosenTemplate = useSelector((state) => state.ticketEdition.chosenTemplate);
@@ -142,7 +148,7 @@ const MainTicketEditionForm = () => {
 					Back
 				</FormButton>
 				<FormButton highLighted={true} type="submit" disabled={isFormDisabled || loading}>
-					{loading ? <Loader>Editing Ticket...</Loader> : "Save Ticket"}
+					{loading ? <Loader>Editing Ticket...</Loader> : "Edit Ticket"}
 				</FormButton>
 			</div>
 		</form>

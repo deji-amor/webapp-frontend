@@ -9,6 +9,7 @@ import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets"
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
 import { v4 } from "uuid";
 import { useNavigate, NavLink } from "react-router-dom";
+import ViewTicket from "./View/ViewTicket";
 
 const Edit = styled("p")`
 	color: #2b2e72;
@@ -39,7 +40,8 @@ const TicketsTableBody = () => {
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);
 	const {users, loading: usersLoading} = useSelector((state) => state.users)
 	const dispatch = useDispatch()
-	
+	const navigate = useNavigate()
+
 	const filteredActiveTickets = useMemo(() => {
 		let filteredTickets = tickets
 			.filter((ticket) => {
@@ -84,12 +86,17 @@ const TicketsTableBody = () => {
 
 	if(customersLoading || ticketsLoading || usersLoading) return <tbody></tbody>
 
+	const ViewTicket = (id) => {
+		navigate(`view/detail/${id}`)
+	}
+
 	const list = filteredSearchTickets
 		.slice(activeTicketsStartPoint, activeTicketsEndPoint)
 		.map((ticket) => (
 			<tr
 				key={`${ticket.id}${ticket.user_id}${ticket.customer_id}${ticket.workspace_id}${v4()}`}
 				className="bg-white border-b hover:bg-gray-50"
+				onClick={() => ViewTicket(ticket.id)}
 			>
 				<RecentTicketTableText>
 					{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}
