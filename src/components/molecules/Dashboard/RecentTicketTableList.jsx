@@ -5,7 +5,7 @@ import RecentTicketTableText from "../../atoms/Dashboard/RecentTicketTableText";
 const RecentTicketTableList = (props) => {
 	return (
 		<tr className="bg-white border-b hover:bg-gray-50">
-			<RecentTicketTableText isID={true}>OlA0123</RecentTicketTableText>
+			<RecentTicketTableText isID={true}>OlA0123</RecentTicketTableText> {/* ADD ONCLICK TO REDIRECT TO PARTICULAR ID INFO PAGE */}
 			<RecentTicketTableText>Project Request</RecentTicketTableText>
 			<RecentTicketTableText>Project Management</RecentTicketTableText>
 			<RecentTicketTableText>Nov 26 2022</RecentTicketTableText>

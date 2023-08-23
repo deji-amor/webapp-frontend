@@ -17,14 +17,14 @@ const RecentTickets = () => {
 				<HeadingEmail>Recent Tickets</HeadingEmail>
 			</div>
 			<div className="flex items-center justify-between">
-				<div className="flex items-center gap-[1rem]">
+				{/* <div className="flex items-center gap-[1rem]">
 					<Tab>Projects</Tab>
 					<Tab>Done</Tab>
 					<FilterButton />
-				</div>
-				<div className="">
+				</div> */}
+				{/* <div className="">
 					<Button>View All Tickets</Button>
-				</div>
+				</div> */}
 			</div>
 		</Wrapper>
 	);
