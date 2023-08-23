@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
 import { v4 } from "uuid";
+import { useNavigate, NavLink } from "react-router-dom";
 
 const Edit = styled("p")`
 	color: #2b2e72;
@@ -38,6 +39,7 @@ const TicketsTableBody = () => {
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);
 	const {users, loading: usersLoading} = useSelector((state) => state.users)
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	const filteredActiveTickets = useMemo(() => {
 		let filteredTickets = tickets
@@ -104,8 +106,8 @@ const TicketsTableBody = () => {
 				</RecentTicketTableText>
 				<RecentTicketTableText>{getDateFromDateTime(ticket.created_at)}</RecentTicketTableText>
 				<RecentTicketTableText>
-					<Edit className="justify-center items-center cursor-pointer hover:underline">
-						<span>Edit Ticket</span> <EditIcon fontSize="small" />
+					<Edit className="flex justify-center items-center cursor-pointer hover:underline">
+						<NavLink to={`edit/${ticket.id}`}>Edit Ticket<EditIcon fontSize="small" /></NavLink><MoreVertIcon fontSize="small" />
 					</Edit>
 				</RecentTicketTableText>
 			</tr>

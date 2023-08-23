@@ -37,7 +37,7 @@ const initialState = {
 	activeTickets: [],
 	activeTicketsStartPoint: 0,
 	activeTicketsEndPoint: 0,
-	ticketsOnEachPage: 5,
+	ticketsOnEachPage: 10,
 	sortByAscending: true,
 	filterByStatus: "All",
 	statuses: ["All", "Done", "Pending", "Inprogress", "Overdue"]
