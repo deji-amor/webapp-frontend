@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
 import { uploadFile } from "../../../aws/aws-crud-operations";
 
-export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
+export const createTicket = createAsyncThunk("ticketCreation", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
 			if(args.scopeOfWorkDocument){

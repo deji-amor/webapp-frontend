@@ -39,8 +39,7 @@ const TicketsTableBody = () => {
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);
 	const {users, loading: usersLoading} = useSelector((state) => state.users)
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
-
+	
 	const filteredActiveTickets = useMemo(() => {
 		let filteredTickets = tickets
 			.filter((ticket) => {

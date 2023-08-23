@@ -2,12 +2,14 @@ import React from 'react'
 import BlueThemedMediumText from "../../../atoms/tickets/CreateTicketSuperAdmin/BlueThemedMediumText";
 import BlueThemeSmall from "../../../atoms/tickets/CreateTicketSuperAdmin/BlueThemedSmall";
 import BlueThemedLightText from "../../../atoms/tickets/CreateTicketSuperAdmin/BlueThemedLightText";
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const CompanyNameAndPathToTemplate = () => {
-  const { pathToTemplate } = useSelector((state) => state.ticketCreation);
+  const { pathToTemplate } = useSelector((state) => state.ticketEdition);
 	const { data } = useSelector((state) => state.authUser);
 	const { workspaceName } = data;
+
+	// console.log({pathToTemplate});
 
 	const path = pathToTemplate.slice().map((p, ind, arr) => {
 		return ind === arr.length - 1 ? (

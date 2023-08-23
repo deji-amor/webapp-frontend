@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useId } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createTicketActions } from "../state-manager/reducers/tickets/ticketCreation";
+import { editTicketActions } from "../state-manager/reducers/tickets/ticketEdition";
 
-const useCreateTicketInput = (pointer, validateValue) => {
-	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
+const useEditTicketInput = (pointer, validateValue) => {
+	const allPossibleFields = useSelector((state) => state.ticketEdition.allPossibleFields);
 	const dispatch = useDispatch();
 	const enteredValue = allPossibleFields[pointer];
 	const isTouched = allPossibleFields[`${pointer}IsTouched`];
@@ -11,20 +11,20 @@ const useCreateTicketInput = (pointer, validateValue) => {
 	const valueIsValid = allPossibleFields[`${pointer}IsValid`];
 
 	const setEnteredValue = (value) => {
-		dispatch(createTicketActions.updateField({ key: pointer, value: value }));
+		dispatch(editTicketActions.updateField({ key: pointer, value: value }));
 	};
 
 	const setIsTouched = (bool) => {
-		dispatch(createTicketActions.updateField({ key: `${pointer}IsTouched`, value: bool }));
+		dispatch(editTicketActions.updateField({ key: `${pointer}IsTouched`, value: bool }));
 	};
 
 	const setHasError = (bool) => {
-		dispatch(createTicketActions.updateField({ key: `${pointer}HasError`, value: bool }));
+		dispatch(editTicketActions.updateField({ key: `${pointer}HasError`, value: bool }));
 	};
 
 	useEffect(() => {
 		dispatch(
-			createTicketActions.updateField({
+			editTicketActions.updateField({
 				key: `${pointer}IsValid`,
 				value: validateValue(enteredValue)[0],
 			})
@@ -76,6 +76,4 @@ const useCreateTicketInput = (pointer, validateValue) => {
 	};
 };
 
-useCreateTicketInput.propTypes = {};
-
-export default useCreateTicketInput;
+export default useEditTicketInput;
