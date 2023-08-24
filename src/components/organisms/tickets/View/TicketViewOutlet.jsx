@@ -20,7 +20,6 @@ const TicketViewOutlet = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const {pathname} = location
-    console.log(location);
 
 		useEffect(() => {
 			if (ticketToEdit) dispatch(editTicketActions.setTicketToEdit(ticketToEdit));
@@ -32,7 +31,7 @@ const TicketViewOutlet = () => {
 		<div>
 			<CompanyNameAndPathToTemplate />
 			<div className="flex items-center justify-between">
-				<BigBlueText>ID T0566</BigBlueText>
+				<BigBlueText>ID {ticketId}</BigBlueText>
 				<div className="flex items-center gap-[1.25rem]">
 					<ChangeTicketStatus />
 					<ExportTicket />
@@ -47,10 +46,10 @@ const TicketViewOutlet = () => {
       </div>
 			<div className="flex justify-between gap-[1.5rem]">
 				<div className="basis-[15%]">
-					<LinkButton active={pathname.includes("detail/")} onClick={() => navigate(`../view/detail/${106}`)}>Ticket Detail</LinkButton>
-					<LinkButton active={pathname.includes("history")} onClick={() => navigate(`../view/history/${106}`)}>Ticket History</LinkButton>
+					<LinkButton active={pathname.includes("detail/")} onClick={() => navigate(`../view/detail/${ticketId}`)}>Ticket Detail</LinkButton>
+					<LinkButton active={pathname.includes("history/")} onClick={() => navigate(`../view/history/${ticketId}`)}>Ticket History</LinkButton>
 				</div>
-				<div className="basis-[85%] py-[1rem] px-[1.25rem]">
+				<div className="basis-[85%] py-[1rem] px-[1.25rem] border border-[##2B2E72] rounded-md">
 					<Outlet />
 				</div>
 			</div>

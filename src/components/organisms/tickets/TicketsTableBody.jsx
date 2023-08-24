@@ -86,7 +86,8 @@ const TicketsTableBody = () => {
 
 	if(customersLoading || ticketsLoading || usersLoading) return <tbody></tbody>
 
-	const ViewTicket = (id) => {
+	const ViewTicket = (event, id) => {
+		if(event.target.closest("a")) return
 		navigate(`view/detail/${id}`)
 	}
 
@@ -96,7 +97,7 @@ const TicketsTableBody = () => {
 			<tr
 				key={`${ticket.id}${ticket.user_id}${ticket.customer_id}${ticket.workspace_id}${v4()}`}
 				className="bg-white border-b hover:bg-gray-50"
-				onClick={() => ViewTicket(ticket.id)}
+				onClick={(event) => ViewTicket(event, ticket.id)}
 			>
 				<RecentTicketTableText>
 					{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}

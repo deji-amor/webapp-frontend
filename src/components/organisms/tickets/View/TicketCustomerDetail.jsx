@@ -1,32 +1,34 @@
 import React from 'react'
 import { styled } from '@mui/material'
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Customer = styled("p")`
 	display: flex;
-	width: 245px;
-	height: 18px;
+	width: 15.3125rem;
+	height: 1.125rem;
 	flex-direction: column;
 	justify-content: center;
 	color: #706e6e;
 	font-family: Poppins;
-	font-size: 20px;
+	font-size: 1.25rem;
 	font-style: normal;
 	font-weight: 600;
-	line-height: 41.121px; /* 205.603% */
+	line-height: 2.57006rem; /* 205.603% */
 `;
 
 const CustomerName = styled("p")`
 	display: flex;
-	width: 179px;
-	height: 27px;
+	width: 11.1875rem;
+	height: 1.6875rem;
 	flex-direction: column;
 	justify-content: center;
-	color: #706e6e;
+	color: #2b2e72;
 	font-family: Poppins;
-	font-size: 20px;
+	font-size: 1.5rem;
 	font-style: normal;
 	font-weight: 600;
-	line-height: 41.121px; /* 205.603% */
+	line-height: 2.57006rem; /* 171.336% */
 `;
 
 const CustomerEmail = styled("p")`
@@ -44,11 +46,20 @@ const CustomerEmail = styled("p")`
 `;
 
 const TicketCustomerDetail = () => {
+		const params = useParams();
+		const { ticketId } = params;
+		const { tickets } = useSelector((state) => state.tickets);
+		const {customers} = useSelector(state => state.customers)
+		const ticketToEdit = tickets.find((ticket) => +ticket.id === +ticketId);
+
+		const customer = customers.find(customer => customer.id === ticketToEdit.customer_id)
+		const {first_name, last_name, company_email} = customer
+
   return (
 		<div>
-			<customer>Customer</customer>
-			<CustomerName>John Doe</CustomerName>
-			<CustomerEmail>J.Doe@company.com</CustomerEmail>
+			<Customer className='mb-[1rem]'>Customer</Customer>
+			<CustomerName className='mb-[0.12rem]'>{first_name} {last_name}</CustomerName>
+			<CustomerEmail>{company_email}</CustomerEmail>
 		</div>
 	);
 }

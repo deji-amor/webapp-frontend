@@ -14,7 +14,7 @@ const Text = styled("h1")`
 
 const BigBlueText = ({children}) => {
   return (
-    <Text>BigBlueText</Text>
+    <Text>{children}</Text>
   )
 }
 
