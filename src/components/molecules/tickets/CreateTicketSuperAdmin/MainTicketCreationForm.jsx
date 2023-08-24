@@ -35,7 +35,7 @@ const MainTicketCreationForm = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(requiredFields);
+		console.log(requiredFields);
 		dispatch(createTicket(requiredFields));
 	};
 

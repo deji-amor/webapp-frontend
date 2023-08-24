@@ -31,9 +31,8 @@ function getTodayAndTomorrow() {
 const rightNow = getTodayAndTomorrow().today
 
 const Duration = () => {
-	const { originalTicket } = useSelector((state) => state.ticketEdition);
+	const { originalTicket} = useSelector((state) => state.ticketEdition);
 	const {startDateTime} = originalTicket
-	// console.log(originalTicket);
 
     const {
 			enteredValue: startDateValue,

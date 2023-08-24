@@ -17,12 +17,13 @@ const useEditTicketFields = () => {
 		numberOfTechnicians,
 		scopeOfWorkDescription,
 		scopeOfWorkDocument,
+		scopeOfWorkDocumentUrl,
 		startDateTime,
 		endDateTime,
 		hardwareQuantity,
 		hardwareName,
-		hardwareComponentTypeQuantityValue,
-		hardwareComponentTypeQuantityName,
+		hardwareComponentTypeList,
+		hardwareComponentTypeQuantity,
 		locations,
 		materialsDescription,
 		numberOfWorkstation,
@@ -48,6 +49,7 @@ const useEditTicketFields = () => {
 		scopeOfWork: {
 			scopeOfWorkDescription,
 			scopeOfWorkDocument,
+			scopeOfWorkDocumentUrl,
 		},
 		duration: {
 			startDateTime,
@@ -58,8 +60,8 @@ const useEditTicketFields = () => {
 			hardwareName,
 		},
 		hardwareComponentType: {
-			hardwareQuantity: hardwareComponentTypeQuantityValue,
-			hardwareName: hardwareComponentTypeQuantityName,
+			hardwareComponentTypeList: hardwareComponentTypeList,
+			hardwareComponentTypeQuantity: hardwareComponentTypeQuantity,
 		},
 		location: {
 			locations,

@@ -93,110 +93,108 @@ export const allRequiredFields = {
 
 const allPossibleFields = {
 	...allRequiredFields,
-		// POINT OF CONTACT NAME
-		
-		"pointOfContactNameIsTouched": false,
-		"pointOfContactNameIsValid": false,
-		"pointOfContactNameHasError": false,
-		// POINT OF CONTACT PHONE NUMBER
-		
-		"pointOfContactPhoneNumberIsTouched": false,
-		"pointOfContactPhoneNumberIsValid": false,
-		"pointOfContactPhoneNumberHasError": false,
-		// POINT OF CONTACT ADDRESS
-		
-		"pointOfContactAddressIsTouched": false,
-		"pointOfContactAddressIsValid": false,
-		"pointOfContactAddressHasError": false,
-		// NUMBER OF TECHNICIANS
-		
-		// SCOPE OF WORK
-		
-		"scopeOfWorkDescriptionIsTouched": "",
-		"scopeOfWorkDescriptionIsValid": false,
-		"scopeOfWorkDescriptionHasError": "",
-		
-		"scopeOfWorkDocumentIsValid": false, // might not be need for this
-		// DURATION
-		"durationIsValid": true,
+	// POINT OF CONTACT NAME
 
-		//HARDWARE COMPONENT TYPE
-		"hardwareInputTypeCurrentValue": "",
-		"hardwareInputTypeCurrentValueIsValid": "",
-		"hardwareInputTypeCurrentValueIsTouched": "",
-		"hardwareInputTypeCurrentValueIsHasError": "",
-		
-		"hardwareComponentTypeListIsValid": false,
-		//HARDWARE COMPONENT QUANTITY
-		
-		"hardwareQuantityIsValid": false,
-		"hardwareNameIsValid": false,
-		"hardwareNameIsTouched": "",
-		"hardwareNameHasError": "",
-		//SOFTWARE INSTALLATION
+	pointOfContactNameIsTouched: false,
+	pointOfContactNameIsValid: false,
+	pointOfContactNameHasError: false,
+	// POINT OF CONTACT PHONE NUMBER
 
-		"softwareInstallationNameIsValid": false,
-		"softwareInstallationNameIsTouched": "",
-		"softwareInstallationNameHasError": "",
-		//SOFTWARE CUSTOMIZATION
+	pointOfContactPhoneNumberIsTouched: false,
+	pointOfContactPhoneNumberIsValid: false,
+	pointOfContactPhoneNumberHasError: false,
+	// POINT OF CONTACT ADDRESS
 
-		"softwareCustomizationNameIsValid": false,
-		"softwareCustomizationNameIsTouched": "",
-		"softwareCustomizationNameHasError": "",
-		// WORKSTATION
-		
-		// WORK SYSTEM
-		
-		// LOCATION
-		
-		
-		"locationsAddressIsValid": false,
-		"activeLocationAddress": 0, // ZERO INDEX BASED
-		"activeLocationType": 0, // ZERO INDEX BASED
-		"locationAddress": "",
-		"locationType": "government",
-		"locationAddressIsValid": false,
-		"locationAddressIsTouched": "",
-		"locationAddressHasError": "",
-		//PICk UP LOCATION
-		
-		
-		"pickLocationsAddressIsValid": false,
-		"activePickLocationAddress": 0, // ZERO INDEX BASED
-		"activePickLocationType": 0, // ZERO INDEX BASED
-		"pickLocationAddress": "",
-		"pickLocationType": "government",
-		"pickLocationAddressIsValid": false,
-		"pickLocationAddressIsTouched": "",
-		"pickLocationAddressHasError": "",
-		//DROP OFF LOCATION
-		
-		
-		"dropOffLocationsAddressIsValid": false,
-		"activeDropOffLocationAddress": 0, // ZERO INDEX BASED
-		"activeDropOffLocationType": 0, // ZERO INDEX BASED
-		"dropOffLocationAddress": "",
-		"dropOffLocationType": "government",
-		"dropOffLocationAddressIsValid": false,
-		"dropOffLocationAddressIsTouched": "",
-		"dropOffLocationAddressHasError": "",
-		// MATERIALS PROCUREMENT
-		
-		"materialsDescriptionIsTouched": "",
-		"materialsDescriptionIsValid": false,
-		"materialsDescriptionHasError": "",
-		// EXTRA FIELDS
-		"extraFieldNameInputTypeCurrentValue": "",
-		"extraFieldNameInputTypeCurrentValueIsValid": "",
-		"extraFieldNameInputTypeCurrentValueIsTouched": "",
-		"extraFieldNameInputTypeCurrentValueIsHasError": "",
-		"extraFieldValueInputTypeCurrentValue": "",
-		"extraFieldValueInputTypeCurrentValueIsValid": "",
-		"extraFieldValueInputTypeCurrentValueIsTouched": "",
-		"extraFieldValueInputTypeCurrentValueIsHasError": "",
-		
-		"additionalFieldsIsValid": true,
-}
+	pointOfContactAddressIsTouched: false,
+	pointOfContactAddressIsValid: false,
+	pointOfContactAddressHasError: false,
+	// NUMBER OF TECHNICIANS
+
+	// SCOPE OF WORK
+
+	scopeOfWorkDescriptionIsTouched: "",
+	scopeOfWorkDescriptionIsValid: false,
+	scopeOfWorkDescriptionHasError: "",
+	scopeOfWorkDocumentUrl: "",
+
+	scopeOfWorkDocumentIsValid: false, // might not be need for this
+	// DURATION
+	durationIsValid: true,
+
+	//HARDWARE COMPONENT TYPE
+	hardwareInputTypeCurrentValue: "",
+	hardwareInputTypeCurrentValueIsValid: "",
+	hardwareInputTypeCurrentValueIsTouched: "",
+	hardwareInputTypeCurrentValueIsHasError: "",
+
+	hardwareComponentTypeListIsValid: false,
+	//HARDWARE COMPONENT QUANTITY
+
+	hardwareQuantityIsValid: false,
+	hardwareNameIsValid: false,
+	hardwareNameIsTouched: "",
+	hardwareNameHasError: "",
+	//SOFTWARE INSTALLATION
+
+	softwareInstallationNameIsValid: false,
+	softwareInstallationNameIsTouched: "",
+	softwareInstallationNameHasError: "",
+	//SOFTWARE CUSTOMIZATION
+
+	softwareCustomizationNameIsValid: false,
+	softwareCustomizationNameIsTouched: "",
+	softwareCustomizationNameHasError: "",
+	// WORKSTATION
+
+	// WORK SYSTEM
+
+	// LOCATION
+
+	locationsAddressIsValid: false,
+	activeLocationAddress: 0, // ZERO INDEX BASED
+	activeLocationType: 0, // ZERO INDEX BASED
+	locationAddress: "",
+	locationType: "government",
+	locationAddressIsValid: false,
+	locationAddressIsTouched: "",
+	locationAddressHasError: "",
+	//PICk UP LOCATION
+
+	pickLocationsAddressIsValid: false,
+	activePickLocationAddress: 0, // ZERO INDEX BASED
+	activePickLocationType: 0, // ZERO INDEX BASED
+	pickLocationAddress: "",
+	pickLocationType: "government",
+	pickLocationAddressIsValid: false,
+	pickLocationAddressIsTouched: "",
+	pickLocationAddressHasError: "",
+	//DROP OFF LOCATION
+
+	dropOffLocationsAddressIsValid: false,
+	activeDropOffLocationAddress: 0, // ZERO INDEX BASED
+	activeDropOffLocationType: 0, // ZERO INDEX BASED
+	dropOffLocationAddress: "",
+	dropOffLocationType: "government",
+	dropOffLocationAddressIsValid: false,
+	dropOffLocationAddressIsTouched: "",
+	dropOffLocationAddressHasError: "",
+	// MATERIALS PROCUREMENT
+
+	materialsDescriptionIsTouched: "",
+	materialsDescriptionIsValid: false,
+	materialsDescriptionHasError: "",
+	// EXTRA FIELDS
+	extraFieldNameInputTypeCurrentValue: "",
+	extraFieldNameInputTypeCurrentValueIsValid: "",
+	extraFieldNameInputTypeCurrentValueIsTouched: "",
+	extraFieldNameInputTypeCurrentValueIsHasError: "",
+	extraFieldValueInputTypeCurrentValue: "",
+	extraFieldValueInputTypeCurrentValueIsValid: "",
+	extraFieldValueInputTypeCurrentValueIsTouched: "",
+	extraFieldValueInputTypeCurrentValueIsHasError: "",
+
+	additionalFieldsIsValid: true,
+};
 
 const initialState = {
 	loading: false,

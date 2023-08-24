@@ -4,7 +4,7 @@ import NumberDropDown from "../general/NumberDropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { editTicketActions } from '../../../../../../state-manager/reducers/tickets/ticketEdition';
 import ValidationErrorText from "../../../../Login/ValidationErrorText";
-import { isHardwareQuantityValid } from "../../../../../../helpers/validation";
+import { isHardwareQuantityValid} from "../../../../../../helpers/validation";
 import useEditTicketInput from '../../../../../../hooks/useEditTicketInput';
 import Input from "../general/Input";
 
@@ -29,7 +29,7 @@ const HardwareComponentQuantity = () => {
   };
 
   return (
-		<div className="flex items-center justify-between">
+		<div className="flex items-center gap-[5rem]">
 			<div className="">
 				<GrayThemedLighterText>Hardware Component Name*</GrayThemedLighterText>
 				<div className="w-[21rem]">

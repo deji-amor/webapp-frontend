@@ -42,8 +42,8 @@ const TicketsTableBody = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const t = tickets.filter(ti => +ti.id === +"112")
-	console.log(t);
+	// const t = tickets.filter(ti => +ti.id === +"112")
+	// console.log(t);
 
 	// const t = tickets.filter((ti) => ti.additional_fields !== "[]");
 	// console.log(t);

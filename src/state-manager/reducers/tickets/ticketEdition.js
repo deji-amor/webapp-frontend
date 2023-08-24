@@ -1,20 +1,27 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-import {uploadFile} from "../../../aws/aws-crud-operations";
+import {uploadFile, deleteFileByUrl} from "../../../aws/aws-crud-operations";
 import tree from "./ticketCreationMultiplePath";
 
 export const editTicket = createAsyncThunk("ticketEdition", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
-		// if (args.scopeOfWorkDocument) {
-		// 	const {scopeOfWorkDocument} = args;
-		// 	const fileUrl = await uploadFile(scopeOfWorkDocument);
-		// 	console.log(fileUrl);
-		// 	if (fileUrl) {
-		// 		// const {Location: scopeOfWorkDocumentUrl} = result;
-		// 		args.scopeOfWorkDocumentUrl = fileUrl;
-		// 	}
-		// }
+		if (args.scopeOfWorkDocument && args.scopeOfWorkDocumentUrl) {
+			console.log("a new document was uploaded to the ui")
+			await deleteFileByUrl(args.scopeOfWorkDocumentUrl);
+			const {scopeOfWorkDocument} = args;
+			const fileUrl = await uploadFile(scopeOfWorkDocument);
+			if (fileUrl) {
+				args.scopeOfWorkDocumentUrl = fileUrl;
+			}
+		}else if(args.scopeOfWorkDocument){
+			console.log("first time document upload")
+			const {scopeOfWorkDocument} = args;
+			const fileUrl = await uploadFile(scopeOfWorkDocument);
+			if (fileUrl) {
+				args.scopeOfWorkDocumentUrl = fileUrl;
+			}
+		}
 		const config = {
 			method: "PATCH",
 			headers: {
@@ -116,6 +123,7 @@ const allPossibleFields = {
 	scopeOfWorkDescriptionIsTouched: "",
 	scopeOfWorkDescriptionIsValid: false,
 	scopeOfWorkDescriptionHasError: "",
+	scopeOfWorkDocumentUrl: "",
 
 	scopeOfWorkDocumentIsValid: false, // might not be need for this
 	// DURATION
@@ -255,7 +263,8 @@ const editTicketSlice = createSlice({
 			// SCOPE OF WORK OF WORK SECTION STARTS HERE
 			state.allPossibleFields.scopeOfWorkDescription = ticketToEdit.scope_of_work_description;
 			state.allPossibleFields.scopeOfWorkDescriptionIsValid = true;
-			state.allPossibleFields.scopeOfWorkDocument = ticketToEdit.scope_of_work_document;
+			state.allPossibleFields.scopeOfWorkDocumentUrl = ticketToEdit.scope_of_work_document;
+			// state.allPossibleFields.scopeOfWorkDocument = ticketToEdit.scope_of_work_document;
 			// state.allPossibleFields.scopeOfWorkDocumentIsValid
 			// SCOPE OF WORK OF WORK SECTION ENDS HERE
 
@@ -279,8 +288,8 @@ const editTicketSlice = createSlice({
 			// SCOPE OF WORK OF NUMBER OF HARDWARE COMPONENT TYPE ENDS HERE
 
 			// SCOPE OF WORK OF NUMBER OF HARDWARE COMPONENT QUANTITY ENDS HERE
-			state.allPossibleFields.hardwareQuantity = ticketToEdit.hardware_name;
-			state.allPossibleFields.hardwareName = ticketToEdit.hardware_quantity;
+			state.allPossibleFields.hardwareQuantity = ticketToEdit.hardware_quantity;
+			state.allPossibleFields.hardwareName = ticketToEdit.hardware_name;
 			state.allPossibleFields.hardwareNameIsValid = true;
 			// SCOPE OF WORK OF NUMBER OF HARDWARE COMPONENT QUANTITY ENDS HERE
 

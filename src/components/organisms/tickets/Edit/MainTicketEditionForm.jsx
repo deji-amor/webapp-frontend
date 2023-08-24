@@ -56,6 +56,7 @@ const MainTicketEditionForm = () => {
 		useEffect(() => {
 			if (successful === true) {
 				if (data) dispatch(ticketsActions.replaceTicket(data));
+				dispatch(editTicketActions.reset())
 				dispatch(
 					UIActions.showToasts({
 						message: "You have successfully edited the Ticket for the customer.",
@@ -74,7 +75,7 @@ const MainTicketEditionForm = () => {
 					})
 				);
 			}
-		}, [error, successful, data, dispatch, errorMessage, navigate]);
+		}, [error, data, successful]);
 
     const isFormValid = useEditTicketFormValidator() && !hasTicketHasChanged;
 		// console.log({isFormValid});

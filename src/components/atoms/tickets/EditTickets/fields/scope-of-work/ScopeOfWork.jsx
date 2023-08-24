@@ -10,36 +10,36 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useSelector, useDispatch } from 'react-redux';
 
+export function getFileNameFromS3Url(s3Url) {
+	const url = new URL(s3Url);
+	const path = url.pathname; // Get the pathname from the URL
+	const parts = path.split("/"); // Split the path into parts using '/'
+	const fileName = parts[parts.length - 1]; // Get the last part, which is the file name
+	return fileName;
+}
+
+
 const ScopeOfWork = () => {
     const {
 			enteredValue: scopeOfWorkValue,
 			errorMessage: scopeOfWorkErrorMessage,
-// SCOPE
-			// setErrorMessage: scopeOfWorkSetErrorMessage,
 			hasError: scopeOfWorkHasError,
-// SCOPE
-			// setHasError: scopeOfWorkSetHasError,
 			valueChangeHandler: scopeOfWorkChangeHandler,
 			valueBlurHandler: scopeOfWorkBlurHandler,
 			valueIsValid: scopeOfWorkIsValid,
 			errorFromServer: scopeOfWorkErrFromServer,
-// SCOPE
-			// setErrorFromServer: scopeOfWorkSetErrorFromServer,
 			id: scopeOfWorkId,
-// SCOPE
-			// reset: scopeOfWorkReset,
 		} = useEditTicketInput("scopeOfWorkDescription", isScopeOfWorkEmpty);
 
     const dispatch = useDispatch()
     const allPossibleFields = useSelector((state) => state.ticketEdition.allPossibleFields);
     const scopeOfWorkDocument = allPossibleFields.scopeOfWorkDocument;
+		const scopeOfWorkDocumentUrl = allPossibleFields.scopeOfWorkDocumentUrl;
+		// console.log({scopeOfWorkDocumentUrl});
+
     const onDocumentChange = (event) => {
       const selectedFile = event.target.files[0]; 
-// SCOPE
-	// The selected file is the first element in the "files" array
       if (selectedFile) {
-// SCOPE
-        // Do something with the selected file (e.g., read its content, upload it, etc.)
         console.log("Selected file:", selectedFile);
         dispatch(editTicketActions.updateField({ key: "scopeOfWorkDocument", value: selectedFile }));
       } else {
@@ -62,17 +62,32 @@ const ScopeOfWork = () => {
 			<div className="">
 				<div className="flex items-center justify-start gap-[1rem] mb-[0.5rem]">
 					<GrayThemedLighterText>Scope of work*</GrayThemedLighterText>
-						{validDocument ? (
-							<BlueThemedXtraSm>
-								{scopeOfWorkDocument.name} <RemoveCircleOutlineIcon onClick={removeFileIcon} className="cursor-pointer" fontSize="medium" />{" "}
+					{validDocument ? (
+						<BlueThemedXtraSm className="max-w-[15rem] overflow-ellipsis">
+							<span className="max-w-[1rem] truncate">
+								{scopeOfWorkDocument.name
+									? scopeOfWorkDocument.name
+									: getFileNameFromS3Url(scopeOfWorkDocumentUrl)}
+							</span>
+							<RemoveCircleOutlineIcon
+								onClick={removeFileIcon}
+								className="cursor-pointer"
+								fontSize="medium"
+							/>{" "}
+						</BlueThemedXtraSm>
+					) : (
+						<label
+							className="cursor-pointer max-w-[25rem] truncate"
+							htmlFor="scope-of-work-document"
+						>
+							<BlueThemedXtraSm className="max-w-[15rem] overflow-ellipsis">
+								{scopeOfWorkDocumentUrl
+									? getFileNameFromS3Url(scopeOfWorkDocumentUrl)
+									: "Attach Document (10mb max)"}
+								<AttachFileIcon className="rotate-45" fontSize="small" />{" "}
 							</BlueThemedXtraSm>
-						) : (
-						<label className="cursor-pointer" htmlFor="scope-of-work-document">
-							<BlueThemedXtraSm>
-								Attach Document (10mb max) <AttachFileIcon className="rotate-45" fontSize="small" />{" "}
-							</BlueThemedXtraSm>
-					</label>
-						)}
+						</label>
+					)}
 					<input
 						onChange={onDocumentChange}
 						type="file"
