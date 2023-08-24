@@ -26,7 +26,6 @@ class Dropdown extends Component {
 			flexDirection: "row",
 			alignItems: "center",
             justifyContent: "space-between",
-			gap: "400px"
 		};
 
 		const checkboxContainerStyle = {
@@ -63,7 +62,7 @@ class Dropdown extends Component {
 
 		const lineStyle = {
 			borderBottom: "2px solid #000",
-			width: "830px",
+			width: "800px",
 			margin: "15px 0",
 		};
 		const Typography = styled("h3")`

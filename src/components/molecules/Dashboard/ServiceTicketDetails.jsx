@@ -13,9 +13,7 @@ class ServiceTicketDetails extends Component {
 	};
 
 	componentDidMount() {
-		// Simulate fetching data from an endpoint
 		setTimeout(() => {
-			// Replace these with actual endpoint data once available
 			const totalCount = 100;
 			const progressBars = [
 				{ name: "Done", progress: 30 },
@@ -25,7 +23,7 @@ class ServiceTicketDetails extends Component {
 			];
 
 			this.setState({ totalCount, progressBars });
-		}, 1000); // Simulating a delay for fetching data
+		}, 1000);
 	}
 
 	render() {
@@ -48,23 +46,32 @@ class ServiceTicketDetails extends Component {
 			fontStyle: "normal",
 			fontWeight: 500,
 			lineHeight: "32.625px",
-            width: "110px",
+			width: "110px",
 		};
 
 		const progressBarContainerStyle = {
-            width: "80%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          };
-      
-          const progressBarStyle = {
-            flex: 1,
-            height: "13.05px",
-            backgroundColor: "var(--gray-100, #F2F4F7)",
-            borderRadius: "6.525px",
-            marginRight: "18px", // Add margin to separate from the value
-          };
+			width: "80%",
+			display: "flex",
+			justifyContent: "space-between",
+			alignItems: "center",
+		};
+
+		const progressBarStyle = {
+			flex: 1,
+			height: "13.05px",
+			backgroundColor: "var(--gray-100, #F2F4F7)",
+			borderRadius: "6.525px",
+			marginRight: "18px",
+			overflow: "hidden",
+		};
+
+		const progressBarFillStyle = {
+			height: "100%",
+			backgroundColor: "#2B2E72",
+			borderRadius: "6.525px",
+			width: 0,
+			animation: "slide-in 1s ease-in-out forwards",
+		};
 
 		const progressBarTextStyle = {
 			color: "#2B2E72",
@@ -75,42 +82,46 @@ class ServiceTicketDetails extends Component {
 			lineHeight: "32.625px",
 		};
 
+		const cssKeyframes = `
+      @keyframes slide-in {
+        0% {
+          width: 0;
+        }
+      }
+    `;
+
 		return (
 			<div>
-				{totalCount === null ? (
-					<p>Loading...</p>
-				) : (
-					<>
-						<Text>
-							Total Service Tickets:{" "}
-							<span style={{ color: "#2b2e72", fontWeight: "600", fontSize: "20px" }}>
-								{totalCount}
-							</span>
-						</Text>
-						{progressBars.map((bar) => (
-							<div key={bar.name} style={{ display: "flex", alignItems: "center" }}>
-								<p style={{ ...nameStyle, marginRight: "10px" }}>{bar.name}</p>
-								<div style={progressBarContainerStyle}>
-									<div style={progressBarStyle}>
-										{bar.progress !== null && (
-											<div
-												style={{
-													width: `${bar.progress}%`,
-													height: "100%",
-													backgroundColor: "#2B2E72",
-													borderRadius: "6.525px",
-												}}
-											></div>
-										)}
-									</div>
-									{bar.progress !== null && (
-										<span style={progressBarTextStyle}>{`${bar.progress}`}</span>
-									)}
-								</div>
+				<style>{cssKeyframes}</style>
+				<Text>
+					Total Service Tickets:{" "}
+					<span style={{ color: "#2b2e72", fontWeight: "600", fontSize: "20px" }}>
+						{totalCount}
+					</span>
+				</Text>
+				{progressBars.map((bar) => (
+					<div key={bar.name} style={{ display: "flex", alignItems: "center" }}>
+						<p style={{ ...nameStyle, marginRight: "10px" }}>{bar.name}</p>
+						<div style={progressBarContainerStyle}>
+							<div style={progressBarStyle}>
+								{bar.progress !== null && (
+									<div
+										style={{
+											...progressBarFillStyle,
+											width: `${bar.progress}%`,
+											height: "100%",
+											backgroundColor: "#2B2E72",
+											borderRadius: "6.525px",
+										}}
+									></div>
+								)}
 							</div>
-						))}
-					</>
-				)}
+							{bar.progress !== null && (
+								<span style={progressBarTextStyle}>{`${bar.progress}`}</span>
+							)}
+						</div>
+					</div>
+				))}
 			</div>
 		);
 	}

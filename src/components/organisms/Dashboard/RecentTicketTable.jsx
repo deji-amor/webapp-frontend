@@ -1,7 +1,6 @@
 import React from "react";
 import RecentTicketTableHeadRow from "../../molecules/Dashboard/RecentTicketTableHeadRow";
 import RecentTicketTableList from "../../molecules/Dashboard/RecentTicketTableList";
-import RecentTicketTablePagination from "../../molecules/Dashboard/RecentTicketTablePagination";
 import { styled } from "@mui/material";
 
 const RecentTicketTable = () => {

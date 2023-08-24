@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import ProjectTicketDetails from "../../molecules/Dashboard/ProjectTicketDetails";
 import ServiceTicketDetails from "../../molecules/Dashboard/ServiceTicketDetails";
 
@@ -14,5 +15,9 @@ class TicketDropdown extends Component {
     );
   }
 }
+
+TicketDropdown.propTypes = {
+  selectedCheckbox: PropTypes.oneOf(["project", "service"]).isRequired,
+};
 
 export default TicketDropdown;
