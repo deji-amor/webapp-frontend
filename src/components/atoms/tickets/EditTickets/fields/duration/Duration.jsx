@@ -6,6 +6,7 @@ import BlueThemedXtraSm from '../../../CreateTicketSuperAdmin/BlueThemedXtraSm'
 import { isValidDateTimeLocal } from '../../../../../../helpers/validation'
 import useEditTicketInput from '../../../../../../hooks/useEditTicketInput'
 import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 function getTodayAndTomorrow() {
 	const today = new Date();
@@ -30,6 +31,10 @@ function getTodayAndTomorrow() {
 const rightNow = getTodayAndTomorrow().today
 
 const Duration = () => {
+	const { originalTicket } = useSelector((state) => state.ticketEdition);
+	const {startDateTime} = originalTicket
+	// console.log(originalTicket);
+
     const {
 			enteredValue: startDateValue,
 			errorMessage: startDateErrorMessage,
@@ -89,7 +94,7 @@ const Duration = () => {
 				<DateInput
 					id={startDateId}
 					type={"datetime-local"}
-					min={rightNow}
+					min={startDateTime}
 					onBlur={startDateBlurHandler}
 					onChange={startDateChangeHandler}
 					placeholder={""}

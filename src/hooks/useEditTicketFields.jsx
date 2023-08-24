@@ -1,11 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { allRequiredFields } from "../state-manager/reducers/tickets/ticketCreation";
+import { useParams } from "react-router-dom";
 
 const useEditTicketFields = () => {
 	const chosenTemplate = useSelector((state) => state.ticketEdition.chosenTemplate);
 	const { pathToTemplate } = useSelector((state) => state.ticketEdition);
 	const allPossibleFields = useSelector((state) => state.ticketEdition.allPossibleFields);
+	const params = useParams()
+	const {ticketId} = params
 
 	const {
 		pointOfContactName,
@@ -99,6 +102,7 @@ const useEditTicketFields = () => {
 		ticketPath: pathToTemplate,
 		ticketForm: pathToTemplate.at(-1),
 		customerId: +allPossibleFields.customerId,
+		ticketId: +ticketId,
 	};
 
 	const fields = chosenTemplate.reduce((previousValue, currentSection) => {

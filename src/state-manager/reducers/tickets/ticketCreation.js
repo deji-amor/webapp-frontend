@@ -280,7 +280,7 @@ const createTicketSlice = createSlice({
 				const {status, code, data, message} = payload
 				console.log(payload)
 				if(status === "OK" && code === 200){
-					state.data = data[0]
+					state.data = Array.isArray(data) ? data[0] : data;
 					state.successful = true
 					console.log("truly successful")
 				}else {

@@ -7,9 +7,8 @@ const useAdditionalEditionFieldsInput = (validateValue) => {
 	const dispatch = useDispatch();
 
 	const additionalFieldsList = additionalFields.map((currentField, currentFieldInd) => {
-
-		const enteredName = Object.entries(currentField)[0][0];
-		const enteredValue = Object.entries(currentField)[0][1];
+		const enteredValue = currentField.value;
+		const enteredName = currentField.name;
 		// IS TOUCHED
 		// const isTouched = currentField.isTouched;
 		const hasError = currentField.hasError;
@@ -19,20 +18,17 @@ const useAdditionalEditionFieldsInput = (validateValue) => {
 		const setEnteredValue = (value) => {
 			const fields = additionalFields.slice();
 			const field = additionalFields.find((_, ind) => ind === currentFieldInd);
-			// console.log({fields, field});
 			const isValid = validateValue(value)[0];
 			const errMsg = validateValue(value)[1];
-			const newKey = Object.keys(field)[0];
 			const newField = {
 				...field,
-				[newKey]: value,
+				value: value,
 				isValid: isValid,
 				hasError: !isValid,
 				errorMessage: errMsg,
 				isTouched: true,
 			};
 			fields.splice(currentFieldInd, 1, newField);
-			console.log(fields);
 			dispatch(editTicketActions.updateField({ key: "additionalFields", value: fields }));
 		};
 
@@ -66,6 +62,8 @@ const useAdditionalEditionFieldsInput = (validateValue) => {
 
 		const valueChangeHandler = (value) => {
 			setEnteredValue(value);
+			// SET ERROR
+			// setErrorFromServer(false);
 		};
 
 		const valueBlurHandler = () => {

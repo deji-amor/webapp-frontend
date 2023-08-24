@@ -6,24 +6,24 @@ import tree from "./ticketCreationMultiplePath";
 export const editTicket = createAsyncThunk("ticketEdition", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
-		if (args.scopeOfWorkDocument) {
-			const {scopeOfWorkDocument} = args;
-			const fileUrl = await uploadFile(scopeOfWorkDocument);
-			console.log(fileUrl);
-			if (fileUrl) {
-				// const {Location: scopeOfWorkDocumentUrl} = result;
-				args.scopeOfWorkDocumentUrl = fileUrl;
-			}
-		}
+		// if (args.scopeOfWorkDocument) {
+		// 	const {scopeOfWorkDocument} = args;
+		// 	const fileUrl = await uploadFile(scopeOfWorkDocument);
+		// 	console.log(fileUrl);
+		// 	if (fileUrl) {
+		// 		// const {Location: scopeOfWorkDocumentUrl} = result;
+		// 		args.scopeOfWorkDocumentUrl = fileUrl;
+		// 	}
+		// }
 		const config = {
-			method: "POST",
+			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(args),
 		};
-		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/create`;
+		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/edit`;
 		const response = await fetch(url, config);
 		const result = await response.json();
 		return result;
@@ -234,7 +234,7 @@ const editTicketSlice = createSlice({
 			// TICkET METADATA STARTS HERE
 			state.pathToTemplate = JSON.parse(ticketToEdit.ticket_path);
 			state.chosenTemplate = tree[ticketToEdit.ticket_form].fields;
-      state.allPossibleFields.customerId = ticketToEdit.customer_id;
+			state.allPossibleFields.customerId = ticketToEdit.customer_id;
 			// TICkET METADATA STARTS HERE
 
 			// POINT OF CONTACT SECTION STARTS HERE
@@ -272,13 +272,16 @@ const editTicketSlice = createSlice({
 			state.allPossibleFields.hardwareComponentTypeList = JSON.parse(
 				ticketToEdit.hardware_component_type_list
 			);
-      state.allPossibleFields.hardwareComponentTypeQuantity = ticketToEdit.hardware_component_type_quantity ? ticketToEdit.hardware_component_type_quantity : 1
+			state.allPossibleFields.hardwareComponentTypeQuantity =
+				ticketToEdit.hardware_component_type_quantity
+					? ticketToEdit.hardware_component_type_quantity
+					: 1;
 			// SCOPE OF WORK OF NUMBER OF HARDWARE COMPONENT TYPE ENDS HERE
 
 			// SCOPE OF WORK OF NUMBER OF HARDWARE COMPONENT QUANTITY ENDS HERE
 			state.allPossibleFields.hardwareQuantity = ticketToEdit.hardware_name;
 			state.allPossibleFields.hardwareName = ticketToEdit.hardware_quantity;
-      state.allPossibleFields.hardwareNameIsValid = true
+			state.allPossibleFields.hardwareNameIsValid = true;
 			// SCOPE OF WORK OF NUMBER OF HARDWARE COMPONENT QUANTITY ENDS HERE
 
 			// SCOPE OF WORK OF NUMBER OF NUMBER OF WORK STATION ENDS HERE
@@ -341,10 +344,9 @@ const editTicketSlice = createSlice({
 			state.allPossibleFields.locationType = locations[0]?.type;
 			state.allPossibleFields.locationAddressIsValid = true;
 
-			// EXTRA WORk STARTS HERE
-      // console.log({ticketToEdit})
-      state.allPossibleFields.additionalFields = JSON.parse(ticketToEdit.additional_fields);
-      state.originalTicket = state.allPossibleFields
+			const additionalFieldsList = JSON.parse(ticketToEdit.additional_fields);
+			state.allPossibleFields.additionalFields = additionalFieldsList.map(item => ({name: Object.entries(item)[0][0], value: Object.entries(item)[0][1]}));
+			state.originalTicket = state.allPossibleFields;
 		},
     reset: () => {
       return initialState
@@ -373,9 +375,9 @@ const editTicketSlice = createSlice({
 				const {status, code, data, message} = payload;
 				console.log(payload);
 				if (status === "OK" && code === 200) {
-					state.data = data[0];
+					state.data = Array.isArray(data) ? data[0] : data;
 					state.successful = true;
-					console.log("truly successful");
+					console.log("edit truly successful");
 				} else {
 					state.error = true;
 					state.errorMessage = message;

@@ -7,7 +7,7 @@ import IconButton from "../general/IconButton";
 import BlueThemedLightText from '../../../CreateTicketSuperAdmin/BlueThemedLightText';
 import GrayThemedLightestText from '../../../CreateTicketSuperAdmin/GrayThemedLightestText';
 import useEditTicketInput from '../../../../../../hooks/useEditTicketInput';
-import useAdditionalEditionFieldsInput from '../../../../../../hooks/useAdditionalEditionFieldsInput';
+import useAdditionalEditionFieldsInput from "../../../../../../hooks/useAdditionalEditionFieldsInput"
 import AddOrCancelButton from "../general/AddOrCancelButton";
 import { isFieldValueEmpty } from '../../../../../../helpers/validation';
 import { editTicketActions } from '../../../../../../state-manager/reducers/tickets/ticketEdition';
@@ -20,8 +20,6 @@ const AddExtraFields = () => {
 	// const additionalFieldsIsValid = allPossibleFields.additionalFieldsIsValid;
 	const [showInput, setShowInput] = useState(false);
 	const dispatch = useDispatch()
-
-	// console.log(additionalFields);
 
 	const {
 		enteredValue: fieldNameValue,
@@ -58,7 +56,9 @@ const AddExtraFields = () => {
 	} = useEditTicketInput("extraFieldValueInputTypeCurrentValue", isFieldValueEmpty);
 
 	const addFieldHandler = () => {
-		const newField = {[fieldNameValue]: fieldValueValue, isValid: true, isTouched: false, hasError: false,}
+		const newField = {name: fieldNameValue, value: fieldValueValue, isValid: true, isTouched: false, hasError: false,}
+		// NEW FIELD
+		// const newField = {[fieldNameValue]: fieldValueValue}
 		const addFields = additionalFields.slice()
 		addFields.push(newField)
 		dispatch(editTicketActions.updateField({ key: "additionalFields", value: addFields }));
@@ -75,15 +75,15 @@ const AddExtraFields = () => {
 
 	const isAddFieldButtonDisabled = !(!fieldNameHasError && fieldValueIsValid);
 	useEffect(() => {
-		if (additionalFields.some((item) => Object.keys(item)[0] === fieldNameValue)) {
+		if(additionalFields.some(item => item.name === fieldNameValue)){
 			console.log("gotcha");
-			fieldNameSetErrorMessage("field names can not be duplicates");
-			fieldNameSetHasError(true);
+			fieldNameSetErrorMessage("field names can not be duplicates")
+			fieldNameSetHasError(true)
 		}
 	}, [fieldNameValue])
 
 	useEffect(() => {
-		if (additionalFields.every(item => isFieldValueEmpty(Object.values(item)[0]))){
+		if (additionalFields.every(({ value }) => isFieldValueEmpty(value)[0])){
 			dispatch(editTicketActions.updateField({ key: "additionalFieldsIsValid", value: true }));
 		}else {
 			dispatch(editTicketActions.updateField({ key: "additionalFieldsIsValid", value: false }));
@@ -93,9 +93,6 @@ const AddExtraFields = () => {
 	const hasNewFieldsReachedLimit = additionalFields.length >= 3
 
 	const list = useAdditionalEditionFieldsInput(isFieldValueEmpty)
-
-	// console.log(list);
-
 	
 	const listDiv = list.map(item => {
 		const {

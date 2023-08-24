@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
 	createTicket,
 	createTicketActions,
@@ -11,9 +11,9 @@ import useEditTicketFields from '../../../../hooks/useEditTicketFields';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
-import { ticketsActions } from "../../../../state-manager/reducers/tickets/tickets";
+import { ticketsActions} from "../../../../state-manager/reducers/tickets/tickets";
 import useEditTicketIsAltered from '../../../../hooks/useEditTicketIsAltered';
-import { editTicketActions } from '../../../../state-manager/reducers/tickets/ticketEdition';
+import { editTicketActions, editTicket } from '../../../../state-manager/reducers/tickets/ticketEdition';
 import PointOfContact from '../../../atoms/tickets/EditTickets/fields/point-of-contact/PointOfContact';
 import MaterialsProcurement from "../../../atoms/tickets/EditTickets/fields/materials-procurement/MaterialsProcurement";
 import ScopeOfWork from "../../../atoms/tickets/EditTickets/fields/scope-of-work/ScopeOfWork";
@@ -37,12 +37,11 @@ const MainTicketEditionForm = () => {
 		// console.log(requiredFields);
 		const dispatch = useDispatch();
 		const navigate = useNavigate()
-		const { customer, data} = useSelector((state) => state.ticketEdition);
 
 		const submitHandler = (e) => {
 			e.preventDefault();
-			// console.log(requiredFields);
-			dispatch(createTicket(requiredFields));
+			console.log(requiredFields);
+			dispatch(editTicket(requiredFields));
 		};
 
 		const goBackHandler = () => {
@@ -50,33 +49,32 @@ const MainTicketEditionForm = () => {
 			navigate("../");
 		};
 
-		const { loading, error, errorMessage, successful } = useSelector(
+		const { loading, error, errorMessage, successful, customer, data } = useSelector(
 			(state) => state.ticketEdition
 		);
 		
-		// useEffect(() => {
-		// 	if (successful === true) {
-		// 		if (data) dispatch(ticketsActions.addNewTicket(data));
-		// 		dispatch(
-		// 			UIActions.showToasts({
-		// 				message: "You have successfully edited the Ticket for the customer.",
-		// 				title: "Ticket edition successful",
-		// 				type: "successful",
-		// 			})
-		// 		);
-		// 		dispatch(createTicketActions.toggleTemplateModal());
-		// 	}
-		// 	if (error === true) {
-		// 		dispatch(
-		// 			UIActions.showToasts({
-		// 				message: errorMessage,
-		// 				title: "Ticket Edition Unsuccessful",
-		// 				type: "error",
-		// 			})
-		// 		);
-		// 		// DISPATCH dispatch(createTicketActions.toggleTemplateModal());
-		// 	}
-		// }, [error, successful, data]);
+		useEffect(() => {
+			if (successful === true) {
+				if (data) dispatch(ticketsActions.replaceTicket(data));
+				dispatch(
+					UIActions.showToasts({
+						message: "You have successfully edited the Ticket for the customer.",
+						title: "Ticket edition successful",
+						type: "successful",
+					})
+				);
+				navigate("../")
+			}
+			if (error === true) {
+				dispatch(
+					UIActions.showToasts({
+						message: errorMessage,
+						title: "Ticket Edition Unsuccessful",
+						type: "error",
+					})
+				);
+			}
+		}, [error, successful, data, dispatch, errorMessage, navigate]);
 
     const isFormValid = useEditTicketFormValidator() && !hasTicketHasChanged;
 		// console.log({isFormValid});
@@ -104,7 +102,7 @@ const MainTicketEditionForm = () => {
 		const additionalFields = chosenTemplate.includes("additionalFields");
 
 	return (
-		<form onSubmit={() => {}}>
+		<form onSubmit={submitHandler}>
 			<div
 				id="ticket-creation-form-sections"
 				className="max-h-[26rem] max-w-[67rem] overflow-y-auto space-y-[0.75rem] mb-[1rem]"

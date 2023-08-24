@@ -76,4 +76,6 @@ const useEditTicketInput = (pointer, validateValue) => {
 	};
 };
 
+useEditTicketInput.propTypes = {};
+
 export default useEditTicketInput;
