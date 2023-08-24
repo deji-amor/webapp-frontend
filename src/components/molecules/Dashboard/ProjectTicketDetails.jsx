@@ -5,9 +5,10 @@ class ProjectTicketDetails extends Component {
 	state = {
 		totalCount: null,
 		progressBars: [
-			{ name: "Active", progress: null },
-			{ name: "Inactive", progress: null },
-			{ name: "Suspended", progress: null },
+			{ name: "Done", progress: null },
+			{ name: "Pending", progress: null },
+			{ name: "En Route", progress: null },
+			{ name: "In Progress", progress: null },
 		],
 	};
 
@@ -15,11 +16,12 @@ class ProjectTicketDetails extends Component {
 		// Simulate fetching data from an endpoint
 		setTimeout(() => {
 			// Replace these with actual endpoint data once available
-			const totalCount = 80;
+			const totalCount = 100;
 			const progressBars = [
-				{ name: "Active", progress: 50 },
-				{ name: "Inactive", progress: 20 },
-				{ name: "Suspended", progress: 10 },
+				{ name: "Done", progress: 30 },
+				{ name: "Pending", progress: 20 },
+				{ name: "En Route", progress: 15 },
+				{ name: "In Progress", progress: 35 },
 			];
 
 			this.setState({ totalCount, progressBars });
