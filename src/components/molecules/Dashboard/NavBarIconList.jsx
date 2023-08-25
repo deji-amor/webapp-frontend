@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { styled } from "@mui/material";
+import { Avatar, styled } from "@mui/material";
 import NotificationsNoneSharpIcon from "@mui/icons-material/NotificationsNoneSharp";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import PersonIcon from '@mui/icons-material/Person';
 import NavbarDropdown from "./NavbarDropdown";
 
 const NavBarIconList = () => {
@@ -23,7 +24,6 @@ const NavBarIconList = () => {
 		setShowDropdown((previousValue) => !previousValue);
 	};
 
-
 	useEffect(() => {
 		const escapeHandler = (e) => {
 			if (!e.target.closest("#drop-down")) {
@@ -42,8 +42,11 @@ const NavBarIconList = () => {
 				<SettingsOutlinedIcon onClick={toggleHandler} className="icon" style={{ fontSize: 30 }} />
 				{showDropdown && <NavbarDropdown />}
 			</div>
-			<div className="">
-				<PersonOutlineOutlinedIcon className="icon" style={{ fontSize: 30 }} />
+			<div style={{ display: 'flex', alignItems: 'center' }}>
+				<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72"}}>
+					<PersonIcon style={{ fontSize: 30 }}/>	
+				</Avatar>
+				<ArrowDropDownIcon />
 			</div>
 		</List>
 	);
