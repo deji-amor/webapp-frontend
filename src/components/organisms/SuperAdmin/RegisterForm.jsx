@@ -257,8 +257,8 @@ const RegisterForm = () => {
 							serverError=""
 							control={control}
 							name="companyEmail"
-							label="Company Email"
-							placeholder="Company Email"
+							label="Work Email"
+							placeholder="Work Email"
 							type="text"
 						/>
 					</Box>
