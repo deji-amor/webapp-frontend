@@ -20,15 +20,18 @@ const Message = styled("span")`
 	} 
 `;
 
-const HistoryTicketMessage = props => {
+const HistoryTicketMessage = ({field, email}) => {
   return (
 		<Message>
-			<span className="blue">J.doe@company.com</span> updated the field{" "}
-			<span className="blue">Number of Technicians</span>
+			<span className="blue">{email}</span> updated the field{" "}
+			<span className="blue">{field}</span>
 		</Message>
 	);
 }
 
-HistoryTicketMessage.propTypes = {}
+HistoryTicketMessage.propTypes = {
+	field: PropTypes.string,
+	email: PropTypes.string,
+}
 
 export default HistoryTicketMessage

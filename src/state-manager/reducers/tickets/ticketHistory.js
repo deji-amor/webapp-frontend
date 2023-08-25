@@ -1,7 +1,7 @@
 import {createSlice, current, createAsyncThunk} from "@reduxjs/toolkit";
-import { getAuthToken } from "../../../utilis";
+import {getAuthToken} from "../../../utilis";
 
-export const fetchTickets = createAsyncThunk("tickets", async (args, {rejectWithValue}) => {
+export const fetchTicketHistory = createAsyncThunk("ticketHistory", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
 		const config = {
@@ -11,7 +11,7 @@ export const fetchTickets = createAsyncThunk("tickets", async (args, {rejectWith
 				Authorization: `Bearer ${token}`,
 			},
 		};
-		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/get-all`;
+		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/get-details/${args}`;
 		const response = await fetch(url, config);
 		const result = await response.json();
 		return result;
@@ -29,22 +29,13 @@ const initialState = {
 	error: null,
 	errorMessage: "",
 	successful: null,
-	tickets: [],
-	searchTicketsValue: "",
-	searchCustomersValue: "",
-	showServiceRequestsTab: true,
-	showProjectsTab: false,
-	activeTickets: [],
-	activeTicketsStartPoint: 0,
-	activeTicketsEndPoint: 0,
-	ticketsOnEachPage: 10,
-	sortByAscending: true,
-	filterByStatus: "All",
-	statuses: ["All", "Done", "Pending", "Inprogress", "Overdue"]
+	ticketData: {},
+	editLogs: {},
+	modifiedLogs: []
 };
 
-const ticketsSlice = createSlice({
-	name: "tickets",
+const ticketHistorySlice = createSlice({
+	name: "ticketHistory",
 	initialState: initialState,
 	reducers: {
 		updateField: (state, action) => {
@@ -69,24 +60,24 @@ const ticketsSlice = createSlice({
 		},
 		replaceTicket: (state, action) => {
 			const newTicket = action.payload;
-			console.log({newTicket})
-			const tickets = current(state).tickets.slice()
+			const tickets = current(state).tickets.slice();
 			const ticketInd = tickets.findIndex(ticket => ticket.id === newTicket.id);
-			tickets.splice(ticketInd, 1, newTicket)
-			state.tickets = tickets
-		}
+			tickets.splice(ticketInd, 1, newTicket);
+			state.tickets = tickets;
+		},
 	},
 	extraReducers: builder => {
 		builder
-			.addCase(fetchTickets.pending, (state, action) => {
+			.addCase(fetchTicketHistory.pending, (state, action) => {
 				state.loading = true;
 				state.tickets = [];
 			})
-			.addCase(fetchTickets.fulfilled, (state, action) => {
-				const {status, code, data} = action.payload;
+			.addCase(fetchTicketHistory.fulfilled, (state, action) => {
+				const {status, code, data: {editLogs, ticketData}} = action.payload;
 				state.loading = false;
 				if (code === 200 && status === "OK") {
-					state.tickets = data.slice().reverse();
+					state.ticketData = ticketData;
+					state.editLogs = editLogs;
 					state.successful = true;
 					state.error = false;
 				} else {
@@ -95,7 +86,7 @@ const ticketsSlice = createSlice({
 					state.errorMessage = "Could not fetch all customers";
 				}
 			})
-			.addCase(fetchTickets.rejected, (state, action) => {
+			.addCase(fetchTicketHistory.rejected, (state, action) => {
 				state.loading = false;
 				state.tickets = [];
 				state.successful = false;
@@ -105,5 +96,5 @@ const ticketsSlice = createSlice({
 	},
 });
 
-export default ticketsSlice.reducer;
-export const ticketsActions = ticketsSlice.actions;
+export default ticketHistorySlice.reducer;
+export const ticketsHistoryActions = ticketHistorySlice.actions;

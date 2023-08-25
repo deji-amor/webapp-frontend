@@ -17,7 +17,7 @@ const HardwareComponentType = () => {
 				<div className="basis-[50%] py-[0.75rem]">
 					<DetailText>Hardware Types</DetailText>
 				</div>
-				<div className="basis-[50%] py-[0.75rem]">
+				<div className="basis-[50%] py-[0.75rem] flex gap-[0.5rem]">
 					{list.map((item) => (
 						<DetailText key={item}>{item}.</DetailText>
 					))}

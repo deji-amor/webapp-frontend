@@ -11,6 +11,9 @@ import resetPasswordReducer from "./reducers/password/resetpassword"
 import superAdminReducer from "./reducers/superAdminOnboarding/superadmin"
 import ticketCreationReducer from "./reducers/tickets/ticketCreation"
 import ticketEditionReducer from "./reducers/tickets/ticketEdition"
+import ticketDetailsReducer from "./reducers/tickets/ticketDetails"
+import ticketHistoryReducer from "./reducers/tickets/ticketHistory"
+import testingReducer from "./reducers/tickets/testing"
 import ticketsReducer from "./reducers/tickets/tickets"
 import storage from "redux-persist/lib/storage"
 import { persistReducer, persistStore } from "redux-persist"
@@ -20,7 +23,7 @@ const persistConfig = {
 	key: "root",
 	storage,
 	blacklist: [
-        "ui",
+		"ui",
 		"loginAdmin",
 		"loginCustomer",
 		"forgotpassword",
@@ -28,9 +31,12 @@ const persistConfig = {
 		"logout",
 		"ticketCreation",
 		"ticketEdition",
+		"ticketDetails",
+		"ticketHistory",
+        "testing",
 		"tickets",
-        "customers",
-        "users"
+		"customers",
+		"users",
 	],
 };
 
@@ -46,6 +52,9 @@ const rootReducers = combineReducers({
     users: usersReducer,
     ticketCreation: ticketCreationReducer,
     ticketEdition: ticketEditionReducer,
+    ticketDetails: ticketDetailsReducer,
+    ticketHistory: ticketHistoryReducer,
+    testing: testingReducer,
     tickets: ticketsReducer, 
     customers: customersReducer
 })

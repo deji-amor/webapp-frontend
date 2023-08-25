@@ -20,16 +20,19 @@ const ArrowIcon = () => (
 	</svg>
 );
 
-const HistoryTicketValueChange = props => {
+const HistoryTicketValueChange = ({prevValue, newValue}) => {
   return (
     <div className='flex gap-[1.12rem] items-center'>
-      <ValueText>3</ValueText>
+      <ValueText>{prevValue}</ValueText>
       <ArrowIcon/>
-      <ValueText>12</ValueText>
+      <ValueText>{newValue}</ValueText>
     </div>
   )
 }
 
-HistoryTicketValueChange.propTypes = {}
+HistoryTicketValueChange.propTypes = {
+	prevValue: PropTypes.any,
+	newValue: PropTypes.any,
+}
 
 export default HistoryTicketValueChange

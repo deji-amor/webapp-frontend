@@ -33,10 +33,17 @@ const StatusTab = ({status}) => {
 			</Tab>
 		);
 	}
-	if(status.toLowerCase() === "inprogress"){
+	if(status.toLowerCase() === "in-progress"){
 		return (
 			<Tab className="capitalize" color={"#AD9E01"} background={"rgba(173,158,1,0.14)"}>
 				Inprogress
+			</Tab>
+		);
+	}
+	if(status.toLowerCase() === "technician enroute"){
+		return (
+			<Tab className="capitalize" color={"#AD9E01"} background={"rgba(173,158,1,0.14)"}>
+				Technician Enroute
 			</Tab>
 		);
 	}
