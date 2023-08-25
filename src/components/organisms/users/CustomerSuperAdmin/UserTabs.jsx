@@ -9,7 +9,7 @@ import CustomerTable from "./CustomerTable";
 import { useEffect } from "react";
 import Placeholder from "../../../molecules/general/Placeholder";
 
-const CustomTab = (props) => {
+export const CustomTab = (props) => {
 	const { label, ...other } = props;
 
 	return (
