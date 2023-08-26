@@ -31,7 +31,8 @@ const initialState = {
 	successful: null,
 	ticketData: {},
 	editLogs: {},
-	modifiedLogs: []
+	modifiedLogs: [],
+	sortByAscending: true,
 };
 
 const ticketHistorySlice = createSlice({

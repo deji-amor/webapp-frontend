@@ -44,12 +44,12 @@ const TicketViewOutlet = () => {
       <div className='mb-[1.2rem]'>
         <HorizontalRule></HorizontalRule>
       </div>
-			<div className="flex justify-between gap-[1.5rem]">
+			<div className="flex justify-between gap-[1.5rem] min-h-[17rem]">
 				<div className="basis-[15%]">
 					<LinkButton active={pathname.includes("detail/")} onClick={() => navigate(`../view/detail/${ticketId}`)}>Ticket Detail</LinkButton>
 					<LinkButton active={pathname.includes("history/")} onClick={() => navigate(`../view/history/${ticketId}`)}>Ticket History</LinkButton>
 				</div>
-				<div className="basis-[85%] py-[1rem] px-[1.25rem] border border-[##2B2E72] rounded-md">
+				<div className="basis-[85%] py-[1rem] px-[1.25rem] self-stretch border border-[##2B2E72] rounded-md">
 					<Outlet />
 				</div>
 			</div>

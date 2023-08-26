@@ -34,9 +34,8 @@ import HorizontalRule from '../../../atoms/tickets/CreateTicketSuperAdmin/Horizo
 const MainTicketEditionForm = () => {
 		const requiredFields = useEditTicketFields();
 		const hasTicketHasChanged = useEditTicketIsAltered();
-		// console.log(requiredFields);
 		const dispatch = useDispatch();
-		const navigate = useNavigate()
+		const navigate = useNavigate();
 
 		const submitHandler = (e) => {
 			e.preventDefault();
@@ -46,7 +45,7 @@ const MainTicketEditionForm = () => {
 
 		const goBackHandler = () => {
 			dispatch(editTicketActions.reset());
-			navigate("../");
+			navigate(-1);
 		};
 
 		const { loading, error, errorMessage, successful, customer, data } = useSelector(

@@ -12,37 +12,26 @@ const ViewTicket = () => {
 	const dispatch = useDispatch();
 	const params = useParams();
 	const { ticketId } = params;
-
-	const { loading: ticketsLoading, error: ticketsError } = useSelector((state) => state.tickets);
-	const { loading: customersLoading, error: customersError } = useSelector(
-		(state) => state.customers
-	);
-	const { loading: ticketHistoryLoading, error: ticketHistoryError} = useSelector(
-		(state) => state.ticketHistory
-	);
+	const { tickets } = useSelector((state) => state.tickets);
 
 	const goBackToTicketHandler = () => {
 		dispatch(editTicketActions.reset());
 		navigate("../");
 	};
 
+	const ticketInView = tickets.find(ticket => +ticket.id === +ticketId);
+	const ticketStatus = ticketInView?.status
+
 	useEffect(() => {
 		dispatch(fetchTicketHistory(ticketId));
-	}, []);
-
-	if(ticketHistoryLoading || ticketsLoading || customersLoading) return <></>
-	if(ticketHistoryError || customersError || ticketsError) return <p>An error occurred please refresh</p>
+	}, [ticketStatus, dispatch, ticketId]);
 
 	return (
 		<>
 			<Overlay onClick={goBackToTicketHandler} />
 			<div className="max-w-[75rem] w-full">
 				<Modal>
-					{(ticketHistoryError || customersError || ticketHistoryError) ? (
-						<p>An error occurred please refresh</p>
-					) : (
-						<TicketViewOutlet />
-					)}
+					<TicketViewOutlet />
 				</Modal>
 			</div>
 		</>
