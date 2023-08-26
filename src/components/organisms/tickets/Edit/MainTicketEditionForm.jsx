@@ -63,7 +63,7 @@ const MainTicketEditionForm = () => {
 						type: "successful",
 					})
 				);
-				navigate("../")
+				navigate(-1)
 			}
 			if (error === true) {
 				dispatch(

@@ -40,7 +40,7 @@ const initialState = {
 	ticketsOnEachPage: 10,
 	sortByAscending: true,
 	filterByStatus: "All",
-	statuses: ["All", "Done", "Pending", "Inprogress", "Overdue"]
+	statuses: ["All", "Done", "Pending", "technician enroute", "Inprogress", "Overdue"]
 };
 
 const ticketsSlice = createSlice({

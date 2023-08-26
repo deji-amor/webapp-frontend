@@ -1,28 +1,8 @@
-import React, { useEffect, useMemo } from "react";
-import RecentTicketTableText from "../../atoms/Dashboard/RecentTicketTableText";
-import StatusTab from "../../atoms/tickets/StatusTab";
-import EditIcon from "@mui/icons-material/Edit";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { styled } from "@mui/material";
+import React, { useEffect, useMemo} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets";
-import { getDateFromDateTime } from "../../../helpers/date-manipulation";
 import { v4 } from "uuid";
-import { useNavigate, NavLink } from "react-router-dom";
-import ViewTicket from "./View/ViewTicket";
-
-const Edit = styled("p")`
-	color: #2b2e72;
-	font-family: Poppins;
-	font-size: 1rem;
-	font-style: normal;
-	font-weight: 600;
-	line-height: 2.25rem; /* 225% */
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	gap: 0.2rem;
-`;
+import TicketsTableBodyItem from "./TicketsTableBodyItem";
 
 const TicketsTableBody = () => {
 	const {
@@ -35,19 +15,13 @@ const TicketsTableBody = () => {
 		activeTicketsEndPoint,
 		filterByStatus,
 		sortByAscending,
+		statuses,
 	} = useSelector((state) => state.tickets);
 
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);
 	const {users, loading: usersLoading} = useSelector((state) => state.users)
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
-
-	// const t = tickets.filter(ti => +ti.id === +"112")
-	// console.log(t);
-
-	// const t = tickets.filter((ti) => ti.additional_fields !== "[]");
-	// console.log(t);
-
+	
 	const filteredActiveTickets = useMemo(() => {
 		let filteredTickets = tickets
 			.filter((ticket) => {
@@ -60,7 +34,10 @@ const TicketsTableBody = () => {
 			})
 			.filter(ticket => {
 				if(filterByStatus.toLowerCase() === "all") return true
-				return ticket.status.toLowerCase() === filterByStatus.toLowerCase()
+				return (
+					ticket.status.toLowerCase().replaceAll("-", "") ===
+					filterByStatus.toLowerCase().replaceAll("-", "")
+				);
 			});
 
 		if(!sortByAscending) filteredTickets = filteredTickets.reverse()
@@ -92,39 +69,9 @@ const TicketsTableBody = () => {
 
 	if(customersLoading || ticketsLoading || usersLoading) return <tbody></tbody>
 
-	const ViewTicket = (event, id) => {
-		if(event.target.closest("a")) return
-		navigate(`view/detail/${id}`)
-	}
-
 	const list = filteredSearchTickets
 		.slice(activeTicketsStartPoint, activeTicketsEndPoint)
-		.map((ticket) => (
-			<tr
-				key={`${ticket.id}${ticket.user_id}${ticket.customer_id}${ticket.workspace_id}${v4()}`}
-				className="bg-white border-b hover:bg-gray-50"
-				onClick={(event) => ViewTicket(event, ticket.id)}
-			>
-				<RecentTicketTableText>
-					{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}
-				</RecentTicketTableText>
-				<RecentTicketTableText className="max-w-[10rem] border truncate">
-					{ticket.ticket_form}
-				</RecentTicketTableText>
-				<RecentTicketTableText>
-					{users.find((user) => +user.id === +ticket.user_id)?.email}
-				</RecentTicketTableText>
-				<RecentTicketTableText>
-					<StatusTab status={ticket.status} />
-				</RecentTicketTableText>
-				<RecentTicketTableText>{getDateFromDateTime(ticket.created_at)}</RecentTicketTableText>
-				<RecentTicketTableText>
-					<Edit className="flex justify-center items-center cursor-pointer hover:underline">
-						<NavLink to={`edit/${ticket.id}`}>Edit Ticket<EditIcon fontSize="small" /></NavLink><MoreVertIcon fontSize="small" />
-					</Edit>
-				</RecentTicketTableText>
-			</tr>
-		));
+		.map((ticket) => <TicketsTableBodyItem key={v4()} ticket={ticket}/>);
 	return <tbody>{list}</tbody>;
 };
 

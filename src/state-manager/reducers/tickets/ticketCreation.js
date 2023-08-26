@@ -218,6 +218,9 @@ const createTicketSlice = createSlice({
 	name: "createTicket",
 	initialState: initialState,
 	reducers: {
+		reset: () => {
+			return initialState
+		},
 		toggleAddTicketModal: (state, action) => {
 			// TICKET state.showAddTicketModal = !state.showAddTicketModal;
 			return initialState

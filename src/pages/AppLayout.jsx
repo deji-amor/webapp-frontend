@@ -89,7 +89,7 @@ const AppLayout = () => {
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
 			{showAddTicketModal && <MemoizedInitialAdminCreationFormAndModal />}
-			{showTemplateModal && <MemoizedTicketTemplateCreationOrEditionForm />}
+			{/* {showTemplateModal && <MemoizedTicketTemplateCreationOrEditionForm />} */}
 
 			<div className="flex h-screen max-h-screen">
 				<MemoizedSidebar />

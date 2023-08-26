@@ -11,9 +11,10 @@ function formatDate(inputDate) {
   const hours = date.getHours();
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const period = hours >= 12 ? 'pm' : 'am';
-  const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+  const formattedHours = (hours % 12 === 0 ? 12 : hours % 12);
+	const paddedFormattedHours = String(formattedHours).padStart(2, "0")
 
-  const formattedDate = `${day}-${month}-${year}/${formattedHours}:${minutes} ${period}`;
+  const formattedDate = `${day}-${month}-${year}/${paddedFormattedHours}:${minutes} ${period}`;
   return formattedDate;
 }
 

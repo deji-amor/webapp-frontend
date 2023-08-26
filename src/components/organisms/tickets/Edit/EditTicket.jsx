@@ -12,7 +12,7 @@ const EditTicket = () => {
 
 	const goBackToTicketHandler = () => {
 		dispatch(editTicketActions.reset())
-		navigate("../")
+		navigate(-1)
 	}
 
   return (

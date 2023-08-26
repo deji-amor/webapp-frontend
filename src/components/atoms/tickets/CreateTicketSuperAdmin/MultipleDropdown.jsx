@@ -7,6 +7,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 // import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTicketActions } from '../../../../state-manager/reducers/tickets/ticketCreation';
+import { useNavigate } from 'react-router-dom';
 
   const Wrapper = styled("div")`
 		display: flex;
@@ -24,7 +25,8 @@ import { createTicketActions } from '../../../../state-manager/reducers/tickets/
 
 const MultipleDropdown = ({options, level: currentLevel}) => {
 	const dispatch = useDispatch()
-	const { level, pathToTemplate } = useSelector((state) => state.ticketCreation);
+	const navigate = useNavigate()
+	const { level, pathToTemplate, allPossibleFields } = useSelector((state) => state.ticketCreation);
   const [selectedOption, setSelectedOption] = useState(null)
 
   const Dropdown = styled("div")`
@@ -47,21 +49,14 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 		}
 	`;
 
-
   const handleOptionClick = (event, option) => {
 		event.stopPropagation();
 		// WHEN WE HAVE REACHED THE END AND TO REDIRECT TO THE FORM
 		if (!tree[option]?.options) {
-			const newpath = [...pathToTemplate].slice(0, currentLevel);
-			newpath[currentLevel] = option;
-			// CONSOLED PATH
-			// console.log({oldPath: pathToTemplate, newpath});
-			dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: newpath }));
-			// REDIRECT TO Ticket TEMPLATE FORM
-			// console.log(tree[option]);
-			dispatch(createTicketActions.goToTicketTemplateForm(tree[option]?.fields));
-			// CONSOLED CHOSEN TEMPLATE
-			// console.log("chosen template");
+			const {customerId} = allPossibleFields
+			const newpath = [...pathToTemplate].slice(0, currentLevel); //
+			newpath[currentLevel] = option; //
+			navigate(`/admin/tickets/create/${customerId}?ticketPath=${JSON.stringify(newpath)}`);
 			return;
 		}
 
