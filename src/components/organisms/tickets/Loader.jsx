@@ -20,7 +20,7 @@ const Loader = ({children}) => {
 					fill="currentFill"
 				/>
 			</svg>
-			<span className="truncate">{children}...</span>
+			{children && <span className="truncate">{children}...</span>}
 		</div>
 	);
 

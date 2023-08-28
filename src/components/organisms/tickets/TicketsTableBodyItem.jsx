@@ -1,11 +1,13 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import ChangeTicketStatusDropdown from "../../molecules/tickets/ChangeTicketStatusDropdown";
-import { changeATicketStatus } from "../../../state-manager/reducers/tickets/ticketDetails";
+import { changeATicketStatus, ticketDetailsActions } from "../../../state-manager/reducers/tickets/ticketDetails";
+import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
 import RecentTicketTableText from "../../atoms/Dashboard/RecentTicketTableText";
 import StatusTab from "../../atoms/tickets/StatusTab";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Loader from './Loader';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
@@ -28,6 +30,7 @@ const TicketsTableBodyItem = ({ ticket }) => {
   const {
     statuses,
   } = useSelector((state) => state.tickets);
+		const { loading, data, error, successful } = useSelector((state) => state.ticketDetails);
     const { customers} = useSelector((state) => state.customers);
 		const { users} = useSelector((state) => state.users);
 
@@ -36,7 +39,7 @@ const TicketsTableBodyItem = ({ ticket }) => {
   const [showStatusDrop, setShowStatusDrop] = useState(false);
 
   const ViewTicket = (event, id) => {
-    if (event.target.closest("a") || event.target.closest("span.changeTicketDropdown")) return;
+    if (event.target.closest("a") || event.target.closest("button.changeTicketDropdown")) return;
     navigate(`view/detail/${id}`);
   };
 
@@ -45,9 +48,50 @@ const TicketsTableBodyItem = ({ ticket }) => {
     setShowStatusDrop((pv) => !pv);
   };
 
+	const id = `ticketStatusDropdownWrapper${ticket.id}`
+
+	useEffect(() => {
+		const listener = (event) => {
+			if(!event.target.closest(`#${id}`)) {
+				setShowStatusDrop(false)
+			}
+		}
+
+		document.body.addEventListener("click", listener)
+		return () => {
+			document.body.removeEventListener("click", listener)
+		}
+	}, [])
+
+	const [isThisTicketLoading, setIsThisTicketLoading] = useState(false)
+
+	useEffect(() => {
+		if (successful === true) {
+			if (data) dispatch(ticketsActions.replaceTicket(data));
+			dispatch(
+				ticketDetailsActions.changeMultipleState([
+					{ key: "successful", value: null },
+					{ key: "error", value: null },
+				])
+			);
+			setIsThisTicketLoading(false)
+		}
+		if (error === true) {
+			dispatch(
+				ticketDetailsActions.changeMultipleState([
+					{ key: "successful", value: null },
+					{ key: "error", value: null },
+				])
+			);
+			setIsThisTicketLoading(false)
+		}
+	}, [successful, error, data, dispatch])
+
   const changeTicketStatusHandler = (ticketId, status) => {
     setShowStatusDrop(false);
-    // dispatch(changeATicketStatus({ ticketId: ticketId, status: status.toUpperCase() }));
+		setIsThisTicketLoading(true)
+		// console.log({ticketId, status});
+    dispatch(changeATicketStatus({ ticketId: ticketId, status: status.toUpperCase() }));
   };
 
 	return (
@@ -74,12 +118,12 @@ const TicketsTableBodyItem = ({ ticket }) => {
 						Edit Ticket
 						<EditIcon fontSize="small" />
 					</NavLink>
-					<span className="changeTicketDropdown relati">
+					<button disabled={loading} className={`changeTicketDropdown relati ${loading && "cursor-not-allowed"}`} id={id}>
 						{showStatusDrop && (
 							<ChangeTicketStatusDropdown
-								onClick={() => changeTicketStatusHandler(ticket.id, ticket.status)}
-								currentStatus={ticket}
-								remove={() => setShowStatusDropHandler}
+								onClick={changeTicketStatusHandler}
+								currentStatus={ticket.status.toLowerCase().replaceAll("-", "")}
+								id={ticket.id}
 								statuses={statuses
 									.filter((status) => status.toLowerCase() !== "all")
 									.filter((status) => status.toLowerCase() !== "overdue")
@@ -90,8 +134,11 @@ const TicketsTableBodyItem = ({ ticket }) => {
 									)}
 							/>
 						)}
+						{
+						isThisTicketLoading ? <Loader/> :
 						<MoreVertIcon fontSize="small" onClick={(event) => setShowStatusDropHandler(event)} />
-					</span>
+						}
+					</button>
 				</Edit>
 			</RecentTicketTableText>
 		</tr>

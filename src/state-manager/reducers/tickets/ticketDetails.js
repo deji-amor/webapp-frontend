@@ -62,9 +62,11 @@ const ticketDetailsSlice = createSlice({
 				if (status === "OK" && code === 200) {
 					state.data = data;
 					state.successful = true;
+					state.error = false;
 				} else {
 					state.error = true;
 					state.errorMessage = message;
+					state.successful = false
 				}
 			})
 			.addCase(changeATicketStatus.rejected, (state, {payload}) => {
