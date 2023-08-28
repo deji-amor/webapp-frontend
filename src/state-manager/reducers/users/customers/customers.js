@@ -245,10 +245,6 @@ const initialState = {
 	successful: null,
 	creationSuccess: false,
 	customers: [],
-	filteredCustomers: [],
-	filteredCustomersByStatus: [],
-	filteredCustomersByDate: [],
-	multipleCustomerStatusFiltering: [],
 	response: null,
 	passwordResponse: null,
 	validationResponse: null,
@@ -268,51 +264,7 @@ const customersSlice = createSlice({
 
 		SET_RESPONSE_NULL: (state, action) => {
 			state.response = null;
-		},
-
-		filterCustomers: (state, {payload}) => {
-			state.filteredCustomers = payload;
-		},
-
-		filterCustomersByDate: (state, {payload}) => {
-			state.filteredCustomersByDate = payload;
-		},
-
-		setSingleCustomersFilterByStatus: (state, {payload}) => {
-			state.filteredCustomersByStatus = payload
-		},
-
-		filterCustomersByStatus: (state, {payload}) => {
-			const {data, status} = payload;
-			if (state.multipleCustomerStatusFiltering.includes(status)) {
-				console.log("Already exist.");
-			} else {
-				state.filteredCustomersByStatus = current(state).filteredCustomersByStatus.concat(data);
-			}
-		},
-
-		sortFilteredCustomersByDate: (state, {payload}) => {
-			state.filteredCustomersByStatus = payload;
-		},
-
-		setMultipleCustomersFilterStatus: (state, {payload}) => {
-			if (state.multipleCustomerStatusFiltering.includes(payload)) {
-				console.log("Already exist.");
-			} else {
-				state.multipleCustomerStatusFiltering =
-					current(state).multipleCustomerStatusFiltering.concat(payload);
-			}
-		},
-
-		removeMultipleCustomersFilterStatus: (state, {payload}) => {
-			console.log(payload);
-			state.multipleCustomerStatusFiltering = current(state)
-				.multipleCustomerStatusFiltering.slice()
-				.filter(status => status != payload);
-			state.filteredCustomersByStatus = current(state)
-				.filteredCustomersByStatus.slice()
-				.filter(ticket => ticket.status.toLowerCase() != payload);
-		},
+		}
 	},
 	extraReducers: builder => {
 		builder
@@ -327,7 +279,6 @@ const customersSlice = createSlice({
 				state.loading = false;
 				if (code === 200 && status === "OK") {
 					state.customers = data.slice().reverse();
-					state.filteredCustomers = data.slice().reverse();
 					state.successful = true;
 					state.error = false;
 				} else {
@@ -522,12 +473,5 @@ export default customersSlice.reducer;
 export const {
 	SET_ERROR_NULL,
 	SET_RESPONSE_NULL,
-	filterCustomers,
-	filterCustomersByDate,
-	filterCustomersByStatus,
-	sortFilteredCustomersByDate,
-	setSingleCustomersFilterByStatus,
-	setMultipleCustomersFilterStatus,
-	removeMultipleCustomersFilterStatus,
 } = customersSlice.actions;
 export const customerActions = customersSlice.actions;

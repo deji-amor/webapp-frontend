@@ -75,12 +75,12 @@ export const handleCustomerFilterByStatus = (
 				.filter(tic => tic.status.toLowerCase() === status);
 			dispatch(filterCustomersByStatus(filCustomers));
 		}
-		// else {
-		// 	filCustomers = filteredCustomersByDate
-		// 		.slice()
-		// 		.filter(tic => tic.status.toLowerCase() === status);
-		// 	dispatch(filterCustomersByStatus(filCustomers));
-		// }
+		else {
+			filCustomers = filteredCustomersByDate
+				.slice()
+				.filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterCustomersByStatus(filCustomers));
+		}
 	} else {
 		if (status === "active") {
 			filCustomers = filteredCustomers.slice().filter(tic => tic.status.toLowerCase() === status);
@@ -91,10 +91,9 @@ export const handleCustomerFilterByStatus = (
 		} else if (status === "suspend") {
 			filCustomers = filteredCustomers.slice().filter(tic => tic.status.toLowerCase() === status);
 			dispatch(filterCustomersByStatus(filCustomers));
+		}else {
+			filCustomers = filteredCustomers.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterCustomersByStatus(filCustomers));
 		}
-		// else {
-		// 	filCustomers = filteredCustomers.slice().filter(tic => tic.status.toLowerCase() === status);
-		// 	dispatch(filterCustomersByStatus(filCustomers));
-		// }
 	}
 };

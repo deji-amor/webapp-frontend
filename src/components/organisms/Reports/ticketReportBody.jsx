@@ -8,7 +8,7 @@ import {
 	sortFilteredTicketsByDate,
 	filterTicketsByDate,
 	filterTickets,
-} from "../../../state-manager/reducers/tickets/tickets";
+} from "../../../state-manager/reducers/reports/tickets/ticketreport";
 
 const TicketReportBody = () => {
 	const [toggle, setToggle] = useState(true);
