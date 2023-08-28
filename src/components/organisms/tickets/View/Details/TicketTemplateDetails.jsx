@@ -10,7 +10,7 @@ import NumberOfTechNeeded from "./components/NumberOfTechNeeded";
 import NumberOfWorkStation from "./components/NumberOfWorkStation";
 import NumberOfWorkSystem from "./components/NumberOfWorkSystem";
 import PickUpLocation from "./components/PickUpLocation";
-import PointOfContact from "./components/pointOfContact";
+import PointOfContact from "./components/PointOfContact";
 import ScopeOfWork from "./components/ScopeOfWork";
 import SoftwareCustomization from "./components/SoftwareCustomization";
 import SoftwareInstallation from "./components/SoftwareInstallation";
