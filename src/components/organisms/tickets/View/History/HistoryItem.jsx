@@ -4,7 +4,7 @@ import HistoryTicketMessage from "./HistoryTicketMessage";
 import HistoryTicketDate from "./HistoryTicketDate";
 import HistoryTicketValueChange from "./HistoryTicketValueChange";
 import { omitBy, isEqual, reduce, isObject, intersection, pick } from "lodash";
-import { useSelector } from "react-redux";
+import { formatDate } from "../Details/components/Duration";
 import { v4 } from "uuid";
 
 function isJSONString(str) {
@@ -38,14 +38,15 @@ const HistoryItem = ({ log }) => {
 
 	const isOldDetailsAnObject = isJSONString(old_details) && isObject(JSON.parse(old_details));
 	const isNewDetailsAnObject = isJSONString(new_details) && isObject(JSON.parse(new_details));
-  // console.log(log);
-  // console.log(old_details, new_details);
-  // console.log(isOldDetailsAnObject, isNewDetailsAnObject);
 
 	if (isOldDetailsAnObject || isNewDetailsAnObject) {
 		const oldDetails = JSON.parse(old_details);
-		// old_details.start_date_time = convertDate(old_details.start_date_time);
-		// old_details.end_date_time = convertDate(old_details.end_date_time);
+		if(oldDetails.start_date_time) {
+			oldDetails.start_date_time = formatDate(convertDate(oldDetails.start_date_time));
+		}
+		if(oldDetails.end_date_time) {
+			oldDetails.end_date_time = formatDate(convertDate(oldDetails.end_date_time));
+		}
     const newDetails = JSON.parse(new_details);
 
 		const newDetailsModified = {
@@ -61,8 +62,8 @@ const HistoryItem = ({ log }) => {
 			number_of_technicians: newDetails.numberOfTechnicians,
 			scope_of_work_description: newDetails.scopeOfWorkDescription,
 			scope_of_work_document: newDetails.scopeOfWorkDocument,
-			start_date_time: newDetails.startDateTime,
-			end_date_time: newDetails.endDateTime,
+			start_date_time: formatDate(newDetails.startDateTime),
+			end_date_time: formatDate(newDetails.endDateTime),
 			hardware_quantity: newDetails.hardwareQuantity,
 			hardware_name: newDetails.hardwareName,
 			hardware_component_type_list: newDetails.hardwareComponentTypeList,
@@ -82,20 +83,14 @@ const HistoryItem = ({ log }) => {
 		};
 
 		const similarKeys = intersection(Object.keys(oldDetails), Object.keys(newDetailsModified));
-		// console.log(similarKeys);
 		const commonOldDetails = pick(oldDetails, similarKeys)
 		const commonNewDetails = pick(newDetailsModified, similarKeys)
-		// console.log({commonOldDetails, commonNewDetails});
 
 		const differences = omitBy(commonNewDetails, (value, key) => compareValues(value, commonOldDetails[key]));
-    // console.log(differences); 
-		// // console.log({ oldDetails, newDetails });
 
 		const diffArray = Object.keys(differences).map((key) => ({
 			[key]: [commonOldDetails[key], commonNewDetails[key]],
 		}));
-
-		console.log(diffArray);
 
 		return diffArray.map((item) => {
       return (
@@ -103,6 +98,7 @@ const HistoryItem = ({ log }) => {
 					key={v4()}
 					log={{
 						...log,
+						edit_type: Object.entries(item)[0][0].replaceAll("_", " "),
 						old_details: Object.entries(item)[0][1][0],
 						new_details: Object.entries(item)[0][1][1],
 					}}
@@ -115,7 +111,7 @@ const HistoryItem = ({ log }) => {
 		<div>
 			<HistoryTicketMessage
 				email={email}
-				field={edit_type.replace("-", " ")}
+				field={edit_type.replace("ticket-", " ")}
 			></HistoryTicketMessage>
 			<HistoryTicketDate timeStamp={datetime}></HistoryTicketDate>
 			<HistoryTicketValueChange

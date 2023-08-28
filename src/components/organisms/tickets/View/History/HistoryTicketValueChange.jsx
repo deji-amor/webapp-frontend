@@ -1,11 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { styled } from '@mui/material'
-import { isObject } from 'lodash';
+import React from "react";
+import PropTypes from "prop-types";
+import { styled } from "@mui/material";
+import { isObject } from "lodash";
 
 const ValueText = styled("span")`
 	color: #2b2e72;
-	text-align: center;
 	font-family: Poppins;
 	font-size: 0.875rem;
 	font-style: normal;
@@ -21,42 +20,46 @@ const ArrowIcon = () => (
 	</svg>
 );
 
-const HistoryTicketValueChange = ({prevValue, newValue}) => {
-	let modPrevValue = prevValue
-	let modNewValue = newValue
+const HistoryTicketValueChange = ({ prevValue, newValue }) => {
+	let modPrevValue = prevValue;
+	let modNewValue = newValue;
 
-	if(isObject(modPrevValue)) {
-		modPrevValue = modNewValue.forEach((item) => {
+	if (isObject(modPrevValue)) {
+		let string = "";
+		modPrevValue.forEach((item) => {
 			const en = Object.entries(item);
-			const res = en.map((e) => `${e[0]}: ${e[1]}`);
+			const res = en.forEach((e) => (string = string += ` ${e[0]}: ${e[1]} `));
 			return res;
 		});
-
-		modPrevValue = JSON.stringify(modPrevValue)
+		modPrevValue = string;
 	}
 
 	if (isObject(modNewValue)) {
-		modNewValue = modNewValue.forEach((currentItem, item) => {
+		let string = "";
+		modNewValue.forEach((item) => {
 			const en = Object.entries(item);
-			const res = en.map((e) => `${currentItem} ${e[0]}: ${e[1]}`);
+			const res = en.forEach((e) => (string = string += ` ${e[0]}: ${e[1]} `));
 			return res;
 		});
-
-		modNewValue = JSON.stringify(modNewValue);
+		modNewValue = string;
 	}
 
-  return (
-    <div className='flex gap-[1.12rem] items-center'>
-      <ValueText>{modPrevValue}</ValueText>
-      <ArrowIcon/>
-      <ValueText>{modNewValue}</ValueText>
-    </div>
-  )
-}
+	return (
+		<div className="flex space-x-[1rem] items-start">
+			<ValueText className="border flex-wrap">
+				{modPrevValue.trim() === "" ? "Nothing was provided" : modPrevValue}
+			</ValueText>
+			<ArrowIcon />
+			<ValueText className="border flex-wrap">
+				{modNewValue.trim() === "" ? "Nothing provided" : modNewValue}
+			</ValueText>
+		</div>
+	);
+};
 
 HistoryTicketValueChange.propTypes = {
 	prevValue: PropTypes.any,
 	newValue: PropTypes.any,
-}
+};
 
-export default HistoryTicketValueChange
+export default HistoryTicketValueChange;
