@@ -15,6 +15,9 @@ import ticketDetailsReducer from "./reducers/tickets/ticketDetails"
 import ticketHistoryReducer from "./reducers/tickets/ticketHistory"
 import testingReducer from "./reducers/tickets/testing"
 import ticketsReducer from "./reducers/tickets/tickets"
+import reportsReducer from "./reducers/reports/report"
+import ticketReportReducer from "./reducers/reports/tickets/ticketreport"
+import customerReportReducer from "./reducers/reports/customers/customers"
 import storage from "redux-persist/lib/storage"
 import { persistReducer, persistStore } from "redux-persist"
 import thunk from "redux-thunk"
@@ -35,8 +38,11 @@ const persistConfig = {
 		"ticketHistory",
         "testing",
 		"tickets",
-		"customers",
-		"users",
+        "customers",
+        "users",
+        "reports",
+        "ticketReports",
+        "customerReports"
 	],
 };
 
@@ -56,7 +62,10 @@ const rootReducers = combineReducers({
     ticketHistory: ticketHistoryReducer,
     testing: testingReducer,
     tickets: ticketsReducer, 
-    customers: customersReducer
+    customers: customersReducer,
+    reports: reportsReducer,
+    ticketReports: ticketReportReducer,
+    customerReports: customerReportReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducers)

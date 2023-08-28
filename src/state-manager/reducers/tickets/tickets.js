@@ -1,5 +1,5 @@
 import {createSlice, current, createAsyncThunk} from "@reduxjs/toolkit";
-import { getAuthToken } from "../../../utilis";
+import {getAuthToken} from "../../../utilis";
 
 export const fetchTickets = createAsyncThunk("tickets", async (args, {rejectWithValue}) => {
 	try {
@@ -106,4 +106,5 @@ const ticketsSlice = createSlice({
 });
 
 export default ticketsSlice.reducer;
+
 export const ticketsActions = ticketsSlice.actions;

@@ -39,7 +39,7 @@ const MainTicketEditionForm = () => {
 
 		const submitHandler = (e) => {
 			e.preventDefault();
-			console.log(requiredFields);
+			// console.log(requiredFields);
 			dispatch(editTicket(requiredFields));
 		};
 

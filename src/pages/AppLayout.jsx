@@ -8,6 +8,8 @@ import InitialAdminCreationFormAndModal from '../components/organisms/tickets/Cr
 import TicketTemplateCreationOrEditionForm from '../components/organisms/tickets/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm';
 import { fetchUsers } from '../state-manager/reducers/users/users';
 import { fetchCustomers } from '../state-manager/reducers/users/customers/customers';
+import { fetchAllCustomers } from '../state-manager/reducers/reports/customers/customers';
+import { fetchAllTickets } from '../state-manager/reducers/reports/tickets/ticketreport';
 import { fetchTickets } from '../state-manager/reducers/tickets/tickets';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
@@ -81,6 +83,8 @@ const AppLayout = () => {
 		dispatch(fetchUsers())
 		dispatch(fetchCustomers())
 		dispatch(fetchTickets())
+		dispatch(fetchAllCustomers())
+		dispatch(fetchAllTickets())
 	}, [])
 
 	return (

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
+import { isObject } from 'lodash';
 
 const ValueText = styled("span")`
 	color: #2b2e72;
@@ -21,11 +22,34 @@ const ArrowIcon = () => (
 );
 
 const HistoryTicketValueChange = ({prevValue, newValue}) => {
+	let modPrevValue = prevValue
+	let modNewValue = newValue
+
+	if(isObject(modPrevValue)) {
+		modPrevValue = modNewValue.forEach((item) => {
+			const en = Object.entries(item);
+			const res = en.map((e) => `${e[0]}: ${e[1]}`);
+			return res;
+		});
+
+		modPrevValue = JSON.stringify(modPrevValue)
+	}
+
+	if (isObject(modNewValue)) {
+		modNewValue = modNewValue.forEach((currentItem, item) => {
+			const en = Object.entries(item);
+			const res = en.map((e) => `${currentItem} ${e[0]}: ${e[1]}`);
+			return res;
+		});
+
+		modNewValue = JSON.stringify(modNewValue);
+	}
+
   return (
     <div className='flex gap-[1.12rem] items-center'>
-      <ValueText>{prevValue}</ValueText>
+      <ValueText>{modPrevValue}</ValueText>
       <ArrowIcon/>
-      <ValueText>{newValue}</ValueText>
+      <ValueText>{modNewValue}</ValueText>
     </div>
   )
 }

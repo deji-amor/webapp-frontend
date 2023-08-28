@@ -53,6 +53,7 @@ const TicketCustomerDetail = () => {
 		const ticketToEdit = tickets.find((ticket) => +ticket.id === +ticketId);
 
 		const customer = customers.find(customer => customer.id === ticketToEdit.customer_id)
+		if (!customer) return <></>
 		const {first_name, last_name, company_email} = customer
 
   return (

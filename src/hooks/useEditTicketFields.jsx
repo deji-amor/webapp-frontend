@@ -94,7 +94,7 @@ const useEditTicketFields = () => {
 			locations: [],
 		},
 		additionalFields: {
-			additionalFields: additionalFields,
+			additionalFields: additionalFields.map(({ name, value }) => ({ [name]: value })),
 		},
 	};
 
