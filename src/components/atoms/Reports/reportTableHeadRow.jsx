@@ -6,7 +6,7 @@ import ReportTableHeadCell from "./reportTableHeadCell";
 const ReportTableHeadRowWrapper = styled("tr")(() => ({
 	width: "100%",
 	height: "63px",
-	borderBottom: "2px solid rgba(238, 238, 238, 1)",
+	borderBottom: "5px solid rgba(250, 250, 250, 1)",
 	background: "rgba(255, 255, 255, 1)",
 
 	th: {
@@ -20,7 +20,7 @@ const ReportTableHeadRowWrapper = styled("tr")(() => ({
 	},
 
 	".first": {
-		paddingLeft: "30px"
+		paddingLeft: "10px"
 	}
 }));
 

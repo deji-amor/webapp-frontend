@@ -3,12 +3,13 @@ import { styled } from "@mui/material";
 import PropTypes from "prop-types";
 import ReportTableBodyCell from "./reportTableBodyCell";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
-import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 const ReportTableBodyRowWrapper = styled("tr")(() => ({
 	width: "100%",
-	height: "63px",
-	borderBottom: "1px solid rgba(238, 238, 238, 1)",
+	height: "80px",
+	borderBottom: "4px solid rgba(250, 250, 250, 1)",
 
 	span: {
 		maxWidth: "250px",
@@ -47,9 +48,42 @@ const ReportTableBodyRowWrapper = styled("tr")(() => ({
 		letterSpacing: "0em",
 		textAlign: "left",
 	},
+
+	".edit": {
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "flex",
+		gap: "10px"
+	},
+
+	".active": {
+		height: "28px",
+		lineHeight: "30px",
+		background: "rgba(18, 133, 26, 0.2)",
+		padding: "0px 10px 0px 10px",
+		borderRadius: "16px",
+		color: "rgba(4, 133, 13, 1)"
+	},
+	".inactive": {
+		height: "28px",
+		lineHeight: "30px",
+		background: "rgba(237, 117, 56, 0.2)",
+		padding: "0px 10px 0px 10px",
+		borderRadius: "16px",
+		color: "rgba(237, 90, 17, 1)"
+	},
+	".suspend": {
+		height: "28px",
+		textAlign: "center",
+		lineHeight: "30px",
+		background: "rgba(204, 150, 29, 0.2)",
+		padding: "0px 10px 0px 10px",
+		borderRadius: "16px",
+		color: "rgba(204, 150, 29, 1)"
+	}
 }));
 
-const ReportTableTecBodyRow = ({ ticket }) => {
+const ReportTableCustomerBodyRow = ({ ticket }) => {
 	return (
 		<ReportTableBodyRowWrapper>
 			<ReportTableBodyCell>
@@ -59,7 +93,9 @@ const ReportTableTecBodyRow = ({ ticket }) => {
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
-					<p>{ticket.first_name} {ticket.last_name}</p>
+					<p>
+						{ticket.first_name} {ticket.last_name}
+					</p>
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
@@ -69,21 +105,24 @@ const ReportTableTecBodyRow = ({ ticket }) => {
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
-					<p>{ticket.status}</p>
+					<p className={ticket.status === "active" ? "active" : ticket.status === "inactive" ? "inactive" : "suspend" }>{ticket.status}</p>
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span className="location">
-					<p>Edit Customer Profile</p>
-					<RemoveRedEyeOutlinedIcon />
+					<p className="edit">
+						<BorderColorOutlinedIcon />
+						Edit Customer Profile
+					</p>
+					<MoreVertOutlinedIcon />
 				</span>
 			</ReportTableBodyCell>
 		</ReportTableBodyRowWrapper>
 	);
 };
 
-ReportTableTecBodyRow.propTypes = {
+ReportTableCustomerBodyRow.propTypes = {
 	ticket: PropTypes.object,
 };
 
-export default ReportTableTecBodyRow;
+export default ReportTableCustomerBodyRow;

@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { handleFilterByStatus } from "../../organisms/Reports/filters";
+import {
+	removeMultipleCustomersFilterStatus,
+	filterCustomersByStatus,
+	setMultipleCustomersFilterStatus,
+} from "../../../state-manager/reducers/reports/customers/customers";
+import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
-const FilterByWrapper = styled("div")(() => ({
+const CustomerFilterByWrapper = styled("div")(() => ({
 	position: "relative",
 	left: "17px",
 	top: "20px",
+	display: "flex",
+	gap: "10px",
 
 	button: {
 		minWidth: "140px",
@@ -22,7 +30,7 @@ const FilterByWrapper = styled("div")(() => ({
 	},
 
 	".dropdownCard": {
-		width: "167px",
+		width: "190px",
 		height: "130px",
 		overflow: "hidden",
 		background: "white",
@@ -33,11 +41,12 @@ const FilterByWrapper = styled("div")(() => ({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "center",
-		gap: "2px",
+		gap: "3px",
 		transition: "all",
 	},
 
 	".dropdownCard .item": {
+		height: "38px",
 		display: "flex",
 		alignItems: "center",
 		fontFamily: "Poppins",
@@ -56,55 +65,95 @@ const FilterByWrapper = styled("div")(() => ({
 
 	".dropdownCard .item:hover": {
 		width: "100%",
-		height: "38px",
 		border: "0px 0px 1px 0px",
 		gap: "16px",
 		cursor: "pointer",
 		background: "rgba(76, 111, 255, 0.08)",
 	},
+
+	".status": {
+		display: "flex",
+		gap: "20px",
+		alignItems: "center",
+		color: "rgba(43, 46, 114, 1)",
+	},
+
+	".status span": {
+		border: ".5px solid rgba(43, 46, 114, 1)",
+		borderRadius: "8px",
+		padding: "5px",
+		cursor: "pointer",
+	},
+
+	".status span:hover": {
+		background: "rgba(43, 46, 114, 1)",
+		color: "white",
+	},
 }));
 
-const FilterBy = ({ dropItems, filterList, ticketList, setFilteredTickets }) => {
-	const [text, setText] = useState("All");
-	const [status, setStatus] = useState("")
+const CustomerFilterBy = ({ dropItems, filteredReports }) => {
+	const [text, setText] = useState("All Customers");
+	const [status, setStatus] = useState("");
 	const [toggle, setToggle] = useState(false);
+	const { filteredCustomers, filteredCustomersByDate, multipleCustomerStatusFiltering } =
+		useSelector((state) => state.customerReports);
+	const dispatch = useDispatch();
+
+	const handleClick = (t) => {
+		dispatch(removeMultipleCustomersFilterStatus(t));
+	};
 
 	useEffect(() => {
-		handleFilterByStatus(status, filterList, ticketList, setFilteredTickets);
+		if (status != "") {
+			handleFilterByStatus(
+				status,
+				filteredCustomers,
+				filteredCustomersByDate,
+				filterCustomersByStatus,
+				setMultipleCustomersFilterStatus,
+				dispatch
+			);
+		}
 	}, [status]);
 
 	return (
-		<FilterByWrapper>
-			<button type="button" onClick={() => setToggle((prev) => !prev)}>
-				{text}
-			</button>
-			{toggle && (
-				<div className="dropdownCard">
-					{dropItems.map((item) => (
-						<div
-							key={item.status}
-							className={text === item.title ? "item active" : "item"}
-							onClick={() => {
-								setToggle(false);
-								setStatus(item.status)
-								setText(item.title);
-							}}
-						>
-							{item.title}
-						</div>
-					))}
-				</div>
-			)}
-		</FilterByWrapper>
+		<CustomerFilterByWrapper>
+			<div>
+				<button type="button" onClick={() => setToggle((prev) => !prev)}>
+					All Customers
+				</button>
+				{toggle && (
+					<div className="dropdownCard">
+						{dropItems.map((item) => (
+							<div
+								key={item.status}
+								className="item"
+								onClick={() => {
+									// setToggle(false);
+									setStatus(item.status);
+									// setText(item.title);
+								}}
+							>
+								{item.title}
+							</div>
+						))}
+					</div>
+				)}
+			</div>
+			<div className="status">
+				{multipleCustomerStatusFiltering?.map((ticket) => (
+					<span key={ticket} onClick={() => handleClick(ticket)}>
+						{ticket} <ClearOutlinedIcon />
+					</span>
+				))}
+			</div>
+		</CustomerFilterByWrapper>
 	);
 };
 
-FilterBy.propTypes = {
+CustomerFilterBy.propTypes = {
 	dropItems: PropTypes.array,
-	filterList: PropTypes.array,
-	ticketList: PropTypes.array,
-	handleTicketsFilter: PropTypes.func,
-	setFilteredTickets: PropTypes.func,
+	filteredReports: PropTypes.array,
 };
 
-export default FilterBy;
+export default CustomerFilterBy;

@@ -227,7 +227,7 @@ export const resendMyVerificationLink = createAsyncThunk(
 			}/api/v1/customer/resend-my-verification`;
 			const response = await fetch(url, config);
 			const data = await response.json();
-			return data
+			return data;
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -245,6 +245,10 @@ const initialState = {
 	successful: null,
 	creationSuccess: false,
 	customers: [],
+	filteredCustomers: [],
+	filteredCustomersByStatus: [],
+	filteredCustomersByDate: [],
+	multipleCustomerStatusFiltering: [],
 	response: null,
 	passwordResponse: null,
 	validationResponse: null,
@@ -265,6 +269,50 @@ const customersSlice = createSlice({
 		SET_RESPONSE_NULL: (state, action) => {
 			state.response = null;
 		},
+
+		filterCustomers: (state, {payload}) => {
+			state.filteredCustomers = payload;
+		},
+
+		filterCustomersByDate: (state, {payload}) => {
+			state.filteredCustomersByDate = payload;
+		},
+
+		setSingleCustomersFilterByStatus: (state, {payload}) => {
+			state.filteredCustomersByStatus = payload
+		},
+
+		filterCustomersByStatus: (state, {payload}) => {
+			const {data, status} = payload;
+			if (state.multipleCustomerStatusFiltering.includes(status)) {
+				console.log("Already exist.");
+			} else {
+				state.filteredCustomersByStatus = current(state).filteredCustomersByStatus.concat(data);
+			}
+		},
+
+		sortFilteredCustomersByDate: (state, {payload}) => {
+			state.filteredCustomersByStatus = payload;
+		},
+
+		setMultipleCustomersFilterStatus: (state, {payload}) => {
+			if (state.multipleCustomerStatusFiltering.includes(payload)) {
+				console.log("Already exist.");
+			} else {
+				state.multipleCustomerStatusFiltering =
+					current(state).multipleCustomerStatusFiltering.concat(payload);
+			}
+		},
+
+		removeMultipleCustomersFilterStatus: (state, {payload}) => {
+			console.log(payload);
+			state.multipleCustomerStatusFiltering = current(state)
+				.multipleCustomerStatusFiltering.slice()
+				.filter(status => status != payload);
+			state.filteredCustomersByStatus = current(state)
+				.filteredCustomersByStatus.slice()
+				.filter(ticket => ticket.status.toLowerCase() != payload);
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -279,6 +327,7 @@ const customersSlice = createSlice({
 				state.loading = false;
 				if (code === 200 && status === "OK") {
 					state.customers = data.slice().reverse();
+					state.filteredCustomers = data.slice().reverse();
 					state.successful = true;
 					state.error = false;
 				} else {
@@ -316,8 +365,8 @@ const customersSlice = createSlice({
 					state.error = true;
 				}
 				state.loading = false;
-				state.error = false
-				state.creationSuccess = true
+				state.error = false;
+				state.creationSuccess = true;
 				state.response = message ? message : null;
 			})
 
@@ -340,10 +389,10 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(validateToken.fulfilled, (state, {payload}) => {
-				const {message, data: valid} = payload
+				const {message, data: valid} = payload;
 				state.loading = false;
 				state.error = false;
-				state.valid = valid.valid
+				state.valid = valid.valid;
 				state.validationResponse = message ? message : null;
 			})
 
@@ -352,7 +401,7 @@ const customersSlice = createSlice({
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false;
-				state.valid = valid.valid
+				state.valid = valid.valid;
 				state.validationResponse = message ? message : null;
 				state.successful = false;
 			})
@@ -375,8 +424,8 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(setCustomerPassword.rejected, (state, {payload}) => {
-				const {message} = payload
-				console.log(message)
+				const {message} = payload;
+				console.log(message);
 				state.error = true;
 				state.loading = false;
 				state.successful = false;
@@ -391,7 +440,7 @@ const customersSlice = createSlice({
 
 			.addCase(editCustomer.fulfilled, (state, {payload}) => {
 				const {status, code, data} = payload;
-				console.log(payload)
+				console.log(payload);
 				if (status === "OK" && code === 200) {
 					const customers = current(state).customers.slice();
 					const customerIndex = customers.findIndex(customer => customer.user_id === data.user_id);
@@ -417,17 +466,17 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(suspendUnsuspend.fulfilled, (state, {payload}) => {
-				const {status, code, data} = payload
-				if(status === "OK" && code === 200){
-					const customers = current(state).customers.slice()
-					const customerIndex = customers.findIndex(customer => customer.user_id === data.user_id)
-					customers.splice(customerIndex, 1, data)
-					state.customers = customers
-					state.error = false
-					state.successful = true
-				}else {
-					state.successful = false
-					state.error = true
+				const {status, code, data} = payload;
+				if (status === "OK" && code === 200) {
+					const customers = current(state).customers.slice();
+					const customerIndex = customers.findIndex(customer => customer.user_id === data.user_id);
+					customers.splice(customerIndex, 1, data);
+					state.customers = customers;
+					state.error = false;
+					state.successful = true;
+				} else {
+					state.successful = false;
+					state.error = true;
 				}
 				state.loading = false;
 			})
@@ -456,20 +505,29 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(resendMyVerificationLink.fulfilled, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.loading = false;
-				state.validationResponse = message ? message : null
+				state.validationResponse = message ? message : null;
 			})
 
 			.addCase(resendMyVerificationLink.rejected, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.loading = false;
-				state.validationResponse = message ? message : null
+				state.validationResponse = message ? message : null;
 			});
 	},
 });
 
 export default customersSlice.reducer;
-export const {SET_ERROR_NULL} = customersSlice.actions;
+export const {
+	SET_ERROR_NULL,
+	SET_RESPONSE_NULL,
+	filterCustomers,
+	filterCustomersByDate,
+	filterCustomersByStatus,
+	sortFilteredCustomersByDate,
+	setSingleCustomersFilterByStatus,
+	setMultipleCustomersFilterStatus,
+	removeMultipleCustomersFilterStatus,
+} = customersSlice.actions;
 export const customerActions = customersSlice.actions;
-export const {SET_RESPONSE_NULL} = customersSlice.actions;

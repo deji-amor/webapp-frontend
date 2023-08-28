@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
 import SortImage from "../../../assets/password/vecsort.png";
@@ -27,8 +27,7 @@ const SortWrapper = styled("div")(({toggle}) => ({
 	},
 }));
 
-const ReportSort = ({handleReportsSort}) => {
-	const [toggle, setToggle] = useState(false)
+const ReportSort = ({handleReportsSort, toggle, setToggle}) => {
 
 	const handleToggle = () => {
 		if (toggle) {
@@ -49,7 +48,9 @@ const ReportSort = ({handleReportsSort}) => {
 };
 
 ReportSort.propTypes = {
-	handleReportsSort: PropTypes.func
+	handleReportsSort: PropTypes.func,
+	setToggle: PropTypes.func,
+	toggle: PropTypes.bool
 }
 
 export default ReportSort;

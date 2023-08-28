@@ -4,11 +4,12 @@ import PropTypes from "prop-types";
 import ReportTableBodyCell from "./reportTableBodyCell";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const ReportTableBodyRowWrapper = styled("tr")(() => ({
 	width: "100%",
-	height: "63px",
-	borderBottom: "1px solid rgba(238, 238, 238, 1)",
+	height: "60px",
+	borderBottom: "3px solid rgba(250, 250, 250, 1)",
 
 	span: {
 		maxWidth: "250px",
@@ -25,7 +26,7 @@ const ReportTableBodyRowWrapper = styled("tr")(() => ({
 	},
 
 	".first": {
-		paddingLeft: "30px",
+		paddingLeft: "10px",
 	},
 
 	".check": {
@@ -53,33 +54,38 @@ const ReportTableBodyRow = ({ ticket }) => {
 	return (
 		<ReportTableBodyRowWrapper>
 			<ReportTableBodyCell>
-				<span className="first">
-					<input className="check" type="checkbox" /> <p>{ticket.ticket_form}</p>
+				<span className="first" title={ticket?.ticket_form}>
+					<input className="check" type="checkbox" /> <p>{ticket?.ticket_form}</p>
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
-					<p>{ticket.ticket_type}</p>
+					<p>{ticket?.ticket_type}</p>
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
-					<p>{ticket.scope_of_work_description}</p>
+					<p>{ticket?.scope_of_work_description}</p>
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
-					<p>{getDateFromDateTime(ticket.start_date_time)}</p>
+					<p>{getDateFromDateTime(ticket?.start_date_time)}</p>
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
-					<p>{getDateFromDateTime(ticket.end_date_time)}</p>
+					<p>{getDateFromDateTime(ticket?.end_date_time)}</p>
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
-					<p>{ticket.status}</p>
+					<p>{ticket?.status}</p>
+					{ticket?.status.toLowerCase() === "done" ? (
+						<CheckCircleIcon style={{ color: "green" }} />
+					) : (
+						""
+					)}
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>

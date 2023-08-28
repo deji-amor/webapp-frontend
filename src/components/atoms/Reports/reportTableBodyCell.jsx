@@ -10,6 +10,7 @@ const ReportTableBodyWrapper = styled("td")(({color}) => ({
 	lineHeight: "36px",
 	letterSpacing: "0em",
 	textAlign: "left",
+	padding: "10px",
 	color: color || "rgba(112, 110, 110, 1)",
 }));
 

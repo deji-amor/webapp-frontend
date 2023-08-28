@@ -1,116 +1,102 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ReportNavigateButs from "../../molecules/Reports/reportNavigateSection";
 import TypeFilterBoard from "../../molecules/Reports/reportFiltersSection";
-import ReportTable from "../../molecules/Reports/reportTable";
+import ReportCustomerTable from "../../molecules/Reports/reportCustomerTable";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
+import {
+	filterCustomers,
+	sortFilteredCustomersByDate,
+	filterCustomersByDate,
+} from "../../../state-manager/reducers/reports/customers/customers";
 import Placeholder from "../../molecules/general/Placeholder";
+import CreateIcon from "@mui/icons-material/Create";
 
 const CustomerReportBody = () => {
-	const [filteredCustomers, setFilteredCustomers] = useState([]);
-	const { customers } = useSelector((state) => state.customers);
-	// const [customer, setCustomer] = useState([])
+	const [toggle, setToggle] = useState(true);
+	const { filteredCustomers, filteredCustomersByStatus, filteredCustomersByDate } = useSelector(
+		(state) => state.customerReports
+	);
+	const dispatch = useDispatch();
 
-	console.log(customers)
 	const handleCustomerDateRange = useCallback(
 		(start, end) => {
-			if (filteredCustomers.length != 0) {
-				const filteredDate = filteredCustomers.slice().filter((ticket) => {
-					const start_date = new Date(start);
-					const end_date = new Date(end);
-					const ticket_start_date = new Date(getDateFromDateTime(ticket.start_date_time));
+			setToggle(true);
 
-					return ticket_start_date >= start_date && ticket_start_date <= end_date;
-				});
+			if (start != "NaN-NaN-NaN" && end != "NaN-NaN-NaN") {
+				if (filteredCustomersByStatus.length != 0) {
+					const filteredDate = filteredCustomersByStatus.slice().filter((customer) => {
+						const start_date = new Date(start);
+						const end_date = new Date(end);
+						const customer_start_date = new Date(getDateFromDateTime(customer.datetime));
 
-				setFilteredCustomers(filteredDate);
-			} else {
-				const filteredDate = customers.slice().filter((ticket) => {
-					const start_date = new Date(start);
-					const end_date = new Date(end);
-					const ticket_start_date = new Date(getDateFromDateTime(ticket.start_date_time));
-
-					return ticket_start_date >= start_date && ticket_start_date <= end_date;
-				});
-
-				setFilteredCustomers(filteredDate);
+						return customer_start_date >= start_date && customer_start_date <= end_date;
+					});
+	
+					dispatch(filterCustomersByDate([...filteredDate]));
+				}else {
+					const filteredDate = filteredCustomers.slice().filter((customer) => {
+						const start_date = new Date(start);
+						const end_date = new Date(end);
+						const customer_start_date = new Date(getDateFromDateTime(customer.datetime));
+	
+						return customer_start_date >= start_date && customer_start_date <= end_date;
+					});
+	
+					dispatch(filterCustomers([...filteredDate]));
+				}
 			}
 		},
-		[customers]
+		[filteredCustomers, filteredCustomersByStatus, dispatch]
 	);
 
 	const handleCustomersSort = (type) => {
-		let sortedTickets = null;
-		if (filteredCustomers.length != 0) {
-			if (type === "ascending") {
-				console.log("Ascending");
-				sortedTickets = filteredCustomers
-					.slice()
-					.sort((t1, t2) =>
-						t1.start_date_time > t2.start_date_time
-							? 1
-							: t1.start_date_time < t2.start_date_time
-							? -1
-							: 0
-					);
-				setFilteredCustomers([...sortedTickets]);
-			} else {
-				console.log("Descending");
-				sortedTickets = filteredCustomers
-					.slice()
-					.sort((t1, t2) =>
-						t1.start_date_time > t2.start_date_time
-							? -1
-							: t1.start_date_time > t2.start_date_time
-							? 1
-							: 0
-					);
-				setFilteredCustomers([...sortedTickets]);
-			}
+		let sortedCustomers = null;
+
+		if (filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0) {
+			console.log("Status")
+			sortedCustomers = filteredCustomersByStatus
+				.slice()
+				.sort((t1, t2) =>
+					type === "ascending"
+						? t1.company_name.toLowerCase().localeCompare(t2.company_name.toLowerCase())
+						: t2.company_name.toLowerCase().localeCompare(t1.company_name.toLowerCase())
+				);
+			dispatch(sortFilteredCustomersByDate(sortedCustomers));
+		} else if (filteredCustomersByDate.length != 0) {
+			console.log("Date")
+			sortedCustomers = filteredCustomersByDate
+				.slice()
+				.sort((t1, t2) =>
+					type === "ascending"
+						? t1.company_name.toLowerCase().localeCompare(t2.company_name.toLowerCase())
+						: t2.company_name.toLowerCase().localeCompare(t1.company_name.toLowerCase())
+				);
+			dispatch(filterCustomersByDate(sortedCustomers));
 		} else {
-			if (type === "ascending") {
-				console.log("Ascending");
-				sortedTickets = customers
-					.slice()
-					.sort((t1, t2) =>
-						t1.start_date_time > t2.start_date_time
-							? 1
-							: t1.start_date_time < t2.start_date_time
-							? -1
-							: 0
-					);
-				setFilteredCustomers([...sortedTickets]);
-			} else {
-				console.log("Descending");
-				sortedTickets = customers
-					.slice()
-					.sort((t1, t2) =>
-						t1.start_date_time < t2.start_date_time
-							? -1
-							: t1.start_date_time > t2.start_date_time
-							? 1
-							: 0
-					);
-				setFilteredCustomers([...sortedTickets]);
-			}
+			console.log("Original List")
+			sortedCustomers = filteredCustomers
+				.slice()
+				.sort((t1, t2) =>
+					type === "ascending"
+						? t1.company_name.toLowerCase().localeCompare(t2.company_name.toLowerCase())
+						: t2.company_name.toLowerCase().localeCompare(t1.company_name.toLowerCase())
+				);
+			dispatch(filterCustomers(sortedCustomers));
 		}
 	};
-
 	return (
 		<>
-			{(customers.length != 0 && (
+			{(filteredCustomers.length != 0 && (
 				<>
 					<TypeFilterBoard
 						handleReportDateRange={handleCustomerDateRange}
 						handleReportsSort={handleCustomersSort}
-						filterList={filteredCustomers}
-						reportList={customers}
-						setFilteredReports={setFilteredCustomers}
-						filteredReports={filteredCustomers.length != 0 ? filteredCustomers : customers}
+						filteredReports={filteredCustomers}
+						toggle={toggle}
+						setToggle={setToggle}
 					/>
-					<ReportTable
-						filteredReports={filteredCustomers.length != 0 ? filteredCustomers : customers}
-					/>
+					<ReportCustomerTable />
 				</>
 			)) || (
 				<Placeholder

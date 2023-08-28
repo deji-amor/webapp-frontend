@@ -3,6 +3,15 @@ import PropTypes from "prop-types";
 import { TextField, styled } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	filterTickets,
+	filterTicketsByDate,
+} from "../../../state-manager/reducers/reports/tickets/ticketreport";
+import {
+	filterCustomersByDate,
+	filterCustomers,
+} from "../../../state-manager/reducers/reports/customers/customers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
@@ -72,21 +81,31 @@ const DateFilterWrapper = styled("div")(() => ({
 	},
 }));
 
-const DateFilter = ({ handleTicketDateRange }) => {
+const DateFilter = ({ handleReportDateRange }) => {
 	const [values, setValues] = useState({ startDate: "", endDate: "" });
-
 	const { startDate, endDate } = values;
-
 	const start = getDateFromDateTime(startDate);
 	const end = getDateFromDateTime(endDate);
 
+	const dispatch = useDispatch();
+	const { tickets } = useSelector((state) => state.tickets);
+	const { customers } = useSelector((state) => state.customers);
+	const { customerReport } = useSelector((state) => state.reports);
+
 	const handleClear = () => {
 		setValues({ startDate: "", endDate: "" });
+		if (customerReport) {
+			dispatch(filterCustomersByDate([]));
+			dispatch(filterCustomers(customers));
+		} else {
+			dispatch(filterTicketsByDate([]));
+			dispatch(filterTickets(tickets));
+		}
 	};
 
 	useEffect(() => {
-		handleTicketDateRange(start, end);
-	}, [start, end, handleTicketDateRange]);
+		handleReportDateRange(start, end);
+	}, [start, end]);
 
 	return (
 		<DateFilterWrapper>
@@ -180,8 +199,7 @@ const DateFilter = ({ handleTicketDateRange }) => {
 };
 
 DateFilter.propTypes = {
-	handleTicketDateRange: PropTypes.func,
+	handleReportDateRange: PropTypes.func,
 };
 
 export default DateFilter;
-

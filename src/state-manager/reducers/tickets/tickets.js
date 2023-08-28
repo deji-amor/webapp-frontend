@@ -1,5 +1,5 @@
 import {createSlice, current, createAsyncThunk} from "@reduxjs/toolkit";
-import { getAuthToken } from "../../../utilis";
+import {getAuthToken} from "../../../utilis";
 
 export const fetchTickets = createAsyncThunk("tickets", async (args, {rejectWithValue}) => {
 	try {
@@ -30,6 +30,14 @@ const initialState = {
 	errorMessage: "",
 	successful: null,
 	tickets: [],
+	filteredTickets: [],
+	filteredTicketsByDate: [],
+	filteredTicketsByStatus: [],
+	multipleTicketStatusFiltering: [],
+	filteredProjectTickets: [],
+	filteredProjectTicketsByDate: [],
+	filteredProjectTicketsByStatus: [],
+	multipleProjectTicketStatusFiltering: [],
 	searchTicketsValue: "",
 	searchCustomersValue: "",
 	showServiceRequestsTab: true,
@@ -40,7 +48,7 @@ const initialState = {
 	ticketsOnEachPage: 5,
 	sortByAscending: true,
 	filterByStatus: "All",
-	statuses: ["All", "Done", "Pending", "Inprogress", "Overdue"]
+	statuses: ["All", "Done", "Pending", "Inprogress", "Overdue"],
 };
 
 const ticketsSlice = createSlice({
@@ -60,13 +68,52 @@ const ticketsSlice = createSlice({
 			}
 		},
 		addNewTicket: (state, action) => {
-			const newTicket = action.payload
-			if(state.sortByAscending){
-				state.tickets = [newTicket, ...current(state).tickets]
-			}else{
-				state.tickets = [...current(state).tickets, newTicket]
+			const newTicket = action.payload;
+			if (state.sortByAscending) {
+				state.tickets = [newTicket, ...current(state).tickets];
+			} else {
+				state.tickets = [...current(state).tickets, newTicket];
 			}
-		}
+		},
+
+		filterTickets: (state, {payload}) => {
+			state.filteredTickets = payload;
+		},
+
+		filterTicketsByDate: (state, {payload}) => {
+			state.filteredTicketsByDate = payload;
+		},
+
+		filterTicketsByStatus: (state, {payload}) => {
+			const {data, status} = payload
+			if (state.multipleTicketStatusFiltering.includes(status)) {
+				console.log("Already exist.");
+			} else {
+				state.filteredTicketsByStatus = current(state).filteredTicketsByStatus.concat(data);
+			}
+		},
+
+		sortFilteredTicketsByDate: (state, {payload}) => {
+			state.filteredTicketsByStatus = payload;
+		},
+
+		setMultipleFilterStatus: (state, {payload}) => {
+			if (state.multipleTicketStatusFiltering.includes(payload)) {
+				console.log("Already exist.");
+			} else {
+				state.multipleTicketStatusFiltering =
+					current(state).multipleTicketStatusFiltering.concat(payload);
+			}
+		},
+
+		removeMultipleFilterStatus: (state, {payload}) => {
+			state.multipleTicketStatusFiltering = current(state).multipleTicketStatusFiltering.slice().filter(
+				status => status != payload
+			);
+			state.filteredTicketsByStatus = current(state).filteredTicketsByStatus.slice().filter(
+				ticket => ticket.status.toLowerCase() != payload
+			);
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -79,6 +126,8 @@ const ticketsSlice = createSlice({
 				state.loading = false;
 				if (code === 200 && status === "OK") {
 					state.tickets = data.slice().reverse();
+					state.filteredTickets = data.slice().reverse().filter(ticket => ticket.ticket_type === "service ticket");
+					state.filteredProjectTickets = data.slice().reverse().filter(ticket => ticket.ticket_type === "project ticket");
 					state.successful = true;
 					state.error = false;
 				} else {
@@ -98,4 +147,12 @@ const ticketsSlice = createSlice({
 });
 
 export default ticketsSlice.reducer;
+export const {
+	filterTickets,
+	filterTicketsByDate,
+	filterTicketsByStatus,
+	setMultipleFilterStatus,
+	removeMultipleFilterStatus,
+	sortFilteredTicketsByDate,
+} = ticketsSlice.actions;
 export const ticketsActions = ticketsSlice.actions;

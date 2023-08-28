@@ -28,10 +28,15 @@ const initialState = {
 
 	loading: false,
 	response: null,
+
+	dateValues: {
+		start: "",
+		end: ""
+	}
 };
 
 const reportSlice = createSlice({
-	name: "forgotpassword",
+	name: "reports",
 	initialState,
 
 	reducers: {
@@ -86,6 +91,19 @@ const reportSlice = createSlice({
 			state.exportDocType = payload;
 			state.exportPDFDropdown = false;
 		},
+
+		// UPDATE_DATE: (state, {payload}) => {
+		// 	if (payload.fieldName === "start") {
+		// 		state.dateValues.start = payload.data
+		// 	}else {
+		// 		state.dateValues.end = payload.data
+		// 	}
+		// },
+
+		// CLEAR_DATE: (state, action) => {
+		// 	state.dateValues.start = ""
+		// 	state.dateValues.end = ""
+		// }
 	},
 
 	extraReducers: builder => {
@@ -101,7 +119,9 @@ export const {
 	SET_EXPORT_PDF_DROPDOWN,
 	SET_EXPORT_CSV_DROPDOWN,
 	SET_REPORT_BOARD_STATE_TO_DEFAULT,
-	SET_REPORT_TAB_INDEX
+	SET_REPORT_TAB_INDEX,
+	// UPDATE_DATE,
+	// CLEAR_DATE
 } = reportSlice.actions;
 
 export default reportSlice.reducer;

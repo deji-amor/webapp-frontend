@@ -1,37 +1,100 @@
-import { getDateFromDateTime } from "../../../helpers/date-manipulation";
+export const handleFilterByStatus = (
+	status,
+	filteredTickets,
+	filteredTicketsByDate,
+	filterTicketsByStatus,
+	setMultipleFilterStatus,
+	dispatch
+) => {
+	let filTickets = [];
 
-export const handleFilterByStatus = (status, filteredTickets, tickets, setFilteredTickets) => {
-    let filTickets = []
+	if (filteredTicketsByDate.length != 0) {
+		if (status === "done") {
+			console.log(status);
+			filTickets = filteredTicketsByDate.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterTicketsByStatus({data: filTickets, status: status}));
+			dispatch(setMultipleFilterStatus(status));
+		} else if (status === "in-progress") {
+			filTickets = filteredTicketsByDate.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterTicketsByStatus({data: filTickets, status: status}));
+			dispatch(setMultipleFilterStatus(status));
+		} else if (status === "pending") {
+			filTickets = filteredTicketsByDate.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterTicketsByStatus({data: filTickets, status: status}));
+			dispatch(setMultipleFilterStatus(status));
+		} else {
+			filTickets = filteredTicketsByDate.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterTicketsByStatus({data: filTickets, status: status}));
+			dispatch(setMultipleFilterStatus(status));
+		}
+	} else {
+		if (status === "done") {
+			console.log(status);
+			filTickets = filteredTickets.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterTicketsByStatus({data: filTickets, status: status}));
+			dispatch(setMultipleFilterStatus(status));
+		} else if (status === "in-progress") {
+			filTickets = filteredTickets.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterTicketsByStatus({data: filTickets, status: status}));
+			dispatch(setMultipleFilterStatus(status));
+		} else if (status === "pending") {
+			filTickets = filteredTickets.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterTicketsByStatus({data: filTickets, status: status}));
+			dispatch(setMultipleFilterStatus(status));
+		} else {
+			filTickets = filteredTickets.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterTicketsByStatus({data: filTickets, status: status}));
+			dispatch(setMultipleFilterStatus(status));
+		}
+	}
+};
 
-    if (status === "all") {
-        return setFilteredTickets([...tickets])
-    }
+export const handleCustomerFilterByStatus = (
+	status,
+	filteredCustomers,
+	filteredCustomersByDate,
+	filterCustomersByStatus,
+	dispatch
+) => {
+	let filCustomers = [];
 
-    if (filteredTickets) {
-        if (status === "done") {
-            console.log(status)
-            filTickets = filteredTickets.slice().filter((tic) => tic.status === status)
-            setFilteredTickets([...filTickets])
-        }else if (status === "inprogress") {
-            filTickets = filteredTickets.slice().filter((tic) => tic.status === status)
-            setFilteredTickets([...filTickets])
-        }else {
-            filTickets = filteredTickets.slice().filter((tic) => tic.status === "pending")
-            setFilteredTickets([...filTickets])
-        }
-    }else {
-        console.log(status)
-        if (status === "done") {
-            filTickets = tickets.slice().filter((tic) => tic.status === status)
-            setFilteredTickets([...filTickets])
-        }else if (status === "inprogress") {
-            filTickets = tickets.slice().filter((tic) => tic.status === status)
-            setFilteredTickets([...filTickets])
-        }else {
-            filTickets = tickets.slice().filter((tic) => tic.status === "pending")
-            setFilteredTickets([...filTickets])
-        }
-    }
-
-    console.log(filTickets)
-}
+	if (filteredCustomersByDate.length != 0) {
+		if (status === "active") {
+			filCustomers = filteredCustomersByDate
+				.slice()
+				.filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterCustomersByStatus(filCustomers));
+		} else if (status === "inactive") {
+			filCustomers = filteredCustomersByDate
+				.slice()
+				.filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterCustomersByStatus(filCustomers));
+		} else if (status === "suspend") {
+			filCustomers = filteredCustomersByDate
+				.slice()
+				.filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterCustomersByStatus(filCustomers));
+		}
+		// else {
+		// 	filCustomers = filteredCustomersByDate
+		// 		.slice()
+		// 		.filter(tic => tic.status.toLowerCase() === status);
+		// 	dispatch(filterCustomersByStatus(filCustomers));
+		// }
+	} else {
+		if (status === "active") {
+			filCustomers = filteredCustomers.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterCustomersByStatus(filCustomers));
+		} else if (status === "inactive") {
+			filCustomers = filteredCustomers.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterCustomersByStatus(filCustomers));
+		} else if (status === "suspend") {
+			filCustomers = filteredCustomers.slice().filter(tic => tic.status.toLowerCase() === status);
+			dispatch(filterCustomersByStatus(filCustomers));
+		}
+		// else {
+		// 	filCustomers = filteredCustomers.slice().filter(tic => tic.status.toLowerCase() === status);
+		// 	dispatch(filterCustomersByStatus(filCustomers));
+		// }
+	}
+};

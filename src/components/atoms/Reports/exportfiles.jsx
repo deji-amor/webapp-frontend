@@ -1,4 +1,5 @@
 import React from "react";
+import { CSVLink } from "react-csv";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
 import ExportImage from "../../../assets/password/export.png";
@@ -9,6 +10,7 @@ import {
 	SET_EXPORT_CSV_DROPDOWN,
 	SET_REPORT_BOARD_STATE_TO_DEFAULT,
 } from "../../../state-manager/reducers/reports/report";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const ExportFilesWrapper = styled("div")(() => ({
 	position: "relative",
@@ -68,6 +70,10 @@ const ExportFilesWrapper = styled("div")(() => ({
 		letterSpacing: "0.02em",
 		textAlign: "left",
 		borderRadius: "8px",
+		display: "flex",
+		justifyContent: "space-around",
+		gap: "60px",
+		alignItems: "center",
 	},
 
 	".instant-recurring button:hover, .pdf-csv button:hover": {
@@ -75,13 +81,78 @@ const ExportFilesWrapper = styled("div")(() => ({
 	},
 
 	".pdf-csv": {},
+
+	".instant-recurring button, .pdf-csv button .arrow": {
+		fontSize: "15px",
+	},
 }));
 
 const ExportFiles = ({ text }) => {
 	const dispatch = useDispatch();
-	const { exportDropdown1, exportPDFDropdown, exportCSVDropdown, exportDocType } = useSelector(
-		(state) => state.reports
+	const {
+		exportDropdown1,
+		exportPDFDropdown,
+		exportCSVDropdown,
+		exportDocType,
+		reportTapIndex,
+		customerReport,
+	} = useSelector((state) => state.reports);
+
+	const { filteredTickets, filteredTicketsByDate, filteredTicketsByStatus } = useSelector(
+		(state) => state.ticketReports
 	);
+
+	const { filteredCustomers, filteredCustomersByDate, filteredCustomersByStatus } = useSelector(
+		(state) => state.customerReports
+	);
+
+	console.log(filteredCustomers)
+
+	const ticketHeaders = [
+		{ label: "Ticket Title", key: "ticket_form" },
+		{ label: "Ticket type", key: "ticket_type" },
+		{ label: "Status", key: "status" },
+		{ label: "Date created", key: "created_at" },
+		{ label: "Point of contact name", key: "point_of_contact_name" },
+		{ label: "Point of contact number", key: "point_of_contact_phone_number" },
+		{ label: "Material Procurements", key: "materials_description" },
+		{ label: "Hardware type quantity", key: "hardware_component_type_quantity" },
+		{ label: "Hardware component name", key: "hardware_name" },
+		{ label: "Software application name", key: "software_customization_name" },
+		{ label: "Number of work station", key: "number_of_work_station" },
+		{ label: "Number of work system", key: "number_of_work_station" },
+		{ label: "Scope of work", key: "scope_of_work_description" },
+		{ label: "Number of technician", key: "number_of_technicians" },
+		{ label: "Start date", key: "start_date_time" },
+		{ label: "End date", key: "end_date_time" },
+	];
+
+	const CustomerHeaders = [
+		{ label: "Company name", key: "company_name" },
+		{ label: "First name", key: "first_name" },
+		{ label: "Last name", key: "last_name" },
+		{ label: "Company representative email", key: "email" },
+		{ label: "Company finance email", key: "company_finance_email" },
+		{ label: "Company email", key: "company_name" },
+		{ label: "Status", key: "status" },
+		{ label: "Date Created", key: "datetime" }
+	];
+
+	const filteredTicketServiceReports =
+		filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length === 0
+			? filteredTicketsByStatus
+			: filteredTicketsByDate.length != 0
+			? filteredTicketsByDate
+			: filteredTickets;
+
+	const filteredTicketProjectReport = [];
+
+	const filteredCustomerReport =
+		filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0
+			? filteredCustomersByStatus
+			: filteredCustomersByDate.length != 0
+			? filteredCustomersByDate
+			: filteredCustomers;
 
 	return (
 		<ExportFilesWrapper>
@@ -94,41 +165,99 @@ const ExportFiles = ({ text }) => {
 				<img className="export-icon" src={ExportImage} alt="export files" />
 			</button>
 			<div className="exp">
-				{exportDropdown1 && (exportPDFDropdown || exportCSVDropdown) && (
-					<div className="instant-recurring">
-						<button
-							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
-							className="instant"
-							type="button"
-						>
-							Instant {exportDocType} Export
-						</button>
-						<button
-							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
-							className="recurring"
-							type="button"
-						>
-							Recurring {exportDocType} Export
-						</button>
-					</div>
-				)}
+				{exportDropdown1 &&
+					(exportPDFDropdown || exportCSVDropdown) &&
+					((customerReport && (
+						<div className="instant-recurring">
+							<button
+								onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+								className="instant"
+								type="button"
+							>
+								<CSVLink
+									data={filteredCustomerReport}
+									headers={CustomerHeaders}
+									filename="admin_filtered_customers.csv"
+									target="_blank"
+								>
+									Instant {exportDocType} Export
+								</CSVLink>
+							</button>
+							<button
+								onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+								className="recurring"
+								type="button"
+							>
+								Recurring {exportDocType} Export
+							</button>
+						</div>
+					)) ||
+						(reportTapIndex === 0 && (
+							<div className="instant-recurring">
+								<button
+									onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+									className="instant"
+									type="button"
+								>
+									<CSVLink
+										data={filteredTicketServiceReports}
+										headers={ticketHeaders}
+										filename="admin_filtered_service_tickets.csv"
+										target="_blank"
+									>
+										Instant {exportDocType} Export
+									</CSVLink>
+								</button>
+								<button
+									onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+									className="recurring"
+									type="button"
+								>
+									Recurring {exportDocType} Export
+								</button>
+							</div>
+						)) || (
+							<div className="instant-recurring">
+								<button
+									onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+									className="instant"
+									type="button"
+								>
+									<CSVLink
+										data={filteredTicketProjectReport}
+										headers={ticketHeaders}
+										filename="admin_filtered_project_tickets.csv"
+										target="_blank"
+									>
+										Instant {exportDocType} Export
+									</CSVLink>
+								</button>
+								<button
+									onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+									className="recurring"
+									type="button"
+								>
+									Recurring {exportDocType} Export
+								</button>
+							</div>
+						))}
 				{exportDropdown1 && (
 					<div className="pdf-csv">
 						<button
 							onClick={() => dispatch(SET_EXPORT_PDF_DROPDOWN("PDF"))}
-							className="pdf"
+							className="but"
 							type="button"
 						>
-							PDF
-							{/* <img src="" alt="pdf" /> */}
+							<span>PDF</span>
+							<ArrowForwardIosIcon className="arrow" />
 						</button>
 						<button
 							onClick={() => dispatch(SET_EXPORT_CSV_DROPDOWN("CSV"))}
-							className="csv"
+							className="but"
 							type="button"
 						>
-							CSV
-							{/* <img src="" alt="csv" /> */}
+							<span>CSV</span>
+							<ArrowForwardIosIcon className="arrow" />
 						</button>
 					</div>
 				)}

@@ -1,33 +1,52 @@
 export const filterTickets = [
-    {
-        status: "all",
-        title: "All Tickets"
-    },
 	{
 		status: "done",
         title: "Tickets Done"
 	},
 	{
-		status: "inprogress",
+		status: "in-progress",
         title: "Tickets Inprogress"
 	},
 	{
 		status: "pending",
         title: "Tickets Pending"
 	},
+    {
+        status: "technician enroute",
+        title: "Technician Enroute"
+    }
 ];
 
-export const filterCustomer = [
+export const filterCustomers = [
+	{
+        status: "active",
+        title: "Active Customers"
+    },
     {
-        status: "All Customers",
+        status: "inactive",
+        title: "Inactive Customers",
+    },
+    {
+        status: "suspended",
+        title: "Suspended Customers",
+    }
+];
+
+export const singleFilterCustomers = [
+    {
+        status: "all",
+        title: "All"
     },
 	{
-        status: "Active Customers",
+        status: "active",
+        title: "Active"
     },
     {
-        status: "Inactive Customers",
+        status: "inactive",
+        title: "Inactive",
     },
     {
-        status: "Suspended Customers",
+        status: "suspend",
+        title: "Suspend",
     }
 ];

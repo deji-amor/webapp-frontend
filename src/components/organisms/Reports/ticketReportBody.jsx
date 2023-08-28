@@ -1,50 +1,71 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch, createDispatchHook } from "react-redux";
 import TypeFilterBoard from "../../molecules/Reports/reportFiltersSection";
-import ReportTable from "../../molecules/Reports/reportTable";
+import ReportTicketTable from "../../molecules/Reports/reportTicketTable";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
 import Placeholder from "../../molecules/general/Placeholder";
+import {
+	sortFilteredTicketsByDate,
+	filterTicketsByDate,
+	filterTickets,
+} from "../../../state-manager/reducers/tickets/tickets";
 
 const TicketReportBody = () => {
-	const [filteredTickets, setFilteredTickets] = useState([]);
-	const { tickets } = useSelector((state) => state.tickets);
-	const { reportTapIndex } = useSelector((state) => state.reports);
+	const [toggle, setToggle] = useState(true);
+	const {
+		filteredTickets: filteredT,
+		filteredTicketsByDate: filteredTBD,
+		filteredTicketsByStatus: filteredTBS,
+		filteredProjectTickets,
+		filteredProjectTicketsByDate,
+		filteredProjectTicketsByStatus,
+		reportTapIndex
+	} = useSelector((state) => state.ticketReports);
+	const dispatch = useDispatch();
 
-	console.log(reportTapIndex)
+	const filteredTickets = reportTapIndex === 0 ? filteredT : filteredProjectTickets
+	const filteredTicketsByDate = reportTapIndex === 0 ?  filteredTBD : filteredProjectTicketsByDate
+	const filteredTicketsByStatus = reportTapIndex === 0 ? filteredTBS : filteredProjectTicketsByStatus
 
 	const handleTicketDateRange = useCallback(
 		(start, end) => {
-			if (filteredTickets.length != 0) {
-				const filteredDate = filteredTickets.slice().filter((ticket) => {
-					const start_date = new Date(start);
-					const end_date = new Date(end);
-					const ticket_start_date = new Date(getDateFromDateTime(ticket.start_date_time));
+			setToggle(true);
+			if (start != "NaN-NaN-NaN" && end != "NaN-NaN-NaN") {
+				if (filteredTicketsByStatus.length != 0) {
+					console.log("Status");
+					const filteredDate = filteredTicketsByStatus.slice().filter((ticket) => {
+						const start_date = new Date(start);
+						const end_date = new Date(end);
+						const ticket_start_date = new Date(getDateFromDateTime(ticket.start_date_time));
 
-					return ticket_start_date >= start_date && ticket_start_date <= end_date;
-				});
+						return ticket_start_date >= start_date && ticket_start_date <= end_date;
+					});
 
-				setFilteredTickets(filteredDate);
-			} else {
-				const filteredDate = tickets.slice().filter((ticket) => {
-					const start_date = new Date(start);
-					const end_date = new Date(end);
-					const ticket_start_date = new Date(getDateFromDateTime(ticket.start_date_time));
+					dispatch(filterTicketsByDate(filteredDate));
+				} else {
+					console.log("Status");
+					const filteredDate = filteredTickets.slice().filter((ticket) => {
+						const start_date = new Date(start);
+						const end_date = new Date(end);
+						const ticket_start_date = new Date(getDateFromDateTime(ticket.start_date_time));
 
-					return ticket_start_date >= start_date && ticket_start_date <= end_date;
-				});
+						return ticket_start_date >= start_date && ticket_start_date <= end_date;
+					});
 
-				setFilteredTickets(filteredDate);
+					dispatch(filterTicketsByDate(filteredDate));
+				}
 			}
 		},
-		[tickets]
+		[filteredTickets, dispatch]
 	);
 
 	const handleTicketsSort = (type) => {
 		let sortedTickets = null;
-		if (filteredTickets.length != 0) {
+
+		if (filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length === 0) {
+			console.log("Ascending");
 			if (type === "ascending") {
-				console.log("Ascending");
-				sortedTickets = filteredTickets
+				sortedTickets = filteredTicketsByStatus
 					.slice()
 					.sort((t1, t2) =>
 						t1.start_date_time > t2.start_date_time
@@ -53,24 +74,48 @@ const TicketReportBody = () => {
 							? -1
 							: 0
 					);
-				setFilteredTickets([...sortedTickets]);
+				dispatch(sortFilteredTicketsByDate(sortedTickets));
 			} else {
-				console.log("Descending");
-				sortedTickets = filteredTickets
+				sortedTickets = filteredTicketsByStatus
 					.slice()
 					.sort((t1, t2) =>
 						t1.start_date_time > t2.start_date_time
 							? -1
-							: t1.start_date_time > t2.start_date_time
+							: t1.start_date_time < t2.start_date_time
 							? 1
 							: 0
 					);
-				setFilteredTickets([...sortedTickets]);
+				dispatch(sortFilteredTicketsByDate(sortedTickets));
+			}
+		} else if (filteredTicketsByDate.length != 0) {
+			console.log("Ascending");
+			if (type === "ascending") {
+				sortedTickets = filteredTicketsByDate
+					.slice()
+					.sort((t1, t2) =>
+						t1.start_date_time > t2.start_date_time
+							? 1
+							: t1.start_date_time < t2.start_date_time
+							? -1
+							: 0
+					);
+				dispatch(filterTicketsByDate(sortedTickets));
+			} else {
+				sortedTickets = filteredTicketsByDate
+					.slice()
+					.sort((t1, t2) =>
+						t1.start_date_time > t2.start_date_time
+							? -1
+							: t1.start_date_time < t2.start_date_time
+							? 1
+							: 0
+					);
+				dispatch(filterTicketsByDate(sortedTickets));
 			}
 		} else {
+			console.log("Descending");
 			if (type === "ascending") {
-				console.log("Ascending");
-				sortedTickets = tickets
+				sortedTickets = filteredTickets
 					.slice()
 					.sort((t1, t2) =>
 						t1.start_date_time > t2.start_date_time
@@ -79,46 +124,33 @@ const TicketReportBody = () => {
 							? -1
 							: 0
 					);
-				setFilteredTickets([...sortedTickets]);
+				dispatch(filterTickets(sortedTickets));
 			} else {
-				console.log("Descending");
-				sortedTickets = tickets
+				sortedTickets = filteredTickets
 					.slice()
 					.sort((t1, t2) =>
-						t1.start_date_time < t2.start_date_time
+						t1.start_date_time > t2.start_date_time
 							? -1
-							: t1.start_date_time > t2.start_date_time
+							: t1.start_date_time < t2.start_date_time
 							? 1
 							: 0
 					);
-				setFilteredTickets([...sortedTickets]);
+				dispatch(filterTickets(sortedTickets));
 			}
 		}
 	};
 
 	return (
 		<>
-			{(tickets.length != 0 && (
+			{(filteredTickets.length != 0 && (
 				<>
 					<TypeFilterBoard
 						handleReportDateRange={handleTicketDateRange}
 						handleReportsSort={handleTicketsSort}
-						// handleTicketsFilter={handleTicketsFilter}
-						filterList={filteredTickets}
-						reportList={tickets}
-						setFilteredReports={setFilteredTickets}
-						filteredReports={filteredTickets.length != 0 ? filteredTickets : tickets}
+						toggle={toggle}
+						setToggle={setToggle}
 					/>
-					{(reportTapIndex === 0 && (
-						<ReportTable
-							filteredReports={filteredTickets.length != 0 ? filteredTickets : tickets}
-						/>
-					)) ||
-						(reportTapIndex === 1 && (
-							<ReportTable
-								filteredReports={[]}
-							/>
-						))}
+					{(reportTapIndex === 0 && <ReportTicketTable />) || <ReportTicketTable />}
 				</>
 			)) || (
 				<Placeholder

@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+	filterTicketsByStatus,
+	setMultipleFilterStatus,
+	removeMultipleFilterStatus,
+} from "../../../state-manager/reducers/reports/tickets/ticketreport";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { handleFilterByStatus } from "../../organisms/Reports/filters";
+import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
 const FilterByWrapper = styled("div")(() => ({
 	position: "relative",
 	left: "17px",
 	top: "20px",
+	display: "flex",
+	gap: "10px",
 
 	button: {
 		minWidth: "140px",
@@ -23,7 +31,7 @@ const FilterByWrapper = styled("div")(() => ({
 
 	".dropdownCard": {
 		width: "167px",
-		height: "130px",
+		height: "140px",
 		overflow: "hidden",
 		background: "white",
 		borderRadius: "8px",
@@ -62,49 +70,92 @@ const FilterByWrapper = styled("div")(() => ({
 		cursor: "pointer",
 		background: "rgba(76, 111, 255, 0.08)",
 	},
+
+	".status": {
+		display: "flex",
+		gap: "20px",
+		alignItems: "center",
+		color: "rgba(43, 46, 114, 1)",
+	},
+
+	".status span": {
+		border: ".5px solid rgba(43, 46, 114, 1)",
+		borderRadius: "8px",
+		padding: "5px",
+		cursor: "pointer",
+	},
+
+	".status span:hover": {
+		background: "rgba(43, 46, 114, 1)",
+		color: "white",
+	},
 }));
 
-const FilterBy = ({ dropItems, filterList, ticketList, setFilteredTickets }) => {
+const FilterBy = ({ dropItems }) => {
 	const [text, setText] = useState("All Tickets");
-	const [status, setStatus] = useState("")
+	const [status, setStatus] = useState("");
 	const [toggle, setToggle] = useState(false);
+	const { filteredTickets, filteredTicketsByDate, multipleTicketStatusFiltering } = useSelector(
+		(state) => state.ticketReports
+	);
+	const dispatch = useDispatch();
+
+	const handleClick = (t) => {
+		dispatch(removeMultipleFilterStatus(t));
+	};
 
 	useEffect(() => {
-		handleFilterByStatus(status, filterList, ticketList, setFilteredTickets);
+		if (status != "") {
+			handleFilterByStatus(
+				status,
+				filteredTickets,
+				filteredTicketsByDate,
+				filterTicketsByStatus,
+				setMultipleFilterStatus,
+				dispatch
+			);
+		}
 	}, [status]);
 
 	return (
 		<FilterByWrapper>
-			<button type="button" onClick={() => setToggle((prev) => !prev)}>
-				{text}
-			</button>
-			{toggle && (
-				<div className="dropdownCard">
-					{dropItems.map((item) => (
-						<div
-							key={item.status}
-							className={text === item.title ? "item active" : "item"}
-							onClick={() => {
-								setToggle(false);
-								setStatus(item.status)
-								setText(item.title);
-							}}
-						>
-							{item.title}
-						</div>
-					))}
-				</div>
-			)}
+			<div>
+				<button type="button" onClick={() => setToggle((prev) => !prev)}>
+					All Tickets
+					<ExpandMoreIcon />
+				</button>
+				{toggle && (
+					<div className="dropdownCard">
+						{dropItems.map((item) => (
+							<div
+								key={item.status}
+								className="item"
+								onClick={() => {
+									// setToggle(false);
+									setStatus(item.status);
+									// setText(item.title);
+								}}
+							>
+								{item.title}
+							</div>
+						))}
+					</div>
+				)}
+			</div>
+			<div className="status">
+				{multipleTicketStatusFiltering?.map((ticket) => (
+					<span key={ticket} onClick={() => handleClick(ticket)}>
+						{ticket} <ClearOutlinedIcon />
+					</span>
+				))}
+			</div>
 		</FilterByWrapper>
 	);
 };
 
 FilterBy.propTypes = {
 	dropItems: PropTypes.array,
-	filterList: PropTypes.array,
-	ticketList: PropTypes.array,
-	handleTicketsFilter: PropTypes.func,
-	setFilteredTickets: PropTypes.func,
+	filteredReports: PropTypes.array,
 };
 
 export default FilterBy;
