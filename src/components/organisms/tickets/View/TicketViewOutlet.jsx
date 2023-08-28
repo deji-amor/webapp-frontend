@@ -9,7 +9,7 @@ import ExportTicket from './ExportTicket'
 import ChangeTicketStatus from './ChangeTicketStatus'
 import TicketCustomerDetail from './TicketCustomerDetail'
 import HorizontalRule from '../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule'
-import LinkButton from './linkButton'
+import LinkButton from './LinkButton'
 
 const TicketViewOutlet = () => {
     const params = useParams();
