@@ -103,7 +103,7 @@ const TicketHistory = () => {
 				</OrderText>
 			</div>
 			<HorizontalRule />
-			<div className="max-h-[12rem] overflow-y-auto">
+			<div className="max-h-[12rem] overflow-y-auto max-w-full">
         <HistoryItemList />
       </div>
 		</div>

@@ -1,6 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { styled } from '@mui/material'
+import React from "react";
+import { styled } from "@mui/material";
+import TicketTemplateDetails from "./Details/TicketTemplateDetails";
+import { PDFDownloadLink, Document, Page, StyleSheet, View } from "@react-pdf/renderer";
 
 const ExportButton = styled("button")`
 	display: flex;
@@ -32,17 +33,38 @@ const ExportIcon = () => (
 	</svg>
 );
 
-const ExportTicket = props => {
-  return (
+const styles = StyleSheet.create({
+	page: {
+		flexDirection: "row",
+		backgroundColor: "#E4E4E4",
+	},
+	section: {
+		margin: 10,
+		padding: 10,
+		flexGrow: 1,
+	},
+});
+
+const MyDoc = () => (
+	<Document>
+		<Page size="A4" style={styles.page}>
+			<View>its all good</View>
+			{/* <TicketTemplateDetails /> */}
+		</Page>
+	</Document>
+);
+
+const ExportTicket = () => {
+	return (
 		<ExportButton className="flex items-center justify-start gap-[0.5rem]">
-			<span>Export</span>
-      <span>
-        <ExportIcon />
-      </span>
+			<PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
+				{({ blob, url, loading, error }) => (loading ? "Loading document..." : "Export")}
+			</PDFDownloadLink>
+			<span>
+				<ExportIcon />
+			</span>
 		</ExportButton>
 	);
-}
+};
 
-ExportTicket.propTypes = {}
-
-export default ExportTicket
+export default ExportTicket;
