@@ -4,27 +4,32 @@ import { createTicketActions } from "../state-manager/reducers/tickets/ticketCre
 
 const useCreateTicketInput = (pointer, validateValue) => {
 	const allPossibleFields = useSelector((state) => state.ticketCreation.allPossibleFields);
-	const dispatch = useDispatch()
-	const enteredValue = allPossibleFields[pointer]
+	const dispatch = useDispatch();
+	const enteredValue = allPossibleFields[pointer];
 	const isTouched = allPossibleFields[`${pointer}IsTouched`];
 	const hasError = allPossibleFields[`${pointer}HasError`];
-	const valueIsValid = allPossibleFields[`${pointer}IsValid`]
+	const valueIsValid = allPossibleFields[`${pointer}IsValid`];
 
 	const setEnteredValue = (value) => {
-		dispatch(createTicketActions.updateField({ key: pointer, value:  value}));
-	}
+		dispatch(createTicketActions.updateField({ key: pointer, value: value }));
+	};
 
 	const setIsTouched = (bool) => {
 		dispatch(createTicketActions.updateField({ key: `${pointer}IsTouched`, value: bool }));
-	}
+	};
 
 	const setHasError = (bool) => {
 		dispatch(createTicketActions.updateField({ key: `${pointer}HasError`, value: bool }));
-	}
+	};
 
 	useEffect(() => {
-		dispatch(createTicketActions.updateField({ key: `${pointer}IsValid`, value: validateValue(enteredValue)[0] }));
-	}, [enteredValue, dispatch, pointer, validateValue])
+		dispatch(
+			createTicketActions.updateField({
+				key: `${pointer}IsValid`,
+				value: validateValue(enteredValue)[0],
+			})
+		);
+	}, [enteredValue, dispatch, pointer, validateValue]);
 
 	const id = useId();
 	// USE STATE const [enteredValue, setEnteredValue] = useState("");

@@ -24,17 +24,19 @@ export const uploadFile = async file => {
 	}
 };
 
-export const deleteFile = async (fileKey) => {
-  const params = {
-		Bucket: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_BUCKET_NAME, // Replace with your S3 bucket name
+export const deleteFileByUrl = async fileUrl => {
+	// Extract the file key from the URL
+	const urlParts = fileUrl.split("/");
+	const fileKey = urlParts[urlParts.length - 1];
+
+	const params = {
+		Bucket: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_BUCKET_NAME,
 		Key: fileKey,
 	};
 
-  try {
-    return await s3Client.send(new DeleteObjectCommand(params));
-  } catch (error) {
-    console.error('Error deleting file:', error);
-  }
+	try {
+		return await s3Client.send(new DeleteObjectCommand(params));
+	} catch (error) {
+		console.error("Error deleting file:", error);
+	}
 };
-
-export default deleteFile;

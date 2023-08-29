@@ -37,10 +37,10 @@ const initialState = {
 	activeTickets: [],
 	activeTicketsStartPoint: 0,
 	activeTicketsEndPoint: 0,
-	ticketsOnEachPage: 5,
+	ticketsOnEachPage: 10,
 	sortByAscending: true,
 	filterByStatus: "All",
-	statuses: ["All", "Done", "Pending", "Inprogress", "Overdue"],
+	statuses: ["All", "Done", "Pending", "Technician enroute", "Inprogress", "Overdue"]
 };
 
 const ticketsSlice = createSlice({
@@ -67,6 +67,14 @@ const ticketsSlice = createSlice({
 				state.tickets = [...current(state).tickets, newTicket];
 			}
 		},
+		replaceTicket: (state, action) => {
+			const newTicket = action.payload;
+			console.log({newTicket})
+			const tickets = current(state).tickets.slice()
+			const ticketInd = tickets.findIndex(ticket => ticket.id === newTicket.id);
+			tickets.splice(ticketInd, 1, newTicket)
+			state.tickets = tickets
+		}
 	},
 	extraReducers: builder => {
 		builder

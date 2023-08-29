@@ -10,6 +10,10 @@ import forgotPasswordReducer from "./reducers/password/forgotpassword"
 import resetPasswordReducer from "./reducers/password/resetpassword"
 import superAdminReducer from "./reducers/superAdminOnboarding/superadmin"
 import ticketCreationReducer from "./reducers/tickets/ticketCreation"
+import ticketEditionReducer from "./reducers/tickets/ticketEdition"
+import ticketDetailsReducer from "./reducers/tickets/ticketDetails"
+import ticketHistoryReducer from "./reducers/tickets/ticketHistory"
+import testingReducer from "./reducers/tickets/testing"
 import ticketsReducer from "./reducers/tickets/tickets"
 import reportsReducer from "./reducers/reports/report"
 import ticketReportReducer from "./reducers/reports/tickets/ticketreport"
@@ -22,13 +26,17 @@ const persistConfig = {
 	key: "root",
 	storage,
 	blacklist: [
-        "ui",
+		"ui",
 		"loginAdmin",
 		"loginCustomer",
 		"forgotpassword",
 		"resetpassword",
 		"logout",
 		"ticketCreation",
+		"ticketEdition",
+		"ticketDetails",
+		"ticketHistory",
+        "testing",
 		"tickets",
         "customers",
         "users",
@@ -49,6 +57,10 @@ const rootReducers = combineReducers({
     authUser: authUserReducer,
     users: usersReducer,
     ticketCreation: ticketCreationReducer,
+    ticketEdition: ticketEditionReducer,
+    ticketDetails: ticketDetailsReducer,
+    ticketHistory: ticketHistoryReducer,
+    testing: testingReducer,
     tickets: ticketsReducer, 
     customers: customersReducer,
     reports: reportsReducer,

@@ -4,6 +4,7 @@ import { styled } from "@mui/material";
 
 const BlueThemedXtraSm = ({ children }) => {
 	const Text = styled("p")`
+		display: inline-block;
 		color: #2b2e72;
 		font-family: "Poppins", sans-serif;
 		font-size: 0.875rem;

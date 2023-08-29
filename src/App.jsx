@@ -20,6 +20,12 @@ import CustomerAppLayout from "./pages/CustomerAppLayout";
 import Dashboard from "./pages/app/Dashboard";
 import CustomerDashboard from "./pages/customerApp/Dashboard";
 import Tickets from "./pages/app/Tickets";
+import InitialAdminCreationFormAndModal from "./components/organisms/tickets/CreateTicketSuperAdmin/InitialAdminCreationFormAndModal";
+import TicketTemplateCreationOrEditionForm from "./components/organisms/tickets/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm";
+import EditTicket from "./components/organisms/tickets/Edit/EditTicket";
+import ViewTicket from "./components/organisms/tickets/View/ViewTicket";
+import TicketDetail from "./components/organisms/tickets/View/Details/TicketDetail";
+import TicketHistory from "./components/organisms/tickets/View/History/TicketHistory";
 import Users from "./pages/app/Users";
 import Reports from "./pages/app/Reports";
 import CustomerReports from "./pages/customerApp/Reports";
@@ -59,8 +65,17 @@ function App() {
 			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
 			children: [
 				{ path: "dashboard", element:<MemoizedProtectedRoute><Dashboard /></MemoizedProtectedRoute>, index: true },
-				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute> },
-				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute> },
+				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute>, children: [
+					{path: "create/:customerId", element: <TicketTemplateCreationOrEditionForm/> },
+					{path: "edit/:ticketId", element: <EditTicket/> },
+					{path: "view", element: <ViewTicket/>, children: [
+						{path: "detail/:ticketId", element: <TicketDetail/>},
+						{path: "history/:ticketId", element: <TicketHistory/>}
+					] }
+				] },
+				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute>, children: [
+					// {path: "edit/:userId", element: <></>}
+				] },
 				{ path: "reports", element: <MemoizedProtectedRoute><Reports /></MemoizedProtectedRoute> },
 			],
 		},
