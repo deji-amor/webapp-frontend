@@ -1,34 +1,6 @@
 import React from 'react'
-import DetailText from "../DetailText";
-import { styled } from '@mui/material';
-
-const AttachmentButton = styled("button")`
-	padding: 0.5rem;
-	gap: 0.25rem;
-	border-radius: 0.5rem;
-	border: 1px solid #706e6e;
-`;
-
-const AttachmentText = styled("p")`
-	color: #706e6e;
-	font-family: Poppins;
-	font-size: 0.875rem;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 1.25rem; /* 142.857% */
-	letter-spacing: 0.00938rem;
-`;
-
-const DownloadText = styled("a")`
-  display: inline-flex;
-	color: #2b2e72;
-	font-family: Poppins;
-	font-size: 0.875rem;
-	font-style: normal;
-	font-weight: 600;
-	line-height: 1.25rem; /* 142.857% */
-	letter-spacing: 0.00938rem;
-`;
+import PropTypes from "prop-types";
+import { StyleSheet, View, Text, Image, Svg, Link } from "@react-pdf/renderer";
 
 const ClipIcon = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none">
@@ -49,33 +21,78 @@ const Attachments = ({ ticket}) => {
 		return pathAndQuery;
 	}
 
+		const styles = StyleSheet.create({
+			section: {
+				display: "flex",
+				flexDirection: "row",
+				borderTopWidth: 1,
+				borderTopColor: "#ECECEC",
+				borderBottomWidth: 1,
+				borderBottomColor: "#ECECEC",
+			},
+			side: {
+				flexBasis: "50%",
+				paddingTop: 12,
+				paddingBottom: 12,
+			},
+			detailText: {
+				color: "#706e6e",
+				fontSize: 11.2,
+				fontWeight: 400,
+			},
+			detailTextBolder: {
+				color: "#333",
+				fontSize: 11.2,
+				fontWeight: 500,
+			},
+			AttachmentButton: {
+				display: "flex",
+				flexDirection: "row",
+				justifyContent: "space-between",
+				rowGap: 20,
+				padding: 6.4,
+				borderRadius: 6.4,
+				borderColor: "#706e6e",
+				borderWidth: 1,
+			},
+			AttachmentText: {
+				color: "#706e6e",
+				fontSize: 11.2,
+				fontWeight: 400,
+			},
+			DownloadText: {
+				color: "#2b2e72",
+				fontSize: 11.2,
+				fontWeight: 600,
+			},
+		});
+
 	return (
 		<>
 			{scope_of_work_document && (
-				<div className="flex">
-					<div className="basis-[50%] py-[0.75rem]">
-						<DetailText>Attachment(s)</DetailText>
-					</div>
-					<div className="basis-[50%] py-[0.75rem]">
-						<AttachmentButton
-							type="button"
-							className="flex items-center justify-between space-x-[3rem]"
-						>
-							<AttachmentText className="flex items-center gap-[0.5rem]">
-								<ClipIcon />
-								<span className="max-w-[13rem] truncate">
-									{removeDomainFromUrl(scope_of_work_document)}
-								</span>
-							</AttachmentText>
-							<DownloadText href={`${scope_of_work_document}`} download>
+				<View style={styles.section}>
+					<View style={styles.side}>
+						<Text style={styles.detailText}>Attachment(s)</Text>
+					</View>
+					<View style={styles.side}>
+						<View style={styles.AttachmentButton}>
+							<Text style={styles.AttachmentText}>
+								{removeDomainFromUrl(scope_of_work_document)}
+							</Text>
+							<Link src={scope_of_work_document} style={styles.DownloadText}>
 								Download
-							</DownloadText>
-						</AttachmentButton>
-					</div>
-				</div>
+							</Link>
+						</View>
+					</View>
+				</View>
 			)}
 		</>
 	);
+};
+
+Attachments.propTypes = {
+	ticket: PropTypes.object,
+	customer: PropTypes.object,
 };
 
 export default Attachments

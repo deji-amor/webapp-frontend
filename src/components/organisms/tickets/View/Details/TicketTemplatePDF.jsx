@@ -94,7 +94,7 @@ const TicketTemplatePDF = ({ticket, customer}) => {
 					{location && <Location ticket={ticket} />}
 					{dropOffLocation && <DropOffLocation ticket={ticket} />}
 					{pickUpLocation && <PickUpLocation ticket={ticket} />}
-					{additionalFields && <AdditionalFields ticket={ticket} />}
+					{/* {additionalFields && <AdditionalFields ticket={ticket} />} */}
 					{<Attachments ticket={ticket}/>}
 				</View>
 			</Page>
