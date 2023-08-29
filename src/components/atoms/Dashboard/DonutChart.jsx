@@ -7,11 +7,11 @@ const DonutChart = ({ data }) => {
       display: false,
     },
     tooltips: {
-      enabled: false, // Disable tooltips
+      enabled: false,
     },
     plugins: {
       datalabels: {
-        display: false, // Disable data labels
+        display: false,
       },
     },
   };

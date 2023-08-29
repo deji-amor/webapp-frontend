@@ -1,8 +1,7 @@
 import React from "react";
-import { Avatar, Typography, Box } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PersonIcon from '@mui/icons-material/Person';
-import AvatarDropdown from "../../atoms/Dashboard/AvatarDropdown";
 
 const UserProfile = ({ onClick }) => {
   return (

@@ -1,9 +1,8 @@
 import React from "react";
-import { Box, Typography, Divider, Avatar, styled } from "@mui/material";
+import { Box, Avatar, styled } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import EditIcon from "@mui/icons-material/Edit";
-import EditableField from "../../atoms/Dashboard/EditableField";
 import { useSelector } from "react-redux";
 
 const AvatarDropdown = ({ onEditClick }) => {

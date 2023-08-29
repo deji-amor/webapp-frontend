@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import React, { Component } from "react";
 
-class ProjectTicketDetails extends Component {
+class CustomerDetails extends Component {
 	state = {
 		totalCount: null,
 		progressBars: [
@@ -92,7 +92,7 @@ class ProjectTicketDetails extends Component {
 			<div>
 				<style>{cssKeyframes}</style>
 				<Text>
-					Total Project Tickets:{" "}
+					Total Customers:{" "}
 					<span style={{ color: "#2b2e72", fontWeight: "600", fontSize: "20px" }}>
 						{totalCount}
 					</span>
@@ -125,4 +125,4 @@ class ProjectTicketDetails extends Component {
 	}
 }
 
-export default ProjectTicketDetails;
+export default CustomerDetails;

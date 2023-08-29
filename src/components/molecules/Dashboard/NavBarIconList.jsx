@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import NotificationsNoneSharpIcon from "@mui/icons-material/NotificationsNoneSharp";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import PersonIcon from "@mui/icons-material/Person";
 import NavbarDropdown from "./NavbarDropdown";
 import ProfileDropdownMenu from "../../organisms/Dashboard/ProfileDropdownMenu";
 
