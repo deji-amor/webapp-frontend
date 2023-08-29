@@ -14,7 +14,7 @@ const SoftwareInstallation = () => {
 		<>
 			<div className="flex">
 				<div className="basis-[50%] py-[0.75rem]">
-					<DetailText>Software to Customize Name</DetailText>
+					<DetailText>Software to Installation Name</DetailText>
 				</div>
 				<div className="basis-[50%] py-[0.75rem]">
 					<DetailText>{software_installation_name}</DetailText>
@@ -22,7 +22,7 @@ const SoftwareInstallation = () => {
 			</div>
 			<div className="flex">
 				<div className="basis-[50%] py-[0.75rem]">
-					<DetailText>Software To Customize Quantity</DetailText>
+					<DetailText>Software To Installation Quantity</DetailText>
 				</div>
 				<div className="basis-[50%] py-[0.75rem]">
 					<DetailText>{software_installation_quantity}</DetailText>
