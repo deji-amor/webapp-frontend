@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import ReportTabs from "../../atoms/Reports/tabs";
 import ReportSort from "../../atoms/Reports/sort";
 import FilterBy from "../../atoms/Reports/filter";
+import ProjectFilterBy from "../../atoms/Reports/projectfilter";
 import ExportFiles from "../../atoms/Reports/exportfiles";
 import DateFilter from "../../atoms/Reports/datefilter";
+import ProjectDateFilter from "../../atoms/Reports/projectdateFilter";
 import CustomerFilterBy from "../../atoms/Reports/customerFilter";
-import { SET_REPORT_TAB_INDEX } from "../../../state-manager/reducers/reports/tickets/ticketreport"
+import { SET_REPORT_TAB_INDEX } from "../../../state-manager/reducers/reports/tickets/ticketreport";
 
 const ReportFilterBoardWrapper = styled("div")(() => ({
 	width: "1,133px",
@@ -41,34 +43,34 @@ const ReportFilterBoardWrapper = styled("div")(() => ({
 }));
 
 const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, setToggle }) => {
-	const [index, setIndex] = useState(0);
 	const { customerReport } = useSelector((state) => state.reports);
-	const { filteredTickets } = useSelector((state) => state.ticketReports);
+	const { filteredTickets, filteredProjectTickets, reportTabIndex } = useSelector(
+		(state) => state.ticketReports
+	);
 	const { filteredCustomers } = useSelector((state) => state.customerReports);
 
 	const dispatch = useDispatch();
 
-	const handleChange = (index) => {
-		setIndex(index);
-		dispatch(SET_REPORT_TAB_INDEX(index));
+	const handleChange = (ind) => {
+		dispatch(SET_REPORT_TAB_INDEX(ind));
 	};
 
-	const a11yProps = (index) => {
+	const a11yProps = (ind) => {
 		return {
-			id: `simple-tab-${index}`,
-			"aria-controls": `simple-tabpanel-${index}`,
+			id: `simple-tab-${ind}`,
+			"aria-controls": `simple-tabpanel-${ind}`,
 		};
 	};
 
 	return (
 		<ReportFilterBoardWrapper>
 			<div className="tab-sort">
-				<ReportTabs index={index} handleChange={handleChange}>
+				<ReportTabs index={reportTabIndex} handleChange={() => handleChange(reportTabIndex)}>
 					{!customerReport && (
 						<CustomTab label="Service Tickets" {...a11yProps(0)} onClick={() => handleChange(0)} />
 					)}
 					{!customerReport && (
-						<CustomTab label="Project Tickets" {...a11yProps(0)} onClick={() => handleChange(1)} />
+						<CustomTab label="Project Tickets" {...a11yProps(1)} onClick={() => handleChange(1)} />
 					)}
 				</ReportTabs>
 
@@ -80,12 +82,16 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 				{customerReport ? (
 					<CustomerFilterBy dropItems={filterCustomers} filteredReports={filteredCustomers} />
 				) : (
-					<FilterBy dropItems={filterTickets} filteredReports={filteredTickets} />
+					(reportTabIndex === 0 && (
+						<FilterBy dropItems={filterTickets} filteredReports={filteredTickets} />
+					)) || <ProjectFilterBy dropItems={filterTickets} filteredReports={filteredProjectTickets} />
 				)}
 				<ExportFiles text={"Export Tickets"} />
 			</div>
 			<div>
-				<DateFilter handleReportDateRange={handleReportDateRange} />
+				{(reportTabIndex === 0 && <DateFilter handleReportDateRange={handleReportDateRange} />) || (
+					<ProjectDateFilter handleReportDateRange={handleReportDateRange} />
+				)}
 			</div>
 		</ReportFilterBoardWrapper>
 	);

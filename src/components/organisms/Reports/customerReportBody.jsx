@@ -19,6 +19,8 @@ const CustomerReportBody = () => {
 	);
 	const dispatch = useDispatch();
 
+	console.log({ filteredCustomers, filteredCustomersByStatus, filteredCustomersByDate })
+
 	const handleCustomerDateRange = useCallback(
 		(start, end) => {
 			setToggle(true);

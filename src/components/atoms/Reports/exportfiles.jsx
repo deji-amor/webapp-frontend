@@ -106,7 +106,7 @@ const ExportFiles = ({ text }) => {
 		(state) => state.customerReports
 	);
 
-	console.log(filteredCustomers)
+	// console.log(filteredCustomers)
 
 	const ticketHeaders = [
 		{ label: "Ticket Title", key: "ticket_form" },

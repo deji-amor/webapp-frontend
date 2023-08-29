@@ -6,11 +6,11 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	filterTickets,
-	filterTicketsByDate,
+	filterTicketsByDate
 } from "../../../state-manager/reducers/reports/tickets/ticketreport";
 import {
 	filterCustomersByDate,
-	filterCustomers,
+	filterCustomers
 } from "../../../state-manager/reducers/reports/customers/customers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -81,17 +81,21 @@ const DateFilterWrapper = styled("div")(() => ({
 	},
 }));
 
-const DateFilter = ({ handleReportDateRange }) => {
+const ProjectDateFilter = ({ handleReportDateRange }) => {
 	const [values, setValues] = useState({ startDate: "", endDate: "" });
 	const { startDate, endDate } = values;
+
 	const start = getDateFromDateTime(startDate);
 	const end = getDateFromDateTime(endDate);
 
 	const dispatch = useDispatch();
-	const { serviceTickets } = useSelector((state) => state.ticketReports);
+	const { projectTickets } = useSelector(
+		(state) => state.ticketReports
+	);
+    
 	const { customers } = useSelector((state) => state.customers);
 	const { customerReport } = useSelector((state) => state.reports);
-
+	
 	const handleClear = () => {
 		setValues({ startDate: "", endDate: "" });
 		if (customerReport) {
@@ -99,7 +103,7 @@ const DateFilter = ({ handleReportDateRange }) => {
 			dispatch(filterCustomers(customers));
 		} else {
 			dispatch(filterTicketsByDate([]));
-			dispatch(filterTickets(serviceTickets));
+			dispatch(filterTickets(projectTickets));
 		}
 	};
 
@@ -198,8 +202,8 @@ const DateFilter = ({ handleReportDateRange }) => {
 	);
 };
 
-DateFilter.propTypes = {
+ProjectDateFilter.propTypes = {
 	handleReportDateRange: PropTypes.func,
 };
 
-export default DateFilter;
+export default ProjectDateFilter;

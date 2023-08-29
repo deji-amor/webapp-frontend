@@ -91,12 +91,13 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 	},
 }));
 
-const CustomerFilterBy = ({ dropItems, filteredReports }) => {
-	const [text, setText] = useState("All Customers");
+const CustomerFilterBy = ({ dropItems }) => {
 	const [status, setStatus] = useState("");
 	const [toggle, setToggle] = useState(false);
+
 	const { filteredCustomers, filteredCustomersByDate, multipleCustomerStatusFiltering } =
 		useSelector((state) => state.customerReports);
+
 	const dispatch = useDispatch();
 
 	const handleClick = (t) => {
@@ -114,6 +115,7 @@ const CustomerFilterBy = ({ dropItems, filteredReports }) => {
 				dispatch
 			);
 		}
+		setStatus("")
 	}, [status]);
 
 	return (
@@ -129,9 +131,7 @@ const CustomerFilterBy = ({ dropItems, filteredReports }) => {
 								key={item.status}
 								className="item"
 								onClick={() => {
-									// setToggle(false);
 									setStatus(item.status);
-									// setText(item.title);
 								}}
 							>
 								{item.title}

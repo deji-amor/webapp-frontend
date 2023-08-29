@@ -58,6 +58,8 @@ export const handleCustomerFilterByStatus = (
 ) => {
 	let filCustomers = [];
 
+	console.log(status)
+
 	if (filteredCustomersByDate.length != 0) {
 		if (status === "active") {
 			filCustomers = filteredCustomersByDate
