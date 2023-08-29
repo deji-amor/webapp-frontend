@@ -6,11 +6,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	filterTickets,
-	filterTicketsByDate
+	filterTicketsByDate,
+	setDateRangeEnd,
+	setDateRangeStart,
 } from "../../../state-manager/reducers/reports/tickets/ticketreport";
 import {
 	filterCustomersByDate,
-	filterCustomers
+	filterCustomers,
 } from "../../../state-manager/reducers/reports/customers/customers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -79,25 +81,42 @@ const DateFilterWrapper = styled("div")(() => ({
 		background: "rgba(43, 46, 114, 1)",
 		color: "white",
 	},
+
+	".errordate": {
+		color: "red",
+		marginLeft: "10px",
+	},
+
+	".empty": {
+		color: "rgba(43, 46, 114, 1)",
+		marginLeft: "10px",
+	},
 }));
 
 const ProjectDateFilter = ({ handleReportDateRange }) => {
 	const [values, setValues] = useState({ startDate: "", endDate: "" });
+	const [toggleErr, setToggleErr] = useState(false);
+	const [toggleEmpty, setToggleEmpty] = useState(false);
 	const { startDate, endDate } = values;
 
 	const start = getDateFromDateTime(startDate);
 	const end = getDateFromDateTime(endDate);
 
 	const dispatch = useDispatch();
-	const { projectTickets } = useSelector(
+	const { projectTickets, filteredProjectTicketsByDate } = useSelector(
 		(state) => state.ticketReports
 	);
-    
+
 	const { customers } = useSelector((state) => state.customers);
 	const { customerReport } = useSelector((state) => state.reports);
-	
+
 	const handleClear = () => {
 		setValues({ startDate: "", endDate: "" });
+		dispatch(setDateRangeStart(""));
+		dispatch(setDateRangeEnd(""));
+		setToggleErr(false);
+		setToggleEmpty(false);
+
 		if (customerReport) {
 			dispatch(filterCustomersByDate([]));
 			dispatch(filterCustomers(customers));
@@ -108,12 +127,36 @@ const ProjectDateFilter = ({ handleReportDateRange }) => {
 	};
 
 	useEffect(() => {
-		handleReportDateRange(start, end);
+		if (start > end) {
+			setToggleErr(true);
+		} else {
+			setToggleErr(false);
+			dispatch(setDateRangeStart(start));
+			dispatch(setDateRangeEnd(end));
+			handleReportDateRange(start, end);
+		}
+
+		if (
+			start != "NaN-NaN-NaN" &&
+			end != "NaN-NaN-NaN" &&
+			filteredProjectTicketsByDate.length === 0
+		) {
+			setToggleEmpty(true);
+		} else {
+			setToggleEmpty(false);
+		}
 	}, [start, end]);
 
 	return (
 		<DateFilterWrapper>
-			<p>Filter By Date:</p>
+			<p>
+				Filter By Date:
+				{(toggleErr && (
+					<span className="errordate">Start Date cannot be greater than End Date.</span>
+				)) 
+				// || (toggleEmpty && <span className="empty">No data for this date range.</span>)
+					}
+			</p>
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
 				<DemoContainer components={["DatePicker", "DatePicker"]}>
 					<div className="dates">
@@ -129,6 +172,7 @@ const ProjectDateFilter = ({ handleReportDateRange }) => {
 								}}
 								value={startDate}
 								className="input"
+								disableFuture={true}
 								renderInput={(params) => <TextField {...params} error={false} />}
 								onChange={(data) => setValues({ ...values, startDate: data })}
 								popperPlacement="bottom-end"
@@ -166,6 +210,7 @@ const ProjectDateFilter = ({ handleReportDateRange }) => {
 								}}
 								value={endDate}
 								className="input"
+								disableFuture={true}
 								onChange={(data) => setValues({ ...values, endDate: data })}
 								popperPlacement="bottom-end"
 								popperModifiers={{

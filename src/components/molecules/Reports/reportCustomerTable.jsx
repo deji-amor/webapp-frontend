@@ -32,8 +32,6 @@ const ReportCustomerTable = () => {
 			? filteredCustomersByDate
 			: filteredCustomers;
 
-	console.log({filteredCustomers, filteredCustomersByDate, filteredCustomersByStatus})
-
 	const customersPerPage = 8;
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + customersPerPage;

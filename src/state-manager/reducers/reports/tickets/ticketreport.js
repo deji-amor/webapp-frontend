@@ -30,6 +30,10 @@ const initialState = {
 	error: null,
 	errorMessage: "",
 	successful: null,
+	serviceDateStart: "",
+	serviceDateEnd: "",
+	projectDateStart: "",
+	projectDateEnd: "",
 	serviceTickets: [],
 	filteredTickets: [],
 	filteredTicketsByDate: [],
@@ -49,7 +53,23 @@ const ticketReportSlice = createSlice({
 		SET_REPORT_TAB_INDEX: (state, {payload}) => {
 			state.reportTabIndex = payload;
 		},
-		
+
+		setDateRangeStart: (state, {payload}) => {
+			if (state.reportTabIndex === 0) {
+				state.serviceDateStart = payload;
+			} else {
+				state.projectDateStart = payload;
+			}
+		},
+
+		setDateRangeEnd: (state, {payload}) => {
+			if (state.reportTabIndex === 0) {
+				state.serviceDateEnd = payload;
+			} else {
+				state.projectDateEnd = payload;
+			}
+		},
+
 		filterTickets: (state, {payload}) => {
 			if (state.reportTabIndex === 0) {
 				state.filteredTickets = payload;
@@ -159,7 +179,7 @@ const ticketReportSlice = createSlice({
 						.slice()
 						.reverse()
 						.filter(ticket => ticket.ticket_type === "project ticket");
-						
+
 					state.successful = true;
 					state.error = false;
 				} else {
@@ -180,6 +200,8 @@ const ticketReportSlice = createSlice({
 
 export default ticketReportSlice.reducer;
 export const {
+	setDateRangeEnd,
+	setDateRangeStart,
 	filterTickets,
 	filterTicketsByDate,
 	filterTicketsByStatus,

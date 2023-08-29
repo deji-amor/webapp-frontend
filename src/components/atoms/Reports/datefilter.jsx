@@ -124,6 +124,7 @@ const DateFilter = ({ handleReportDateRange }) => {
 									},
 								}}
 								value={startDate}
+								disableFuture={true}
 								className="input"
 								renderInput={(params) => <TextField {...params} error={false} />}
 								onChange={(data) => setValues({ ...values, startDate: data })}
@@ -162,6 +163,7 @@ const DateFilter = ({ handleReportDateRange }) => {
 								}}
 								value={endDate}
 								className="input"
+								disableFuture={true}
 								onChange={(data) => setValues({ ...values, endDate: data })}
 								popperPlacement="bottom-end"
 								popperModifiers={{

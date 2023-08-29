@@ -39,10 +39,6 @@ const ReportTicketTable = () => {
 			? filteredTicketsByDate
 			: filteredTicketsByStatus;
 
-	// console.log(filteredProjectTicketsByDate)
-	console.log(filteredTicketsByDate);
-	console.log(filteredTickets);
-
 	const ticketsPerPage = 8;
 	const indexOfFirstCustomer = (page - 1) * ticketsPerPage;
 	const indexOfLastCustomer = indexOfFirstCustomer + ticketsPerPage;
@@ -55,12 +51,6 @@ const ReportTicketTable = () => {
 			: filteredProjectTicketsByDate.length != 0 && filteredProjectTicketsByStatus.length === 0
 			? filteredProjectTicketsByDate
 			: filteredProjectTicketsByStatus;
-
-	// filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length != 0
-	// 	? filteredProjectTicketsByStatus
-	// 	: filteredProjectTicketsByDate.length != 0
-	// 	? filteredProjectTicketsByDate
-	// 	: filteredProjectTickets;
 
 	const projectTicketPage = 8;
 	const indexOfFirstProject = (projectPage - 1) * projectTicketPage;

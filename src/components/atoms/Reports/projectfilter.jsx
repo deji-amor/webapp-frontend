@@ -100,8 +100,6 @@ const ProjectFilterBy = ({ dropItems }) => {
 		(state) => state.ticketReports
 	);
 
-	console.log(filteredProjectTicketsByStatus)
-
 	const dispatch = useDispatch();
 
 	const handleClick = (t) => {
