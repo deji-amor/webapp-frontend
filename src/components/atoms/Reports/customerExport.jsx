@@ -98,7 +98,8 @@ const CustomerExportFiles = ({ text }) => {
 	);
 
 	const filteredCustomerReport =
-		filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length != 0
+		(filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0) ||
+		(filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length != 0)
 			? filteredCustomersByStatus
 			: filteredCustomersByDate.length != 0
 			? filteredCustomersByDate
@@ -115,33 +116,31 @@ const CustomerExportFiles = ({ text }) => {
 				<img className="export-icon" src={ExportImage} alt="export files" />
 			</button>
 			<div className="exp">
-				{exportDropdown1 &&
-					(exportPDFDropdown || exportCSVDropdown) &&
-					((customerReport && (
-						<div className="instant-recurring">
-							<button
-								onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
-								className="instant"
-								type="button"
+				{exportDropdown1 && (exportPDFDropdown || exportCSVDropdown) && customerReport && (
+					<div className="instant-recurring">
+						<button
+							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+							className="instant"
+							type="button"
+						>
+							<CSVLink
+								data={filteredCustomerReport}
+								headers={customerHeaders}
+								filename="admin_filtered_customers.csv"
+								target="_blank"
 							>
-								<CSVLink
-									data={filteredCustomerReport}
-									headers={customerHeaders}
-									filename="admin_filtered_customers.csv"
-									target="_blank"
-								>
-									Instant {exportDocType} Export
-								</CSVLink>
-							</button>
-							<button
-								onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
-								className="recurring"
-								type="button"
-							>
-								Recurring {exportDocType} Export
-							</button>
-						</div>
-					)))}
+								Instant {exportDocType} Export
+							</CSVLink>
+						</button>
+						<button
+							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+							className="recurring"
+							type="button"
+						>
+							Recurring {exportDocType} Export
+						</button>
+					</div>
+				)}
 				{exportDropdown1 && (
 					<div className="pdf-csv">
 						<button

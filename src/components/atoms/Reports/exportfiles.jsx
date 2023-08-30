@@ -117,27 +117,20 @@ const ExportFiles = ({ text }) => {
 	console.log(selectedProjectTickets);
 
 	const filteredTicketServiceReports =
-		filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0
+		(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0) ||
+		(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length === 0)
 			? filteredTicketsByStatus
 			: filteredTicketsByDate.length != 0
 			? filteredTicketsByDate
 			: filteredTickets;
 
 	const filteredTicketProjectReport =
-		filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length != 0
+		(filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length != 0) ||
+		(filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length === 0)
 			? filteredProjectTicketsByStatus
 			: filteredProjectTicketsByDate.length != 0
 			? filteredProjectTicketsByDate
 			: filteredProjectTickets;
-
-	const filteredCustomerReport =
-		filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0
-			? filteredCustomersByStatus
-			: filteredCustomersByDate.length != 0
-			? filteredCustomersByDate
-			: filteredCustomers;
-
-	console.log(filteredTicketServiceReports);
 
 	return (
 		<ExportFilesWrapper>
