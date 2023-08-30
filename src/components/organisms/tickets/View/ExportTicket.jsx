@@ -61,8 +61,10 @@ const ExportTicket = () => {
 	const {ticketId} = params
 	const {tickets} = useSelector(state => state.tickets)
 	const { customers } = useSelector((state) => state.customers);
+	const { users } = useSelector((state) => state.users);
 	const ticket = tickets.find(ticket => +ticket.id === +ticketId)
 	const customer = customers.find((user) => +user.id === ticket.customer_id);
+	const user = users.find((user) => +user.id === ticket.user_id);
 	const [showDropdown, setShowDropdown] = useState(false)
 
 		const showDropdownHandler = () => {
@@ -92,7 +94,7 @@ const ExportTicket = () => {
 				<DropdownWrapper className="absolute top-[105%] right-0">
 					<Item>
 						<PDFDownloadLink
-							document={<TicketTemplatePDF ticket={ticket} customer={customer}/>}
+							document={<TicketTemplatePDF ticket={ticket} customer={customer} user={user}/>}
 							fileName="somename.pdf"
 							onClick={(event) => event.stopPropagation()}
 						>

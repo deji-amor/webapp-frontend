@@ -39,11 +39,10 @@ const TicketDetail = () => {
 		const params = useParams();
 		const { ticketId } = params;
 		const { tickets } = useSelector((state) => state.tickets);
-		const {customers} = useSelector(state => state.customers)
+		const {users} = useSelector(state => state.users)
 		const ticketToEdit = tickets.find((ticket) => +ticket.id === +ticketId);
-		const customer = customers.find((customer) => +customer.id === +ticketToEdit.customer_id);
-		const { first_name, last_name, company_email } = customer;
-
+		const user = users.find(user => user.id === ticketToEdit.user_id)
+		const { first_name, last_name, email } = user;
 
   return (
 		<div className="">
@@ -58,7 +57,7 @@ const TicketDetail = () => {
 			</div>
 			<div className="flex pb-[0.5rem] border-b-2 border-b-[#ECECEC] space-x-2">
 				<DetailText>Created by:</DetailText>
-				<DetailText bolder={true}>{first_name} {last_name} ({company_email})</DetailText>
+				<DetailText bolder={true}>{first_name} {last_name} ({email})</DetailText>
 			</div>
 			<TicketTemplateDetails/>
 		</div>

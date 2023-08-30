@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, View, Text, Image, Svg, Link } from "@react-pdf/renderer";
 
-const EditFromPdf = ({ ticket, customer }) => {
+const EditFromPdf = ({ ticket, user }) => {
 	const { id } = ticket;
-  const {company_email} = customer
+  const {email} = user
 
 	const styles = StyleSheet.create({
 		section: {
@@ -70,14 +70,14 @@ const EditFromPdf = ({ ticket, customer }) => {
 					<Text style={styles.info}>Ticket Information</Text>
 				</View>
 				<View style={styles}>
-					<Link src={`http://localhost:5173/admin/tickets/edit/${id}`} style={styles.icon}>
+					<Link src={`https://web.amorservtech.net/admin/tickets/edit/${id}`} style={styles.icon}>
 						Edit Ticket
 					</Link>
 				</View>
 			</View>
 			<View style={styles.oneLine}>
 				<Text style={styles.detailText}>Created by: </Text>
-				<Text style={styles.detailTextBolder}>John Doe ({company_email})</Text>
+				<Text style={styles.detailTextBolder}>John Doe ({email})</Text>
 			</View>
 		</>
 	);
@@ -85,7 +85,7 @@ const EditFromPdf = ({ ticket, customer }) => {
 
 EditFromPdf.propTypes = {
 	ticket: PropTypes.object,
-	customer: PropTypes.object,
+	user: PropTypes.object,
 };
 
 export default EditFromPdf;

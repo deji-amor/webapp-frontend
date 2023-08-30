@@ -45,14 +45,16 @@ const AdditionalFields = ({ ticket }) => {
 		},
 	});
 
+	if(list.length === 0) return <></>
+
 	return (
 		<>
 			{list.map(({name, value}) => (
-				<View style={styles.section} key={`${name}${value}`} className="flex">
-					<View style={styles.side} className="basis-[50%] py-[0.75rem]">
+				<View style={styles.section} key={`${name}${value}`} >
+					<View style={styles.side}>
 						<Text style={styles.detailText}>{name}</Text>
 					</View>
-					<View style={styles.side} className="basis-[50%] py-[0.75rem]">
+					<View style={styles.side}>
 						<Text style={styles.detailText}>{value}</Text>
 					</View>
 				</View>

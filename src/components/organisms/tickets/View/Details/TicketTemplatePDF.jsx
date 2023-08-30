@@ -21,7 +21,7 @@ import SoftwareCustomization from "./pdf/SoftwareCustomization";
 import SoftwareInstallation from "./pdf/SoftwareInstallation";
 import Attachments from "./pdf/Attachments";
 
-const TicketTemplatePDF = ({ticket, customer}) => {
+const TicketTemplatePDF = ({ticket, customer, user}) => {
   const styles = StyleSheet.create({
 		page: {
 			backgroundColor: "#fff",
@@ -79,7 +79,7 @@ const TicketTemplatePDF = ({ticket, customer}) => {
 			<Page size="A4" style={styles.page}>
 				<CompanyNameAndPathToTemplate ticket={ticket} customer={customer} />
 				<View style={styles.border}>
-					<EditFromPdf ticket={ticket} customer={customer}/>
+					<EditFromPdf ticket={ticket} user={user}/>
 					{pointOfContact && <PointOfContact ticket={ticket} />}
 					{numberOfTechniciansNeeded && <NumberOfTechNeeded ticket={ticket} />}
 					{numberOfWorkStation && <NumberOfWorkStation ticket={ticket} />}
@@ -94,7 +94,7 @@ const TicketTemplatePDF = ({ticket, customer}) => {
 					{location && <Location ticket={ticket} />}
 					{dropOffLocation && <DropOffLocation ticket={ticket} />}
 					{pickUpLocation && <PickUpLocation ticket={ticket} />}
-					{/* {additionalFields && <AdditionalFields ticket={ticket} />} */}
+					{additionalFields && <AdditionalFields ticket={ticket} />}
 					{<Attachments ticket={ticket}/>}
 				</View>
 			</Page>
@@ -105,6 +105,7 @@ const TicketTemplatePDF = ({ticket, customer}) => {
 TicketTemplatePDF.propTypes = {
 	ticket: PropTypes.object,
 	customer: PropTypes.object,
+	user: PropTypes.object,
 }
 
 export default TicketTemplatePDF
