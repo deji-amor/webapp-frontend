@@ -14,7 +14,7 @@ const NumberOfWorkStation = () => {
 		<>
 			<div className="flex">
 				<div className="basis-[50%] py-[0.75rem]">
-					<DetailText>Number of technicians</DetailText>
+					<DetailText>Number of work station</DetailText>
 				</div>
 				<div className="basis-[50%] py-[0.75rem]">
 					<DetailText>{number_of_work_station}</DetailText>

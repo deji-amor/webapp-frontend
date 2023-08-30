@@ -90,8 +90,8 @@ const TicketsTableBodyItem = ({ ticket }) => {
   const changeTicketStatusHandler = (ticketId, status) => {
     setShowStatusDrop(false);
 		setIsThisTicketLoading(true)
-		// console.log({ticketId, status});
-    dispatch(changeATicketStatus({ ticketId: ticketId, status: status.toUpperCase() }));
+		let newStatus = status.toLowerCase() === "inprogress" ? "IN-PROGRESS" : status.toUpperCase();
+    dispatch(changeATicketStatus({ ticketId: ticketId, status: newStatus }));
   };
 
 	return (

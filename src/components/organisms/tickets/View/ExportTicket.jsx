@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { styled } from "@mui/material";
-import TicketTemplateDetails from "./Details/TicketTemplateDetails";
-import { PDFDownloadLink, Document, Page, StyleSheet, View } from "@react-pdf/renderer";
+import { PDFDownloadLink} from "@react-pdf/renderer";
+import TicketTemplatePDF from "./Details/TicketTemplatePDF";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ExportButton = styled("button")`
 	display: flex;
@@ -15,6 +17,27 @@ const ExportButton = styled("button")`
 	font-size: 1.125rem;
 	font-style: normal;
 	font-weight: 500;
+`;
+
+const DropdownWrapper = styled("div")`
+	display: flex;
+	padding: 0.5rem 0.5rem 0.75rem 0.5rem;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	border-radius: 0.5rem;
+	background: #fff;
+	box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+	width: 100%;
+`;
+
+const Item = styled("div")`
+	display: flex;
+	padding: 0.125rem 0rem;
+	align-items: center;
+	gap: 1rem;
+	align-self: stretch;
+	cursor: pointer;
 `;
 
 const ExportIcon = () => (
@@ -33,37 +56,61 @@ const ExportIcon = () => (
 	</svg>
 );
 
-const styles = StyleSheet.create({
-	page: {
-		flexDirection: "row",
-		backgroundColor: "#E4E4E4",
-	},
-	section: {
-		margin: 10,
-		padding: 10,
-		flexGrow: 1,
-	},
-});
-
-const MyDoc = () => (
-	<Document>
-		<Page size="A4" style={styles.page}>
-			<View>its all good</View>
-			{/* <TicketTemplateDetails /> */}
-		</Page>
-	</Document>
-);
-
 const ExportTicket = () => {
+	const params = useParams()
+	const {ticketId} = params
+	const {tickets} = useSelector(state => state.tickets)
+	const { customers } = useSelector((state) => state.customers);
+	const { users } = useSelector((state) => state.users);
+	const ticket = tickets.find(ticket => +ticket.id === +ticketId)
+	const customer = customers.find((user) => +user.id === ticket.customer_id);
+	const user = users.find((user) => +user.id === ticket.user_id);
+	const [showDropdown, setShowDropdown] = useState(false)
+
+		const showDropdownHandler = () => {
+			setShowDropdown(pv => !pv)
+		}
+
+		const	ExportTicketAsCSVHandler = () => {
+
+		}
+
+	useEffect(() => {
+		const listener = (event) => {
+			if(!event.target.closest("#ExportTicketAsCSVOrPDFDropdown")){
+				setShowDropdown(false)
+			}
+		}
+
+		document.body.addEventListener("click", listener)
+		return () => {
+			document.body.removeEventListener("click", listener)
+		}
+	}, [])
+
 	return (
-		<ExportButton className="flex items-center justify-start gap-[0.5rem]">
-			<PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
-				{({ blob, url, loading, error }) => (loading ? "Loading document..." : "Export")}
-			</PDFDownloadLink>
-			<span>
-				<ExportIcon />
-			</span>
-		</ExportButton>
+		<div className="relative" id="ExportTicketAsCSVOrPDFDropdown">
+			{showDropdown && (
+				<DropdownWrapper className="absolute top-[105%] right-0">
+					<Item>
+						<PDFDownloadLink
+							document={<TicketTemplatePDF ticket={ticket} customer={customer} user={user}/>}
+							fileName="somename.pdf"
+							onClick={(event) => event.stopPropagation()}
+						>
+							{({ blob, url, loading, error }) => (loading ? "Loading PDF..." : "PDF")}
+						</PDFDownloadLink>
+					</Item>
+					<Item onClick={ExportTicketAsCSVHandler}>CSV</Item>
+				</DropdownWrapper>
+			)}
+			<ExportButton onClick={showDropdownHandler} className="flex items-center justify-start gap-[0.5rem]">
+				<span>Export</span>
+				<span>
+					<ExportIcon />
+				</span>
+			</ExportButton>
+		</div>
 	);
 };
 

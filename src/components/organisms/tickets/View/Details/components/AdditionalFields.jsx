@@ -13,13 +13,13 @@ const AdditionalFields = () => {
 
 	return (
 		<>
-			{list.map((item, ind) => (
-				<div key={item} className="flex">
+			{list.map(({ name, value }) => (
+				<div key={`${name}${value}`} className="flex">
 					<div className="basis-[50%] py-[0.75rem]">
-						<DetailText>{item[0]}</DetailText>
+						<DetailText>{name}</DetailText>
 					</div>
 					<div className="basis-[50%] py-[0.75rem]">
-						<DetailText>{item[1]}</DetailText>
+						<DetailText>{value}</DetailText>
 					</div>
 				</div>
 			))}
