@@ -18,7 +18,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 	top: "-15px",
 
 	".exportBut": {
-		width: "164px",
+		width: "184px",
 		borderRadius: "8px",
 		padding: "8px 15px 8px 15px",
 		color: "white",
@@ -88,56 +88,21 @@ const ExportFilesWrapper = styled("div")(() => ({
 	},
 }));
 
-const ExportFiles = ({ text }) => {
+const CustomerExportFiles = ({ text }) => {
 	const dispatch = useDispatch();
 	const { exportDropdown1, exportPDFDropdown, exportCSVDropdown, exportDocType, customerReport } =
 		useSelector((state) => state.reports);
-
-	const {
-		reportTabIndex,
-		filteredTickets,
-		filteredTicketsByDate,
-		filteredTicketsByStatus,
-		selectedTickets,
-		selectedProjectTickets,
-		filteredProjectTickets,
-		filteredProjectTicketsByDate,
-		filteredProjectTicketsByStatus,
-	} = useSelector((state) => state.ticketReports);
 
 	const { filteredCustomers, filteredCustomersByDate, filteredCustomersByStatus } = useSelector(
 		(state) => state.customerReports
 	);
 
-	const selectedService = selectedTickets ? selectedTickets : [];
-
-	const selectedProject = selectedProjectTickets ? selectedProjectTickets : [];
-
-	console.log(selectedTickets);
-	console.log(selectedProjectTickets);
-
-	const filteredTicketServiceReports =
-		filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0
-			? filteredTicketsByStatus
-			: filteredTicketsByDate.length != 0
-			? filteredTicketsByDate
-			: filteredTickets;
-
-	const filteredTicketProjectReport =
-		filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length != 0
-			? filteredProjectTicketsByStatus
-			: filteredProjectTicketsByDate.length != 0
-			? filteredProjectTicketsByDate
-			: filteredProjectTickets;
-
 	const filteredCustomerReport =
-		filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0
+		filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length != 0
 			? filteredCustomersByStatus
 			: filteredCustomersByDate.length != 0
 			? filteredCustomersByDate
 			: filteredCustomers;
-
-	console.log(filteredTicketServiceReports);
 
 	return (
 		<ExportFilesWrapper>
@@ -150,45 +115,33 @@ const ExportFiles = ({ text }) => {
 				<img className="export-icon" src={ExportImage} alt="export files" />
 			</button>
 			<div className="exp">
-				{exportDropdown1 && (exportPDFDropdown || exportCSVDropdown) && (
-					<div className="instant-recurring">
-						<button
-							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
-							className="instant"
-							type="button"
-						>
-							{/* {" "} */}
-							{(reportTabIndex === 0 && (
+				{exportDropdown1 &&
+					(exportPDFDropdown || exportCSVDropdown) &&
+					((customerReport && (
+						<div className="instant-recurring">
+							<button
+								onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+								className="instant"
+								type="button"
+							>
 								<CSVLink
-									data={
-										selectedService.length != 0 ? selectedService : filteredTicketServiceReports
-									}
-									headers={ticketHeaders}
-									filename="admin_filtered_service_tickets.csv"
+									data={filteredCustomerReport}
+									headers={customerHeaders}
+									filename="admin_filtered_customers.csv"
 									target="_blank"
 								>
 									Instant {exportDocType} Export
 								</CSVLink>
-							)) || (
-								<CSVLink
-									data={selectedProject.length != 0 ? selectedProject : filteredTicketProjectReport}
-									headers={ticketHeaders}
-									filename="admin_filtered_project_tickets.csv"
-									target="_blank"
-								>
-									Instant {exportDocType} Export
-								</CSVLink>
-							)}
-						</button>
-						<button
-							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
-							className="recurring"
-							type="button"
-						>
-							Recurring {exportDocType} Export
-						</button>
-					</div>
-				)}
+							</button>
+							<button
+								onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+								className="recurring"
+								type="button"
+							>
+								Recurring {exportDocType} Export
+							</button>
+						</div>
+					)))}
 				{exportDropdown1 && (
 					<div className="pdf-csv">
 						<button
@@ -214,8 +167,8 @@ const ExportFiles = ({ text }) => {
 	);
 };
 
-ExportFiles.propTypes = {
+CustomerExportFiles.propTypes = {
 	text: PropTypes.string,
 };
 
-export default ExportFiles;
+export default CustomerExportFiles;

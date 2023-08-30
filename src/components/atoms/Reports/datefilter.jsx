@@ -79,10 +79,23 @@ const DateFilterWrapper = styled("div")(() => ({
 		background: "rgba(43, 46, 114, 1)",
 		color: "white",
 	},
+
+	".errordate": {
+		color: "red",
+		marginLeft: "10px",
+	},
+
+	".empty": {
+		color: "rgba(43, 46, 114, 1)",
+		marginLeft: "10px",
+	},
 }));
 
 const DateFilter = ({ handleReportDateRange }) => {
 	const [values, setValues] = useState({ startDate: "", endDate: "" });
+	const [toggleErr, setToggleErr] = useState(false);
+	// const [toggleEmpty, setToggleEmpty] = useState(false);
+
 	const { startDate, endDate } = values;
 	const start = getDateFromDateTime(startDate);
 	const end = getDateFromDateTime(endDate);
@@ -94,6 +107,9 @@ const DateFilter = ({ handleReportDateRange }) => {
 
 	const handleClear = () => {
 		setValues({ startDate: "", endDate: "" });
+		setToggleErr(false);
+		// setToggleEmpty(false);
+
 		if (customerReport) {
 			dispatch(filterCustomersByDate([]));
 			dispatch(filterCustomers(customers));
@@ -104,12 +120,27 @@ const DateFilter = ({ handleReportDateRange }) => {
 	};
 
 	useEffect(() => {
-		handleReportDateRange(start, end);
+		if (start > end) {
+			setToggleErr(true);
+		} else {
+			setToggleErr(false);
+			// dispatch(setDateRangeStart(start));
+			// dispatch(setDateRangeEnd(end));
+			handleReportDateRange(start, end);
+		}
 	}, [start, end]);
 
 	return (
 		<DateFilterWrapper>
-			<p>Filter By Date:</p>
+			<p>
+				Filter By Date:
+				{
+					toggleErr && (
+						<span className="errordate">Start Date cannot be greater than End Date.</span>
+					)
+					// || (toggleEmpty && <span className="empty">No data for this date range.</span>)
+				}
+			</p>
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
 				<DemoContainer components={["DatePicker", "DatePicker"]}>
 					<div className="dates">

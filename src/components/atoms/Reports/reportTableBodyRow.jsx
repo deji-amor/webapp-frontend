@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material";
 import PropTypes from "prop-types";
 import ReportTableBodyCell from "./reportTableBodyCell";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
+import {
+	filterSelectedTickets,
+	removeSelectedTickets,
+} from "../../../state-manager/reducers/reports/tickets/ticketreport";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useDispatch, useSelector } from "react-redux";
 
-const ReportTableBodyRowWrapper = styled("tr")(() => ({
+const ReportTableBodyRowWrapper = styled("tr")(({ checked }) => ({
 	width: "100%",
 	height: "60px",
 	borderBottom: "3px solid rgba(250, 250, 250, 1)",
+	background: (checked && "rgba(241, 242, 253, 1)") || "",
+
+	":hover": {
+		background: "rgba(245, 245, 245, 1)",
+		color: "white",
+	},
 
 	span: {
 		maxWidth: "250px",
@@ -51,11 +62,26 @@ const ReportTableBodyRowWrapper = styled("tr")(() => ({
 }));
 
 const ReportTableBodyRow = ({ ticket }) => {
+	const [checked, setChecked] = useState(false);
+	const dispatch = useDispatch();
+	const { selectedTickets, selectedProjectTickets } = useSelector((state) => state.ticketReports);
+
+	const handleClick = () => {
+		setChecked((prev) => !prev);
+		if (!checked) {
+			dispatch(filterSelectedTickets(ticket));
+		} else {
+			dispatch(removeSelectedTickets(ticket));
+		}
+	};
+
+	// console.log(selectedProjectTickets);
 	return (
-		<ReportTableBodyRowWrapper>
+		<ReportTableBodyRowWrapper checked={checked}>
 			<ReportTableBodyCell>
 				<span className="first" title={ticket?.ticket_form}>
-					<input className="check" type="checkbox" /> <p>{ticket?.ticket_form}</p>
+					<input className="check" onClick={handleClick} type="checkbox" />{" "}
+					<p>{ticket?.ticket_form}</p>
 				</span>
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>

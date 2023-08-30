@@ -97,8 +97,8 @@ const ProjectDateFilter = ({ handleReportDateRange }) => {
 	const [values, setValues] = useState({ startDate: "", endDate: "" });
 	const [toggleErr, setToggleErr] = useState(false);
 	const [toggleEmpty, setToggleEmpty] = useState(false);
-	const { startDate, endDate } = values;
 
+	const { startDate, endDate } = values;
 	const start = getDateFromDateTime(startDate);
 	const end = getDateFromDateTime(endDate);
 
@@ -106,7 +106,6 @@ const ProjectDateFilter = ({ handleReportDateRange }) => {
 	const { projectTickets, filteredProjectTicketsByDate } = useSelector(
 		(state) => state.ticketReports
 	);
-
 	const { customers } = useSelector((state) => state.customers);
 	const { customerReport } = useSelector((state) => state.reports);
 
@@ -115,7 +114,7 @@ const ProjectDateFilter = ({ handleReportDateRange }) => {
 		dispatch(setDateRangeStart(""));
 		dispatch(setDateRangeEnd(""));
 		setToggleErr(false);
-		setToggleEmpty(false);
+		// setToggleEmpty(false);
 
 		if (customerReport) {
 			dispatch(filterCustomersByDate([]));
@@ -151,11 +150,12 @@ const ProjectDateFilter = ({ handleReportDateRange }) => {
 		<DateFilterWrapper>
 			<p>
 				Filter By Date:
-				{(toggleErr && (
-					<span className="errordate">Start Date cannot be greater than End Date.</span>
-				)) 
-				// || (toggleEmpty && <span className="empty">No data for this date range.</span>)
-					}
+				{
+					toggleErr && (
+						<span className="errordate">Start Date cannot be greater than End Date.</span>
+					)
+					// || (toggleEmpty && <span className="empty">No data for this date range.</span>)
+				}
 			</p>
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
 				<DemoContainer components={["DatePicker", "DatePicker"]}>

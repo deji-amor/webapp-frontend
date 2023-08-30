@@ -36,10 +36,12 @@ const initialState = {
 	projectDateEnd: "",
 	serviceTickets: [],
 	filteredTickets: [],
+	selectedTickets: [],
 	filteredTicketsByDate: [],
 	filteredTicketsByStatus: [],
 	multipleTicketStatusFiltering: [],
 	projectTickets: [],
+	selectedProjectTickets: [],
 	filteredProjectTickets: [],
 	filteredProjectTicketsByDate: [],
 	filteredProjectTicketsByStatus: [],
@@ -67,6 +69,27 @@ const ticketReportSlice = createSlice({
 				state.serviceDateEnd = payload;
 			} else {
 				state.projectDateEnd = payload;
+			}
+		},
+
+		filterSelectedTickets: (state, {payload}) => {
+			if (state.reportTabIndex === 0) {
+				state.selectedTickets = current(state).selectedTickets.concat(payload);
+				
+			} else {
+				state.selectedProjectTickets = current(state).selectedProjectTickets.concat(payload);
+			}
+		},
+
+		removeSelectedTickets: (state, {payload}) => {
+			if (state.reportTabIndex === 0) {
+				state.selectedTickets = current(state)
+					.selectedTickets.slice()
+					.filter(ticket => ticket.id != payload.id);
+			}else {
+				state.selectedProjectTickets = current(state)
+					.selectedProjectTickets.slice()
+					.filter(ticket => ticket.id != payload.id);
 			}
 		},
 
@@ -200,6 +223,8 @@ const ticketReportSlice = createSlice({
 
 export default ticketReportSlice.reducer;
 export const {
+	filterSelectedTickets,
+	removeSelectedTickets,
 	setDateRangeEnd,
 	setDateRangeStart,
 	filterTickets,

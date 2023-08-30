@@ -26,11 +26,11 @@ const ReportCustomerTable = () => {
 	);
 
 	const filteredReports =
-		filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0
-			? filteredCustomersByStatus
-			: filteredCustomersByDate.length != 0
+		filteredCustomersByStatus.length === 0 && filteredCustomersByDate.length === 0
+			? filteredCustomers
+			: filteredCustomersByDate.length != 0 && filteredCustomersByStatus.length === 0
 			? filteredCustomersByDate
-			: filteredCustomers;
+			: filteredCustomersByStatus;
 
 	const customersPerPage = 8;
 	const indexOfFirstCustomer = (page - 1) * customersPerPage;

@@ -17,6 +17,11 @@ const ReportTicketTableWrapper = styled("div")(() => ({
 		width: "100%",
 		borderRadius: "120px",
 	},
+
+	".ticket:hover": {
+		background: "green",
+		color: "white"
+	}
 }));
 
 const ReportTicketTable = () => {

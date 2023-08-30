@@ -6,6 +6,7 @@ import { filterTickets, filterCustomers } from "./objects";
 import { useDispatch, useSelector } from "react-redux";
 import ReportTabs from "../../atoms/Reports/tabs";
 import ReportSort from "../../atoms/Reports/sort";
+import CustomerExportFiles from "../../atoms/Reports/customerExport";
 import FilterBy from "../../atoms/Reports/filter";
 import ProjectFilterBy from "../../atoms/Reports/projectfilter";
 import ExportFiles from "../../atoms/Reports/exportfiles";
@@ -84,9 +85,15 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 				) : (
 					(reportTabIndex === 0 && (
 						<FilterBy dropItems={filterTickets} filteredReports={filteredTickets} />
-					)) || <ProjectFilterBy dropItems={filterTickets} filteredReports={filteredProjectTickets} />
+					)) || (
+						<ProjectFilterBy dropItems={filterTickets} filteredReports={filteredProjectTickets} />
+					)
 				)}
-				<ExportFiles text={"Export Tickets"} />
+				{customerReport ? (
+					<CustomerExportFiles text={"Export Customers"} />
+				) : (
+					<ExportFiles text={"Export Tickets"} />
+				)}
 			</div>
 			<div>
 				{(reportTabIndex === 0 && <DateFilter handleReportDateRange={handleReportDateRange} />) || (

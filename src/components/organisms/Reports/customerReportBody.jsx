@@ -45,7 +45,7 @@ const CustomerReportBody = () => {
 						return customer_start_date >= start_date && customer_start_date <= end_date;
 					});
 	
-					dispatch(filterCustomers([...filteredDate]));
+					dispatch(filterCustomersByDate([...filteredDate]));
 				}
 			}
 		},
