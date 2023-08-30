@@ -4,6 +4,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
+import RecentActivities from "../../molecules/Dashboard/RecentActivities";
 
 const AvatarDropdown = ({ onEditClick }) => {
 	const Typography = styled("h2")`
@@ -13,6 +14,15 @@ const AvatarDropdown = ({ onEditClick }) => {
 		font-style: normal;
 		font-weight: 600;
 		line-height: 20px; /* 111.111% */
+	`;
+	const Recent = styled("h2")`
+		color: #333;
+		font-family: Poppins;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		padding-bottom: 12px;
+		line-height: 20px; /* 125% */
 	`;
 	const Text = styled("p")`
 		color: #333;
@@ -63,8 +73,8 @@ const AvatarDropdown = ({ onEditClick }) => {
 				</Box>
 			</Box>
 			<Box mt={3}>
-				<Typography variant="body1">Recent Activity</Typography>
-				{/* Replace with Recent Activity components */}
+				<Recent variant="body1">Recent Activity</Recent>
+				<RecentActivities />
 			</Box>
 		</Box>
 	);

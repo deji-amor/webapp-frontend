@@ -44,12 +44,6 @@ const NavBarIconList = () => {
 			<div style={{ display: "flex", alignItems: "center" }}>
 				<ProfileDropdownMenu />
 			</div>
-			{/* <div style={{ display: 'flex', alignItems: 'center' }}>
-				<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72"}}>
-					<PersonIcon style={{ fontSize: 30 }}/>	
-				</Avatar>
-				<ArrowDropDownIcon />
-			</div> */}
 		</List>
 	);
 };
