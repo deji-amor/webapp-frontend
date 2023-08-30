@@ -91,11 +91,12 @@ const FilterByWrapper = styled("div")(() => ({
 	},
 }));
 
-const FilterBy = ({ dropItems }) => {
+const ProjectFilterBy = ({ dropItems }) => {
+	const [text, setText] = useState("All Tickets");
 	const [status, setStatus] = useState("");
 	const [toggle, setToggle] = useState(false);
 
-	const { filteredTickets, filteredTicketsByDate, multipleTicketStatusFiltering } = useSelector(
+	const { filteredProjectTicketsByStatus, filteredProjectTickets, filteredProjectTicketsByDate, multipleProjectTicketStatusFiltering } = useSelector(
 		(state) => state.ticketReports
 	);
 
@@ -109,8 +110,8 @@ const FilterBy = ({ dropItems }) => {
 		if (status != "") {
 			handleFilterByStatus(
 				status,
-				filteredTickets,
-				filteredTicketsByDate,
+				filteredProjectTickets,
+				filteredProjectTicketsByDate,
 				filterTicketsByStatus,
 				setMultipleFilterStatus,
 				dispatch
@@ -143,7 +144,7 @@ const FilterBy = ({ dropItems }) => {
 				)}
 			</div>
 			<div className="status">
-				{multipleTicketStatusFiltering?.map((ticket) => (
+				{multipleProjectTicketStatusFiltering?.map((ticket) => (
 					<span key={ticket} onClick={() => handleClick(ticket)}>
 						{ticket} <ClearOutlinedIcon />
 					</span>
@@ -153,9 +154,9 @@ const FilterBy = ({ dropItems }) => {
 	);
 };
 
-FilterBy.propTypes = {
+ProjectFilterBy.propTypes = {
 	dropItems: PropTypes.array,
 	filteredReports: PropTypes.array,
 };
 
-export default FilterBy;
+export default ProjectFilterBy;

@@ -19,20 +19,24 @@ const TicketReportBody = () => {
 		filteredProjectTickets,
 		filteredProjectTicketsByDate,
 		filteredProjectTicketsByStatus,
-		reportTapIndex
+		reportTabIndex,
+		serviceDateStart,
+		serviceDateEnd,
 	} = useSelector((state) => state.ticketReports);
 	const dispatch = useDispatch();
 
-	const filteredTickets = reportTapIndex === 0 ? filteredT : filteredProjectTickets
-	const filteredTicketsByDate = reportTapIndex === 0 ?  filteredTBD : filteredProjectTicketsByDate
-	const filteredTicketsByStatus = reportTapIndex === 0 ? filteredTBS : filteredProjectTicketsByStatus
+	console.log(filteredProjectTickets)
+
+	const filteredTickets = reportTabIndex === 0 ? filteredT : filteredProjectTickets;
+	const filteredTicketsByDate = reportTabIndex === 0 ? filteredTBD : filteredProjectTicketsByDate;
+	const filteredTicketsByStatus =
+		reportTabIndex === 0 ? filteredTBS : filteredProjectTicketsByStatus;
 
 	const handleTicketDateRange = useCallback(
 		(start, end) => {
 			setToggle(true);
 			if (start != "NaN-NaN-NaN" && end != "NaN-NaN-NaN") {
 				if (filteredTicketsByStatus.length != 0) {
-					console.log("Status");
 					const filteredDate = filteredTicketsByStatus.slice().filter((ticket) => {
 						const start_date = new Date(start);
 						const end_date = new Date(end);
@@ -41,9 +45,8 @@ const TicketReportBody = () => {
 						return ticket_start_date >= start_date && ticket_start_date <= end_date;
 					});
 
-					dispatch(filterTicketsByDate(filteredDate));
+					dispatch(filterTicketsByDate([...filteredDate]));
 				} else {
-					console.log("Status");
 					const filteredDate = filteredTickets.slice().filter((ticket) => {
 						const start_date = new Date(start);
 						const end_date = new Date(end);
@@ -52,17 +55,17 @@ const TicketReportBody = () => {
 						return ticket_start_date >= start_date && ticket_start_date <= end_date;
 					});
 
-					dispatch(filterTicketsByDate(filteredDate));
+					dispatch(filterTicketsByDate([...filteredDate]));
 				}
 			}
 		},
-		[filteredTickets, dispatch]
+		[filteredTickets, filteredTicketsByStatus, dispatch]
 	);
 
 	const handleTicketsSort = (type) => {
 		let sortedTickets = null;
 
-		if (filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length === 0) {
+		if (filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0) {
 			console.log("Ascending");
 			if (type === "ascending") {
 				sortedTickets = filteredTicketsByStatus
@@ -150,7 +153,7 @@ const TicketReportBody = () => {
 						toggle={toggle}
 						setToggle={setToggle}
 					/>
-					{(reportTapIndex === 0 && <ReportTicketTable />) || <ReportTicketTable />}
+					{(reportTabIndex === 0 && <ReportTicketTable />) || <ReportTicketTable />}
 				</>
 			)) || (
 				<Placeholder

@@ -2,7 +2,6 @@ import React from "react";
 import { styled } from "@mui/material";
 import PropTypes from "prop-types";
 import ReportTableBodyCell from "./reportTableBodyCell";
-import { getDateFromDateTime } from "../../../helpers/date-manipulation";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
@@ -10,6 +9,11 @@ const ReportTableBodyRowWrapper = styled("tr")(() => ({
 	width: "100%",
 	height: "80px",
 	borderBottom: "4px solid rgba(250, 250, 250, 1)",
+
+	":hover": {
+		background: "rgba(245, 245, 245, 1)",
+		color: "white"
+	},
 
 	span: {
 		maxWidth: "250px",

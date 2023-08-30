@@ -4,7 +4,7 @@ export const filterTickets = [
         title: "Tickets Done"
 	},
 	{
-		status: "in-progress",
+		status: "inprogress",
         title: "Tickets Inprogress"
 	},
 	{
@@ -27,7 +27,7 @@ export const filterCustomers = [
         title: "Inactive Customers",
     },
     {
-        status: "suspended",
+        status: "suspend",
         title: "Suspended Customers",
     }
 ];

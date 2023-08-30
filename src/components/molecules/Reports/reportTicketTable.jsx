@@ -17,12 +17,17 @@ const ReportTicketTableWrapper = styled("div")(() => ({
 		width: "100%",
 		borderRadius: "120px",
 	},
+
+	".ticket:hover": {
+		background: "green",
+		color: "white"
+	}
 }));
 
 const ReportTicketTable = () => {
 	const [page, setPage] = useState(1);
 	const [projectPage, setProjectPage] = useState(1);
-	const { reportTapIndex } = useSelector((state) => state.ticketReports);
+	const { reportTabIndex } = useSelector((state) => state.ticketReports);
 	const {
 		filteredTickets,
 		filteredTicketsByDate,
@@ -33,13 +38,11 @@ const ReportTicketTable = () => {
 	} = useSelector((state) => state.ticketReports);
 
 	const filteredReports =
-		filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length === 0
-			? filteredTicketsByStatus
-			: filteredTicketsByDate.length != 0
+		filteredTicketsByStatus.length === 0 && filteredTicketsByDate.length === 0
+			? filteredTickets
+			: filteredTicketsByDate.length != 0 && filteredTicketsByStatus.length === 0
 			? filteredTicketsByDate
-			: filteredTickets;
-
-	console.log(filteredReports)
+			: filteredTicketsByStatus;
 
 	const ticketsPerPage = 8;
 	const indexOfFirstCustomer = (page - 1) * ticketsPerPage;
@@ -48,26 +51,25 @@ const ReportTicketTable = () => {
 	const totalTickets = filteredReports.length;
 
 	const filteredProjectReports =
-		filteredTicketsByStatus.length != 0 && filteredProjectTicketsByStatus.length === 0
-			? filteredProjectTicketsByStatus
-			: filteredProjectTicketsByDate.length != 0
+		filteredProjectTicketsByStatus.length === 0 && filteredProjectTicketsByDate.length === 0
+			? filteredProjectTickets
+			: filteredProjectTicketsByDate.length != 0 && filteredProjectTicketsByStatus.length === 0
 			? filteredProjectTicketsByDate
-			: filteredProjectTickets;
+			: filteredProjectTicketsByStatus;
 
-
-	const projectTicketPage = 8
+	const projectTicketPage = 8;
 	const indexOfFirstProject = (projectPage - 1) * projectTicketPage;
 	const indexOfLastProject = indexOfFirstProject + projectTicketPage;
 	const currentProjects = filteredProjectReports.slice(indexOfFirstProject, indexOfLastProject);
-	const totalProjectsTickets = filteredProjectReports.length
+	const totalProjectsTickets = filteredProjectReports.length;
 
 	const handlePageChange = (newPage) => {
 		setPage(newPage);
 	};
 
 	const handleProjectPageChange = (newPage) => {
-		setProjectPage(newPage)
-	}
+		setProjectPage(newPage);
+	};
 
 	return (
 		<ReportTicketTableWrapper>
@@ -76,16 +78,14 @@ const ReportTicketTable = () => {
 					<ReportTableHeadRow />
 				</thead>
 				<tbody>
-					{(
-						reportTapIndex === 0 &&
+					{(reportTabIndex === 0 &&
 						currentReports.map((ticket) => (
 							<ReportTableBodyRow key={ticket.id} ticket={ticket} />
 						))) ||
-						currentProjects.map((tech) => <ReportTableBodyRow key={tech.id} ticket={tech} />
-					)}
+						currentProjects.map((tech) => <ReportTableBodyRow key={tech.id} ticket={tech} />)}
 				</tbody>
 			</table>
-			{(reportTapIndex === 0 && (
+			{(reportTabIndex === 0 && (
 				<Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
 					<Pagination
 						totalResults={totalTickets}

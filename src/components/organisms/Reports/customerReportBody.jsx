@@ -19,6 +19,8 @@ const CustomerReportBody = () => {
 	);
 	const dispatch = useDispatch();
 
+	console.log({ filteredCustomers, filteredCustomersByStatus, filteredCustomersByDate })
+
 	const handleCustomerDateRange = useCallback(
 		(start, end) => {
 			setToggle(true);
@@ -43,7 +45,7 @@ const CustomerReportBody = () => {
 						return customer_start_date >= start_date && customer_start_date <= end_date;
 					});
 	
-					dispatch(filterCustomers([...filteredDate]));
+					dispatch(filterCustomersByDate([...filteredDate]));
 				}
 			}
 		},

@@ -25,15 +25,23 @@ export const fetchAllTickets = createAsyncThunk("tickets", async (args, {rejectW
 });
 
 const initialState = {
-	reportTapIndex: 0,
+	reportTabIndex: 0,
 	loading: false,
 	error: null,
 	errorMessage: "",
 	successful: null,
+	serviceDateStart: "",
+	serviceDateEnd: "",
+	projectDateStart: "",
+	projectDateEnd: "",
+	serviceTickets: [],
 	filteredTickets: [],
+	selectedTickets: [],
 	filteredTicketsByDate: [],
 	filteredTicketsByStatus: [],
 	multipleTicketStatusFiltering: [],
+	projectTickets: [],
+	selectedProjectTickets: [],
 	filteredProjectTickets: [],
 	filteredProjectTicketsByDate: [],
 	filteredProjectTicketsByStatus: [],
@@ -45,19 +53,56 @@ const ticketReportSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		SET_REPORT_TAB_INDEX: (state, {payload}) => {
-			state.reportTapIndex = payload;
+			state.reportTabIndex = payload;
+		},
+
+		setDateRangeStart: (state, {payload}) => {
+			if (state.reportTabIndex === 0) {
+				state.serviceDateStart = payload;
+			} else {
+				state.projectDateStart = payload;
+			}
+		},
+
+		setDateRangeEnd: (state, {payload}) => {
+			if (state.reportTabIndex === 0) {
+				state.serviceDateEnd = payload;
+			} else {
+				state.projectDateEnd = payload;
+			}
+		},
+
+		filterSelectedTickets: (state, {payload}) => {
+			if (state.reportTabIndex === 0) {
+				state.selectedTickets = current(state).selectedTickets.concat(payload);
+				
+			} else {
+				state.selectedProjectTickets = current(state).selectedProjectTickets.concat(payload);
+			}
+		},
+
+		removeSelectedTickets: (state, {payload}) => {
+			if (state.reportTabIndex === 0) {
+				state.selectedTickets = current(state)
+					.selectedTickets.slice()
+					.filter(ticket => ticket.id != payload.id);
+			}else {
+				state.selectedProjectTickets = current(state)
+					.selectedProjectTickets.slice()
+					.filter(ticket => ticket.id != payload.id);
+			}
 		},
 
 		filterTickets: (state, {payload}) => {
-            if (state.reportTapIndex === 0) {
-			state.filteredTickets = payload;
-            }else {
-			state.filteredProjectTickets = payload;
-            }
+			if (state.reportTabIndex === 0) {
+				state.filteredTickets = payload;
+			} else {
+				state.filteredProjectTickets = payload;
+			}
 		},
 
 		filterTicketsByDate: (state, {payload}) => {
-			if (state.reportTapIndex === 0) {
+			if (state.reportTabIndex === 0) {
 				state.filteredTicketsByDate = payload;
 			} else {
 				state.filteredProjectTicketsByDate = payload;
@@ -66,7 +111,7 @@ const ticketReportSlice = createSlice({
 
 		filterTicketsByStatus: (state, {payload}) => {
 			const {data, status} = payload;
-			if (state.reportTapIndex === 0) {
+			if (state.reportTabIndex === 0) {
 				if (state.multipleTicketStatusFiltering.includes(status)) {
 					console.log("Already exist.");
 				} else {
@@ -83,7 +128,7 @@ const ticketReportSlice = createSlice({
 		},
 
 		sortFilteredTicketsByDate: (state, {payload}) => {
-			if (state.reportTapIndex === 0) {
+			if (state.reportTabIndex === 0) {
 				state.filteredTicketsByStatus = payload;
 			} else {
 				state.filteredProjectTicketsByStatus = payload;
@@ -91,7 +136,7 @@ const ticketReportSlice = createSlice({
 		},
 
 		setMultipleFilterStatus: (state, {payload}) => {
-			if (state.reportTapIndex === 0) {
+			if (state.reportTabIndex === 0) {
 				if (state.multipleTicketStatusFiltering.includes(payload)) {
 					console.log("Already exist.");
 				} else {
@@ -109,7 +154,7 @@ const ticketReportSlice = createSlice({
 		},
 
 		removeMultipleFilterStatus: (state, {payload}) => {
-			if (state.reportTapIndex === 0) {
+			if (state.reportTabIndex === 0) {
 				state.multipleTicketStatusFiltering = current(state)
 					.multipleTicketStatusFiltering.slice()
 					.filter(status => status != payload);
@@ -136,14 +181,28 @@ const ticketReportSlice = createSlice({
 				const {status, code, data} = action.payload;
 				state.loading = false;
 				if (code === 200 && status === "OK") {
+					// SERVICE TICKETS
+					state.serviceTickets = data
+						.slice()
+						.reverse()
+						.filter(ticket => ticket.ticket_type === "service ticket");
+
 					state.filteredTickets = data
 						.slice()
 						.reverse()
 						.filter(ticket => ticket.ticket_type === "service ticket");
+
+					// PROJECT TICKETS
+					state.projectTickets = data
+						.slice()
+						.reverse()
+						.filter(ticket => ticket.ticket_type === "project ticket");
+
 					state.filteredProjectTickets = data
 						.slice()
 						.reverse()
 						.filter(ticket => ticket.ticket_type === "project ticket");
+
 					state.successful = true;
 					state.error = false;
 				} else {
@@ -164,6 +223,10 @@ const ticketReportSlice = createSlice({
 
 export default ticketReportSlice.reducer;
 export const {
+	filterSelectedTickets,
+	removeSelectedTickets,
+	setDateRangeEnd,
+	setDateRangeStart,
 	filterTickets,
 	filterTicketsByDate,
 	filterTicketsByStatus,

@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	filterTickets,
 	filterTicketsByDate,
+	setDateRangeEnd,
+	setDateRangeStart,
 } from "../../../state-manager/reducers/reports/tickets/ticketreport";
 import {
 	filterCustomersByDate,
@@ -91,22 +93,26 @@ const DateFilterWrapper = styled("div")(() => ({
 	},
 }));
 
-const DateFilter = ({ handleReportDateRange }) => {
+const ProjectDateFilter = ({ handleReportDateRange }) => {
 	const [values, setValues] = useState({ startDate: "", endDate: "" });
 	const [toggleErr, setToggleErr] = useState(false);
-	// const [toggleEmpty, setToggleEmpty] = useState(false);
+	const [toggleEmpty, setToggleEmpty] = useState(false);
 
 	const { startDate, endDate } = values;
 	const start = getDateFromDateTime(startDate);
 	const end = getDateFromDateTime(endDate);
 
 	const dispatch = useDispatch();
-	const { serviceTickets } = useSelector((state) => state.ticketReports);
+	const { projectTickets, filteredProjectTicketsByDate } = useSelector(
+		(state) => state.ticketReports
+	);
 	const { customers } = useSelector((state) => state.customers);
 	const { customerReport } = useSelector((state) => state.reports);
 
 	const handleClear = () => {
 		setValues({ startDate: "", endDate: "" });
+		dispatch(setDateRangeStart(""));
+		dispatch(setDateRangeEnd(""));
 		setToggleErr(false);
 		// setToggleEmpty(false);
 
@@ -115,7 +121,7 @@ const DateFilter = ({ handleReportDateRange }) => {
 			dispatch(filterCustomers(customers));
 		} else {
 			dispatch(filterTicketsByDate([]));
-			dispatch(filterTickets(serviceTickets));
+			dispatch(filterTickets(projectTickets));
 		}
 	};
 
@@ -124,9 +130,19 @@ const DateFilter = ({ handleReportDateRange }) => {
 			setToggleErr(true);
 		} else {
 			setToggleErr(false);
-			// dispatch(setDateRangeStart(start));
-			// dispatch(setDateRangeEnd(end));
+			dispatch(setDateRangeStart(start));
+			dispatch(setDateRangeEnd(end));
 			handleReportDateRange(start, end);
+		}
+
+		if (
+			start != "NaN-NaN-NaN" &&
+			end != "NaN-NaN-NaN" &&
+			filteredProjectTicketsByDate.length === 0
+		) {
+			setToggleEmpty(true);
+		} else {
+			setToggleEmpty(false);
 		}
 	}, [start, end]);
 
@@ -155,8 +171,8 @@ const DateFilter = ({ handleReportDateRange }) => {
 									},
 								}}
 								value={startDate}
-								disableFuture={true}
 								className="input"
+								disableFuture={true}
 								renderInput={(params) => <TextField {...params} error={false} />}
 								onChange={(data) => setValues({ ...values, startDate: data })}
 								popperPlacement="bottom-end"
@@ -231,8 +247,8 @@ const DateFilter = ({ handleReportDateRange }) => {
 	);
 };
 
-DateFilter.propTypes = {
+ProjectDateFilter.propTypes = {
 	handleReportDateRange: PropTypes.func,
 };
 
-export default DateFilter;
+export default ProjectDateFilter;
