@@ -147,8 +147,8 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-					<EditableField label="Workspace Name" value={workspaceName} onChange={() => {}} isEditable={true}/>
-					<EditableField label="Phone Number" value={phoneNumber} onChange={() => {}} isEditable={true}/>
+					<EditableField label="Workspace Name" value={workspaceName} width='400px' onChange={() => {}} isEditable={true}/>
+					<EditableField label="Phone Number" value={phoneNumber} width='400px' onChange={() => {}} isEditable={true}/>
 					</Box>
 					<EditableField label="Work Email" value={email} onChange={() => {}} />
 					<Box
@@ -159,8 +159,8 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-					<EditableField label="Country" value={country} onChange={() => {}} isEditable={true}/>
-					<EditableField label="State" value={city} onChange={() => {}} isEditable={true}/>
+					<EditableField label="Country" value={country} width='400px' onChange={() => {}} isEditable={true}/>
+					<EditableField label="State" value={city} width='400px' onChange={() => {}} isEditable={true}/>
 					</Box>
 					
 				</Box>

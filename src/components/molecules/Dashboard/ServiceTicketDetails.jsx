@@ -1,88 +1,64 @@
 import { styled } from "@mui/material";
-import React, { Component } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 
-class ServiceTicketDetails extends Component {
-	state = {
-		totalCount: null,
-		progressBars: [
-			{ name: "Done", progress: null },
-			{ name: "Pending", progress: null },
-			{ name: "En Route", progress: null },
-			{ name: "In Progress", progress: null },
-		],
+const ServiceTicketDetails = () => {
+	const analyticsData = useSelector((state) => state.dashboard.analyticsData);
+
+	const Text = styled("p")`
+		color: #333;
+		font-family: Poppins;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 400;
+		padding-bottom: 8px;
+		line-height: 32.625px; /* 163.125% */
+	`;
+
+	const nameStyle = {
+		color: "#000",
+		fontFamily: "Poppins",
+		fontSize: "20px",
+		fontStyle: "normal",
+		fontWeight: 500,
+		lineHeight: "32.625px",
+		width: "110px",
 	};
 
-	componentDidMount() {
-		setTimeout(() => {
-			const totalCount = 100;
-			const progressBars = [
-				{ name: "Done", progress: 30 },
-				{ name: "Pending", progress: 20 },
-				{ name: "En Route", progress: 15 },
-				{ name: "In Progress", progress: 35 },
-			];
+	const progressBarContainerStyle = {
+		width: "80%",
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+	};
 
-			this.setState({ totalCount, progressBars });
-		}, 1000);
-	}
+	const progressBarStyle = {
+		flex: 1,
+		height: "13.05px",
+		backgroundColor: "var(--gray-100, #F2F4F7)",
+		borderRadius: "6.525px",
+		marginRight: "18px",
+		overflow: "hidden",
+	};
 
-	render() {
-		const { totalCount, progressBars } = this.state;
+	const progressBarFillStyle = {
+		height: "100%",
+		backgroundColor: "#2B2E72",
+		borderRadius: "6.525px",
+		width: 0,
+		animation: "slide-in 1s ease-in-out forwards",
+	};
 
-		const Text = styled("p")`
-			color: #333;
-			font-family: Poppins;
-			font-size: 20px;
-			font-style: normal;
-			font-weight: 400;
-			padding-bottom: 8px;
-			line-height: 32.625px; /* 163.125% */
-		`;
+	const progressBarTextStyle = {
+		color: "#2B2E72",
+		fontFamily: "Poppins",
+		fontSize: "20px",
+		fontStyle: "normal",
+		fontWeight: 600,
+		lineHeight: "32.625px",
+	};
 
-		const nameStyle = {
-			color: "#000",
-			fontFamily: "Poppins",
-			fontSize: "20px",
-			fontStyle: "normal",
-			fontWeight: 500,
-			lineHeight: "32.625px",
-			width: "110px",
-		};
-
-		const progressBarContainerStyle = {
-			width: "80%",
-			display: "flex",
-			justifyContent: "space-between",
-			alignItems: "center",
-		};
-
-		const progressBarStyle = {
-			flex: 1,
-			height: "13.05px",
-			backgroundColor: "var(--gray-100, #F2F4F7)",
-			borderRadius: "6.525px",
-			marginRight: "18px",
-			overflow: "hidden",
-		};
-
-		const progressBarFillStyle = {
-			height: "100%",
-			backgroundColor: "#2B2E72",
-			borderRadius: "6.525px",
-			width: 0,
-			animation: "slide-in 1s ease-in-out forwards",
-		};
-
-		const progressBarTextStyle = {
-			color: "#2B2E72",
-			fontFamily: "Poppins",
-			fontSize: "20px",
-			fontStyle: "normal",
-			fontWeight: 600,
-			lineHeight: "32.625px",
-		};
-
-		const cssKeyframes = `
+	const cssKeyframes = `
       @keyframes slide-in {
         0% {
           width: 0;
@@ -90,16 +66,24 @@ class ServiceTicketDetails extends Component {
       }
     `;
 
-		return (
-			<div>
-				<style>{cssKeyframes}</style>
-				<Text>
-					Total Service Tickets:{" "}
-					<span style={{ color: "#2b2e72", fontWeight: "600", fontSize: "20px" }}>
-						{totalCount}
-					</span>
-				</Text>
-				{progressBars.map((bar) => (
+	const progressBars = [
+		{ name: "Done", key: "totalServiceTicketsDone" },
+		{ name: "Pending", key: "totalServiceTicketsPending" },
+		{ name: "En Route", key: "totalServiceTicketsTechnicianEnroute" },
+		{ name: "In Progress", key: "totalServiceTicketsInprogress" },
+	];
+
+	return (
+		<div>
+			<style>{cssKeyframes}</style>
+			<Text>
+				Total Service Tickets:{" "}
+				<span style={{ color: "#2b2e72", fontWeight: "600", fontSize: "20px" }}>
+					{analyticsData?.ticketsCount?.serviceTickets?.totalServiceTickets || 0}
+				</span>
+			</Text>
+			{analyticsData?.ticketsCount?.serviceTickets &&
+				progressBars.map((bar) => (
 					<div key={bar.name} style={{ display: "flex", alignItems: "center" }}>
 						<p style={{ ...nameStyle, marginRight: "10px" }}>{bar.name}</p>
 						<div style={progressBarContainerStyle}>
@@ -108,7 +92,7 @@ class ServiceTicketDetails extends Component {
 									<div
 										style={{
 											...progressBarFillStyle,
-											width: `${bar.progress}%`,
+											width: `${analyticsData.ticketsCount.serviceTickets[bar.key] || 0}%`,
 											height: "100%",
 											backgroundColor: "#2B2E72",
 											borderRadius: "6.525px",
@@ -117,14 +101,15 @@ class ServiceTicketDetails extends Component {
 								)}
 							</div>
 							{bar.progress !== null && (
-								<span style={progressBarTextStyle}>{`${bar.progress}`}</span>
+								<span style={progressBarTextStyle}>
+									{analyticsData.ticketsCount.serviceTickets[bar.key] || 0}
+								</span>
 							)}
 						</div>
 					</div>
 				))}
-			</div>
-		);
-	}
-}
+		</div>
+	);
+};
 
 export default ServiceTicketDetails;

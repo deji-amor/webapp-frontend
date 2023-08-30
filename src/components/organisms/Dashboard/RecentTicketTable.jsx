@@ -35,8 +35,6 @@ const RecentTicketTable = () => {
 				<RecentTicketTableHeadRow />
 				<tbody>
 					<RecentTicketTableList />
-					<RecentTicketTableList />
-					<RecentTicketTableList />
 				</tbody>
 			</table>
 		</Wrapper>

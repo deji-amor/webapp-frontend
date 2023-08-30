@@ -34,6 +34,7 @@ const EditableField = ({ label, value, isEditable, }) => {
           lineHeight: "30px",
           display: "flex",
           alignItems: "center",
+          width:'400px',
         }}
       >
         {label}
@@ -63,7 +64,7 @@ const EditableField = ({ label, value, isEditable, }) => {
           value={editedValue}
           onChange={(e) => setEditedValue(e.target.value)}
           sx={{
-            width: '100%',
+            width: '400px',
             "& .MuiOutlinedInput-root": {
               " .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#2B2E72",

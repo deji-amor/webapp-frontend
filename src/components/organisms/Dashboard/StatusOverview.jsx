@@ -23,6 +23,10 @@ const StatusOverview = ({ defaultOption, ticketData, customerData }) => {
 
   const data = selectedOption === "Tickets" ? ticketData : customerData;
 
+  if (!data) {
+    return <p>Loading...</p>;
+  }
+
   const legendColors = data.chartData.datasets[0].backgroundColor;
 
   return (
