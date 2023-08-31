@@ -9,15 +9,7 @@ import BlueThemedXtraSm from '../../../CreateTicketSuperAdmin/BlueThemedXtraSm';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useSelector, useDispatch } from 'react-redux';
-
-export function getFileNameFromS3Url(s3Url) {
-	const url = new URL(s3Url);
-	const path = url.pathname; // Get the pathname from the URL
-	const parts = path.split("/"); // Split the path into parts using '/'
-	const fileName = parts[parts.length - 1]; // Get the last part, which is the file name
-	return fileName;
-}
-
+import { extractCleanFilenameFromUrl } from '../../../../../organisms/tickets/View/Details/components/Attachments';
 
 const ScopeOfWork = () => {
     const {
@@ -67,7 +59,7 @@ const ScopeOfWork = () => {
 							<span className="max-w-[1rem] truncate">
 								{scopeOfWorkDocument.name
 									? scopeOfWorkDocument.name
-									: getFileNameFromS3Url(scopeOfWorkDocumentUrl)}
+									: extractCleanFilenameFromUrl(scopeOfWorkDocumentUrl)}
 							</span>
 							<RemoveCircleOutlineIcon
 								onClick={removeFileIcon}
@@ -82,7 +74,7 @@ const ScopeOfWork = () => {
 						>
 							<BlueThemedXtraSm className="max-w-[15rem] overflow-ellipsis">
 								{scopeOfWorkDocumentUrl
-									? getFileNameFromS3Url(scopeOfWorkDocumentUrl)
+									? extractCleanFilenameFromUrl(scopeOfWorkDocumentUrl)
 									: "Attach Document (10mb max)"}
 								<AttachFileIcon className="rotate-45" fontSize="small" />{" "}
 							</BlueThemedXtraSm>

@@ -52,7 +52,7 @@ const MobileLinkWrapper = styled("div")(() => ({
 	},
 
 	".drop": {
-		width: "170px",
+		width: "200px",
 		background: "white",
 		padding: "5px",
 		borderRadius: "8px",
@@ -60,26 +60,27 @@ const MobileLinkWrapper = styled("div")(() => ({
 		top: "45px",
 		right: "50%",
 		transform: "translateX(50%)",
-        display: "flex",
-        flexDirection: "column",
-        gap: "5px",
-        justifyContent: "center",
-		marginTop: "5px"
+		display: "flex",
+		flexDirection: "column",
+		gap: "5px",
+		justifyContent: "center",
+		marginTop: "5px",
 	},
 
 	".login-customer, .login-admin": {
 		color: "#2B2E72",
 		width: "100%",
-        padding: "10px 0px 10px 0px",
-        fontSize: "14px",
-        textAlign: "center",
+		padding: "10px 10px 10px 10px",
+		fontSize: "16px",
+		textAlign: "left",
+		fontWeight: "600",
 		// border: "2px solid #2B2E72",
 	},
 
-    ".login-customer:hover, .login-admin:hover": {
-        background: "#2B2E72",
-        color: "white"
-    }, 
+	".login-customer:hover, .login-admin:hover": {
+		background: "#2B2E72",
+		color: "white",
+	},
 }));
 
 const MobileLink = () => {
@@ -118,14 +119,14 @@ const MobileLink = () => {
 						</button>
 						{toggle && (
 							<div className="drop">
-								<NavLink to="/login-admin">
-									<button className="login-admin" type="button">
-										Login as an admin
-									</button>
-								</NavLink>
 								<NavLink to="/login-customer">
 									<button className="login-customer" type="button">
-										Login as a customer
+										Login as a Customer
+									</button>
+								</NavLink>
+								<NavLink to="/login-admin">
+									<button className="login-admin" type="button">
+										Login as an Admin
 									</button>
 								</NavLink>
 							</div>

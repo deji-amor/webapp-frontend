@@ -11,6 +11,7 @@ import { fetchCustomers } from '../state-manager/reducers/users/customers/custom
 import { fetchAllCustomers } from '../state-manager/reducers/reports/customers/customers';
 import { fetchAllTickets } from '../state-manager/reducers/reports/tickets/ticketreport';
 import { fetchTickets } from '../state-manager/reducers/tickets/tickets';
+import { fetchNotifications } from '../state-manager/reducers/notifications/notifications';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
@@ -85,6 +86,7 @@ const AppLayout = () => {
 		dispatch(fetchTickets())
 		dispatch(fetchAllCustomers())
 		dispatch(fetchAllTickets())
+		dispatch(fetchNotifications())
 	}, [])
 
 	return (

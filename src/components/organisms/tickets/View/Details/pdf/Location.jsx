@@ -48,7 +48,6 @@ const Location = ({ ticket }) => {
 		},
 	});
 
-
 	return (
 		<>
 			<View style={styles.section}>

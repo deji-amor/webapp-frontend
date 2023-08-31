@@ -1,7 +1,7 @@
 import React from 'react'
-import NavBarSearch from "../../atoms/Dashboard/NavBarSearch";
 import NavBarIconList from '../Dashboard/NavBarIconList';
 import { styled } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const CustomerNavbar = () => {
     const NavigationBar = styled("div")`
@@ -19,9 +19,20 @@ const CustomerNavbar = () => {
 			}
 		`;
 
+	const CompanyName = styled("h1")`
+		color: #2b2e72;
+		font-family: "Poppins", sans-serif;
+		font-size: 1.5rem;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.5rem;
+	`;
+
+		const { workspaceName } = useSelector((state) => state.authUser.data);
+
 	return (
 		<NavigationBar>
-			<NavBarSearch />
+			<CompanyName>{workspaceName}</CompanyName>
 			<NavBarIconList />
 		</NavigationBar>
 	);

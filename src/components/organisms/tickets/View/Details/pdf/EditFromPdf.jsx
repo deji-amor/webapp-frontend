@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, View, Text, Image, Svg, Link } from "@react-pdf/renderer";
+import { StyleSheet, View, Text, Svg, Link } from "@react-pdf/renderer";
 
 const EditFromPdf = ({ ticket, user }) => {
 	const { id } = ticket;
-  const {email} = user
+  const {email, first_name, last_name} = user
 
 	const styles = StyleSheet.create({
 		section: {
@@ -77,7 +77,7 @@ const EditFromPdf = ({ ticket, user }) => {
 			</View>
 			<View style={styles.oneLine}>
 				<Text style={styles.detailText}>Created by: </Text>
-				<Text style={styles.detailTextBolder}>John Doe ({email})</Text>
+				<Text style={styles.detailTextBolder}>{first_name} {last_name} ({email})</Text>
 			</View>
 		</>
 	);

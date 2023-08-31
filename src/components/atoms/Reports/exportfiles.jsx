@@ -18,7 +18,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 	top: "-15px",
 
 	".exportBut": {
-		width: "164px",
+		width: "184px",
 		borderRadius: "8px",
 		padding: "8px 15px 8px 15px",
 		color: "white",
@@ -73,9 +73,12 @@ const ExportFilesWrapper = styled("div")(() => ({
 		textAlign: "left",
 		borderRadius: "8px",
 		display: "flex",
-		justifyContent: "space-around",
 		gap: "60px",
 		alignItems: "center",
+	},
+
+	".pdf-csv button": {
+		justifyContent: "space-around",
 	},
 
 	".instant-recurring button:hover, .pdf-csv button:hover": {
@@ -83,7 +86,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 	},
 
 	".pdf-csv": {
-		height: "42px"
+		height: "42px",
 	},
 
 	".instant-recurring button, .pdf-csv button .arrow": {
@@ -116,9 +119,6 @@ const ExportFiles = ({ text }) => {
 
 	const selectedProject = selectedProjectTickets ? selectedProjectTickets : [];
 
-	console.log(selectedTickets);
-	console.log(selectedProjectTickets);
-
 	const filteredTicketServiceReports =
 		(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0) ||
 		(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length === 0)
@@ -135,16 +135,72 @@ const ExportFiles = ({ text }) => {
 			? filteredProjectTicketsByDate
 			: filteredProjectTickets;
 
+	// console.log(filteredTicketProjectReport)
+
+	const serviceCounter =
+		selectedTickets.length || filteredTicketsByStatus.length || filteredTicketsByDate.length;
+
+	const projectCounter =
+		selectedProjectTickets.length ||
+		filteredProjectTicketsByStatus.length ||
+		filteredProjectTicketsByDate.length;
+
 	return (
 		<ExportFilesWrapper>
-			<button
-				onClick={() => dispatch(SET_EXPORT_DROPDOWN_ONE())}
-				className="exportBut"
-				type="button"
-			>
-				<span>{text}</span>
-				<img className="export-icon" src={ExportImage} alt="export files" />
-			</button>
+			{(reportTabIndex === 0 && (
+				<button
+					onClick={() => dispatch(SET_EXPORT_DROPDOWN_ONE())}
+					className="exportBut"
+					type="button"
+				>
+					<span>{text}</span>
+					{serviceCounter != 0 && (
+						<p
+							style={{
+								borderRadius: "50%",
+								background: "white",
+								color: "rgba(43, 46, 114, 1)",
+								padding: "5px 5px 5px 5px",
+								width: "23px",
+								height: "23px",
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							{serviceCounter}
+						</p>
+					)}
+					<img className="export-icon" src={ExportImage} alt="export files" />
+				</button>
+			)) || (
+				<button
+					onClick={() => dispatch(SET_EXPORT_DROPDOWN_ONE())}
+					className="exportBut"
+					type="button"
+				>
+					<span>{text}</span>
+					{projectCounter != 0 && (
+						<p
+							style={{
+								borderRadius: "50%",
+								background: "white",
+								color: "rgba(43, 46, 114, 1)",
+								padding: "5px 5px 5px 5px",
+								width: "23px",
+								height: "23px",
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							{projectCounter}
+						</p>
+					)}
+					<img className="export-icon" src={ExportImage} alt="export files" />
+				</button>
+			)}
+
 			<div className="exp">
 				{exportDropdown1 && (exportPDFDropdown || exportCSVDropdown) && (
 					<div className="instant-recurring">
