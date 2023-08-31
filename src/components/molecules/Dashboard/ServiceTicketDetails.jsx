@@ -26,7 +26,7 @@ const ServiceTicketDetails = () => {
 	};
 
 	const progressBarContainerStyle = {
-		width: "80%",
+		width: "75%",
 		display: "flex",
 		justifyContent: "space-between",
 		alignItems: "center",

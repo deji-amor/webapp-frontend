@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Box, Button, Avatar, IconButton } from "@mui/material";
 import EditableField from "../../atoms/Dashboard/EditableField";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
@@ -6,28 +6,40 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
 import Cover from "../../../assets/daashboard/Cover.png";
 import CustomButton from "../../atoms/Password/customButton";
-// import { updateProfilePicture } from "../../../actions/authUser";
+import { editProfile } from "../../../state-manager/reducers/dashboard/dashboard";
+
+// IMPORT import { updateProfilePicture } from "../../../actions/authUser";
 
 const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
 	const [selectedImage, setSelectedImage] = useState(null);
-	// const [loading, setLoading] = useState(false);
-	const { email, firstName, lastName, workspaceName, phoneNumber, country, city } = useSelector(
-		(state) => state.authUser.data
-	);
+	//COMMENT const [loading, setLoading] = useState(false);
+	const { email, first_name, last_name, workspace_name, phone_number, country, state } =
+		useSelector((state) => state.dashboard.editProfile);
 
 	const handleImageChange = (event) => {
 		const imageFile = event.target.files[0];
 		setSelectedImage(URL.createObjectURL(imageFile));
 	};
 
+	useEffect(() => {
+		dispatch(editProfile());
+	}, [dispatch]);
+
 	const handleSave = () => {
-		// Handle save logic here
-		//   if (selectedImage) {
-		//     dispatch(updateProfilePicture(selectedImage)); // Dispatch action to update profile picture
-		//   }
-		// setLoading(true);
-		onClose();
+		const editedData = {
+			workspaceName: workspace_name,
+			phoneNumber: phone_number,
+			country: country,
+			state: state,
+		};
+
+		dispatch(editProfile(editedData))
+			.then(() => {
+				setSelectedImage(null);
+				onClose();
+			})
+			.catch((error) => {});
 	};
 
 	const handleCancel = () => {
@@ -50,7 +62,6 @@ const EditProfileModal = ({ open, onClose }) => {
 					borderRadius: "12px",
 				}}
 			>
-
 				<Box
 					sx={{
 						position: "relative",
@@ -135,8 +146,8 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-						<EditableField label="First Name" value={firstName} onChange={() => {}} />
-						<EditableField label="Last Name" value={lastName} onChange={() => {}} />
+						<EditableField label="First Name" value={first_name} />
+						<EditableField label="Last Name" value={last_name} />
 					</Box>
 					<Box
 						sx={{
@@ -148,20 +159,18 @@ const EditProfileModal = ({ open, onClose }) => {
 					>
 						<EditableField
 							label="Workspace Name"
-							value={workspaceName}
+							value={workspace_name}
 							width="400px"
-							onChange={() => {}}
 							isEditable={true}
 						/>
 						<EditableField
 							label="Phone Number"
-							value={phoneNumber}
+							value={phone_number}
 							width="400px"
-							onChange={() => {}}
 							isEditable={true}
 						/>
 					</Box>
-					<EditableField label="Work Email" value={email} onChange={() => {}} />
+					<EditableField label="Work Email" value={email} />
 					<Box
 						sx={{
 							display: "flex",
@@ -170,20 +179,8 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-						<EditableField
-							label="Country"
-							value={country}
-							width="400px"
-							onChange={() => {}}
-							isEditable={true}
-						/>
-						<EditableField
-							label="State"
-							value={city}
-							width="400px"
-							onChange={() => {}}
-							isEditable={true}
-						/>
+						<EditableField label="Country" value={country} width="400px" isEditable={true} />
+						<EditableField label="State" value={state} width="400px" isEditable={true} />
 					</Box>
 				</Box>
 

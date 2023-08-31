@@ -53,36 +53,43 @@ export const recentactivities = createAsyncThunk(
 );
 
 // EDIT PROFILE
-export const editProfile = createAsyncThunk(
-	"editProfile",
-	async (_, {rejectWithValue}) => {
-		try {
-			const token = await getAuthToken();
-			const config = {
-				method: "PATCH",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-			};
-			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/edit-profile`;
-			const response = await fetch(url, config);
-			const result = await response.json();
-			return result.data;
-		} catch (err) {
-			if (err.response && err.response.data.message) {
-				return rejectWithValue(err.response.data.message);
-			} else {
-				return rejectWithValue(err.message);
-			}
+export const editProfile = createAsyncThunk("editProfile", async (data, {rejectWithValue}) => {
+	try {
+		const token = await getAuthToken();
+		const config = {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		};
+		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/edit-profile`;
+		const response = await fetch(url, config);
+		const result = await response.json();
+		return result.data;
+	} catch (err) {
+		if (err.response && err.response.data.message) {
+			return rejectWithValue(err.response.data.message);
+		} else {
+			return rejectWithValue(err.message);
 		}
 	}
-);
+});
 
 const initialState = {
 	loading: false,
 	error: null,
 	analyticsData: null,
+	editProfile: {
+		email: "",
+		first_name: "",
+		last_name: "",
+		phone_number: "",
+		country: "",
+		state: "",
+		workspace_name: "",
+	},
 };
 
 const dashboardSlice = createSlice({
@@ -123,14 +130,15 @@ const dashboardSlice = createSlice({
 			// ADDCASE EDIT PROFILE
 			.addCase(editProfile.pending, state => {
 				state.loading = true;
+				state.error = null;
 			})
 			.addCase(editProfile.fulfilled, (state, action) => {
 				state.loading = false;
-				state.recentActivities = action.payload;
+				state.editProfile = action.payload;
 			})
 			.addCase(editProfile.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.payload || "Could not fetch data";
+				state.error = action.payload || "Provide the required fields!";
 			});
 	},
 });
