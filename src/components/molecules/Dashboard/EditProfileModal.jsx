@@ -50,7 +50,7 @@ const EditProfileModal = ({ open, onClose }) => {
 					borderRadius: "12px",
 				}}
 			>
-				{/* Cover Image */}
+
 				<Box
 					sx={{
 						position: "relative",
@@ -65,7 +65,7 @@ const EditProfileModal = ({ open, onClose }) => {
 						alt="Cover"
 						style={{ width: "100%", height: "100%", objectFit: "cover" }}
 					/>
-					{/* Avatar with Edit Icon */}
+
 					<Box
 						sx={{
 							position: "absolute",
@@ -125,10 +125,8 @@ const EditProfileModal = ({ open, onClose }) => {
 					sx={{
 						alignItems: "center",
 						gap: "24px",
-						// width: "800px",
 					}}
 				>
-					{/* Editable Fields */}
 					<Box
 						sx={{
 							display: "flex",
@@ -189,15 +187,6 @@ const EditProfileModal = ({ open, onClose }) => {
 					</Box>
 				</Box>
 
-				{/* Save and Close Buttons */}
-				{/* <Box mt={2} display="flex" justifyContent="flex-end">
-					<Button variant="outlined" onClick={handleCancel}>
-						Cancel
-					</Button>
-					<Button variant="contained" color="primary" onClick={handleSave} sx={{ ml: 2 }}>
-						Save
-					</Button>
-				</Box> */}
 				<Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: "16px" }}>
 					<Button
 						onClick={handleCancel}

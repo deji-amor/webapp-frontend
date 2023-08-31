@@ -1,36 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RecentTicketTableText from "../../atoms/Dashboard/RecentTicketTableText";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const RecentTicketTableList = () => {
 	const analyticsData = useSelector((state) => state.dashboard.analyticsData);
+	const navigate = useNavigate(); // Hook to get the navigation function
 
 	const recentTickets = analyticsData?.recentTickets || [];
 
-	// 	const [isModalOpen, setIsModalOpen] = useState(false);
-	//   const [selectedTicket, setSelectedTicket] = useState(null);
-
-	//   const handleIDClick = (ticket) => {
-	//     setSelectedTicket(ticket);
-	//     setIsModalOpen(true);
-	//   };
-
-	//   const closeModal = () => {
-	//     setSelectedTicket(null);
-	//     setIsModalOpen(false);
-	//   };
+	const capitalizeFirstLetter = (str) => {
+		return str
+			.split(" ")
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+			.join(" ");
+	};
 
 	const renderStatus = (ticket) => {
+		let statusIcon = null;
+		let statusText = "N/A";
+
 		if (ticket.status === "Done") {
-			return (
-				<>
-					Done <CheckCircleIcon className="text-[green]" />
-				</>
-			);
-		} else {
-			return ticket.status || "N/A";
+			statusIcon = <CheckCircleIcon className="text-[green]" />;
+			statusText = "Done";
+		} else if (ticket.status) {
+			statusText = capitalizeFirstLetter(ticket.status);
 		}
+
+		return (
+			<>
+				{statusText} {statusIcon}
+			</>
+		);
 	};
 
 	const formatDate = (dateString) => {
@@ -41,14 +43,16 @@ const RecentTicketTableList = () => {
 	return (
 		<>
 			{recentTickets.map((ticket, index) => (
-				<tr key={index} className="bg-white border-b hover:bg-gray-50">
-					<RecentTicketTableText
-						isID={true}
-						// onClick={() => handleIDClick(ticket)}
-					>
-						{ticket.id || "N/A"}
+				<tr
+					key={index}
+					className="bg-white border-b hover:bg-gray-50"
+					onClick={() => navigate(`/admin/tickets/view/${ticket.id}`)}
+					style={{ cursor: "pointer" }}
+				>
+					<RecentTicketTableText isID={true}>{ticket.id || "N/A"}</RecentTicketTableText>
+					<RecentTicketTableText>
+						{capitalizeFirstLetter(ticket.ticket_type) || "N/A"}
 					</RecentTicketTableText>
-					<RecentTicketTableText>{ticket.ticket_type || "N/A"}</RecentTicketTableText>
 					<RecentTicketTableText>{ticket.ticket_form || "N/A"}</RecentTicketTableText>
 					<RecentTicketTableText>{formatDate(ticket.created_at) || "N/A"}</RecentTicketTableText>
 					<RecentTicketTableText>{renderStatus(ticket)}</RecentTicketTableText>
