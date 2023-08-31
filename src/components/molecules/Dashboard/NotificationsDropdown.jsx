@@ -16,6 +16,7 @@ const Wrapper = styled("div")`
 	border-radius: 0.75rem;
 	background: #fff;
 	box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+	max-width: 35rem;
 `;
 
 const OrderText = styled("p")`
@@ -108,19 +109,26 @@ const NotificationsDropdown = () => {
 
   return (
 		<Wrapper>
-			<div className="flex justify-between gap-[10rem] mb-[0.68rem]">
+			<div className="flex justify-between gap-[7rem]">
 				<NotificationText>Notifications</NotificationText>
-				<div className='flex items-center gap-[0.75rem]'>
-					<NotificationsFilterDropdown/>
-					<OrderText onClick={changeSortOrder} className="truncate flex items-center cursor-pointer hover:underline">
+				<div className="flex items-center gap-[0.75rem]">
+					<NotificationsFilterDropdown />
+					<OrderText
+						onClick={changeSortOrder}
+						className="truncate flex items-center cursor-pointer hover:underline"
+					>
 						<span>{orderText}</span>
-						<OrderIcon className={sortByAscending ? "" : "rotate-180"}/>
+						<OrderIcon className={sortByAscending ? "" : "rotate-180"} />
 					</OrderText>
 				</div>
 			</div>
-			<HorizontalRule/>
-			<div className=''>
-				
+			<div className="my-[0.68rem]">
+				<HorizontalRule />
+			</div>
+			<div className="space-y-[1rem]">
+				<NotificationItem />
+				<NotificationItem />
+				{/* <NotificationItem/> */}
 			</div>
 		</Wrapper>
 	);

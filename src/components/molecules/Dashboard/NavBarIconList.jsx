@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import useNotifications from "../../../hooks/useNotifications";
 import { styled } from "@mui/material";
 import NotificationsNoneSharpIcon from "@mui/icons-material/NotificationsNoneSharp";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import NavbarDropdown from "./NavbarDropdown";
 import NotificationsDropdown from "./NotificationsDropdown";
 import ProfileDropdownMenu from "../../organisms/Dashboard/ProfileDropdownMenu";
+import { useSelector } from "react-redux";
 
 const NavBarIconList = () => {
 	const List = styled("div")`
@@ -18,14 +20,33 @@ const NavBarIconList = () => {
 		}
 	`;
 
+	// absolute inline-flex items-center justify-center w-6 h-6 text-[0.75rem] font-[500] text-white bg-[#2B2E72] rounded-full -top-2 -right-2
+	const Dot = styled("div")`
+		position: absolute;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.5rem; /* 24px */
+		height: 1.5rem; /* 24px */
+		font-size: 0.75rem /* 12px */;
+		font-weight: 500;
+		background-color: #2b2e72;
+		border-radius: 9999px;
+		color: #fff;
+		top: -0.5rem /* -8px */;
+		right: -0.5rem /* -8px */;
+	`;
+
 	const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
 	const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
 
 	const toggleLogoutHandler = () => {
+		setShowNotificationDropdown(false);
 		setShowLogoutDropdown((previousValue) => !previousValue);
 	};
 
 	const toggleNotificationHandler = () => {
+		setShowLogoutDropdown(false);
 		setShowNotificationDropdown((previousValue) => !previousValue);
 	};
 
@@ -39,11 +60,18 @@ const NavBarIconList = () => {
 		document.addEventListener("click", escapeHandler);
 	}, []);
 
+		const authUser = useSelector(state => state.authUser.data)
+		const { id, workspaceId } = authUser;
+		// useNotifications(id, workspaceId)
+
 	return (
 		<List id="drop-down">
 			<div className="relative">
 				<span className={`w-[2.5rem] h-[2.5rem] rounded-[0.75rem] p-[0.2rem] ${showNotificationDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
-					<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
+					<span className="relative">
+						<Dot>08</Dot>
+						<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
+					</span>
 				</span>
 				{showNotificationDropdown && <NotificationsDropdown/>}
 			</div>
