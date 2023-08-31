@@ -96,7 +96,7 @@ const TicketsTableBodyItem = ({ ticket }) => {
 
 	return (
 		<tr
-			className="bg-white border-b hover:bg-gray-50 relative"
+			className="bg-white border-b hover:bg-gray-50 relative cursor-pointer"
 			onClick={(event) => ViewTicket(event, ticket.id)}
 		>
 			<RecentTicketTableText>

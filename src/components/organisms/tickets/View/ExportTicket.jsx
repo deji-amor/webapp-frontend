@@ -4,6 +4,8 @@ import { PDFDownloadLink} from "@react-pdf/renderer";
 import TicketTemplatePDF from "./Details/TicketTemplatePDF";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { CSVLink } from "react-csv";
+import { ticketHeaders } from "../../../atoms/Reports/headers";
 
 const ExportButton = styled("button")`
 	display: flex;
@@ -56,6 +58,17 @@ const ExportIcon = () => (
 	</svg>
 );
 
+export const removeNullishValuesFromTickets = (ticket) => {
+	const ticketCopy = structuredClone(ticket);
+	const valuesToExclude = ["", "[]", "undefined", "null", null, undefined];
+	Object.keys(ticket).forEach((key) => {
+		if(valuesToExclude.includes(ticket[key])) {
+			ticketCopy[key] = "—"; 
+		}
+	});
+	return ticketCopy;
+};
+
 const ExportTicket = () => {
 	const params = useParams()
 	const {ticketId} = params
@@ -63,30 +76,31 @@ const ExportTicket = () => {
 	const { customers } = useSelector((state) => state.customers);
 	const { users } = useSelector((state) => state.users);
 	const ticket = tickets.find(ticket => +ticket.id === +ticketId)
-	const customer = customers.find((user) => +user.id === ticket.customer_id);
-	const user = users.find((user) => +user.id === ticket.user_id);
+	const customer = customers.find((user) => +user.id === +ticket.customer_id);
+	const user = users.find((user) => +user.id === +ticket.user_id);
 	const [showDropdown, setShowDropdown] = useState(false)
 
 		const showDropdownHandler = () => {
 			setShowDropdown(pv => !pv)
 		}
 
-		const	ExportTicketAsCSVHandler = () => {
+		console.log("gggg97g79979");
+		console.log(removeNullishValuesFromTickets(ticket));
 
-		}
+		const list = [ticket]
 
-	useEffect(() => {
-		const listener = (event) => {
-			if(!event.target.closest("#ExportTicketAsCSVOrPDFDropdown")){
-				setShowDropdown(false)
+		useEffect(() => {
+			const listener = (event) => {
+				if(!event.target.closest("#ExportTicketAsCSVOrPDFDropdown")){
+					setShowDropdown(false)
+				}
 			}
-		}
 
-		document.body.addEventListener("click", listener)
-		return () => {
-			document.body.removeEventListener("click", listener)
-		}
-	}, [])
+			document.body.addEventListener("click", listener)
+			return () => {
+				document.body.removeEventListener("click", listener)
+			}
+		}, [])
 
 	return (
 		<div className="relative" id="ExportTicketAsCSVOrPDFDropdown">
@@ -94,17 +108,29 @@ const ExportTicket = () => {
 				<DropdownWrapper className="absolute top-[105%] right-0">
 					<Item>
 						<PDFDownloadLink
-							document={<TicketTemplatePDF ticket={ticket} customer={customer} user={user}/>}
-							fileName="somename.pdf"
+							document={<TicketTemplatePDF ticket={ticket} customer={customer} user={user} />}
+							fileName={`ticket-${ticket.id}-${new Date()}-pdf`}
 							onClick={(event) => event.stopPropagation()}
 						>
 							{({ blob, url, loading, error }) => (loading ? "Loading PDF..." : "PDF")}
 						</PDFDownloadLink>
 					</Item>
-					<Item onClick={ExportTicketAsCSVHandler}>CSV</Item>
+					<Item>
+						<CSVLink
+							data={list}
+							headers={ticketHeaders}
+							filename={`ticket-${ticket.id}-${new Date()}-csv`}
+							target="_blank"
+						>
+							CSV
+						</CSVLink>
+					</Item>
 				</DropdownWrapper>
 			)}
-			<ExportButton onClick={showDropdownHandler} className="flex items-center justify-start gap-[0.5rem]">
+			<ExportButton
+				onClick={showDropdownHandler}
+				className="flex items-center justify-start gap-[0.5rem]"
+			>
 				<span>Export</span>
 				<span>
 					<ExportIcon />

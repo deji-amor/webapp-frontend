@@ -4,6 +4,7 @@ import NotificationsNoneSharpIcon from "@mui/icons-material/NotificationsNoneSha
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import NavbarDropdown from "./NavbarDropdown";
+import NotificationsDropdown from "./NotificationsDropdown";
 
 const NavBarIconList = () => {
 	const List = styled("div")`
@@ -17,17 +18,22 @@ const NavBarIconList = () => {
 		}
 	`;
 
-	const [showDropdown, setShowDropdown] = useState(false);
+	const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
+	const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
 
-	const toggleHandler = () => {
-		setShowDropdown((previousValue) => !previousValue);
+	const toggleLogoutHandler = () => {
+		setShowLogoutDropdown((previousValue) => !previousValue);
 	};
 
+	const toggleNotificationHandler = () => {
+		setShowNotificationDropdown((previousValue) => !previousValue);
+	};
 
 	useEffect(() => {
 		const escapeHandler = (e) => {
 			if (!e.target.closest("#drop-down")) {
-				setShowDropdown(false);
+				setShowLogoutDropdown(false);
+				setShowNotificationDropdown(false)
 			}
 		};
 		document.addEventListener("click", escapeHandler);
@@ -35,14 +41,15 @@ const NavBarIconList = () => {
 
 	return (
 		<List id="drop-down">
-			<div className="">
-				<NotificationsNoneSharpIcon className="icon" style={{ fontSize: 30 }} />
+			<div className="relative">
+				<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
+				{showNotificationDropdown && <NotificationsDropdown/>}
 			</div>
 			<div className="relative">
-				<SettingsOutlinedIcon onClick={toggleHandler} className="icon" style={{ fontSize: 30 }} />
-				{showDropdown && <NavbarDropdown />}
+				<SettingsOutlinedIcon onClick={toggleLogoutHandler} className="icon" style={{ fontSize: 30 }} />
+				{showLogoutDropdown && <NavbarDropdown />}
 			</div>
-			<div className="">
+			<div className="relative">
 				<PersonOutlineOutlinedIcon className="icon" style={{ fontSize: 30 }} />
 			</div>
 		</List>

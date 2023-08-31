@@ -49,13 +49,13 @@ const AdditionalFields = ({ ticket }) => {
 
 	return (
 		<>
-			{list.map(({name, value}) => (
-				<View style={styles.section} key={`${name}${value}`} >
+			{list.map((item) => (
+				<View style={styles.section} key={item}>
 					<View style={styles.side}>
-						<Text style={styles.detailText}>{name}</Text>
+						<Text style={styles.detailText}>{Object.entries(item)[0][0]}</Text>
 					</View>
 					<View style={styles.side}>
-						<Text style={styles.detailText}>{value}</Text>
+						<Text style={styles.detailText}>{Object.entries(item)[0][1]}</Text>
 					</View>
 				</View>
 			))}

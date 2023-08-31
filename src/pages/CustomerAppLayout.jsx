@@ -4,6 +4,12 @@ import CustomerNavbar from '../components/molecules/CustomerDashboard/CustomerNa
 import CustomerSidebar from '../components/molecules/CustomerDashboard/CustomerSidebar'
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay'
 import ResetPassword from '../components/organisms/Password/resetpassword'
+import { fetchUsers } from "../state-manager/reducers/users/users";
+import { fetchCustomers } from "../state-manager/reducers/users/customers/customers";
+import { fetchAllCustomers } from "../state-manager/reducers/reports/customers/customers";
+import { fetchAllTickets } from "../state-manager/reducers/reports/tickets/ticketreport";
+import { fetchTickets } from "../state-manager/reducers/tickets/tickets";
+import { fetchNotifications } from '../state-manager/reducers/notifications/notifications'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout'
@@ -59,6 +65,15 @@ const CustomerAppLayout = () => {
 	/////////// AUTHENTICATION LOGIC ENDS HERE
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
 	const showResetModal = useSelector((state) => state.logout.showResetModal);
+
+		useEffect(() => {
+			dispatch(fetchUsers());
+			dispatch(fetchCustomers());
+			dispatch(fetchTickets());
+			dispatch(fetchAllCustomers());
+			dispatch(fetchAllTickets());
+			dispatch(fetchNotifications());
+		}, []);
 
 	return (
 		<>

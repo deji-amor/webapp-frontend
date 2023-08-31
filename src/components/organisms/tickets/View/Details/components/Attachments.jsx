@@ -41,47 +41,48 @@ const ClipIcon = () => (
 	</svg>
 );
 
+	export function extractCleanFilenameFromUrl(url) {
+		const parts = url.split("/");
+		const filenameWithPrefix = parts.pop(); // Get the last part of the array (the filename)
+
+		// Remove the "file_*****_" prefix from the filename
+		const cleanedFilename = filenameWithPrefix.replace(/^file_[0-9]+_/, "");
+
+		return cleanedFilename;
+	}
+
 const Attachments = () => {
   const params = useParams();
 	const { ticketId } = params;
 	const { tickets } = useSelector((state) => state.tickets);
 	const ticketInView = tickets.find((ticket) => +ticket.id === +ticketId);
 	const { scope_of_work_document } = ticketInView;
-  // console.log(ticketInView);
-
-  function removeDomainFromUrl(url) {
-		const urlObject = new URL(url);
-		const pathAndQuery = urlObject.pathname + urlObject.search + urlObject.hash;
-		return pathAndQuery;
-	}
 
 	return (
 		<>
-    {
-      scope_of_work_document &&
-			<div className="flex">
-				<div className="basis-[50%] py-[0.75rem]">
-					<DetailText>Attachment(s)</DetailText>
-				</div>
-				<div className="basis-[50%] py-[0.75rem]">
-					<AttachmentButton
-						type="button"
-						className="flex items-center justify-between space-x-[3rem]"
-					>
-						<AttachmentText className="flex items-center gap-[0.5rem]">
-							<ClipIcon />
-							<span className="max-w-[13rem] truncate">{removeDomainFromUrl(scope_of_work_document)}</span>
-						</AttachmentText>
-						<DownloadText
-							href={`${scope_of_work_document}`}
-              download
+			{scope_of_work_document && (
+				<div className="flex">
+					<div className="basis-[50%] py-[0.75rem]">
+						<DetailText>Attachment(s)</DetailText>
+					</div>
+					<div className="basis-[50%] py-[0.75rem]">
+						<AttachmentButton
+							type="button"
+							className="flex items-center justify-between space-x-[3rem]"
 						>
-							Download
-						</DownloadText>
-					</AttachmentButton>
+							<AttachmentText className="flex items-center gap-[0.5rem]">
+								<ClipIcon />
+								<span className="max-w-[13rem] truncate">
+									{extractCleanFilenameFromUrl(scope_of_work_document)}
+								</span>
+							</AttachmentText>
+							<DownloadText href={`${scope_of_work_document}`} download target="_blank">
+								Download
+							</DownloadText>
+						</AttachmentButton>
+					</div>
 				</div>
-			</div>
-    }
+			)}
 		</>
 	);
 }
