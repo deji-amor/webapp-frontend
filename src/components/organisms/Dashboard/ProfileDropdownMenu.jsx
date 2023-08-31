@@ -14,7 +14,7 @@ const ProfileDropdownMenu = () => {
 
 	const handleEditClick = () => {
 		setIsEditModalOpen(true);
-		setIsDropdownOpen(false); // Close the dropdown when edit is clicked
+		setIsDropdownOpen(false);
 	};
 
 	const closeEditModal = () => {
@@ -22,7 +22,7 @@ const ProfileDropdownMenu = () => {
 	};
 
 	const handleClickAway = () => {
-		setIsDropdownOpen(false); // Close the dropdown when clicking away
+		setIsDropdownOpen(false);
 	};
 
 	return (

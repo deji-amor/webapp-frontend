@@ -18,7 +18,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 	top: "-15px",
 
 	".exportBut": {
-		width: "184px",
+		width: "210px",
 		borderRadius: "8px",
 		padding: "8px 15px 8px 15px",
 		color: "white",
@@ -71,9 +71,12 @@ const ExportFilesWrapper = styled("div")(() => ({
 		textAlign: "left",
 		borderRadius: "8px",
 		display: "flex",
-		justifyContent: "space-around",
 		gap: "60px",
-		alignItems: "center",
+		alignItems: "left",
+	},
+
+	".pdf-csv button": {
+		justifyContent: "space-around"
 	},
 
 	".instant-recurring button:hover, .pdf-csv button:hover": {
@@ -81,13 +84,21 @@ const ExportFilesWrapper = styled("div")(() => ({
 	},
 
 	".pdf-csv": {
-		height: "42px"
+		height: "42px",
 	},
 
 	".instant-recurring button, .pdf-csv button .arrow": {
 		fontSize: "15px",
-		// textAlign: "left",
-	}
+		textAlign: "left"
+	},
+	
+	// ".inst": {
+	// 	width: "100%",
+	// 	textAlign: "left",
+	// },
+
+	// ".recurring": {
+	// }
 }));
 
 const CustomerExportFiles = ({ text }) => {
@@ -107,6 +118,8 @@ const CustomerExportFiles = ({ text }) => {
 			? filteredCustomersByDate
 			: filteredCustomers;
 
+	const customerCounter = filteredCustomersByStatus.length || filteredCustomersByDate.length;
+
 	return (
 		<ExportFilesWrapper>
 			<button
@@ -115,6 +128,23 @@ const CustomerExportFiles = ({ text }) => {
 				type="button"
 			>
 				<span>{text}</span>
+				{customerCounter != 0 && (
+						<p
+							style={{
+								borderRadius: "50%",
+								background: "white",
+								color: "rgba(43, 46, 114, 1)",
+								padding: "5px 5px 5px 5px",
+								width: "23px",
+								height: "23px",
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							{customerCounter}
+						</p>
+					)}
 				<img className="export-icon" src={ExportImage} alt="export files" />
 			</button>
 			<div className="exp">
@@ -146,14 +176,6 @@ const CustomerExportFiles = ({ text }) => {
 				)}
 				{exportDropdown1 && (
 					<div className="pdf-csv">
-						{/* <button
-							onClick={() => dispatch(SET_EXPORT_PDF_DROPDOWN("PDF"))}
-							className="but"
-							type="button"
-						>
-							<span>PDF</span>
-							<ArrowForwardIosIcon className="arrow" />
-						</button> */}
 						<button
 							onClick={() => dispatch(SET_EXPORT_CSV_DROPDOWN("CSV"))}
 							className="but"

@@ -12,8 +12,9 @@ const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
 	const [selectedImage, setSelectedImage] = useState(null);
 	// const [loading, setLoading] = useState(false);
-	const {email, firstName, lastName, workspaceName, phoneNumber, country, city } = useSelector((state) => state.authUser.data);
-
+	const { email, firstName, lastName, workspaceName, phoneNumber, country, city } = useSelector(
+		(state) => state.authUser.data
+	);
 
 	const handleImageChange = (event) => {
 		const imageFile = event.target.files[0];
@@ -49,7 +50,7 @@ const EditProfileModal = ({ open, onClose }) => {
 					borderRadius: "12px",
 				}}
 			>
-				{/* Cover Image */}
+
 				<Box
 					sx={{
 						position: "relative",
@@ -64,7 +65,7 @@ const EditProfileModal = ({ open, onClose }) => {
 						alt="Cover"
 						style={{ width: "100%", height: "100%", objectFit: "cover" }}
 					/>
-					{/* Avatar with Edit Icon */}
+
 					<Box
 						sx={{
 							position: "absolute",
@@ -124,10 +125,8 @@ const EditProfileModal = ({ open, onClose }) => {
 					sx={{
 						alignItems: "center",
 						gap: "24px",
-						// width: "800px",
 					}}
 				>
-					{/* Editable Fields */}
 					<Box
 						sx={{
 							display: "flex",
@@ -137,7 +136,7 @@ const EditProfileModal = ({ open, onClose }) => {
 						}}
 					>
 						<EditableField label="First Name" value={firstName} onChange={() => {}} />
-						<EditableField label="Last Name" value={lastName}  onChange={() => {}} />
+						<EditableField label="Last Name" value={lastName} onChange={() => {}} />
 					</Box>
 					<Box
 						sx={{
@@ -147,8 +146,20 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-					<EditableField label="Workspace Name" value={workspaceName} width='400px' onChange={() => {}} isEditable={true}/>
-					<EditableField label="Phone Number" value={phoneNumber} width='400px' onChange={() => {}} isEditable={true}/>
+						<EditableField
+							label="Workspace Name"
+							value={workspaceName}
+							width="400px"
+							onChange={() => {}}
+							isEditable={true}
+						/>
+						<EditableField
+							label="Phone Number"
+							value={phoneNumber}
+							width="400px"
+							onChange={() => {}}
+							isEditable={true}
+						/>
 					</Box>
 					<EditableField label="Work Email" value={email} onChange={() => {}} />
 					<Box
@@ -159,21 +170,23 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-					<EditableField label="Country" value={country} width='400px' onChange={() => {}} isEditable={true}/>
-					<EditableField label="State" value={city} width='400px' onChange={() => {}} isEditable={true}/>
+						<EditableField
+							label="Country"
+							value={country}
+							width="400px"
+							onChange={() => {}}
+							isEditable={true}
+						/>
+						<EditableField
+							label="State"
+							value={city}
+							width="400px"
+							onChange={() => {}}
+							isEditable={true}
+						/>
 					</Box>
-					
 				</Box>
 
-				{/* Save and Close Buttons */}
-				{/* <Box mt={2} display="flex" justifyContent="flex-end">
-					<Button variant="outlined" onClick={handleCancel}>
-						Cancel
-					</Button>
-					<Button variant="contained" color="primary" onClick={handleSave} sx={{ ml: 2 }}>
-						Save
-					</Button>
-				</Box> */}
 				<Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: "16px" }}>
 					<Button
 						onClick={handleCancel}
