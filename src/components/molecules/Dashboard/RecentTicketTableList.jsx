@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const RecentTicketTableList = () => {
 	const analyticsData = useSelector((state) => state.dashboard.analyticsData);
-	const navigate = useNavigate(); // Hook to get the navigation function
+	const navigate = useNavigate();
 
 	const recentTickets = analyticsData?.recentTickets || [];
 
@@ -46,7 +46,7 @@ const RecentTicketTableList = () => {
 				<tr
 					key={index}
 					className="bg-white border-b hover:bg-gray-50"
-					onClick={() => navigate(`/admin/tickets/view/${ticket.id}`)}
+					onClick={() => navigate(`/admin/tickets/view/detail/${ticket.id}`)}
 					style={{ cursor: "pointer" }}
 				>
 					<RecentTicketTableText isID={true}>{ticket.id || "N/A"}</RecentTicketTableText>

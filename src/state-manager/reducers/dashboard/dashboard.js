@@ -55,7 +55,7 @@ export const recentactivities = createAsyncThunk(
 // EDIT PROFILE
 export const editProfile = createAsyncThunk(
 	"editProfile",
-	async (_, {rejectWithValue}) => {
+	async (data, { rejectWithValue }) => {
 		try {
 			const token = await getAuthToken();
 			const config = {
@@ -64,6 +64,7 @@ export const editProfile = createAsyncThunk(
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token}`,
 				},
+				body: JSON.stringify(data),
 			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/edit-profile`;
 			const response = await fetch(url, config);
@@ -130,7 +131,7 @@ const dashboardSlice = createSlice({
 			})
 			.addCase(editProfile.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.payload || "Could not fetch data";
+				state.error = action.payload || "Provide the required fields!";
 			});
 	},
 });

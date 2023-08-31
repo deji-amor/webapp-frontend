@@ -6,15 +6,17 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
 import Cover from "../../../assets/daashboard/Cover.png";
 import CustomButton from "../../atoms/Password/customButton";
+import { editProfile } from "../../../state-manager/reducers/dashboard/dashboard";
 // import { updateProfilePicture } from "../../../actions/authUser";
 
 const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
 	const [selectedImage, setSelectedImage] = useState(null);
 	// const [loading, setLoading] = useState(false);
-	const { email, firstName, lastName, workspaceName, phoneNumber, country, city } = useSelector(
-		(state) => state.authUser.data
+	const { email, first_name: firstName, last_name: lastName, phone_number: phoneNumber, country, state, workspace_name: workspaceName } = useSelector(
+		(state) => state.dashboard.editProfile
 	);
+	
 
 	const handleImageChange = (event) => {
 		const imageFile = event.target.files[0];
@@ -22,12 +24,19 @@ const EditProfileModal = ({ open, onClose }) => {
 	};
 
 	const handleSave = () => {
-		// Handle save logic here
-		//   if (selectedImage) {
-		//     dispatch(updateProfilePicture(selectedImage)); // Dispatch action to update profile picture
-		//   }
-		// setLoading(true);
-		onClose();
+		const editedData = {
+			workspace_name: workspaceName,
+			phone_number: phoneNumber,
+			country: country,
+			state: state,
+		};
+
+		dispatch(editProfile(editedData))
+			.then(() => {
+				setSelectedImage(null);
+				onClose();
+			})
+			.catch((error) => {});
 	};
 
 	const handleCancel = () => {
@@ -50,7 +59,6 @@ const EditProfileModal = ({ open, onClose }) => {
 					borderRadius: "12px",
 				}}
 			>
-
 				<Box
 					sx={{
 						position: "relative",
@@ -179,7 +187,7 @@ const EditProfileModal = ({ open, onClose }) => {
 						/>
 						<EditableField
 							label="State"
-							value={city}
+							value={state}
 							width="400px"
 							onChange={() => {}}
 							isEditable={true}
