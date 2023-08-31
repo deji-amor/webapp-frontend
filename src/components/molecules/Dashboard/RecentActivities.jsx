@@ -6,7 +6,9 @@ import { recentactivities } from "../../../state-manager/reducers/dashboard/dash
 
 const RecentActivities = () => {
 	const dispatch = useDispatch();
-	const recentActivities = useSelector((state) => state.dashboard.recentActivities); // Update the state path
+	const recentActivitiesData = useSelector((state) => state.dashboard.recentActivities);
+
+    const recentDataArray = recentActivitiesData?.recentActivities || [];
 
 	//   const [selectedActivityId, setSelectedActivityId] = useState(null);
 	//   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +17,7 @@ const RecentActivities = () => {
 		dispatch(recentactivities());
 	}, [dispatch]);
 
-    console.log(recentActivities);
+	console.log(recentActivitiesData);
 
 	//   const openModal = (activityId) => {
 	//     setSelectedActivityId(activityId);
@@ -58,21 +60,27 @@ const RecentActivities = () => {
 	`;
 	return (
 		<div className="hover-container">
-			{recentActivities &&
-				recentActivities.map((activity) => (
-					<BoxContainer key={activity.id} data={activity} 
-                    // onClick={() => openModal(activity.id)}
-                    >
-						<Box>
-							<div>
-								<Typography variant="subtitle1">{activity.type}</Typography>
-								<Text variant="subtitle2">Today {activity.timestamp}</Text>
-							</div>
-							<ArrowForwardIosIcon />
-						</Box>
+		{recentDataArray.length > 0 ? (
+			recentDataArray.slice(0, 3).map((activity) => {
+				let activityType = activity.type;
+				if (activity.type === "customer-creation") {
+					activityType = "Created Customer";
+				}
+
+				return (
+					<BoxContainer key={activity.id} data={activity}>
+						<div>
+							<Typography variant="subtitle1">{activityType}</Typography>
+							<Text variant="subtitle2">{activity.timestamp}</Text>
+						</div>
+						<ArrowForwardIosIcon style={{ color: "#2B2E72" }} />
 					</BoxContainer>
-				))}
-		</div>
+				);
+			})
+		) : (
+			<p>No recent activities available.</p>
+		)}
+	</div>
 	);
 };
 
