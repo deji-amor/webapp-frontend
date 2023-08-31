@@ -78,10 +78,11 @@ OrderIcon.propTypes = {
 }
 
 const TicketHistory = () => {
-	const { sortByAscending } = useSelector((state) => state.ticketHistory);
-	const { loading: ticketHistoryLoading, error: ticketHistoryError} = useSelector(
-		(state) => state.ticketHistory
-	);
+	const {
+		sortByAscending,
+		loading: ticketHistoryLoading,
+		error: ticketHistoryError,
+	} = useSelector((state) => state.ticketHistory);
 
 	const orderText = sortByAscending ? "Oldest 1st" : "Newest 1st"
 	const dispatch = useDispatch()

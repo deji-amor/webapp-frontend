@@ -30,6 +30,7 @@ const initialState = {
 	errorMessage: "",
 	successful: null,
 	notifications: [],
+	currentSearchValue: "All",
 	searchBy: ["All", "Account Creation", "Profile Update", "Ticket Update"],
 	sortByAscending: true
 };

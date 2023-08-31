@@ -42,22 +42,20 @@ const NavBarIconList = () => {
 	return (
 		<List id="drop-down">
 			<div className="relative">
-				<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
+				<span className={`w-[2.5rem] h-[2.5rem] rounded-[0.75rem] p-[0.2rem] ${showNotificationDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
+					<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
+				</span>
 				{showNotificationDropdown && <NotificationsDropdown/>}
 			</div>
 			<div className="relative">
-				<SettingsOutlinedIcon onClick={toggleLogoutHandler} className="icon" style={{ fontSize: 30 }} />
+				<span className={`w-[2.5rem] h-[2.5rem] rounded-[0.75rem] p-[0.2rem] ${showLogoutDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
+					<SettingsOutlinedIcon onClick={toggleLogoutHandler} className="icon" style={{ fontSize: 30 }} />
+				</span>
 				{showLogoutDropdown && <NavbarDropdown />}
 			</div>
 			<div style={{ display: "flex", alignItems: "center" }}>
 				<ProfileDropdownMenu />
 			</div>
-			{/* <div style={{ display: 'flex', alignItems: 'center' }}>
-				<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72"}}>
-					<PersonIcon style={{ fontSize: 30 }}/>	
-				</Avatar>
-				<ArrowDropDownIcon />
-			</div> */}
 		</List>
 	);
 };
