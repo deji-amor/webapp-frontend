@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
 
-// Fetch Analytics Data
+// FETCH Analytics Data
 export const fetchData = createAsyncThunk("fetchData", async (_, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
@@ -25,7 +25,7 @@ export const fetchData = createAsyncThunk("fetchData", async (_, {rejectWithValu
 	}
 });
 
-// Fetch Recent Activities
+// FETCH Recent Activities
 export const recentactivities = createAsyncThunk(
 	"recentactivities",
 	async (_, {rejectWithValue}) => {
@@ -52,6 +52,33 @@ export const recentactivities = createAsyncThunk(
 	}
 );
 
+// EDIT PROFILE
+export const editProfile = createAsyncThunk(
+	"editProfile",
+	async (_, {rejectWithValue}) => {
+		try {
+			const token = await getAuthToken();
+			const config = {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			};
+			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/edit-profile`;
+			const response = await fetch(url, config);
+			const result = await response.json();
+			return result.data;
+		} catch (err) {
+			if (err.response && err.response.data.message) {
+				return rejectWithValue(err.response.data.message);
+			} else {
+				return rejectWithValue(err.message);
+			}
+		}
+	}
+);
+
 const initialState = {
 	loading: false,
 	error: null,
@@ -64,7 +91,7 @@ const dashboardSlice = createSlice({
 	reducers: {},
 	extraReducers: builder => {
 		builder
-			// Fetch Analytics Data
+			// ADDCASE FETCH Analytics Data
 			.addCase(fetchData.pending, state => {
 				state.loading = true;
 				state.error = null;
@@ -80,7 +107,7 @@ const dashboardSlice = createSlice({
 				state.analyticsData = null;
 			})
 
-			// Fetch Recent Activities
+			// ADDCASE FETCHRecent Activities
 			.addCase(recentactivities.pending, state => {
 				state.loading = true;
 			})
@@ -89,6 +116,19 @@ const dashboardSlice = createSlice({
 				state.recentActivities = action.payload;
 			})
 			.addCase(recentactivities.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.payload || "Could not fetch data";
+			})
+
+			// ADDCASE EDIT PROFILE
+			.addCase(editProfile.pending, state => {
+				state.loading = true;
+			})
+			.addCase(editProfile.fulfilled, (state, action) => {
+				state.loading = false;
+				state.recentActivities = action.payload;
+			})
+			.addCase(editProfile.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.payload || "Could not fetch data";
 			});

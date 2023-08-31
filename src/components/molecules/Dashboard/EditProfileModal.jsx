@@ -12,8 +12,9 @@ const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
 	const [selectedImage, setSelectedImage] = useState(null);
 	// const [loading, setLoading] = useState(false);
-	const {email, firstName, lastName, workspaceName, phoneNumber, country, city } = useSelector((state) => state.authUser.data);
-
+	const { email, firstName, lastName, workspaceName, phoneNumber, country, city } = useSelector(
+		(state) => state.authUser.data
+	);
 
 	const handleImageChange = (event) => {
 		const imageFile = event.target.files[0];
@@ -137,7 +138,7 @@ const EditProfileModal = ({ open, onClose }) => {
 						}}
 					>
 						<EditableField label="First Name" value={firstName} onChange={() => {}} />
-						<EditableField label="Last Name" value={lastName}  onChange={() => {}} />
+						<EditableField label="Last Name" value={lastName} onChange={() => {}} />
 					</Box>
 					<Box
 						sx={{
@@ -147,8 +148,20 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-					<EditableField label="Workspace Name" value={workspaceName} width='400px' onChange={() => {}} isEditable={true}/>
-					<EditableField label="Phone Number" value={phoneNumber} width='400px' onChange={() => {}} isEditable={true}/>
+						<EditableField
+							label="Workspace Name"
+							value={workspaceName}
+							width="400px"
+							onChange={() => {}}
+							isEditable={true}
+						/>
+						<EditableField
+							label="Phone Number"
+							value={phoneNumber}
+							width="400px"
+							onChange={() => {}}
+							isEditable={true}
+						/>
 					</Box>
 					<EditableField label="Work Email" value={email} onChange={() => {}} />
 					<Box
@@ -159,10 +172,21 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-					<EditableField label="Country" value={country} width='400px' onChange={() => {}} isEditable={true}/>
-					<EditableField label="State" value={city} width='400px' onChange={() => {}} isEditable={true}/>
+						<EditableField
+							label="Country"
+							value={country}
+							width="400px"
+							onChange={() => {}}
+							isEditable={true}
+						/>
+						<EditableField
+							label="State"
+							value={city}
+							width="400px"
+							onChange={() => {}}
+							isEditable={true}
+						/>
 					</Box>
-					
 				</Box>
 
 				{/* Save and Close Buttons */}

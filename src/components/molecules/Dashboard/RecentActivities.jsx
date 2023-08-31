@@ -8,7 +8,7 @@ const RecentActivities = () => {
 	const dispatch = useDispatch();
 	const recentActivitiesData = useSelector((state) => state.dashboard.recentActivities);
 
-    const recentDataArray = recentActivitiesData?.recentActivities || [];
+	const recentDataArray = recentActivitiesData?.recentActivities || [];
 
 	//   const [selectedActivityId, setSelectedActivityId] = useState(null);
 	//   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,8 +16,6 @@ const RecentActivities = () => {
 	useEffect(() => {
 		dispatch(recentactivities());
 	}, [dispatch]);
-
-	console.log(recentActivitiesData);
 
 	//   const openModal = (activityId) => {
 	//     setSelectedActivityId(activityId);
@@ -28,6 +26,53 @@ const RecentActivities = () => {
 	//     setSelectedActivityId(null);
 	//     setIsModalOpen(false);
 	//   };
+
+	const formatTimestamp = (timestamp) => {
+		const options = {
+			weekday: "long",
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+			hour: "numeric",
+			minute: "numeric",
+			hour12: true,
+		};
+		const date = new Date(timestamp);
+		const now = new Date();
+		const yesterday = new Date(now);
+		yesterday.setDate(yesterday.getDate() - 1);
+
+		if (
+			date.getDate() === now.getDate() &&
+			date.getMonth() === now.getMonth() &&
+			date.getFullYear() === now.getFullYear()
+		) {
+			return (
+				"Today " +
+				new Intl.DateTimeFormat("en-US", {
+					hour: "numeric",
+					minute: "numeric",
+					hour12: true,
+				}).format(date)
+			);
+		} else if (
+			date.getDate() === yesterday.getDate() &&
+			date.getMonth() === yesterday.getMonth() &&
+			date.getFullYear() === yesterday.getFullYear()
+		) {
+			return (
+				"Yesterday " +
+				new Intl.DateTimeFormat("en-US", {
+					hour: "numeric",
+					minute: "numeric",
+					hour12: true,
+				}).format(date)
+			);
+		} else {
+			return new Intl.DateTimeFormat("en-US", options).format(date);
+		}
+	};
+
 	const Typography = styled("h4")`
 		color: #000;
 		font-family: Poppins;
@@ -51,6 +96,7 @@ const RecentActivities = () => {
 		padding: 8px;
 		gap: 16px;
 		border-bottom: 1px solid #ececec;
+		margin-top: 8px;
 		:hover {
 			border-radius: 8px;
 			border-bottom: 1px solid #ececec;
@@ -60,27 +106,31 @@ const RecentActivities = () => {
 	`;
 	return (
 		<div className="hover-container">
-		{recentDataArray.length > 0 ? (
-			recentDataArray.slice(0, 3).map((activity) => {
-				let activityType = activity.type;
-				if (activity.type === "customer-creation") {
-					activityType = "Created Customer";
-				}
+			{recentDataArray.length > 0 ? (
+				recentDataArray.slice(0, 3).map((activity) => {
+					let activityType = activity.type;
+					if (activity.type === "customer-creation") {
+						activityType = "Created Customer";
+					}
 
-				return (
-					<BoxContainer key={activity.id} data={activity}>
-						<div>
-							<Typography variant="subtitle1">{activityType}</Typography>
-							<Text variant="subtitle2">{activity.timestamp}</Text>
-						</div>
-						<ArrowForwardIosIcon style={{ color: "#2B2E72" }} />
-					</BoxContainer>
-				);
-			})
-		) : (
-			<p>No recent activities available.</p>
-		)}
-	</div>
+					return (
+						<BoxContainer
+							key={activity.id}
+							data={activity}
+							// onClick={() => openModal(activity.id)}
+						>
+							<div>
+								<Typography variant="subtitle1">{activityType}</Typography>
+								<Text variant="subtitle2">{formatTimestamp(activity.timestamp)}</Text>
+							</div>
+							<ArrowForwardIosIcon style={{ color: "#2B2E72" }} />
+						</BoxContainer>
+					);
+				})
+			) : (
+				<p>No recent activities available.</p>
+			)}
+		</div>
 	);
 };
 

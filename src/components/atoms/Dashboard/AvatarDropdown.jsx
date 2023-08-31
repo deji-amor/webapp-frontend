@@ -21,7 +21,7 @@ const AvatarDropdown = ({ onEditClick }) => {
 		font-size: 16px;
 		font-style: normal;
 		font-weight: 400;
-		padding-bottom: 12px;
+		padding-bottom: 4px;
 		line-height: 20px; /* 125% */
 	`;
 	const Text = styled("p")`
