@@ -13,43 +13,23 @@ const StatsPieChart = ({ data }) => {
 			},
 			datalabels: {
 				formatter: (value, ctx) => {
-					const datapoints = ctx.chart.data.datasets[0].data;
-					const total = datapoints.reduce((total, datapoint) => total + datapoint, 0);
-					const percentage = (value / total) * 100;
-					return percentage.toFixed(2) + "%";
+					return value;
 				},
 				color: (context) => {
-					// Define an array of colors for each data label (percentage label)
-					const dataColors = data.datasets[0].dataColors; // Add more colors if you have more data points
+					const dataColors = data.datasets[0].dataColors;
 
-					// Get the data index for the current data label
 					const dataIndex = context.dataIndex;
 
-					// Return the color based on the data index
 					return dataColors[dataIndex];
 				},
 				font: {
-					weight: "bold", // Increase the font weight to "bold"
+					weight: "bold",
 					family: "'Poppins', 'sans-serif'",
-					size: 11,
+					size: 14,
 				},
 			},
 			legend: {
-				display: true, // Hide the legend
-				position: "bottom",
-				fullSize: false,
-				borderRadius: 20,
-				labels: {
-					boxWidth: 10,
-					boxHeight: 10,
-					font: {
-						size: 10,
-						family: "'Poppins', 'sans-serif'",
-						weight: 600,
-						color: "#252421",
-					},
-					padding: 10,
-				},
+				display: false,
 			},
 		},
 	};

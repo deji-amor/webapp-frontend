@@ -1,7 +1,6 @@
 import React from "react";
 import RecentTicketTableHeadRow from "../../molecules/Dashboard/RecentTicketTableHeadRow";
 import RecentTicketTableList from "../../molecules/Dashboard/RecentTicketTableList";
-import RecentTicketTablePagination from "../../molecules/Dashboard/RecentTicketTablePagination";
 import { styled } from "@mui/material";
 
 const RecentTicketTable = () => {
@@ -19,19 +18,25 @@ const RecentTicketTable = () => {
 		}
 	`;
 
+	const Typography = styled("div")`
+	color: #000;
+	font-family: Poppins;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 36px;
+		}
+	`;
+
 	return (
 		<Wrapper className="">
+			<Typography>Most Recent Tickets</Typography>
 			<table className="">
 				<RecentTicketTableHeadRow />
 				<tbody>
 					<RecentTicketTableList />
-					<RecentTicketTableList />
-					<RecentTicketTableList />
-					<RecentTicketTableList />
-					<RecentTicketTableList />
 				</tbody>
 			</table>
-			<RecentTicketTablePagination />
 		</Wrapper>
 	);
 };

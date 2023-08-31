@@ -5,10 +5,10 @@ import { styled } from "@mui/material";
 const StatsCardHeader = ({ children }) => {
 	const Paragraph = styled("p")`
 		color: #252421;
-		font-family: "Poppins", sans-serif;
-		font-size: 1.125rem;
+		font-family: Poppins;
+		font-size: 18px;
 		font-style: normal;
-		font-weight: 500;
+		font-weight: 600;
 		line-height: normal;
 	`;
 

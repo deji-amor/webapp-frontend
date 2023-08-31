@@ -52,14 +52,13 @@ const ExportFilesWrapper = styled("div")(() => ({
 
 	".instant-recurring, .pdf-csv": {
 		minWidth: "170px",
-		height: "84px",
 		padding: "12px 4px 12px 4px",
 		borderRadius: "8px",
 		boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.20)",
 		display: "flex",
 		flexDirection: "column",
+		justifyContent: "center",
 		alignItems: "start",
-		// gap: "2px",
 	},
 
 	".instant-recurring button, .pdf-csv button": {
@@ -81,11 +80,14 @@ const ExportFilesWrapper = styled("div")(() => ({
 		background: "rgba(76, 111, 255, 0.08)",
 	},
 
-	".pdf-csv": {},
+	".pdf-csv": {
+		height: "42px"
+	},
 
 	".instant-recurring button, .pdf-csv button .arrow": {
 		fontSize: "15px",
-	},
+		// textAlign: "left",
+	}
 }));
 
 const CustomerExportFiles = ({ text }) => {
@@ -128,8 +130,9 @@ const CustomerExportFiles = ({ text }) => {
 								headers={customerHeaders}
 								filename="admin_filtered_customers.csv"
 								target="_blank"
+								className="inst"
 							>
-								Instant {exportDocType} Export
+								Instant Export
 							</CSVLink>
 						</button>
 						<button
@@ -137,20 +140,20 @@ const CustomerExportFiles = ({ text }) => {
 							className="recurring"
 							type="button"
 						>
-							Recurring {exportDocType} Export
+							Recurring Export
 						</button>
 					</div>
 				)}
 				{exportDropdown1 && (
 					<div className="pdf-csv">
-						<button
+						{/* <button
 							onClick={() => dispatch(SET_EXPORT_PDF_DROPDOWN("PDF"))}
 							className="but"
 							type="button"
 						>
 							<span>PDF</span>
 							<ArrowForwardIosIcon className="arrow" />
-						</button>
+						</button> */}
 						<button
 							onClick={() => dispatch(SET_EXPORT_CSV_DROPDOWN("CSV"))}
 							className="but"
