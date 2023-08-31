@@ -1,19 +1,19 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-// import IMPORT { uploadImage } from "../../aws/aws-crud-operations"; 
+import { uploadFile } from "../../../aws/aws-crud-operations";
 
-export const createTicket = createAsyncThunk("ticket", async (args, {rejectWithValue}) => {
+export const createTicket = createAsyncThunk("ticketCreation", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
-		// CONDITION if(args.scopeOfWorkDocument){
-		// CONDITION 	const {scopeOfWorkDocument} = args
-		// CONDITION 	const result = await uploadImage(scopeOfWorkDocument)
-		// CONDITION 	console.log(result)
-		// CONDITION 	if(result){
-		// CONDITION 		const {Location: scopeOfWorkDocumentUrl} = result;
-		// CONDITION 		args.scopeOfWorkDocumentUrl = scopeOfWorkDocumentUrl;
-		// CONDITION 	}
-		// CONDITION }
+			if(args.scopeOfWorkDocument){
+				const {scopeOfWorkDocument} = args
+				const fileUrl = await uploadFile(scopeOfWorkDocument)
+				console.log(fileUrl)
+				if(fileUrl){
+					// const {Location: scopeOfWorkDocumentUrl} = result;
+					args.scopeOfWorkDocumentUrl = fileUrl;
+				}
+			}
 		const config = {
 			method: "POST",
 			headers: {
@@ -93,110 +93,108 @@ export const allRequiredFields = {
 
 const allPossibleFields = {
 	...allRequiredFields,
-		// POINT OF CONTACT NAME
-		
-		"pointOfContactNameIsTouched": false,
-		"pointOfContactNameIsValid": false,
-		"pointOfContactNameHasError": false,
-		// POINT OF CONTACT PHONE NUMBER
-		
-		"pointOfContactPhoneNumberIsTouched": false,
-		"pointOfContactPhoneNumberIsValid": false,
-		"pointOfContactPhoneNumberHasError": false,
-		// POINT OF CONTACT ADDRESS
-		
-		"pointOfContactAddressIsTouched": false,
-		"pointOfContactAddressIsValid": false,
-		"pointOfContactAddressHasError": false,
-		// NUMBER OF TECHNICIANS
-		
-		// SCOPE OF WORK
-		
-		"scopeOfWorkDescriptionIsTouched": "",
-		"scopeOfWorkDescriptionIsValid": false,
-		"scopeOfWorkDescriptionHasError": "",
-		
-		"scopeOfWorkDocumentIsValid": false, // might not be need for this
-		// DURATION
-		"durationIsValid": true,
+	// POINT OF CONTACT NAME
 
-		//HARDWARE COMPONENT TYPE
-		"hardwareInputTypeCurrentValue": "",
-		"hardwareInputTypeCurrentValueIsValid": "",
-		"hardwareInputTypeCurrentValueIsTouched": "",
-		"hardwareInputTypeCurrentValueIsHasError": "",
-		
-		"hardwareComponentTypeListIsValid": false,
-		//HARDWARE COMPONENT QUANTITY
-		
-		"hardwareQuantityIsValid": false,
-		"hardwareNameIsValid": false,
-		"hardwareNameIsTouched": "",
-		"hardwareNameHasError": "",
-		//SOFTWARE INSTALLATION
+	pointOfContactNameIsTouched: false,
+	pointOfContactNameIsValid: false,
+	pointOfContactNameHasError: false,
+	// POINT OF CONTACT PHONE NUMBER
 
-		"softwareInstallationNameIsValid": false,
-		"softwareInstallationNameIsTouched": "",
-		"softwareInstallationNameHasError": "",
-		//SOFTWARE CUSTOMIZATION
+	pointOfContactPhoneNumberIsTouched: false,
+	pointOfContactPhoneNumberIsValid: false,
+	pointOfContactPhoneNumberHasError: false,
+	// POINT OF CONTACT ADDRESS
 
-		"softwareCustomizationNameIsValid": false,
-		"softwareCustomizationNameIsTouched": "",
-		"softwareCustomizationNameHasError": "",
-		// WORKSTATION
-		
-		// WORK SYSTEM
-		
-		// LOCATION
-		
-		
-		"locationsAddressIsValid": false,
-		"activeLocationAddress": 0, // ZERO INDEX BASED
-		"activeLocationType": 0, // ZERO INDEX BASED
-		"locationAddress": "",
-		"locationType": "government",
-		"locationAddressIsValid": false,
-		"locationAddressIsTouched": "",
-		"locationAddressHasError": "",
-		//PICk UP LOCATION
-		
-		
-		"pickLocationsAddressIsValid": false,
-		"activePickLocationAddress": 0, // ZERO INDEX BASED
-		"activePickLocationType": 0, // ZERO INDEX BASED
-		"pickLocationAddress": "",
-		"pickLocationType": "government",
-		"pickLocationAddressIsValid": false,
-		"pickLocationAddressIsTouched": "",
-		"pickLocationAddressHasError": "",
-		//DROP OFF LOCATION
-		
-		
-		"dropOffLocationsAddressIsValid": false,
-		"activeDropOffLocationAddress": 0, // ZERO INDEX BASED
-		"activeDropOffLocationType": 0, // ZERO INDEX BASED
-		"dropOffLocationAddress": "",
-		"dropOffLocationType": "government",
-		"dropOffLocationAddressIsValid": false,
-		"dropOffLocationAddressIsTouched": "",
-		"dropOffLocationAddressHasError": "",
-		// MATERIALS PROCUREMENT
-		
-		"materialsDescriptionIsTouched": "",
-		"materialsDescriptionIsValid": false,
-		"materialsDescriptionHasError": "",
-		// EXTRA FIELDS
-		"extraFieldNameInputTypeCurrentValue": "",
-		"extraFieldNameInputTypeCurrentValueIsValid": "",
-		"extraFieldNameInputTypeCurrentValueIsTouched": "",
-		"extraFieldNameInputTypeCurrentValueIsHasError": "",
-		"extraFieldValueInputTypeCurrentValue": "",
-		"extraFieldValueInputTypeCurrentValueIsValid": "",
-		"extraFieldValueInputTypeCurrentValueIsTouched": "",
-		"extraFieldValueInputTypeCurrentValueIsHasError": "",
-		
-		"additionalFieldsIsValid": true,
-}
+	pointOfContactAddressIsTouched: false,
+	pointOfContactAddressIsValid: false,
+	pointOfContactAddressHasError: false,
+	// NUMBER OF TECHNICIANS
+
+	// SCOPE OF WORK
+
+	scopeOfWorkDescriptionIsTouched: "",
+	scopeOfWorkDescriptionIsValid: false,
+	scopeOfWorkDescriptionHasError: "",
+	scopeOfWorkDocumentUrl: "",
+
+	scopeOfWorkDocumentIsValid: false, // might not be need for this
+	// DURATION
+	durationIsValid: true,
+
+	//HARDWARE COMPONENT TYPE
+	hardwareInputTypeCurrentValue: "",
+	hardwareInputTypeCurrentValueIsValid: "",
+	hardwareInputTypeCurrentValueIsTouched: "",
+	hardwareInputTypeCurrentValueIsHasError: "",
+
+	hardwareComponentTypeListIsValid: false,
+	//HARDWARE COMPONENT QUANTITY
+
+	hardwareQuantityIsValid: false,
+	hardwareNameIsValid: false,
+	hardwareNameIsTouched: "",
+	hardwareNameHasError: "",
+	//SOFTWARE INSTALLATION
+
+	softwareInstallationNameIsValid: false,
+	softwareInstallationNameIsTouched: "",
+	softwareInstallationNameHasError: "",
+	//SOFTWARE CUSTOMIZATION
+
+	softwareCustomizationNameIsValid: false,
+	softwareCustomizationNameIsTouched: "",
+	softwareCustomizationNameHasError: "",
+	// WORKSTATION
+
+	// WORK SYSTEM
+
+	// LOCATION
+
+	locationsAddressIsValid: false,
+	activeLocationAddress: 0, // ZERO INDEX BASED
+	activeLocationType: 0, // ZERO INDEX BASED
+	locationAddress: "",
+	locationType: "government",
+	locationAddressIsValid: false,
+	locationAddressIsTouched: "",
+	locationAddressHasError: "",
+	//PICk UP LOCATION
+
+	pickLocationsAddressIsValid: false,
+	activePickLocationAddress: 0, // ZERO INDEX BASED
+	activePickLocationType: 0, // ZERO INDEX BASED
+	pickLocationAddress: "",
+	pickLocationType: "government",
+	pickLocationAddressIsValid: false,
+	pickLocationAddressIsTouched: "",
+	pickLocationAddressHasError: "",
+	//DROP OFF LOCATION
+
+	dropOffLocationsAddressIsValid: false,
+	activeDropOffLocationAddress: 0, // ZERO INDEX BASED
+	activeDropOffLocationType: 0, // ZERO INDEX BASED
+	dropOffLocationAddress: "",
+	dropOffLocationType: "government",
+	dropOffLocationAddressIsValid: false,
+	dropOffLocationAddressIsTouched: "",
+	dropOffLocationAddressHasError: "",
+	// MATERIALS PROCUREMENT
+
+	materialsDescriptionIsTouched: "",
+	materialsDescriptionIsValid: false,
+	materialsDescriptionHasError: "",
+	// EXTRA FIELDS
+	extraFieldNameInputTypeCurrentValue: "",
+	extraFieldNameInputTypeCurrentValueIsValid: "",
+	extraFieldNameInputTypeCurrentValueIsTouched: "",
+	extraFieldNameInputTypeCurrentValueIsHasError: "",
+	extraFieldValueInputTypeCurrentValue: "",
+	extraFieldValueInputTypeCurrentValueIsValid: "",
+	extraFieldValueInputTypeCurrentValueIsTouched: "",
+	extraFieldValueInputTypeCurrentValueIsHasError: "",
+
+	additionalFieldsIsValid: true,
+};
 
 const initialState = {
 	loading: false,
@@ -220,6 +218,9 @@ const createTicketSlice = createSlice({
 	name: "createTicket",
 	initialState: initialState,
 	reducers: {
+		reset: () => {
+			return initialState
+		},
 		toggleAddTicketModal: (state, action) => {
 			// TICKET state.showAddTicketModal = !state.showAddTicketModal;
 			return initialState
@@ -280,7 +281,7 @@ const createTicketSlice = createSlice({
 				const {status, code, data, message} = payload
 				console.log(payload)
 				if(status === "OK" && code === 200){
-					state.data = data[0]
+					state.data = Array.isArray(data) ? data[0] : data;
 					state.successful = true
 					console.log("truly successful")
 				}else {

@@ -18,8 +18,8 @@ const useCreateTicketFields = () => {
     endDateTime,
     hardwareQuantity,
     hardwareName,
-    hardwareComponentTypeQuantityValue,
-    hardwareComponentTypeQuantityName,
+    hardwareComponentTypeList,
+    hardwareComponentTypeQuantity,
     locations,
     materialsDescription,
     numberOfWorkstation,
@@ -34,64 +34,64 @@ const useCreateTicketFields = () => {
   } = allPossibleFields;
 
   const mapFields = {
-    pointOfContact: {
-      pointOfContactName,
-      pointOfContactPhoneNumber,
-      pointOfContactAddress,
-    },
-    numberOfTechniciansNeeded: {
-      numberOfTechnicians: +numberOfTechnicians,
-    },
-    scopeOfWork: {
-      scopeOfWorkDescription,
-      scopeOfWorkDocument,
-    },
-    duration: {
-      startDateTime,
-      endDateTime,
-    },
-    hardwareComponentQuantity: {
-      hardwareQuantity,
-      hardwareName,
-    },
-    hardwareComponentType: {
-      hardwareQuantity: hardwareComponentTypeQuantityValue,
-      hardwareName: hardwareComponentTypeQuantityName,
-    },
-    location: {
-      locations,
-      pickLocations: [],
-      dropOffLocations: [],
-    },
-    materialsProcurement: {
-      materialsDescription,
-    },
-    numberOfWorkStation: {
-      numberOfWorkstation,
-    },
-    numberOfWorkSystems: {
-      numberOfWorkSystems,
-    },
-    softwareApplicationInstallation: {
-      softwareInstallationQuantity,
-      softwareInstallationName,
-    },
-    softwareApplicationCustomization: {
-      softwareCustomizationQuantity,
-      softwareCustomizationName,
-    },
-    pickUpLocation: {
-      pickLocations,
-      locations: [],
-    },
-    dropOffLocation: {
-      dropOffLocations,
-      locations: [],
-    },
-    additionalFields: {
-      additionalFields: additionalFields.map(({ name, value }) => ({ [name]: value })),
-    },
-  };
+		pointOfContact: {
+			pointOfContactName,
+			pointOfContactPhoneNumber,
+			pointOfContactAddress,
+		},
+		numberOfTechniciansNeeded: {
+			numberOfTechnicians: +numberOfTechnicians,
+		},
+		scopeOfWork: {
+			scopeOfWorkDescription,
+			scopeOfWorkDocument,
+		},
+		duration: {
+			startDateTime,
+			endDateTime,
+		},
+		hardwareComponentQuantity: {
+			hardwareQuantity,
+			hardwareName,
+		},
+		hardwareComponentType: {
+			hardwareComponentTypeList: hardwareComponentTypeList,
+			hardwareComponentTypeQuantity: hardwareComponentTypeQuantity,
+		},
+		location: {
+			locations,
+			pickLocations: [],
+			dropOffLocations: [],
+		},
+		materialsProcurement: {
+			materialsDescription,
+		},
+		numberOfWorkStation: {
+			numberOfWorkstation,
+		},
+		numberOfWorkSystems: {
+			numberOfWorkSystems,
+		},
+		softwareApplicationInstallation: {
+			softwareInstallationQuantity,
+			softwareInstallationName,
+		},
+		softwareApplicationCustomization: {
+			softwareCustomizationQuantity,
+			softwareCustomizationName,
+		},
+		pickUpLocation: {
+			pickLocations,
+			locations: [],
+		},
+		dropOffLocation: {
+			dropOffLocations,
+			locations: [],
+		},
+		additionalFields: {
+			additionalFields: additionalFields.map(({ name, value }) => ({ [name]: value })),
+		},
+	};
 
   const initialValue = {
     ...allRequiredFields,

@@ -1,10 +1,19 @@
-import React from 'react'
-import Placeholder from '../../components/molecules/general/Placeholder'
+import ReportNavigateButs from "../../components/molecules/Reports/reportNavigateSection";
+import { useSelector } from "react-redux";
+import TicketReportBody from "../../components/organisms/Reports/ticketReportBody";
+import CustomerReportBody from "../../components/organisms/Reports/customerReportBody";
+import TechnicianReportBody from "../../components/organisms/Reports/technicianReportBody";
 
 const Reports = () => {
-  return (
-    <Placeholder messageHeader="seems you don’t have anything here yet!" messageParagraph="Once a report is generated for you, you will be able to view the data here." />
-  )
-}
+	const { ticketReport, customerReport, technicianReport } = useSelector((state) => state.reports);
+	return (
+		<>
+			<ReportNavigateButs reportTitle={"Reports"} />
+			{(ticketReport && <TicketReportBody />) ||
+				(customerReport && <CustomerReportBody />) ||
+				(technicianReport && <TechnicianReportBody />)}
+		</>
+	);
+};
 
-export default Reports
+export default Reports;

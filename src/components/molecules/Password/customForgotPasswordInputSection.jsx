@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import PropTypes from "prop-types";
 import { InputButtonWrapper } from "../../atoms/Password/wrappers";
 import CustomLabel from "../../atoms/Password/customLabel";
@@ -32,7 +32,9 @@ const InputButton = ({
     error: forgotPasswordError || serverError || empty,
   };
 
-  const getToolTipText = () => {
+  const [message, setMessage] = useState("")
+
+  const getToolTipText = useCallback(() => {
     if (forgotPasswordError) {
       return errorMessage;
     } else if (serverError) {
@@ -40,7 +42,11 @@ const InputButton = ({
     } else {
       return `${label} input field cannot be empty!`;
     }
-  }
+  }, [errorMessage, forgotPasswordError, label, serverError, serverErrorMessage])
+
+  useEffect(() => {
+    setMessage(getToolTipText())
+  }, [getToolTipText])
 
   return (
     <InputButtonWrapper error={errorProps.error}>
@@ -60,7 +66,7 @@ const InputButton = ({
         />
 
         {errorProps.error && (
-          <ToolTip toolTipIcon={errorProps.toolTipIcon} toolTipColor={errorProps.toolTipColor} toolTipText={getToolTipText} />
+          <ToolTip toolTipIcon={errorProps.toolTipIcon} toolTipColor={errorProps.toolTipColor} toolTipText={message} />
         )}
       </div>
       <div>

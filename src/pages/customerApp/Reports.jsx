@@ -1,12 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Reports = props => {
+const CustReports = () => {
+  
   return (
-    <div>Csutomer Reports</div>
-  )
+    <div>
+      Customer report
+    </div>
+    )
 }
 
-Reports.propTypes = {}
+CustReports.propTypes = {}
 
-export default Reports
+export default CustReports

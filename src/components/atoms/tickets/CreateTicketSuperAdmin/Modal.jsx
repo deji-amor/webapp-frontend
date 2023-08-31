@@ -6,6 +6,7 @@ const Modal = ({children}) => {
 	const Wrapper = styled("div")`
 		width: 100%;
     max-width: 74rem;
+		min-height: 35rem;
 		padding: 1.5rem;
     margin: 1rem;
 		border-radius: 0.75rem;

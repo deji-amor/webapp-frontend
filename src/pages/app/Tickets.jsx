@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import Placeholder from "../../components/molecules/general/Placeholder";
 import { Triangle } from "react-loader-spinner";
 import { LoaderContainerWrapper, LoaderWrapper } from "../../components/atoms/Password/wrappers";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 
 const Wrapper = styled("div")`
 	position: relative;
@@ -38,17 +38,19 @@ const Tickets = () => {
 		customers,
 		successful: customersSuccessful,
 		error: customersError,
+		loading: customersLoading,
 	} = useSelector((state) => state.customers);
 
 	const {
 		users,
 		successful: usersSuccessful,
 		error: usersError,
+		loading: usersLoading,
 	} = useSelector((state) => state.users);
 
 	const navigate = useNavigate();
 
-	if (ticketsLoading)
+	if (ticketsLoading || customersLoading || usersLoading){
 		return (
 			<div>
 				<LoaderWrapper></LoaderWrapper>
@@ -61,11 +63,12 @@ const Tickets = () => {
 						wrapperStyle={{}}
 						wrapperClassName="loader"
 						visible={true}
-					/>
+						/>
 				</LoaderContainerWrapper>
 			</div>
 		);
-
+	}
+	
 	if (ticketsError || customersError || usersError) return <p>An error occurred please refresh</p>;
 
 	const createCustomer = () => {
@@ -86,17 +89,20 @@ const Tickets = () => {
 		);
 
 	return (
-		<div className="space-y-[1.62rem]">
-			<TicketsSearchBar />
-			<Wrapper>
-				<TicketsHeaderActiveTicketType />
-				<table>
-					<TicketsTableHeading />
-					<TicketsTableBody />
-				</table>
-				<TicketsTablePagination />
-			</Wrapper>
-		</div>
+		<>
+			<Outlet/>
+			<div className="space-y-[1.62rem]">
+				<TicketsSearchBar />
+				<Wrapper>
+					<TicketsHeaderActiveTicketType />
+					<table>
+						<TicketsTableHeading />
+						<TicketsTableBody />
+					</table>
+					<TicketsTablePagination />
+				</Wrapper>
+			</div>
+		</>
 	);
 };
 

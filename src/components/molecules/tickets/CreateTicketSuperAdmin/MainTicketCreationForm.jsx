@@ -9,6 +9,7 @@ import Loader from "../../../organisms/tickets/Loader";
 import useCreateTicketFormValidator from "../../../../hooks/useCreateTicketFormValidator";
 import useCreateTicketFields from "../../../../hooks/useCreateTicketFields";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
 import { ticketsActions } from "../../../../state-manager/reducers/tickets/tickets";
 import PointOfContact from "../../../atoms/tickets/CreateTicketSuperAdmin/fields/point-of-contact/PointOfContact";
@@ -31,15 +32,18 @@ import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/Horizo
 const MainTicketCreationForm = () => {
 	const requiredFields = useCreateTicketFields();
 	const dispatch = useDispatch();
+	const navigate = useNavigate()
 	const {customer, data} = useSelector((state) => state.ticketCreation);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
+		console.log(requiredFields);
 		dispatch(createTicket(requiredFields));
 	};
 
 	const goBackHandler = () => {
-		dispatch(createTicketActions.goBackToAddTicketModal(customer));
+		navigate(-1);
+		dispatch(createTicketActions.reset());
 	};
 
 	const {loading, error, errorMessage, successful } = useSelector(
@@ -55,7 +59,7 @@ const MainTicketCreationForm = () => {
 					type: "successful"
 				})
 			);
-		dispatch(createTicketActions.toggleTemplateModal());
+			goBackHandler()
 		}
 		if (error === true) {
 				dispatch(
@@ -65,13 +69,13 @@ const MainTicketCreationForm = () => {
 						type: "error",
 					})
 				);
-			// DISPATCH dispatch(createTicketActions.toggleTemplateModal());
 		}
 	}, [error, successful, data]);
 
 	const isFormValid = useCreateTicketFormValidator();
 	const isFormDisabled = !isFormValid;
 
+	
 	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
 	const pointOfContact = chosenTemplate.includes("pointOfContact");
 	const numberOfTechniciansNeeded = chosenTemplate.includes("numberOfTechniciansNeeded");

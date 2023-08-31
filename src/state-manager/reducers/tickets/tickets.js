@@ -1,5 +1,5 @@
 import {createSlice, current, createAsyncThunk} from "@reduxjs/toolkit";
-import { getAuthToken } from "../../../utilis";
+import {getAuthToken} from "../../../utilis";
 
 export const fetchTickets = createAsyncThunk("tickets", async (args, {rejectWithValue}) => {
 	try {
@@ -37,10 +37,10 @@ const initialState = {
 	activeTickets: [],
 	activeTicketsStartPoint: 0,
 	activeTicketsEndPoint: 0,
-	ticketsOnEachPage: 5,
+	ticketsOnEachPage: 10,
 	sortByAscending: true,
 	filterByStatus: "All",
-	statuses: ["All", "Done", "Pending", "Inprogress", "Overdue"]
+	statuses: ["All", "Done", "Pending", "Technician enroute", "Inprogress", "Overdue"]
 };
 
 const ticketsSlice = createSlice({
@@ -60,12 +60,20 @@ const ticketsSlice = createSlice({
 			}
 		},
 		addNewTicket: (state, action) => {
-			const newTicket = action.payload
-			if(state.sortByAscending){
-				state.tickets = [newTicket, ...current(state).tickets]
-			}else{
-				state.tickets = [...current(state).tickets, newTicket]
+			const newTicket = action.payload;
+			if (state.sortByAscending) {
+				state.tickets = [newTicket, ...current(state).tickets];
+			} else {
+				state.tickets = [...current(state).tickets, newTicket];
 			}
+		},
+		replaceTicket: (state, action) => {
+			const newTicket = action.payload;
+			console.log({newTicket})
+			const tickets = current(state).tickets.slice()
+			const ticketInd = tickets.findIndex(ticket => ticket.id === newTicket.id);
+			tickets.splice(ticketInd, 1, newTicket)
+			state.tickets = tickets
 		}
 	},
 	extraReducers: builder => {
@@ -98,4 +106,5 @@ const ticketsSlice = createSlice({
 });
 
 export default ticketsSlice.reducer;
+
 export const ticketsActions = ticketsSlice.actions;

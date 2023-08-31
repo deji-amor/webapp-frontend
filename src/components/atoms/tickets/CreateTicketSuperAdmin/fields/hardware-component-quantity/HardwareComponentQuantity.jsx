@@ -29,7 +29,7 @@ const HardwareComponentQuantity = () => {
   };
 
   return (
-		<div className="flex items-center justify-between">
+		<div className="flex items-center gap-[5rem]">
 			<div className="">
 				<GrayThemedLighterText>Hardware Component Name*</GrayThemedLighterText>
 				<div className="w-[21rem]">

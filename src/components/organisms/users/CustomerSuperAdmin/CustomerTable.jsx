@@ -137,75 +137,80 @@ const CustomerTable = ({ filteredCustomers, handleUpdateStatus }) => {
 	};
 
 	return (
-        <React.Fragment>
-            <TableContainer component={Paper} sx={{ boxShadow: "none", margin: 0, alignItems: "center" }}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell>Company Name</CustomTableCell>
-                            <CustomTableCell>Representative Name</CustomTableCell>
-                            <CustomTableCell>Representative Email</CustomTableCell>
-                            <CustomTableCell>Status</CustomTableCell>
-                            <CustomTableCell>
-                                <Box sx={{ display: "flex", alignItems: "center" }}>
-                                    <span
-                                        style={{
-                                            marginRight: "4px",
-                                            color: "#2B2E72",
-                                            fontSize: "16px",
-                                            fontWeight: "600",
-                                            fontFamily: "Poppins",
-                                        }}
-                                    >
-                                        Filter By:
-                                    </span>
-                                    <FormControl size="small">
-                                        <Select
-                                            value={filter}
-                                            onChange={handleFilterChange}
-                                            sx={{
-                                                border: "1px solid transparent",
-                                                "& .MuiOutlinedInput-input": {
-                                                    borderColor: "#2b2e72",
-                                                },
-                                            }}
-                                        >
-                                            <MenuItem value="All">All</MenuItem>
-                                            <MenuItem value="active">active</MenuItem>
-                                            <MenuItem value="inactive">inactive</MenuItem>
-                                            <MenuItem value="suspend">suspend</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Box>
-                            </CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredCustomersByStatus.map((customer) => (
-                            <CustomeTableRow key={customer.id} customer={customer} showEditUserHandler={showEditUserHandler} handleUpdateStatus={handleUpdateStatus} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
-                <Pagination
-                    totalResults={totalCustomers}
-                    resultsPerPage={customersPerPage}
-                    currentPage={page}
-                    onPageChange={handlePageChange}
-                    sx={{ "& .MuiPaginationItem-root": { color: "#2b2e72", backgroundColor: "transparent" } }}
-                />
-            </Box>
-            {selectedCustomer !== null && (
-                <UnsuspendConfirmationModal
-                    open={unsuspendModalOpen}
-                    onClose={() => setUnsuspendModalOpen(false)}
-                    onConfirm={handleUnsuspendConfirmation}
-                    selectedCustomer={selectedCustomer}
-                />
-            )}
-        </React.Fragment>
-    );
+		<React.Fragment>
+			<TableContainer component={Paper} sx={{ boxShadow: "none", margin: 0, alignItems: "center" }}>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<CustomTableCell>Company Name</CustomTableCell>
+							<CustomTableCell>Representative Name</CustomTableCell>
+							<CustomTableCell>Representative Email</CustomTableCell>
+							<CustomTableCell>Status</CustomTableCell>
+							<CustomTableCell>
+								<Box sx={{ display: "flex", alignItems: "center" }}>
+									<span
+										style={{
+											marginRight: "4px",
+											color: "#2B2E72",
+											fontSize: "16px",
+											fontWeight: "600",
+											fontFamily: "Poppins",
+										}}
+									>
+										Filter By:
+									</span>
+									<FormControl size="small">
+										<Select
+											value={filter}
+											onChange={handleFilterChange}
+											sx={{
+												border: "1px solid transparent",
+												"& .MuiOutlinedInput-input": {
+													borderColor: "#2b2e72",
+												},
+											}}
+										>
+											<MenuItem value="All">All</MenuItem>
+											<MenuItem value="active">active</MenuItem>
+											<MenuItem value="inactive">inactive</MenuItem>
+											<MenuItem value="suspend">suspend</MenuItem>
+										</Select>
+									</FormControl>
+								</Box>
+							</CustomTableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{filteredCustomersByStatus.map((customer) => (
+							<CustomeTableRow
+								key={customer.id}
+								customer={customer}
+								showEditUserHandler={showEditUserHandler}
+								handleUpdateStatus={handleUpdateStatus}
+							/>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
+			<Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+				<Pagination
+					totalResults={totalCustomers}
+					resultsPerPage={customersPerPage}
+					currentPage={page}
+					onPageChange={handlePageChange}
+					sx={{ "& .MuiPaginationItem-root": { color: "#2b2e72", backgroundColor: "transparent" } }}
+				/>
+			</Box>
+			{selectedCustomer !== null && (
+				<UnsuspendConfirmationModal
+					open={unsuspendModalOpen}
+					onClose={() => setUnsuspendModalOpen(false)}
+					onConfirm={handleUnsuspendConfirmation}
+					selectedCustomer={selectedCustomer}
+				/>
+			)}
+		</React.Fragment>
+	);
 };
 
 export default CustomerTable;

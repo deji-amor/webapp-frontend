@@ -227,7 +227,7 @@ export const resendMyVerificationLink = createAsyncThunk(
 			}/api/v1/customer/resend-my-verification`;
 			const response = await fetch(url, config);
 			const data = await response.json();
-			return data
+			return data;
 		} catch (err) {
 			if (err.response && err.response.data.message) {
 				return rejectWithValue(err.response.data.message);
@@ -264,7 +264,7 @@ const customersSlice = createSlice({
 
 		SET_RESPONSE_NULL: (state, action) => {
 			state.response = null;
-		},
+		}
 	},
 	extraReducers: builder => {
 		builder
@@ -316,8 +316,8 @@ const customersSlice = createSlice({
 					state.error = true;
 				}
 				state.loading = false;
-				state.error = false
-				state.creationSuccess = true
+				state.error = false;
+				state.creationSuccess = true;
 				state.response = message ? message : null;
 			})
 
@@ -340,10 +340,10 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(validateToken.fulfilled, (state, {payload}) => {
-				const {message, data: valid} = payload
+				const {message, data: valid} = payload;
 				state.loading = false;
 				state.error = false;
-				state.valid = valid.valid
+				state.valid = valid.valid;
 				state.validationResponse = message ? message : null;
 			})
 
@@ -352,7 +352,7 @@ const customersSlice = createSlice({
 				state.error = true;
 				state.loading = false;
 				state.creationSuccess = false;
-				state.valid = valid.valid
+				state.valid = valid.valid;
 				state.validationResponse = message ? message : null;
 				state.successful = false;
 			})
@@ -375,8 +375,8 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(setCustomerPassword.rejected, (state, {payload}) => {
-				const {message} = payload
-				console.log(message)
+				const {message} = payload;
+				console.log(message);
 				state.error = true;
 				state.loading = false;
 				state.successful = false;
@@ -391,7 +391,7 @@ const customersSlice = createSlice({
 
 			.addCase(editCustomer.fulfilled, (state, {payload}) => {
 				const {status, code, data} = payload;
-				console.log(payload)
+				console.log(payload);
 				if (status === "OK" && code === 200) {
 					const customers = current(state).customers.slice();
 					const customerIndex = customers.findIndex(customer => customer.user_id === data.user_id);
@@ -417,17 +417,17 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(suspendUnsuspend.fulfilled, (state, {payload}) => {
-				const {status, code, data} = payload
-				if(status === "OK" && code === 200){
-					const customers = current(state).customers.slice()
-					const customerIndex = customers.findIndex(customer => customer.user_id === data.user_id)
-					customers.splice(customerIndex, 1, data)
-					state.customers = customers
-					state.error = false
-					state.successful = true
-				}else {
-					state.successful = false
-					state.error = true
+				const {status, code, data} = payload;
+				if (status === "OK" && code === 200) {
+					const customers = current(state).customers.slice();
+					const customerIndex = customers.findIndex(customer => customer.user_id === data.user_id);
+					customers.splice(customerIndex, 1, data);
+					state.customers = customers;
+					state.error = false;
+					state.successful = true;
+				} else {
+					state.successful = false;
+					state.error = true;
 				}
 				state.loading = false;
 			})
@@ -456,20 +456,22 @@ const customersSlice = createSlice({
 			})
 
 			.addCase(resendMyVerificationLink.fulfilled, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.loading = false;
-				state.validationResponse = message ? message : null
+				state.validationResponse = message ? message : null;
 			})
 
 			.addCase(resendMyVerificationLink.rejected, (state, {payload}) => {
-				const {message} = payload
+				const {message} = payload;
 				state.loading = false;
-				state.validationResponse = message ? message : null
+				state.validationResponse = message ? message : null;
 			});
 	},
 });
 
 export default customersSlice.reducer;
-export const {SET_ERROR_NULL} = customersSlice.actions;
+export const {
+	SET_ERROR_NULL,
+	SET_RESPONSE_NULL,
+} = customersSlice.actions;
 export const customerActions = customersSlice.actions;
-export const {SET_RESPONSE_NULL} = customersSlice.actions;
