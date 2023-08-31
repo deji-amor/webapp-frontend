@@ -62,7 +62,7 @@ class Dropdown extends Component {
 
 		const lineStyle = {
 			borderBottom: "2px solid #000",
-			width: "800px",
+			width: "95%",
 			margin: "15px 0",
 		};
 		const Typography = styled("h3")`

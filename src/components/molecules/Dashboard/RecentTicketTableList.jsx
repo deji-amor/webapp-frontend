@@ -22,16 +22,16 @@ const RecentTicketTableList = () => {
 		let statusText = "N/A";
 
 		if (ticket.status === "Done") {
-			statusIcon = <CheckCircleIcon className="text-[green]" />;
+			statusIcon = <CheckCircleIcon sx={{ color: "green", fontSize: 18 }} />;
 			statusText = "Done";
 		} else if (ticket.status) {
 			statusText = capitalizeFirstLetter(ticket.status);
 		}
 
 		return (
-			<>
+			<div style={{ display: "flex", alignItems: "center" }}>
 				{statusText} {statusIcon}
-			</>
+			</div>
 		);
 	};
 
