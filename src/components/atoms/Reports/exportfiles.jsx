@@ -135,6 +135,8 @@ const ExportFiles = ({ text }) => {
 			? filteredProjectTicketsByDate
 			: filteredProjectTickets;
 
+	// console.log(filteredTicketProjectReport)
+
 	const serviceCounter =
 		selectedTickets.length || filteredTicketsByStatus.length || filteredTicketsByDate.length;
 
