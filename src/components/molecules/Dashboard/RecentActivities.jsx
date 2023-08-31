@@ -3,19 +3,33 @@ import { Box, styled } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useDispatch, useSelector } from "react-redux";
 import { recentactivities } from "../../../state-manager/reducers/dashboard/dashboard";
+import { useNavigate } from "react-router-dom";
 
 const RecentActivities = () => {
 	const dispatch = useDispatch();
 	const recentActivitiesData = useSelector((state) => state.dashboard.recentActivities);
 
 	const recentDataArray = recentActivitiesData?.recentActivities || [];
+	const navigate = useNavigate()
 
 	//   const [selectedActivityId, setSelectedActivityId] = useState(null);
 	//   const [isModalOpen, setIsModalOpen] = useState(false);
+	// dashboard
+	//   reports <-
+	//      testing
+	// users
+	// ticqets
 
 	useEffect(() => {
 		dispatch(recentactivities());
 	}, [dispatch]);
+
+	const goToTicketDetail = (activity) => {
+		const {data} = activity
+		const dataParsed = JSON.parse(data)
+		const {id} = dataParsed
+		if(id) navigate(`/admin/tickets/view/detail/${id}`);
+	};
 
 	//   const openModal = (activityId) => {
 	//     setSelectedActivityId(activityId);
@@ -117,7 +131,7 @@ const RecentActivities = () => {
 						<BoxContainer
 							key={activity.id}
 							data={activity}
-							// onClick={() => openModal(activity.id)}
+							onClick={() => goToTicketDetail(activity)}
 						>
 							<div>
 								<Typography variant="subtitle1">{activityType}</Typography>

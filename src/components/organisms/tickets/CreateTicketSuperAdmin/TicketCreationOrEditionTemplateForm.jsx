@@ -13,7 +13,6 @@ const TicketTemplateCreationOrEditionForm = () => {
 	const params = useParams()
 	const [searchParams] = useSearchParams()
 	const {customerId} = params
-	// REFERENCE const ticketType = searchParams.get("ticketType");
 	const ticketPath = JSON.parse(searchParams.get("ticketPath"));
 	const ticketForm = ticketPath.at(-1)
 	const chosenTemplate = tree[ticketForm].fields
