@@ -52,12 +52,13 @@ const ExportFilesWrapper = styled("div")(() => ({
 
 	".instant-recurring, .pdf-csv": {
 		minWidth: "170px",
-		height: "84px",
+		// height: "84px",
 		padding: "12px 4px 12px 4px",
 		borderRadius: "8px",
 		boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.20)",
 		display: "flex",
 		flexDirection: "column",
+		justifyContent: "center",
 		alignItems: "start",
 		// gap: "2px",
 	},
@@ -81,7 +82,9 @@ const ExportFilesWrapper = styled("div")(() => ({
 		background: "rgba(76, 111, 255, 0.08)",
 	},
 
-	".pdf-csv": {},
+	".pdf-csv": {
+		height: "42px"
+	},
 
 	".instant-recurring button, .pdf-csv button .arrow": {
 		fontSize: "15px",
@@ -117,27 +120,20 @@ const ExportFiles = ({ text }) => {
 	console.log(selectedProjectTickets);
 
 	const filteredTicketServiceReports =
-		filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0
+		(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0) ||
+		(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length === 0)
 			? filteredTicketsByStatus
 			: filteredTicketsByDate.length != 0
 			? filteredTicketsByDate
 			: filteredTickets;
 
 	const filteredTicketProjectReport =
-		filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length != 0
+		(filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length != 0) ||
+		(filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length === 0)
 			? filteredProjectTicketsByStatus
 			: filteredProjectTicketsByDate.length != 0
 			? filteredProjectTicketsByDate
 			: filteredProjectTickets;
-
-	const filteredCustomerReport =
-		filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0
-			? filteredCustomersByStatus
-			: filteredCustomersByDate.length != 0
-			? filteredCustomersByDate
-			: filteredCustomers;
-
-	console.log(filteredTicketServiceReports);
 
 	return (
 		<ExportFilesWrapper>
@@ -191,14 +187,14 @@ const ExportFiles = ({ text }) => {
 				)}
 				{exportDropdown1 && (
 					<div className="pdf-csv">
-						<button
+						{/* <button
 							onClick={() => dispatch(SET_EXPORT_PDF_DROPDOWN("PDF"))}
 							className="but"
 							type="button"
 						>
 							<span>PDF</span>
 							<ArrowForwardIosIcon className="arrow" />
-						</button>
+						</button> */}
 						<button
 							onClick={() => dispatch(SET_EXPORT_CSV_DROPDOWN("CSV"))}
 							className="but"

@@ -52,7 +52,7 @@ const MobileLinkWrapper = styled("div")(() => ({
 	},
 
 	".drop": {
-		width: "150px",
+		width: "170px",
 		background: "white",
 		padding: "5px",
 		borderRadius: "8px",
@@ -73,7 +73,7 @@ const MobileLinkWrapper = styled("div")(() => ({
         padding: "10px 0px 10px 0px",
         fontSize: "14px",
         textAlign: "center",
-		border: "2px solid #2B2E72",
+		// border: "2px solid #2B2E72",
 	},
 
     ".login-customer:hover, .login-admin:hover": {
@@ -120,12 +120,12 @@ const MobileLink = () => {
 							<div className="drop">
 								<NavLink to="/login-admin">
 									<button className="login-admin" type="button">
-										Admin Login
+										Login as an admin
 									</button>
 								</NavLink>
 								<NavLink to="/login-customer">
 									<button className="login-customer" type="button">
-										Customer Login
+										Login as a customer
 									</button>
 								</NavLink>
 							</div>

@@ -32,7 +32,7 @@ const NavigationButtonWrapper = styled("div")(() => ({
 	},
 
 	".drop": {
-		width: "150px",
+		width: "200px",
 		background: "white",
 		padding: "5px",
 		borderRadius: "8px",
@@ -43,16 +43,16 @@ const NavigationButtonWrapper = styled("div")(() => ({
         flexDirection: "column",
         gap: "5px",
         justifyContent: "center",
-
 	},
 
 	".login-customer, .login-admin": {
 		color: "#2B2E72",
 		width: "100%",
-        padding: "10px 0px 10px 0px",
-        fontSize: "14px",
-        textAlign: "center",
-		border: "2px solid #2B2E72",
+        padding: "10px 10px 10px 10px",
+        fontSize: "16px",
+        textAlign: "left",
+		fontWeight: "600"
+		// border: "2px solid #2B2E72",
 	},
 
     ".login-customer:hover, .login-admin:hover": {
@@ -78,20 +78,20 @@ const NavigateButtons = () => {
 				{toggle &&
 				(
 					<div className="drop">
-						<Link to="/login-admin">
-							<button
-								className="login-admin"
-								type="button"
-							>
-								Admin Login
-							</button>
-						</Link>
 						<Link to="/login-customer">
 							<button
 								className="login-customer"
 								type="button"
 							>
-								Customer Login
+								Login as a customer
+							</button>
+						</Link>
+						<Link to="/login-admin">
+							<button
+								className="login-admin"
+								type="button"
+							>
+								Login as an admin
 							</button>
 						</Link>
 					</div>

@@ -6,7 +6,7 @@ const StatsCardValue = ({ children }) => {
 	const Paragraph = styled("p")`
 		color: #000;
 		font-family: Poppins;
-		font-size: 2.5rem;
+		font-size: 48px;
 		font-style: normal;
 		font-weight: 600;
 		line-height: normal;
