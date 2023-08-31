@@ -83,7 +83,7 @@ const NavigateButtons = () => {
 								className="login-customer"
 								type="button"
 							>
-								Login as a customer
+								Login as a Customer
 							</button>
 						</Link>
 						<Link to="/login-admin">
@@ -91,7 +91,7 @@ const NavigateButtons = () => {
 								className="login-admin"
 								type="button"
 							>
-								Login as an admin
+								Login as an Admin
 							</button>
 						</Link>
 					</div>
