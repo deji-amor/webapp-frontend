@@ -15,7 +15,6 @@ const TicketsTableBody = () => {
 		activeTicketsEndPoint,
 		filterByStatus,
 		sortByAscending,
-		statuses,
 	} = useSelector((state) => state.tickets);
 
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);

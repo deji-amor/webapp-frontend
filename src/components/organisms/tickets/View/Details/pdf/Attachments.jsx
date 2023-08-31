@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from "prop-types";
-import { StyleSheet, View, Text, Image, Svg, Link } from "@react-pdf/renderer";
+import { StyleSheet, View, Text, Link } from "@react-pdf/renderer";
+import { extractCleanFilenameFromUrl } from '../components/Attachments';
 
 const ClipIcon = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none">
@@ -14,13 +15,6 @@ const ClipIcon = () => (
 const Attachments = ({ ticket}) => {
 	const { scope_of_work_document } = ticket;
 	// console.log(ticketInView);
-
-	function removeDomainFromUrl(url) {
-		const urlObject = new URL(url);
-		const pathAndQuery = urlObject.pathname + urlObject.search + urlObject.hash;
-		return pathAndQuery;
-	}
-
 		const styles = StyleSheet.create({
 			section: {
 				display: "flex",
@@ -77,7 +71,7 @@ const Attachments = ({ ticket}) => {
 					<View style={styles.side}>
 						<View style={styles.AttachmentButton}>
 							<Text style={styles.AttachmentText}>
-								{removeDomainFromUrl(scope_of_work_document)}
+								{extractCleanFilenameFromUrl(scope_of_work_document)}
 							</Text>
 							<Link src={scope_of_work_document} style={styles.DownloadText}>
 								Download

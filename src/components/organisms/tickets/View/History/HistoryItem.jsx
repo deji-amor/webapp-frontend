@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import HistoryTicketMessage from "./HistoryTicketMessage";
 import HistoryTicketDate from "./HistoryTicketDate";
 import HistoryTicketValueChange from "./HistoryTicketValueChange";
-import { omitBy, isEqual, reduce, isObject, intersection, pick } from "lodash";
+import { omitBy, isEqual, isObject, intersection, pick } from "lodash";
 import { formatDate } from "../Details/components/Duration";
 import { v4 } from "uuid";
 
@@ -39,73 +39,79 @@ const HistoryItem = ({ log }) => {
 	const isOldDetailsAnObject = isJSONString(old_details) && isObject(JSON.parse(old_details));
 	const isNewDetailsAnObject = isJSONString(new_details) && isObject(JSON.parse(new_details));
 
-	if (isOldDetailsAnObject || isNewDetailsAnObject) {
-		const oldDetails = JSON.parse(old_details);
-		if(oldDetails.start_date_time) {
-			oldDetails.start_date_time = formatDate(convertDate(oldDetails.start_date_time));
-		}
-		if(oldDetails.end_date_time) {
-			oldDetails.end_date_time = formatDate(convertDate(oldDetails.end_date_time));
-		}
-    const newDetails = JSON.parse(new_details);
+		if (edit_type === "ticket-edit") return <></>
 
-		const newDetailsModified = {
-			id: oldDetails.id,
-			user_id: oldDetails.user_id,
-			workspace_id: oldDetails.workspace_id,
-			ticket_type: newDetails.ticketType,
-			ticket_form: newDetails.ticketForm,
-			ticket_path: newDetails.ticketPath,
-			point_of_contact_name: newDetails.pointOfContactName,
-			point_of_contact_phone_number: newDetails.pointOfContactPhoneNumber,
-			point_of_contact_address: newDetails.pointOfContactAddress,
-			number_of_technicians: newDetails.numberOfTechnicians,
-			scope_of_work_description: newDetails.scopeOfWorkDescription,
-			scope_of_work_document: newDetails.scopeOfWorkDocument,
-			start_date_time: formatDate(newDetails.startDateTime),
-			end_date_time: formatDate(newDetails.endDateTime),
-			hardware_quantity: newDetails.hardwareQuantity,
-			hardware_name: newDetails.hardwareName,
-			hardware_component_type_list: newDetails.hardwareComponentTypeList,
-			hardware_component_type_quantity: newDetails.hardwareComponentTypeQuantity,
-			locations: newDetails.locations,
-			materials_description: newDetails.materialsDescription,
-			number_of_work_station: newDetails.numberOfWorkStation,
-			number_of_work_systems: newDetails.numberOfWorkSystems,
-			software_customization_quantity: newDetails.softwareCustomizationQuantity,
-			software_customization_name: newDetails.softwareCustomizationName,
-			software_installation_quantity: newDetails.softwareInstallationQuantity,
-			software_installation_name: newDetails.softwareInstallationName,
-			pick_locations: newDetails.pickLocations,
-			drop_off_locations: newDetails.dropOffLocations,
-			customer_id: newDetails.customerId,
-			additional_fields: newDetails.additionalFields.map(({ name, value }) => ({ [name]: value })),
-		};
+		if (isOldDetailsAnObject || isNewDetailsAnObject) {
+			const oldDetails = JSON.parse(old_details);
+			if (oldDetails.start_date_time) {
+				oldDetails.start_date_time = formatDate(convertDate(oldDetails.start_date_time));
+			}
+			if (oldDetails.end_date_time) {
+				oldDetails.end_date_time = formatDate(convertDate(oldDetails.end_date_time));
+			}
+			const newDetails = JSON.parse(new_details);
 
-		const similarKeys = intersection(Object.keys(oldDetails), Object.keys(newDetailsModified));
-		const commonOldDetails = pick(oldDetails, similarKeys)
-		const commonNewDetails = pick(newDetailsModified, similarKeys)
+			const newDetailsModified = {
+				id: oldDetails.id,
+				user_id: oldDetails.user_id,
+				workspace_id: oldDetails.workspace_id,
+				ticket_type: newDetails.ticketType,
+				ticket_form: newDetails.ticketForm,
+				ticket_path: newDetails.ticketPath,
+				point_of_contact_name: newDetails.pointOfContactName,
+				point_of_contact_phone_number: newDetails.pointOfContactPhoneNumber,
+				point_of_contact_address: newDetails.pointOfContactAddress,
+				number_of_technicians: newDetails.numberOfTechnicians,
+				scope_of_work_description: newDetails.scopeOfWorkDescription,
+				scope_of_work_document: newDetails.scopeOfWorkDocument,
+				start_date_time: formatDate(newDetails.startDateTime),
+				end_date_time: formatDate(newDetails.endDateTime),
+				hardware_quantity: newDetails.hardwareQuantity,
+				hardware_name: newDetails.hardwareName,
+				hardware_component_type_list: newDetails.hardwareComponentTypeList,
+				hardware_component_type_quantity: newDetails.hardwareComponentTypeQuantity,
+				locations: newDetails.locations,
+				materials_description: newDetails.materialsDescription,
+				number_of_work_station: newDetails.numberOfWorkStation,
+				number_of_work_systems: newDetails.numberOfWorkSystems,
+				software_customization_quantity: newDetails.softwareCustomizationQuantity,
+				software_customization_name: newDetails.softwareCustomizationName,
+				software_installation_quantity: newDetails.softwareInstallationQuantity,
+				software_installation_name: newDetails.softwareInstallationName,
+				pick_locations: newDetails.pickLocations,
+				drop_off_locations: newDetails.dropOffLocations,
+				customer_id: newDetails.customerId,
+				additional_fields: newDetails.additionalFields.map(({ name, value }) => ({
+					[name]: value,
+				})),
+			};
 
-		const differences = omitBy(commonNewDetails, (value, key) => compareValues(value, commonOldDetails[key]));
+			const similarKeys = intersection(Object.keys(oldDetails), Object.keys(newDetailsModified));
+			const commonOldDetails = pick(oldDetails, similarKeys);
+			const commonNewDetails = pick(newDetailsModified, similarKeys);
 
-		const diffArray = Object.keys(differences).map((key) => ({
-			[key]: [commonOldDetails[key], commonNewDetails[key]],
-		}));
-
-		return diffArray.map((item) => {
-      return (
-				<HistoryItem
-					key={v4()}
-					log={{
-						...log,
-						edit_type: Object.entries(item)[0][0].replaceAll("_", " "),
-						old_details: Object.entries(item)[0][1][0],
-						new_details: Object.entries(item)[0][1][1],
-					}}
-				/>
+			const differences = omitBy(commonNewDetails, (value, key) =>
+				compareValues(value, commonOldDetails[key])
 			);
-		});
-	}
+
+			const diffArray = Object.keys(differences).map((key) => ({
+				[key]: [commonOldDetails[key], commonNewDetails[key]],
+			}));
+
+			return diffArray.map((item) => {
+				return (
+					<HistoryItem
+						key={v4()}
+						log={{
+							...log,
+							edit_type: Object.entries(item)[0][0].replaceAll("_", " "),
+							old_details: Object.entries(item)[0][1][0],
+							new_details: Object.entries(item)[0][1][1],
+						}}
+					/>
+				);
+			});
+		}
 
 	return (
 		<div>
