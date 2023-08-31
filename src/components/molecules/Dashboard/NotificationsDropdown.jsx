@@ -16,6 +16,15 @@ const Wrapper = styled("div")`
 	box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
 `;
 
+const NotificationText = styled("h1")`
+	color: #2b2e72;
+	font-family: "Poppins", sans-serif;
+	font-size: 1.5rem;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+`;
+
 const NotificationsDropdown = () => {
   return (
     <Wrapper>NotificationsDropdown</Wrapper>

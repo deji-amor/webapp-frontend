@@ -30,6 +30,8 @@ const initialState = {
 	errorMessage: "",
 	successful: null,
 	notifications: [],
+	searchBy: ["All", "Account Creation", "Profile Update", "Ticket Update"],
+	sortByAscending: true
 };
 
 const notificationsSlice = createSlice({
