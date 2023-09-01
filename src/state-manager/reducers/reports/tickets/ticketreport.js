@@ -25,6 +25,46 @@ export const fetchAllTickets = createAsyncThunk("tickets", async (args, {rejectW
 });
 
 const initialState = {
+	serviceStatus: [
+		{
+			status: "done",
+			title: "Tickets Done",
+			active: false,
+		},
+		{
+			status: "in-progress",
+			title: "Tickets Inprogress",
+			active: false,
+		},
+		{
+			status: "pending",
+			title: "Tickets Pending",
+			active: false,
+		},
+		{
+			status: "technician enroute",
+			title: "Technician Enroute",
+			active: false,
+		},
+	],
+	projectStatus: [
+		{
+			status: "done",
+			active: false,
+		},
+		{
+			status: "in-progress",
+			active: false,
+		},
+		{
+			status: "pending",
+			active: false,
+		},
+		{
+			status: "technician enroute",
+			active: false,
+		},
+	],
 	reportTabIndex: 0,
 	loading: false,
 	error: null,
@@ -75,7 +115,6 @@ const ticketReportSlice = createSlice({
 		filterSelectedTickets: (state, {payload}) => {
 			if (state.reportTabIndex === 0) {
 				state.selectedTickets = current(state).selectedTickets.concat(payload);
-				
 			} else {
 				state.selectedProjectTickets = current(state).selectedProjectTickets.concat(payload);
 			}
@@ -86,7 +125,7 @@ const ticketReportSlice = createSlice({
 				state.selectedTickets = current(state)
 					.selectedTickets.slice()
 					.filter(ticket => ticket.id != payload.id);
-			}else {
+			} else {
 				state.selectedProjectTickets = current(state)
 					.selectedProjectTickets.slice()
 					.filter(ticket => ticket.id != payload.id);
@@ -132,6 +171,31 @@ const ticketReportSlice = createSlice({
 				state.filteredTicketsByStatus = payload;
 			} else {
 				state.filteredProjectTicketsByStatus = payload;
+			}
+		},
+
+		setMultipleDropdownFilterStatus: (state, {payload}) => {
+			console.log(payload)
+			if (state.reportTabIndex === 0) {
+				const allStatus = current(state).serviceStatus.slice();
+				let status = current(state).serviceStatus.find(status => status.status === payload.status);
+				let index = current(state).serviceStatus.findIndex(stat => stat.status === payload.status);
+				if (!status.active) {
+					allStatus.splice(index, 1, {status: payload.status, title: payload.title, active: true});
+				} else {
+					allStatus.splice(index, 1, {status: payload.status, title: payload.title, active: false});
+				}
+				state.serviceStatus = allStatus;
+			} else {
+				const allStatus = current(state).projectStatus.slice();
+				let status = current(state).projectStatus.find(status => status.status === payload.status);
+				let index = current(state).projectStatus.findIndex(stat => stat.status === payload.status);
+				if (!status.active) {
+					allStatus.splice(index, 1, {status: payload.status, title: payload.title, active: true});
+				} else {
+					allStatus.splice(index, 1, {status: payload.status, title: payload.title, active: false});
+				}
+				state.serviceStatus = allStatus;
 			}
 		},
 
@@ -233,5 +297,92 @@ export const {
 	setMultipleFilterStatus,
 	removeMultipleFilterStatus,
 	sortFilteredTicketsByDate,
+	setMultipleDropdownFilterStatus,
 	SET_REPORT_TAB_INDEX,
 } = ticketReportSlice.actions;
+
+// serviceStatus: [
+// 	{
+// 		status: "done",
+// 		title: "Tickets Done",
+// 		active: false,
+// 	},
+// 	{
+// 		status: "in-progress",
+// 		title: "Tickets Inprogress",
+// 		active: false,
+// 	},
+// 	{
+// 		status: "pending",
+// 		title: "Tickets Pending",
+// 		active: false,
+// 	},
+// 	{
+// 		status: "technician enroute",
+// 		title: "Technician Enroute",
+// 		active: false,
+// 	},
+// ],
+// projectStatus: [
+// 	{
+// 		status: "done",
+// 		active: false,
+// 	},
+// 	{
+// 		status: "in-progress",
+// 		active: false,
+// 	},
+// 	{
+// 		status: "pending",
+// 		active: false,
+// 	},
+// 	{
+// 		status: "technician enroute",
+// 		active: false,
+// 	},
+// ],
+// reportTabIndex: 0,
+// loading: false,
+// error: null,
+// errorMessage: "",
+// successful: null,
+// serviceDateStart: "",
+// serviceDateEnd: "",
+// projectDateStart: "",
+// projectDateEnd: "",
+// serviceTickets: [],
+// filteredTickets: [],
+// selectedTickets: [],
+// filteredTicketsByDate: [],
+// filteredTicketsByStatus: [],
+// multipleTicketStatusFiltering: [],
+// projectTickets: [],
+// selectedProjectTickets: [],
+// filteredProjectTickets: [],
+// filteredProjectTicketsByDate: [],
+// filteredProjectTicketsByStatus: [],
+// multipleProjectTicketStatusFiltering: [],
+
+// setMultipleFilterStatus: (state, {payload}) => {
+// 	if (state.reportTabIndex === 0) {
+// 		const allStatus = current(state).serviceStatus.slice();
+// 		let status = current(state).serviceStatus.find(status => status.status === payload.status);
+// 		let index = current(state).serviceStatus.findIndex(stat => stat.status === payload.status);
+// 		if (!status.active) {
+// 			allStatus.splice(index, 1, {status: payload.status, title: payload.title,  active: true});
+// 		} else {
+// 			allStatus.splice(index, 1, {status: payload.status, title: payload.title,  active: false});
+// 		}
+// 		state.serviceStatus = allStatus;
+// 	} else {
+// 		const allStatus = current(state).projectStatus.slice();
+// 		let status = current(state).projectStatus.find(status => status.status === payload.status);
+// 		let index = current(state).projectStatus.findIndex(stat => stat.status === payload.status);
+// 		if (!status.active) {
+// 			allStatus.splice(index, 1, {status: payload.status, title: payload.title,  active: true});
+// 		} else {
+// 			allStatus.splice(index, 1, {status: payload.status, title: payload.title,  active: false});
+// 		}
+// 		state.serviceStatus = allStatus;
+// 	}
+// },

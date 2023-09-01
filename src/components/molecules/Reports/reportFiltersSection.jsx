@@ -45,6 +45,7 @@ const ReportFilterBoardWrapper = styled("div")(() => ({
 
 const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, setToggle }) => {
 	const { customerReport } = useSelector((state) => state.reports);
+	const [clicked, setClicked] = useState(false)
 	const { filteredTickets, filteredProjectTickets, reportTabIndex } = useSelector(
 		(state) => state.ticketReports
 	);

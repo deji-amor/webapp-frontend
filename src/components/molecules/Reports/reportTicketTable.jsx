@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import ReportTableHeadRow from "../../atoms/Reports/reportTableHeadRow";
 import ReportTableBodyRow from "../../atoms/Reports/reportTableBodyRow";
 import Pagination from "../../atoms/users/CustomerSuperAdmin/UserPagination";
+import Placeholder from "../general/Placeholder";
 
 const ReportTicketTableWrapper = styled("div")(() => ({
 	borderRadius: "12px",
@@ -20,8 +21,8 @@ const ReportTicketTableWrapper = styled("div")(() => ({
 
 	".ticket:hover": {
 		background: "green",
-		color: "white"
-	}
+		color: "white",
+	},
 }));
 
 const ReportTicketTable = () => {
@@ -73,43 +74,68 @@ const ReportTicketTable = () => {
 
 	return (
 		<ReportTicketTableWrapper>
-			<table className="content-table">
-				<thead>
-					<ReportTableHeadRow />
-				</thead>
-				<tbody>
-					{(reportTabIndex === 0 &&
-						currentReports.map((ticket) => (
-							<ReportTableBodyRow key={ticket.id} ticket={ticket} />
-						))) ||
-						currentProjects.map((tech) => <ReportTableBodyRow key={tech.id} ticket={tech} />)}
-				</tbody>
-			</table>
-			{(reportTabIndex === 0 && (
-				<Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
-					<Pagination
-						totalResults={totalTickets}
-						resultsPerPage={ticketsPerPage}
-						currentPage={page}
-						onPageChange={handlePageChange}
-						sx={{
-							"& .MuiPaginationItem-root": { color: "#2b2e72", backgroundColor: "transparent" },
-						}}
+			{(reportTabIndex === 0 &&
+				((currentReports.length != 0 && (
+					<>
+						<table className="content-table">
+							<thead>
+								<ReportTableHeadRow />
+							</thead>
+							<tbody>
+								{currentReports.map((ticket) => (
+									<ReportTableBodyRow key={ticket.id} ticket={ticket} />
+								))}
+							</tbody>
+						</table>
+						<Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+							<Pagination
+								totalResults={totalTickets}
+								resultsPerPage={ticketsPerPage}
+								currentPage={page}
+								onPageChange={handlePageChange}
+								sx={{
+									"& .MuiPaginationItem-root": { color: "#2b2e72", backgroundColor: "transparent" },
+								}}
+							/>
+						</Box>
+					</>
+				)) || (
+					<Placeholder
+						messageHeader="seems you don’t have anything here yet!"
+						messageParagraph="Once a report is generated for you, you will be able to view the data here."
 					/>
-				</Box>
-			)) || (
-				<Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
-					<Pagination
-						totalResults={totalProjectsTickets}
-						resultsPerPage={projectTicketPage}
-						currentPage={projectPage}
-						onPageChange={handleProjectPageChange}
-						sx={{
-							"& .MuiPaginationItem-root": { color: "#2b2e72", backgroundColor: "transparent" },
-						}}
+				))) ||
+				(currentProjects.length != 0 && (
+					<>
+						<table className="content-table">
+							<thead>
+								<ReportTableHeadRow />
+							</thead>
+							<tbody>
+								{currentProjects.map((tech) => (
+									<ReportTableBodyRow key={tech.id} ticket={tech} />
+								))}
+							</tbody>
+						</table>
+
+						<Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+							<Pagination
+								totalResults={totalProjectsTickets}
+								resultsPerPage={projectTicketPage}
+								currentPage={projectPage}
+								onPageChange={handleProjectPageChange}
+								sx={{
+									"& .MuiPaginationItem-root": { color: "#2b2e72", backgroundColor: "transparent" },
+								}}
+							/>
+						</Box>
+					</>
+				)) || (
+					<Placeholder
+						messageHeader="seems you don’t have anything here yet!"
+						messageParagraph="Once a report is generated for you, you will be able to view the data here."
 					/>
-				</Box>
-			)}
+				)}
 		</ReportTicketTableWrapper>
 	);
 };
@@ -117,3 +143,4 @@ const ReportTicketTable = () => {
 ReportTicketTable.propTypes = {};
 
 export default ReportTicketTable;
+
