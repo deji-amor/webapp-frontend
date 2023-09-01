@@ -66,12 +66,14 @@ const CustomerAppLayout = () => {
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
 	const showResetModal = useSelector((state) => state.logout.showResetModal);
 
+	const t = useSelector(state => state.tickets)
+
 		useEffect(() => {
 			// dispatch(fetchUsers());
 			// dispatch(fetchCustomers());
 			dispatch(fetchTickets());
 			dispatch(fetchAllCustomers());
-			// dispatch(fetchAllTickets());
+			dispatch(fetchAllTickets());
 			// dispatch(fetchNotifications());
 		}, []);
 

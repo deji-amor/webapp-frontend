@@ -14,7 +14,7 @@ const ProfileDropdownMenu = () => {
 
 	const handleEditClick = () => {
 		setIsEditModalOpen(true);
-		setIsDropdownOpen(false); // Close the dropdown when edit is clicked
+		setIsDropdownOpen(false);
 	};
 
 	const closeEditModal = () => {
@@ -22,7 +22,7 @@ const ProfileDropdownMenu = () => {
 	};
 
 	const handleClickAway = () => {
-		setIsDropdownOpen(false); // Close the dropdown when clicking away
+		setIsDropdownOpen(false);
 	};
 
 	return (
@@ -38,7 +38,7 @@ const ProfileDropdownMenu = () => {
 						borderRadius="12px"
 						backgroundColor="#FFF"
 						boxShadow="0px 0px 20px 0px rgba(37, 36, 33, 0.24)"
-                        padding="10px"
+            padding="10px"
 					>
 						<AvatarDropdown onEditClick={handleEditClick} />
 					</Box>

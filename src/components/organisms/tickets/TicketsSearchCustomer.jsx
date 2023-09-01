@@ -149,7 +149,7 @@ const TicketsSearchCustomer = () => {
 			return;
 		}
 		if (activeCustomer) {
-			dispatch(createTicketActions.updateField({ key: "customerId", value: activeCustomer.id }));
+			dispatch(createTicketActions.updateField({ key: "customerId", value: activeCustomer.user_id }));
 			setShowCustomerList(false);
 		} else setShowCustomerList(true);
 	}, [searchCustomersValue]);
