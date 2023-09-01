@@ -111,10 +111,6 @@ const ExportFiles = ({ text }) => {
 		filteredProjectTicketsByStatus,
 	} = useSelector((state) => state.ticketReports);
 
-	const { filteredCustomers, filteredCustomersByDate, filteredCustomersByStatus } = useSelector(
-		(state) => state.customerReports
-	);
-
 	const selectedService = selectedTickets ? selectedTickets : [];
 
 	const selectedProject = selectedProjectTickets ? selectedProjectTickets : [];
@@ -134,8 +130,6 @@ const ExportFiles = ({ text }) => {
 			: filteredProjectTicketsByDate.length != 0
 			? filteredProjectTicketsByDate
 			: filteredProjectTickets;
-
-	// console.log(filteredTicketProjectReport)
 
 	const serviceCounter =
 		selectedTickets.length || filteredTicketsByStatus.length || filteredTicketsByDate.length;
@@ -208,9 +202,7 @@ const ExportFiles = ({ text }) => {
 							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
 							className="instant"
 							type="button"
-						>
-							{/* {" "} */}
-							{(reportTabIndex === 0 && (
+						>							{(reportTabIndex === 0 && (
 								<CSVLink
 									data={
 										selectedService.length != 0 ? selectedService : filteredTicketServiceReports
@@ -243,14 +235,6 @@ const ExportFiles = ({ text }) => {
 				)}
 				{exportDropdown1 && (
 					<div className="pdf-csv">
-						{/* <button
-							onClick={() => dispatch(SET_EXPORT_PDF_DROPDOWN("PDF"))}
-							className="but"
-							type="button"
-						>
-							<span>PDF</span>
-							<ArrowForwardIosIcon className="arrow" />
-						</button> */}
 						<button
 							onClick={() => dispatch(SET_EXPORT_CSV_DROPDOWN("CSV"))}
 							className="but"

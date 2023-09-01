@@ -8,7 +8,7 @@ const ReportTabs = ({children, index}) => {
 		<Box
         sx={{
             borderBottom: 1,
-            borderColor: "1px solid rgba(182, 182, 182, 1)",
+            borderColor: "divider",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",

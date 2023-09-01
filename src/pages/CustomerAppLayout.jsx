@@ -72,8 +72,8 @@ const CustomerAppLayout = () => {
 			// dispatch(fetchUsers());
 			// dispatch(fetchCustomers());
 			dispatch(fetchTickets());
-			// dispatch(fetchAllCustomers());
-			// dispatch(fetchAllTickets());
+			dispatch(fetchAllCustomers());
+			dispatch(fetchAllTickets());
 			// dispatch(fetchNotifications());
 		}, []);
 

@@ -19,8 +19,6 @@ const CustomerReportBody = () => {
 	);
 	const dispatch = useDispatch();
 
-	console.log({ filteredCustomers, filteredCustomersByStatus, filteredCustomersByDate })
-
 	const handleCustomerDateRange = useCallback(
 		(start, end) => {
 			setToggle(true);
@@ -34,17 +32,17 @@ const CustomerReportBody = () => {
 
 						return customer_start_date >= start_date && customer_start_date <= end_date;
 					});
-	
+
 					dispatch(filterCustomersByDate([...filteredDate]));
-				}else {
+				} else {
 					const filteredDate = filteredCustomers.slice().filter((customer) => {
 						const start_date = new Date(start);
 						const end_date = new Date(end);
 						const customer_start_date = new Date(getDateFromDateTime(customer.datetime));
-	
+
 						return customer_start_date >= start_date && customer_start_date <= end_date;
 					});
-	
+
 					dispatch(filterCustomersByDate([...filteredDate]));
 				}
 			}
@@ -55,8 +53,11 @@ const CustomerReportBody = () => {
 	const handleCustomersSort = (type) => {
 		let sortedCustomers = null;
 
-		if (filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0) {
-			console.log("Status")
+		if (
+			(filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0) ||
+			(filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length != 0)
+		) {
+			console.log("Status");
 			sortedCustomers = filteredCustomersByStatus
 				.slice()
 				.sort((t1, t2) =>
@@ -66,7 +67,7 @@ const CustomerReportBody = () => {
 				);
 			dispatch(sortFilteredCustomersByDate(sortedCustomers));
 		} else if (filteredCustomersByDate.length != 0) {
-			console.log("Date")
+			console.log("Date");
 			sortedCustomers = filteredCustomersByDate
 				.slice()
 				.sort((t1, t2) =>
@@ -76,7 +77,7 @@ const CustomerReportBody = () => {
 				);
 			dispatch(filterCustomersByDate(sortedCustomers));
 		} else {
-			console.log("Original List")
+			console.log("Original List");
 			sortedCustomers = filteredCustomers
 				.slice()
 				.sort((t1, t2) =>
