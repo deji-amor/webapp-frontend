@@ -54,6 +54,7 @@ export const recentactivities = createAsyncThunk(
 
 // EDIT PROFILE
 export const editProfile = createAsyncThunk("editProfile", async (data, {rejectWithValue}) => {
+	console.log(data);
 	try {
 		const token = await getAuthToken();
 		const config = {
@@ -135,6 +136,7 @@ const dashboardSlice = createSlice({
 			.addCase(editProfile.fulfilled, (state, action) => {
 				state.loading = false;
 				state.editProfile = action.payload;
+				state.error = null;
 			})
 			.addCase(editProfile.rejected, (state, action) => {
 				state.loading = false;
