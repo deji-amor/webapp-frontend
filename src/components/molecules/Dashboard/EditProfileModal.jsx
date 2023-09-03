@@ -14,37 +14,59 @@ const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
 	const [selectedImage, setSelectedImage] = useState(null);
 	//COMMENT const [loading, setLoading] = useState(false);
+	const [editedData, setEditedData] = useState({
+		first_name: "",
+		last_name: "",
+		workspace_name: "",
+		phone_number: "",
+		country: "",
+		state: "",
+		email: "",
+	});
+
+	// const { email, first_name, last_name, workspace_name, phone_number, country, state } =
+	// 	useSelector((state) => state.dashboard.editProfile);
 	const { email, first_name, last_name, workspace_name, phone_number, country, state } =
-		useSelector((state) => state.dashboard.editProfile);
+    useSelector((state) => state.dashboard.editProfile);
+
+  useEffect(() => {
+    if (open) {
+      // Fetch initial data when the component mounts
+      dispatch(editProfile({})).then((data) => {
+        setEditedData(data);
+      });
+    }
+  }, [open, dispatch]);
+
+	// const reduxState = useSelector((state) => state);
+	// console.log("Redux State:", reduxState);
 
 	const handleImageChange = (event) => {
 		const imageFile = event.target.files[0];
 		setSelectedImage(URL.createObjectURL(imageFile));
 	};
 
-	useEffect(() => {
-		dispatch(editProfile());
-	}, [dispatch]);
-
 	const handleSave = () => {
-		const editedData = {
-			workspaceName: workspace_name,
-			phoneNumber: phone_number,
-			country: country,
-			state: state,
-		};
-
 		dispatch(editProfile(editedData))
 			.then(() => {
 				setSelectedImage(null);
 				onClose();
 			})
-			.catch((error) => {});
+			.catch((error) => {
+				// Handle errors
+			});
 	};
 
 	const handleCancel = () => {
 		setSelectedImage(null);
 		onClose();
+	};
+
+	const handleFieldChange = (field, value) => {
+		setEditedData({
+			...editedData,
+			[field]: value,
+		});
 	};
 
 	return (
@@ -146,8 +168,16 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-						<EditableField label="First Name" value={first_name} />
-						<EditableField label="Last Name" value={last_name} />
+						<EditableField
+							label="First Name"
+							value={editedData.first_name}
+							onValueChange={(value) => handleFieldChange("first_name", value)}
+						/>
+						<EditableField
+							label="Last Name"
+							value={editedData.last_name}
+							onValueChange={(value) => handleFieldChange("last_name", value)}
+						/>
 					</Box>
 					<Box
 						sx={{
@@ -159,18 +189,24 @@ const EditProfileModal = ({ open, onClose }) => {
 					>
 						<EditableField
 							label="Workspace Name"
-							value={workspace_name}
+							value={editedData.workspace_name}
+							onValueChange={(value) => handleFieldChange("workspace_name", value)}
 							width="400px"
 							isEditable={true}
 						/>
 						<EditableField
 							label="Phone Number"
-							value={phone_number}
+							value={editedData.phone_number}
+							onValueChange={(value) => handleFieldChange("phone_number", value)}
 							width="400px"
 							isEditable={true}
 						/>
 					</Box>
-					<EditableField label="Work Email" value={email} />
+					<EditableField
+						label="Work Email"
+						value={editedData.email}
+						onValueChange={(value) => handleFieldChange("email", value)}
+					/>
 					<Box
 						sx={{
 							display: "flex",
@@ -179,8 +215,20 @@ const EditProfileModal = ({ open, onClose }) => {
 							justifyContent: "space-between",
 						}}
 					>
-						<EditableField label="Country" value={country} width="400px" isEditable={true} />
-						<EditableField label="State" value={state} width="400px" isEditable={true} />
+						<EditableField
+							label="Country"
+							value={editedData.country}
+							onValueChange={(value) => handleFieldChange("country", value)}
+							width="400px"
+							isEditable={true}
+						/>
+						<EditableField
+							label="State"
+							value={editedData.state}
+							onValueChange={(value) => handleFieldChange("state", value)}
+							width="400px"
+							isEditable={true}
+						/>
 					</Box>
 				</Box>
 
