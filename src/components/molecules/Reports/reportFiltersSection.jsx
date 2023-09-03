@@ -26,7 +26,7 @@ const ReportFilterBoardWrapper = styled("div")(() => ({
 
 	".tab-sort": {
 		position: "relative",
-		zIndex: "20",
+		// zIndex: "10",
 	},
 
 	".sort": {
@@ -38,7 +38,7 @@ const ReportFilterBoardWrapper = styled("div")(() => ({
 
 	".filters": {
 		position: "relative",
-		zIndex: "20",
+		// zIndex: "20",
 		width: "100%",
 	},
 }));

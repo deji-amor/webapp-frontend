@@ -38,6 +38,7 @@ const FilterByWrapper = styled("div")(() => ({
 		background: "white",
 		borderRadius: "8px",
 		position: "absolute",
+		zIndex: "20",
 		padding: "8px 6px 8px 6px",
 		boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.20)",
 		display: "flex",
