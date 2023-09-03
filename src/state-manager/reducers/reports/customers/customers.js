@@ -27,6 +27,23 @@ export const fetchAllCustomers = createAsyncThunk("customers", async (args, {rej
 
 
 const initialState = {
+	customerStatus: [
+		{
+			status: "active",
+			title: "Active Customers",
+			active: false,
+		},
+		{
+			status: "inactive",
+			title: "Inactive Customers",
+			active: false,
+		},
+		{
+			status: "suspend",
+			title: "Suspended Customers",
+			active: false,
+		}
+	],
 	loading: false,
 	error: null,
 	errorMessage: "",
@@ -76,6 +93,18 @@ const customerReportSlice = createSlice({
 				state.multipleCustomerStatusFiltering =
 					current(state).multipleCustomerStatusFiltering.concat(payload);
 			}
+		},
+
+		setMultipleCustomerDropdownFilterStatus: (state, {payload}) => {
+			const allStatus = current(state).customerStatus.slice();
+				let status = current(state).customerStatus.find(status => status.status === payload.status);
+				let index = current(state).customerStatus.findIndex(stat => stat.status === payload.status);
+				if (!status.active) {
+					allStatus.splice(index, 1, {status: payload.status, title: payload.title, active: true});
+				} else {
+					allStatus.splice(index, 1, {status: payload.status, title: payload.title, active: false});
+				}
+				state.customerStatus = allStatus;
 		},
 
 		removeMultipleCustomersFilterStatus: (state, {payload}) => {
@@ -129,4 +158,5 @@ export const {
 	setSingleCustomersFilterByStatus,
 	setMultipleCustomersFilterStatus,
 	removeMultipleCustomersFilterStatus,
+	setMultipleCustomerDropdownFilterStatus
 } = customerReportSlice.actions;

@@ -45,7 +45,8 @@ const ReportFilterBoardWrapper = styled("div")(() => ({
 
 const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, setToggle }) => {
 	const { customerReport } = useSelector((state) => state.reports);
-	const [clicked, setClicked] = useState(false)
+	const [serviceClick, setServiceClick] = useState(false)
+	const [projectClick, setProjectClick] = useState(false)
 	const { filteredTickets, filteredProjectTickets, reportTabIndex } = useSelector(
 		(state) => state.ticketReports
 	);
@@ -64,8 +65,18 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 		};
 	};
 
+	const handleClicked = () => {
+		if (serviceClick || projectClick) {
+			if (reportTabIndex === 0) {
+				setServiceClick(false)
+			}else {
+				setProjectClick(false)
+			}
+		}
+	}
+
 	return (
-		<ReportFilterBoardWrapper>
+		<ReportFilterBoardWrapper onClick={handleClicked}>
 			<div className="tab-sort">
 				<ReportTabs index={reportTabIndex} handleChange={() => handleChange(reportTabIndex)}>
 					{!customerReport && (
@@ -80,22 +91,25 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 					<ReportSort handleReportsSort={handleReportsSort} toggle={toggle} setToggle={setToggle} />
 				</div>
 			</div>
+
 			<div className="filters">
 				{customerReport ? (
 					<CustomerFilterBy dropItems={filterCustomers} filteredReports={filteredCustomers} />
 				) : (
 					(reportTabIndex === 0 && (
-						<FilterBy dropItems={filterTickets} filteredReports={filteredTickets} />
+						<FilterBy click={serviceClick} handleClick={() => setServiceClick(prev => !prev)} filteredReports={filteredTickets} />
 					)) || (
-						<ProjectFilterBy dropItems={filterTickets} filteredReports={filteredProjectTickets} />
+						<ProjectFilterBy click={projectClick} handleClick={() => setProjectClick(prev => !prev)} filteredReports={filteredProjectTickets} />
 					)
 				)}
+
 				{customerReport ? (
 					<CustomerExportFiles text={"Export Customers"} />
 				) : (
 					<ExportFiles text={"Export Tickets"} />
 				)}
 			</div>
+
 			<div>
 				{(reportTabIndex === 0 && <DateFilter handleReportDateRange={handleReportDateRange} />) || (
 					<ProjectDateFilter handleReportDateRange={handleReportDateRange} />

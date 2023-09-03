@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
-import {
-	removeMultipleFilterStatus,
-} from "../../../state-manager/reducers/reports/tickets/ticketreport";
-import { useDispatch, useSelector } from "react-redux";
 import CheckIcon from "@mui/icons-material/Check";
 
 const FilterDropdownItemWrapper = styled("div")(({ active }) => ({
@@ -34,20 +30,17 @@ const FilterDropdownItemWrapper = styled("div")(({ active }) => ({
 }));
 
 const FilterDropdownItem = ({ item, setStatus, handleClick }) => {
-	const [active, setActive] = useState(false);
-
 	return (
 		<FilterDropdownItemWrapper
-			active={active}
+			active={item.active}
 			key={item.status}
 			onClick={() => {
 				setStatus(item.status);
-				setActive((prev) => !prev);
-                handleClick(active)
+                handleClick(item.active)
 			}}
 		>
 			{item.title}
-			{active ? <CheckIcon /> : ""}
+			{item.active ? <CheckIcon /> : ""}
 		</FilterDropdownItemWrapper>
 	);
 };

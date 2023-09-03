@@ -28,8 +28,6 @@ const TicketReportBody = () => {
 	const filteredTicketsByStatus =
 		reportTabIndex === 0 ? filteredTBS : filteredProjectTicketsByStatus;
 
-	console.log(filteredTBS);
-
 	const handleTicketDateRange = useCallback(
 		(start, end) => {
 			setToggle(true);

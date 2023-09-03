@@ -50,18 +50,22 @@ const initialState = {
 	projectStatus: [
 		{
 			status: "done",
+			title: "Tickets Done",
 			active: false,
 		},
 		{
 			status: "in-progress",
+			title: "Tickets Inprogress",
 			active: false,
 		},
 		{
 			status: "pending",
+			title: "Tickets Pending",
 			active: false,
 		},
 		{
 			status: "technician enroute",
+			title: "Technician Enroute",
 			active: false,
 		},
 	],
@@ -175,7 +179,6 @@ const ticketReportSlice = createSlice({
 		},
 
 		setMultipleDropdownFilterStatus: (state, {payload}) => {
-			console.log(payload)
 			if (state.reportTabIndex === 0) {
 				const allStatus = current(state).serviceStatus.slice();
 				let status = current(state).serviceStatus.find(status => status.status === payload.status);
@@ -195,7 +198,7 @@ const ticketReportSlice = createSlice({
 				} else {
 					allStatus.splice(index, 1, {status: payload.status, title: payload.title, active: false});
 				}
-				state.serviceStatus = allStatus;
+				state.projectStatus = allStatus;
 			}
 		},
 

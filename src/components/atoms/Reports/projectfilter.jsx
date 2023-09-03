@@ -6,6 +6,7 @@ import {
 	filterTicketsByStatus,
 	setMultipleFilterStatus,
 	removeMultipleFilterStatus,
+	setMultipleDropdownFilterStatus,
 } from "../../../state-manager/reducers/reports/tickets/ticketreport";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { handleFilterByStatus } from "../../organisms/Reports/filters";
@@ -92,12 +93,12 @@ const FilterByWrapper = styled("div")(() => ({
 	},
 }));
 
-const ProjectFilterBy = ({ dropItems }) => {
+const ProjectFilterBy = ({ click, handleClicked }) => {
 	const [status, setStatus] = useState("");
 	const [active, setActive] = useState(false);
 	const [toggle, setToggle] = useState(false);
 
-	const { filteredProjectTickets, filteredProjectTicketsByDate } = useSelector(
+	const { filteredProjectTickets, filteredProjectTicketsByDate, projectStatus, reportTabIndex } = useSelector(
 		(state) => state.ticketReports
 	);
 
@@ -127,7 +128,21 @@ const ProjectFilterBy = ({ dropItems }) => {
 			}
 		}
 		setStatus("")
-	}, [status]);
+	}, [status, active]);
+
+	useEffect(() => {
+		if (reportTabIndex === 1) {
+			if (status === 'done') {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Done"}))
+			}else if (status === "in-progress") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Inprogress"}))
+			}else if (status === "pending") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Pending"}))
+			}else if (status === "technician enroute") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Technician Enroute"}))
+			}
+		}
+	}, [status])
 
 	return (
 		<FilterByWrapper>
@@ -138,7 +153,7 @@ const ProjectFilterBy = ({ dropItems }) => {
 				</button>
 				{toggle && (
 					<div className="dropdownCard">
-						{dropItems.map((item) => (
+						{projectStatus.map((item) => (
 							<FilterDropdownItem key={item.status} item={item} setStatus={setStatus} handleClick={handleClick} />
 						))}
 					</div>
@@ -151,6 +166,8 @@ const ProjectFilterBy = ({ dropItems }) => {
 ProjectFilterBy.propTypes = {
 	dropItems: PropTypes.array,
 	filteredReports: PropTypes.array,
+	handleClicked: PropTypes.func,
+	click: PropTypes.bool
 };
 
 export default ProjectFilterBy;

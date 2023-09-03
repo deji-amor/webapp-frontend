@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
 	filterTicketsByStatus,
 	setMultipleFilterStatus,
+	setMultipleDropdownFilterStatus,
 	removeMultipleFilterStatus,
 } from "../../../state-manager/reducers/reports/tickets/ticketreport";
 import FilterDropdownItem from "./filterdropdownitem";
@@ -66,12 +67,12 @@ const FilterByWrapper = styled("div")(() => ({
 	},
 }));
 
-const FilterBy = ({ dropItems }) => {
+const FilterBy = ({click, handleClicked}) => {
 	const [status, setStatus] = useState("");
 	const [active, setActive] = useState(false);
 	const [toggle, setToggle] = useState(false);
 
-	const { filteredTickets, filteredTicketsByDate } = useSelector(
+	const { filteredTickets, filteredTicketsByDate, serviceStatus, reportTabIndex } = useSelector(
 		(state) => state.ticketReports
 	);
 
@@ -103,6 +104,20 @@ const FilterBy = ({ dropItems }) => {
 		setStatus("");
 	}, [status, active]);
 
+	useEffect(() => {
+		if (reportTabIndex === 0) {
+			if (status === 'done') {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Done"}))
+			}else if (status === "in-progress") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Inprogress"}))
+			}else if (status === "pending") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Pending"}))
+			}else if (status === "technician enroute") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Technician Enroute"}))
+			}
+		}
+	}, [status])
+
 	return (
 		<FilterByWrapper>
 			<div>
@@ -112,7 +127,7 @@ const FilterBy = ({ dropItems }) => {
 				</button>
 				{toggle && (
 					<div className="dropdownCard">
-						{dropItems.map((item) => (
+						{serviceStatus.map((item) => (
 							<FilterDropdownItem key={item.status} item={item} setStatus={setStatus} handleClick={handleClick} />
 						))}
 					</div>
@@ -125,6 +140,8 @@ const FilterBy = ({ dropItems }) => {
 FilterBy.propTypes = {
 	dropItems: PropTypes.array,
 	filteredReports: PropTypes.array,
+	handleClicked: PropTypes.func,
+	click: PropTypes.bool
 };
 
 export default FilterBy;

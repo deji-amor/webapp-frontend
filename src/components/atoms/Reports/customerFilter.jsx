@@ -8,6 +8,7 @@ import {
 	removeMultipleCustomersFilterStatus,
 	filterCustomersByStatus,
 	setMultipleCustomersFilterStatus,
+	setMultipleCustomerDropdownFilterStatus,
 } from "../../../state-manager/reducers/reports/customers/customers";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import FilterDropdownItem from "./filterdropdownitem";
@@ -31,7 +32,7 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 	},
 
 	".dropdownCard": {
-		width: "210px",
+		width: "225px",
 		height: "130px",
 		overflow: "hidden",
 		background: "white",
@@ -98,7 +99,7 @@ const CustomerFilterBy = ({ dropItems }) => {
 	const [active, setActive] = useState(false);
 	const [toggle, setToggle] = useState(false);
 
-	const { filteredCustomers, filteredCustomersByDate } = useSelector(
+	const { filteredCustomers, filteredCustomersByDate, customerStatus } = useSelector(
 		(state) => state.customerReports
 	);
 
@@ -130,6 +131,16 @@ const CustomerFilterBy = ({ dropItems }) => {
 		setStatus("");
 	}, [status]);
 
+	useEffect(() => {
+			if (status === 'active') {
+				dispatch(setMultipleCustomerDropdownFilterStatus({status, title: "Active Customers"}))
+			}else if (status === "inactive") {
+				dispatch(setMultipleCustomerDropdownFilterStatus({status, title: "Inactive Customers"}))
+			}else if (status === "suspend") {
+				dispatch(setMultipleCustomerDropdownFilterStatus({status, title: "Suspended Customers"}))
+			}
+	}, [status])
+
 	return (
 		<CustomerFilterByWrapper>
 			<div>
@@ -139,7 +150,7 @@ const CustomerFilterBy = ({ dropItems }) => {
 				</button>
 				{toggle && (
 					<div className="dropdownCard">
-						{dropItems.map((item) => (
+						{customerStatus.map((item) => (
 							<FilterDropdownItem
 								key={item.status}
 								item={item}
