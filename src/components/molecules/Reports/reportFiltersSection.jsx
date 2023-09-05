@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
 import { CustomTab } from "../../organisms/users/CustomerSuperAdmin/UserTabs";
-import { filterTickets, filterCustomers } from "./objects";
+import { filterCustomers } from "./objects";
 import { useDispatch, useSelector } from "react-redux";
 import ReportTabs from "../../atoms/Reports/tabs";
 import ReportSort from "../../atoms/Reports/sort";
 import CustomerExportFiles from "../../atoms/Reports/customerExport";
 import FilterBy from "../../atoms/Reports/filter";
 import ProjectFilterBy from "../../atoms/Reports/projectfilter";
+import ProjectExportFiles from "../../atoms/Reports/projectExport";
 import ExportFiles from "../../atoms/Reports/exportfiles";
 import DateFilter from "../../atoms/Reports/datefilter";
 import ProjectDateFilter from "../../atoms/Reports/projectdateFilter";
@@ -45,8 +46,6 @@ const ReportFilterBoardWrapper = styled("div")(() => ({
 
 const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, setToggle }) => {
 	const { customerReport } = useSelector((state) => state.reports);
-	// const [serviceClick, setServiceClick] = useState(false)
-	// const [projectClick, setProjectClick] = useState(false)
 	const { filteredTickets, filteredProjectTickets, reportTabIndex } = useSelector(
 		(state) => state.ticketReports
 	);
@@ -64,16 +63,6 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 			"aria-controls": `simple-tabpanel-${ind}`,
 		};
 	};
-
-	// const handleClicked = () => {
-	// 	if (serviceClick || projectClick) {
-	// 		if (reportTabIndex === 0) {
-	// 			setServiceClick(false)
-	// 		}else {
-	// 			setProjectClick(false)
-	// 		}
-	// 	}
-	// }
 
 	return (
 		<ReportFilterBoardWrapper>
@@ -96,9 +85,7 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 				{customerReport ? (
 					<CustomerFilterBy dropItems={filterCustomers} filteredReports={filteredCustomers} />
 				) : (
-					(reportTabIndex === 0 && (
-						<FilterBy filteredReports={filteredTickets} />
-					)) || (
+					(reportTabIndex === 0 && <FilterBy filteredReports={filteredTickets} />) || (
 						<ProjectFilterBy filteredReports={filteredProjectTickets} />
 					)
 				)}
@@ -106,7 +93,9 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 				{customerReport ? (
 					<CustomerExportFiles text={"Export Customers"} />
 				) : (
-					<ExportFiles text={"Export Tickets"} />
+					(reportTabIndex === 0 && <ExportFiles text={"Export Tickets"} />) || (
+						<ProjectExportFiles text={"Export Tickets"} />
+					)
 				)}
 			</div>
 
