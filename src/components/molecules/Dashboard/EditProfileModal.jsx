@@ -15,6 +15,7 @@ const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
 	const [selectedImage, setSelectedImage] = useState(null);
 	const { pictureUrl } = useSelector((state) => state.dashboard);
+	const [hasUploadedImage, setHasUploadedImage] = useState(false);
 	console.log(pictureUrl);
 	// const [loading, setLoading] = useState(false);
 	const [editedFields, setEditedFields] = useState({
@@ -39,6 +40,7 @@ const EditProfileModal = ({ open, onClose }) => {
 	const handleImageChange = (event) => {
 		const imageFile = event.target.files[0];
 		setSelectedImage(imageFile);
+		setHasUploadedImage(true);
 	};
 
 	const handleFieldChange = (field, value) => {
@@ -52,21 +54,16 @@ const EditProfileModal = ({ open, onClose }) => {
 		dispatch(editProfile(editedFields))
 			.then(() => {
 				if (selectedImage) {
-					// Upload or update profile picture
 					dispatch(updateProfilePicture(selectedImage)).then(() => {
-					dispatch(authUserActions.setData(editedFields));
+						dispatch(authUserActions.setData(editedFields));
 
-						// Handle success or error
 						setSelectedImage(null);
 						onClose();
-						// ... Rest of your code
 					});
 				} else {
-					// No image selected, just update profile information
 					dispatch(authUserActions.setData(editedFields));
 					setSelectedImage(null);
 					onClose();
-					// ... Rest of your code
 				}
 			})
 			.catch((error) => {
@@ -131,10 +128,10 @@ const EditProfileModal = ({ open, onClose }) => {
 								onChange={handleImageChange}
 							/>
 							<IconButton component="span">
-								{selectedImage || pictureUrl ? (
+								{hasUploadedImage || pictureUrl ? (
 									<Avatar
 										alt="Profile Picture"
-										src={selectedImage || pictureUrl}
+										src={pictureUrl || (selectedImage ? URL.createObjectURL(selectedImage) : null)}
 										style={{
 											width: "95px",
 											height: "95px",

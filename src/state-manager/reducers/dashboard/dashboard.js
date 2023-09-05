@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
+import { uploadFile } from "../../../aws/aws-crud-operations";
 
 // FETCH Analytics Data
 export const fetchData = createAsyncThunk("fetchData", async (_, {rejectWithValue}) => {
@@ -52,7 +53,6 @@ export const recentactivities = createAsyncThunk(
 	}
 );
 
-// // UPDATE Profile Picture
 // export const updateProfilePicture = createAsyncThunk(
 // 	"updateProfilePicture",
 // 	async (_, {rejectWithValue}) => {
@@ -83,14 +83,15 @@ export const recentactivities = createAsyncThunk(
 export const updateProfilePicture = createAsyncThunk(
 	"updateProfilePicture",
 	async (imageFile, {rejectWithValue}) => {
+		
 		try {
-			const fileUrl = await uploadFile(imageFile); // Upload the image to S3
+			const fileUrl = await uploadFile(imageFile);
+			console.log("Uploaded File URL:", fileUrl)
 			const token = await getAuthToken();
 			const formData = new FormData();
-			formData.append("profilePicture", fileUrl); // Use the appropriate field name
-
+			formData.append("profilePicture", fileUrl);
 			const config = {
-				method: "POST", // Use POST request to update profile picture
+				method: "POST",
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
