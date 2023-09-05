@@ -32,7 +32,7 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 	},
 
 	".dropdownCard": {
-		width: "225px",
+		width: "228px",
 		height: "130px",
 		overflow: "hidden",
 		background: "white",
@@ -52,6 +52,7 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 		height: "38px",
 		display: "flex",
 		alignItems: "center",
+		gap: "16px",
 		fontFamily: "Poppins",
 		fontSize: "14px",
 		fontWeight: "500",
@@ -70,7 +71,6 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 	".dropdownCard .item:hover": {
 		width: "100%",
 		border: "0px 0px 1px 0px",
-		gap: "16px",
 		cursor: "pointer",
 		background: "rgba(76, 111, 255, 0.08)",
 	},
@@ -95,7 +95,7 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 	},
 }));
 
-const CustomerFilterBy = ({ dropItems }) => {
+const CustomerFilterBy = () => {
 	const [status, setStatus] = useState("");
 	const [active, setActive] = useState(false);
 	const [toggle, setToggle] = useState(false);
