@@ -6,67 +6,92 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
 import Cover from "../../../assets/daashboard/Cover.png";
 import CustomButton from "../../atoms/Password/customButton";
-import { editProfile } from "../../../state-manager/reducers/dashboard/dashboard";
-
-// IMPORT import { updateProfilePicture } from "../../../actions/authUser";
+import { updateProfilePicture } from "../../../state-manager/reducers/dashboard/dashboard";
+import { authUserActions, editProfile } from "../../../state-manager/reducers/users/authUser";
+import { UIActions } from "../../../state-manager/reducers/UI/ui";
 
 const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
 	const [selectedImage, setSelectedImage] = useState(null);
-	//COMMENT const [loading, setLoading] = useState(false);
-	const [editedData, setEditedData] = useState({
-		first_name: "",
-		last_name: "",
-		workspace_name: "",
-		phone_number: "",
-		country: "",
-		state: "",
+	const { pictureUrl } = useSelector((state) => state.dashboard);
+	console.log(pictureUrl);
+	// const [loading, setLoading] = useState(false);
+	const [editedFields, setEditedFields] = useState({
+		firstName: "",
+		lastName: "",
+		workspaceName: "",
+		phoneNumber: "",
 		email: "",
+		country: "",
+		city: "",
 	});
 
-	// const { email, first_name, last_name, workspace_name, phone_number, country, state } =
-	// 	useSelector((state) => state.dashboard.editProfile);
-	const { email, first_name, last_name, workspace_name, phone_number, country, state } =
-    useSelector((state) => state.dashboard.editProfile);
+	const { email, firstName, lastName, workspaceName, phoneNumber, country, city } = useSelector(
+		(state) => state.authUser.data
+	);
 
-  useEffect(() => {
-    if (open) {
-      // Fetch initial data when the component mounts
-      dispatch(editProfile({})).then((data) => {
-        setEditedData(data);
-      });
-    }
-  }, [open, dispatch]);
-
-	// const reduxState = useSelector((state) => state);
-	// console.log("Redux State:", reduxState);
+	const { data } = useSelector((state) => state.authUser);
+	useEffect(() => {
+		setEditedFields(data);
+	}, [data]);
 
 	const handleImageChange = (event) => {
 		const imageFile = event.target.files[0];
 		setSelectedImage(URL.createObjectURL(imageFile));
 	};
 
+	const handleFieldChange = (field, value) => {
+		setEditedFields((prevFields) => ({
+			...prevFields,
+			[field]: value,
+		}));
+	};
+
 	const handleSave = () => {
-		dispatch(editProfile(editedData))
+		dispatch(authUserActions.setData(data));
+		dispatch(editProfile(editedFields))
 			.then(() => {
+				if (selectedImage) {
+					dispatch(updateProfilePicture());
+				}
+
+				dispatch(authUserActions.setData(editedFields));
+
 				setSelectedImage(null);
 				onClose();
+
+				dispatch(
+					UIActions.showToasts({
+						message: "Profile Successfully Updated.",
+
+						title: "Profile Updated",
+
+						type: "successful",
+					})
+				);
 			})
 			.catch((error) => {
-				// Handle errors
+				// let errorMessage = "An error occurred while editing the profile";
+
+				// if (error.message === "Workspace name has already been taken") {
+				// 	errorMessage = "Workspace name has already been taken";
+				// } else if (error.message === "An error occurred while editing the profile") {
+				// 	errorMessage = "An error occurred while editing the profile";
+				// }
+
+				// dispatch(
+				// 	UIActions.showToasts({
+				// 		message: errorMessage,
+				// 		title: "Error!",
+				// 		type: "error",
+				// 	})
+				// );
 			});
 	};
 
 	const handleCancel = () => {
 		setSelectedImage(null);
 		onClose();
-	};
-
-	const handleFieldChange = (field, value) => {
-		setEditedData({
-			...editedData,
-			[field]: value,
-		});
 	};
 
 	return (
@@ -121,10 +146,10 @@ const EditProfileModal = ({ open, onClose }) => {
 								onChange={handleImageChange}
 							/>
 							<IconButton component="span">
-								{selectedImage ? (
+								{selectedImage || pictureUrl ? (
 									<Avatar
 										alt="Profile Picture"
-										src={selectedImage}
+										src={selectedImage || pictureUrl}
 										style={{
 											width: "95px",
 											height: "95px",
@@ -170,13 +195,13 @@ const EditProfileModal = ({ open, onClose }) => {
 					>
 						<EditableField
 							label="First Name"
-							value={editedData.first_name}
-							onValueChange={(value) => handleFieldChange("first_name", value)}
+							value={editedFields.firstName || firstName}
+							onSave={(value) => handleFieldChange("firstName", value)}
 						/>
 						<EditableField
 							label="Last Name"
-							value={editedData.last_name}
-							onValueChange={(value) => handleFieldChange("last_name", value)}
+							value={editedFields.lastName || lastName}
+							onSave={(value) => handleFieldChange("lastName", value)}
 						/>
 					</Box>
 					<Box
@@ -189,23 +214,23 @@ const EditProfileModal = ({ open, onClose }) => {
 					>
 						<EditableField
 							label="Workspace Name"
-							value={editedData.workspace_name}
-							onValueChange={(value) => handleFieldChange("workspace_name", value)}
 							width="400px"
+							value={editedFields.workspaceName || workspaceName}
 							isEditable={true}
+							onSave={(value) => handleFieldChange("workspaceName", value)}
 						/>
 						<EditableField
 							label="Phone Number"
-							value={editedData.phone_number}
-							onValueChange={(value) => handleFieldChange("phone_number", value)}
 							width="400px"
+							value={editedFields.phoneNumber || phoneNumber}
 							isEditable={true}
+							onSave={(value) => handleFieldChange("phoneNumber", value)}
 						/>
 					</Box>
 					<EditableField
 						label="Work Email"
-						value={editedData.email}
-						onValueChange={(value) => handleFieldChange("email", value)}
+						value={editedFields.email || email}
+						onSave={(value) => handleFieldChange("email", value)}
 					/>
 					<Box
 						sx={{
@@ -217,17 +242,17 @@ const EditProfileModal = ({ open, onClose }) => {
 					>
 						<EditableField
 							label="Country"
-							value={editedData.country}
-							onValueChange={(value) => handleFieldChange("country", value)}
 							width="400px"
+							value={editedFields.country || country}
 							isEditable={true}
+							onSave={(value) => handleFieldChange("country", value)}
 						/>
 						<EditableField
 							label="State"
-							value={editedData.state}
-							onValueChange={(value) => handleFieldChange("state", value)}
 							width="400px"
+							value={editedFields.city || city}
 							isEditable={true}
+							onSave={(value) => handleFieldChange("city", value)}
 						/>
 					</Box>
 				</Box>
