@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
@@ -95,25 +95,17 @@ const ExportFilesWrapper = styled("div")(() => ({
 }));
 
 const ExportFiles = ({ text }) => {
-	const dispatch = useDispatch();
-	const { exportDropdown1, exportPDFDropdown, exportCSVDropdown, exportDocType, customerReport } =
-		useSelector((state) => state.reports);
+	const [toggle, setToggle] = useState(false);
+	const [csvDrop, setCSVDrop] = useState(false);
 
 	const {
-		reportTabIndex,
 		filteredTickets,
 		filteredTicketsByDate,
 		filteredTicketsByStatus,
 		selectedTickets,
-		selectedProjectTickets,
-		filteredProjectTickets,
-		filteredProjectTicketsByDate,
-		filteredProjectTicketsByStatus,
 	} = useSelector((state) => state.ticketReports);
 
 	const selectedService = selectedTickets ? selectedTickets : [];
-
-	const selectedProject = selectedProjectTickets ? selectedProjectTickets : [];
 
 	const filteredTicketServiceReports =
 		(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0) ||
@@ -123,120 +115,92 @@ const ExportFiles = ({ text }) => {
 			? filteredTicketsByDate
 			: filteredTickets;
 
-	const filteredTicketProjectReport =
-		(filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length != 0) ||
-		(filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length === 0)
-			? filteredProjectTicketsByStatus
-			: filteredProjectTicketsByDate.length != 0
-			? filteredProjectTicketsByDate
-			: filteredProjectTickets;
-
 	const serviceCounter =
 		selectedTickets.length || filteredTicketsByStatus.length || filteredTicketsByDate.length;
 
-	const projectCounter =
-		selectedProjectTickets.length ||
-		filteredProjectTicketsByStatus.length ||
-		filteredProjectTicketsByDate.length;
+	useEffect(() => {
+		const listener = (e) => {
+			if (!e.target.closest("#ticket-drop") || e.target.closest("#ticket-drop")) {
+				setToggle(false);
+				setCSVDrop(false);
+			}
+		};
+
+		document.body.addEventListener("click", listener);
+		return () => document.body.removeEventListener("click", listener);
+	}, []);
 
 	return (
-		<ExportFilesWrapper>
-			{(reportTabIndex === 0 && (
-				<button
-					onClick={() => dispatch(SET_EXPORT_DROPDOWN_ONE())}
-					className="exportBut"
-					type="button"
-				>
-					<span>{text}</span>
-					{serviceCounter != 0 && (
-						<p
-							style={{
-								borderRadius: "50%",
-								background: "white",
-								color: "rgba(43, 46, 114, 1)",
-								padding: "5px 5px 5px 5px",
-								width: "23px",
-								height: "23px",
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-							}}
-						>
-							{serviceCounter}
-						</p>
-					)}
-					<img className="export-icon" src={ExportImage} alt="export files" />
-				</button>
-			)) || (
-				<button
-					onClick={() => dispatch(SET_EXPORT_DROPDOWN_ONE())}
-					className="exportBut"
-					type="button"
-				>
-					<span>{text}</span>
-					{projectCounter != 0 && (
-						<p
-							style={{
-								borderRadius: "50%",
-								background: "white",
-								color: "rgba(43, 46, 114, 1)",
-								padding: "5px 5px 5px 5px",
-								width: "23px",
-								height: "23px",
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-							}}
-						>
-							{projectCounter}
-						</p>
-					)}
-					<img className="export-icon" src={ExportImage} alt="export files" />
-				</button>
-			)}
-
+		<ExportFilesWrapper id="ticket-drop">
+			<button
+				onClick={(e) => {
+					e.stopPropagation();
+					setToggle((prev) => !prev);
+				}}
+				className="exportBut"
+				type="button"
+			>
+				<span>{text}</span>
+				{serviceCounter != 0 && (
+					<p
+						style={{
+							borderRadius: "50%",
+							background: "white",
+							color: "rgba(43, 46, 114, 1)",
+							padding: "5px 5px 5px 5px",
+							width: "23px",
+							height: "23px",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						{serviceCounter}
+					</p>
+				)}
+				<img className="export-icon" src={ExportImage} alt="export files" />
+			</button>
 			<div className="exp">
-				{exportDropdown1 && (exportPDFDropdown || exportCSVDropdown) && (
+				{toggle && csvDrop && (
 					<div className="instant-recurring">
 						<button
-							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+							onClick={(e) => {
+								e.stopPropagation();
+								setToggle(false);
+								setCSVDrop(false);
+							}}
 							className="instant"
 							type="button"
-						>							{(reportTabIndex === 0 && (
-								<CSVLink
-									data={
-										selectedService.length != 0 ? selectedService : filteredTicketServiceReports
-									}
-									headers={ticketHeaders}
-									filename="admin_filtered_service_tickets.csv"
-									target="_blank"
-								>
-									Instant {exportDocType} Export
-								</CSVLink>
-							)) || (
-								<CSVLink
-									data={selectedProject.length != 0 ? selectedProject : filteredTicketProjectReport}
-									headers={ticketHeaders}
-									filename="admin_filtered_project_tickets.csv"
-									target="_blank"
-								>
-									Instant {exportDocType} Export
-								</CSVLink>
-							)}
+						>
+							<CSVLink
+								data={selectedService.length != 0 ? selectedService : filteredTicketServiceReports}
+								headers={ticketHeaders}
+								filename="admin_filtered_service_tickets.csv"
+								target="_blank"
+							>
+								Instant Export
+							</CSVLink>
 						</button>
 						<button
-							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
+							onClick={(e) => {
+								e.stopPropagation();
+								setToggle(false);
+								setCSVDrop(false);
+							}}
 							className="recurring"
 							type="button"
 						>
-							Recurring {exportDocType} Export
+							Recurring Export
 						</button>
 					</div>
 				)}
-				{exportDropdown1 && (
+				{toggle && (
 					<div className="pdf-csv">
 						<button
-							onClick={() => dispatch(SET_EXPORT_CSV_DROPDOWN("CSV"))}
+							onClick={(e) => {
+								e.stopPropagation();
+								setCSVDrop((prev) => !prev);
+							}}
 							className="but"
 							type="button"
 						>
