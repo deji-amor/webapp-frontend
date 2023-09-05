@@ -52,18 +52,49 @@ export const recentactivities = createAsyncThunk(
 	}
 );
 
+// // UPDATE Profile Picture
+// export const updateProfilePicture = createAsyncThunk(
+// 	"updateProfilePicture",
+// 	async (_, {rejectWithValue}) => {
+// 		try {
+// 			const token = await getAuthToken();
+// 			const config = {
+// 				method: "POST",
+// 				headers: {
+// 					"Content-Type": "application/json",
+// 					Authorization: `Bearer ${token}`,
+// 				},
+// 			};
+// 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/update-profile-picture`;
+// 			const response = await fetch(url, config);
+// 			const result = await response.json();
+// 			return result.data.url;
+// 		} catch (err) {
+// 			if (err.response && err.response.data.message) {
+// 				return rejectWithValue(err.response.data.message);
+// 			} else {
+// 				return rejectWithValue(err.message);
+// 			}
+// 		}
+// 	}
+// );
+
 // UPDATE Profile Picture
 export const updateProfilePicture = createAsyncThunk(
 	"updateProfilePicture",
-	async (_, {rejectWithValue}) => {
+	async (imageFile, {rejectWithValue}) => {
 		try {
+			const fileUrl = await uploadFile(imageFile); // Upload the image to S3
 			const token = await getAuthToken();
+			const formData = new FormData();
+			formData.append("profilePicture", fileUrl); // Use the appropriate field name
+
 			const config = {
-				method: "POST",
+				method: "POST", // Use POST request to update profile picture
 				headers: {
-					"Content-Type": "application/json",
 					Authorization: `Bearer ${token}`,
 				},
+				body: formData,
 			};
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/update-profile-picture`;
 			const response = await fetch(url, config);

@@ -9,6 +9,7 @@ import CustomButton from "../../atoms/Password/customButton";
 import { updateProfilePicture } from "../../../state-manager/reducers/dashboard/dashboard";
 import { authUserActions, editProfile } from "../../../state-manager/reducers/users/authUser";
 import { UIActions } from "../../../state-manager/reducers/UI/ui";
+import { uploadFile } from "../../../aws/aws-crud-operations";
 
 const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const EditProfileModal = ({ open, onClose }) => {
 
 	const handleImageChange = (event) => {
 		const imageFile = event.target.files[0];
-		setSelectedImage(URL.createObjectURL(imageFile));
+		setSelectedImage(imageFile);
 	};
 
 	const handleFieldChange = (field, value) => {
@@ -48,44 +49,28 @@ const EditProfileModal = ({ open, onClose }) => {
 	};
 
 	const handleSave = () => {
-		dispatch(authUserActions.setData(data));
 		dispatch(editProfile(editedFields))
 			.then(() => {
 				if (selectedImage) {
-					dispatch(updateProfilePicture());
+					// Upload or update profile picture
+					dispatch(updateProfilePicture(selectedImage)).then(() => {
+					dispatch(authUserActions.setData(editedFields));
+
+						// Handle success or error
+						setSelectedImage(null);
+						onClose();
+						// ... Rest of your code
+					});
+				} else {
+					// No image selected, just update profile information
+					dispatch(authUserActions.setData(editedFields));
+					setSelectedImage(null);
+					onClose();
+					// ... Rest of your code
 				}
-
-				dispatch(authUserActions.setData(editedFields));
-
-				setSelectedImage(null);
-				onClose();
-
-				dispatch(
-					UIActions.showToasts({
-						message: "Profile Successfully Updated.",
-
-						title: "Profile Updated",
-
-						type: "successful",
-					})
-				);
 			})
 			.catch((error) => {
-				// let errorMessage = "An error occurred while editing the profile";
-
-				// if (error.message === "Workspace name has already been taken") {
-				// 	errorMessage = "Workspace name has already been taken";
-				// } else if (error.message === "An error occurred while editing the profile") {
-				// 	errorMessage = "An error occurred while editing the profile";
-				// }
-
-				// dispatch(
-				// 	UIActions.showToasts({
-				// 		message: errorMessage,
-				// 		title: "Error!",
-				// 		type: "error",
-				// 	})
-				// );
+				// Handle error
 			});
 	};
 
