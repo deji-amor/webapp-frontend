@@ -32,38 +32,40 @@ const NavigationButtonWrapper = styled("div")(() => ({
 	},
 
 	".drop": {
-		width: "200px",
+		width: "220px",
 		background: "white",
 		padding: "5px",
 		borderRadius: "8px",
 		position: "absolute",
-		top: "45px",
+		top: "40.5px",
 		right: "0",
-        display: "flex",
-        flexDirection: "column",
-        gap: "5px",
-        justifyContent: "center",
+		display: "none",
+		flexDirection: "column",
+		gap: "5px",
+		justifyContent: "center",
+	},
+
+	".logins:hover .drop": {
+		display: "flex"
 	},
 
 	".login-customer, .login-admin": {
 		color: "#2B2E72",
 		width: "100%",
-        padding: "10px 10px 10px 10px",
-        fontSize: "16px",
-        textAlign: "left",
-		fontWeight: "600"
+		padding: "10px 10px 10px 10px",
+		fontSize: "16px",
+		textAlign: "left",
+		fontWeight: "600",
 		// border: "2px solid #2B2E72",
 	},
 
-    ".login-customer:hover, .login-admin:hover": {
-        background: "#2B2E72",
-        color: "white"
-    }
+	".login-customer:hover, .login-admin:hover": {
+		background: "#2B2E72",
+		color: "white",
+	},
 }));
 
 const NavigateButtons = () => {
-	const [toggle, setToggle] = useState(false);
-
 	return (
 		<NavigationButtonWrapper>
 			<Link to="/super-admin-onboarding">
@@ -72,30 +74,21 @@ const NavigateButtons = () => {
 				</button>
 			</Link>
 			<div className="logins">
-				<button className="login" onClick={() => setToggle((prev) => !prev)} type="button">
+				<button className="login" type="button">
 					Log In
 				</button>
-				{toggle &&
-				(
-					<div className="drop">
-						<Link to="/login-customer">
-							<button
-								className="login-customer"
-								type="button"
-							>
-								Login as a Customer
-							</button>
-						</Link>
-						<Link to="/login-admin">
-							<button
-								className="login-admin"
-								type="button"
-							>
-								Login as an Admin
-							</button>
-						</Link>
-					</div>
-				)}
+				<div className="drop">
+					<Link to="/login-customer">
+						<button className="login-customer" type="button">
+							Login as a Customer
+						</button>
+					</Link>
+					<Link to="/login-admin">
+						<button className="login-admin" type="button">
+							Login as an Admin
+						</button>
+					</Link>
+				</div>
 			</div>
 		</NavigationButtonWrapper>
 	);

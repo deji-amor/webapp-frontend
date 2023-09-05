@@ -49,22 +49,28 @@ const MobileLinkWrapper = styled("div")(() => ({
 
 	".logins": {
 		position: "relative",
+		width: "100%",
+		height: "50px"
 	},
 
 	".drop": {
-		width: "200px",
+		width: "220px",
 		background: "white",
 		padding: "5px",
 		borderRadius: "8px",
 		position: "absolute",
-		top: "45px",
+		top: "38px",
 		right: "50%",
 		transform: "translateX(50%)",
-		display: "flex",
+		display: "none",
 		flexDirection: "column",
 		gap: "5px",
 		justifyContent: "center",
 		marginTop: "5px",
+	},
+
+	".logins:hover .drop": {
+		display: "flex"
 	},
 
 	".login-customer, .login-admin": {
@@ -117,7 +123,7 @@ const MobileLink = () => {
 						<button className="login" onClick={() => setToggle((prev) => !prev)} type="button">
 							Log In
 						</button>
-						{toggle && (
+						{/* {toggle && ( */}
 							<div className="drop">
 								<NavLink to="/login-customer">
 									<button className="login-customer" type="button">
@@ -130,7 +136,7 @@ const MobileLink = () => {
 									</button>
 								</NavLink>
 							</div>
-						)}
+						{/* )} */}
 					</div>
 				</li>
 			</ul>
