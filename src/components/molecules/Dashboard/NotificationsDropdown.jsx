@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import { styled } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux';
 import { notificationsActions } from '../../../state-manager/reducers/notifications/notifications';
@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import HorizontalRule from '../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule';
 import NotificationItem from './NotificationItem';
 import NotificationsFilterDropdown from './NotificationsFilterDropdown';
+import { v4 } from 'uuid';
 
 const Wrapper = styled("div")`
 	position: absolute;
@@ -96,9 +97,7 @@ const NotificationText = styled("h1")`
 `;
 
 const NotificationsDropdown = () => {
-	const {
-		sortByAscending,
-	} = useSelector((state) => state.notifications);
+	const { sortByAscending, notifications, searchBy } = useSelector((state) => state.notifications);
 
 	const orderText = sortByAscending ? "Oldest 1st" : "Newest 1st"
 	const dispatch = useDispatch()
@@ -106,6 +105,29 @@ const NotificationsDropdown = () => {
 	const changeSortOrder = () => {
 		dispatch(notificationsActions.updateField({ key: "sortByAscending", value: !sortByAscending}));
 	}
+
+	// console.log(notifications);
+
+	const notificationsList = useMemo(() => {
+		let list = notifications
+		if(!sortByAscending){
+			list = list.slice().reverse()
+		}
+		return list
+	}, [notifications, sortByAscending])
+
+	console.log(notificationsList);
+
+	const r = notificationsList.filter(
+		(not) =>
+			not.type === "customer-creation" ||
+			not.type === "customer-onboarding" ||
+			not.type === "ticket-update" ||
+			not.type === "ticket-edit" ||
+			not.type === "customer-update"
+	).filter(not => not.id !== 131)
+
+	console.log(r);
 
   return (
 		<Wrapper>
@@ -125,10 +147,10 @@ const NotificationsDropdown = () => {
 			<div className="my-[0.68rem]">
 				<HorizontalRule />
 			</div>
-			<div className="space-y-[1rem]">
-				<NotificationItem />
-				<NotificationItem />
-				{/* <NotificationItem/> */}
+			<div className="space-y-[1rem] max-h-[25rem] overflow-y-auto">
+				{r.map((notification) => (
+					<NotificationItem notification={notification} key={v4()}/>
+				))}
 			</div>
 		</Wrapper>
 	);

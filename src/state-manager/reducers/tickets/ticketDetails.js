@@ -55,10 +55,8 @@ const ticketDetailsSlice = createSlice({
 				state.loading = true;
 			})
 			.addCase(changeATicketStatus.fulfilled, (state, {payload}) => {
-				state.loading = true;
 				state.loading = false;
 				const {status, code, data, message} = payload;
-				console.log(payload);
 				if (status === "OK" && code === 200) {
 					state.data = data;
 					state.successful = true;

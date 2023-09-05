@@ -11,7 +11,7 @@ export const fetchNotifications = createAsyncThunk("notifications", async (args,
 				Authorization: `Bearer ${token}`,
 			},
 		};
-		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/get-all`;
+		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/notifications`;
 		const response = await fetch(url, config);
 		const result = await response.json();
 		return result;
@@ -31,8 +31,15 @@ const initialState = {
 	successful: null,
 	notifications: [],
 	currentSearchValue: "All",
-	searchBy: ["All", "Account Creation", "Profile Update", "Ticket Update"],
-	sortByAscending: true
+	searchBy: [
+		"All",
+		"Account Creation",
+		"Account Onboarding",
+		"Profile Update",
+		"Ticket Update",
+		"Ticket Edit",
+	],
+	sortByAscending: true,
 };
 
 const notificationsSlice = createSlice({

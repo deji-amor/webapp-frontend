@@ -58,12 +58,17 @@ const ExportIcon = () => (
 	</svg>
 );
 
-export const removeNullishValuesFromTickets = (ticket) => {
+
+export const removeNullishValuesFromTickets = (ticket, removeAllNullish=true) => {
 	const ticketCopy = structuredClone(ticket);
 	const valuesToExclude = ["", "[]", "undefined", "null", null, undefined];
 	Object.keys(ticket).forEach((key) => {
 		if(valuesToExclude.includes(ticket[key])) {
-			ticketCopy[key] = "—"; 
+			if(removeAllNullish){
+				delete ticketCopy[key];
+			}else {
+				ticketCopy[key] = ""; 
+			}
 		}
 	});
 	return ticketCopy;
@@ -76,31 +81,28 @@ const ExportTicket = () => {
 	const { customers } = useSelector((state) => state.customers);
 	const { users } = useSelector((state) => state.users);
 	const ticket = tickets.find(ticket => +ticket.id === +ticketId)
-	const customer = customers.find((user) => +user.id === +ticket.customer_id);
+	const customer = customers.find((customer) => +customer.user_id === +ticket.customer_id);
 	const user = users.find((user) => +user.id === +ticket.user_id);
 	const [showDropdown, setShowDropdown] = useState(false)
 
-		const showDropdownHandler = () => {
-			setShowDropdown(pv => !pv)
+	const showDropdownHandler = () => {
+		setShowDropdown(pv => !pv)
+	}
+
+	const list = [removeNullishValuesFromTickets(ticket, true)];
+
+	useEffect(() => {
+		const listener = (event) => {
+			if(!event.target.closest("#ExportTicketAsCSVOrPDFDropdown")){
+				setShowDropdown(false)
+			}
 		}
 
-		console.log("gggg97g79979");
-		console.log(removeNullishValuesFromTickets(ticket));
-
-		const list = [ticket]
-
-		useEffect(() => {
-			const listener = (event) => {
-				if(!event.target.closest("#ExportTicketAsCSVOrPDFDropdown")){
-					setShowDropdown(false)
-				}
-			}
-
-			document.body.addEventListener("click", listener)
-			return () => {
-				document.body.removeEventListener("click", listener)
-			}
-		}, [])
+		document.body.addEventListener("click", listener)
+		return () => {
+			document.body.removeEventListener("click", listener)
+		}
+	}, [])
 
 	return (
 		<div className="relative" id="ExportTicketAsCSVOrPDFDropdown">

@@ -41,6 +41,17 @@ const TicketsTablePagination = () => {
 	}, [showServiceRequestsTab, showProjectsTab]);
 
 	useEffect(() => {
+		console.log(totalItems, itemsOnEachPage);
+		if(totalItems.length <= itemsOnEachPage){
+			console.log("98f6d57");
+			dispatch(
+				ticketsActions.updateField({ key: "activeTicketsStartPoint", value: 0 })
+			);
+			dispatch(
+				ticketsActions.updateField({ key: "activeTicketsEndPoint", value: itemsOnEachPage })
+			);
+			return
+		}
 		dispatch(
 			ticketsActions.updateField({ key: "activeTicketsStartPoint", value: itemStartPoint - 1 })
 		);

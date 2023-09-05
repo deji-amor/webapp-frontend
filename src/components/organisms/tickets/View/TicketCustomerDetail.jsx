@@ -52,7 +52,7 @@ const TicketCustomerDetail = () => {
 		const {customers} = useSelector(state => state.customers)
 		const ticketToEdit = tickets.find((ticket) => +ticket.id === +ticketId);
 
-		const customer = customers.find(customer => customer.id === ticketToEdit.customer_id)
+		const customer = customers.find(customer => customer.user_id === ticketToEdit.customer_id)
 		if (!customer) return <></>
 		const {first_name, last_name, company_email} = customer
 

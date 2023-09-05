@@ -87,7 +87,7 @@ const CompanyNameAndPathToTemplate = ({chosenTemplate, ticket, customer}) => {
 		<>
 			<View style={styles.oneLine}>
 				<Text style={styles.BlueThemeMedium}>{company_name} </Text>
-				<Text style={styles.BlueThemeSmall}>- </Text>
+				<Text style={styles.BlueThemeSmall}>-</Text>
 				{path}
 			</View>
 			<View>

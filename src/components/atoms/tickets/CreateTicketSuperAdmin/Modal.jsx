@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { styled } from "@mui/material";
 
-const Modal = ({children}) => {
+const Modal = ({children, maxWidth}) => {
 	const Wrapper = styled("div")`
 		width: 100%;
-    max-width: 74rem;
+    max-width: ${({maxWidth}) => maxWidth}rem;
 		min-height: 35rem;
 		padding: 1.5rem;
     margin: 1rem;
@@ -18,11 +18,12 @@ const Modal = ({children}) => {
 		left: 50%;
 		transform: translate(-50%, -50%);
 	`;
-	return <Wrapper className="">{children}</Wrapper>;
+	return <Wrapper maxWidth={maxWidth ? maxWidth : "60"} className="">{children}</Wrapper>;
 }
 
 Modal.propTypes = {
 	children: PropTypes.node,
+	maxWidth: PropTypes.string
 };
 
 export default Modal

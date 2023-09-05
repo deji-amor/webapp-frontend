@@ -86,7 +86,7 @@ const AppLayout = () => {
 		dispatch(fetchTickets())
 		dispatch(fetchAllCustomers())
 		dispatch(fetchAllTickets())
-		// dispatch(fetchNotifications())
+		dispatch(fetchNotifications())
 	}, [])
 
 	return (

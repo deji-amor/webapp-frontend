@@ -119,6 +119,8 @@ const TicketsSearchCustomer = () => {
 		return activeCustomer;
 	}, [searchCustomersValue, customers]);
 
+	console.log(customers);
+
 	const filteredCustomers = useMemo(() => {
 		return customers
 			.filter(

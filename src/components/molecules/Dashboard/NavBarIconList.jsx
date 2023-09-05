@@ -60,8 +60,11 @@ const NavBarIconList = () => {
 		document.addEventListener("click", escapeHandler);
 	}, []);
 
-		const authUser = useSelector(state => state.authUser.data)
-		const { id, workspaceId } = authUser;
+	const notifications = useSelector(state => state.notifications.notifications)
+	const numberOfNotifications = notifications.length
+	// console.log(notifications);
+		// const authUser = useSelector(state => state.authUser.data)
+		// const { id, workspaceId } = authUser;
 		// useNotifications(id, workspaceId)
 
 	return (
@@ -69,7 +72,7 @@ const NavBarIconList = () => {
 			<div className="relative">
 				<span className={`w-[2.5rem] h-[2.5rem] rounded-[0.75rem] p-[0.2rem] ${showNotificationDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
 					<span className="relative">
-						<Dot>08</Dot>
+						<Dot>{numberOfNotifications}</Dot>
 						<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
 					</span>
 				</span>
