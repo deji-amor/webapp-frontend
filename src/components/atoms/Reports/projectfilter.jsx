@@ -145,10 +145,24 @@ const ProjectFilterBy = ({ click, handleClicked }) => {
 		}
 	}, [status])
 
+	useEffect(() => {
+		const listener = (e) => {
+			if (!e.target.closest("#drop-one") || e.target.closest("#drop-two")) {
+				setToggle(false);
+			}
+		};
+
+		document.body.addEventListener("click", listener);
+		return () => document.body.removeEventListener("click", listener);
+	}, []);
+
 	return (
 		<FilterByWrapper>
 			<div>
-				<button type="button" onClick={() => setToggle((prev) => !prev)}>
+				<button type="button" onClick={(e) => {
+					e.stopPropagation()
+					setToggle((prev) => !prev)
+				}}>
 					All Tickets
 					<ExpandMoreIcon />
 				</button>

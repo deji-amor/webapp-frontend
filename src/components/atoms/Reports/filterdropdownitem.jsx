@@ -34,7 +34,8 @@ const FilterDropdownItem = ({ item, setStatus, handleClick }) => {
 		<FilterDropdownItemWrapper
 			active={item.active}
 			key={item.status}
-			onClick={() => {
+			onClick={(e) => {
+				e.stopPropagation()
 				setStatus(item.status);
                 handleClick(item.active)
 			}}

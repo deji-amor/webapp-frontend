@@ -133,19 +133,33 @@ const CustomerFilterBy = ({ dropItems }) => {
 	}, [status]);
 
 	useEffect(() => {
-			if (status === 'active') {
-				dispatch(setMultipleCustomerDropdownFilterStatus({status, title: "Active Customers"}))
-			}else if (status === "inactive") {
-				dispatch(setMultipleCustomerDropdownFilterStatus({status, title: "Inactive Customers"}))
-			}else if (status === "suspend") {
-				dispatch(setMultipleCustomerDropdownFilterStatus({status, title: "Suspended Customers"}))
+		if (status === "active") {
+			dispatch(setMultipleCustomerDropdownFilterStatus({ status, title: "Active Customers" }));
+		} else if (status === "inactive") {
+			dispatch(setMultipleCustomerDropdownFilterStatus({ status, title: "Inactive Customers" }));
+		} else if (status === "suspend") {
+			dispatch(setMultipleCustomerDropdownFilterStatus({ status, title: "Suspended Customers" }));
+		}
+	}, [status]);
+
+	useEffect(() => {
+		const listener = (e) => {
+			if (!e.target.closest("#drop-one") || e.target.closest("#drop-one")) {
+				setToggle(false);
 			}
-	}, [status])
+		};
+
+		document.body.addEventListener("click", listener);
+		return () => document.body.removeEventListener("click", listener);
+	}, []);
 
 	return (
-		<CustomerFilterByWrapper>
+		<CustomerFilterByWrapper id="drop-one">
 			<div>
-				<button type="button" onClick={() => setToggle((prev) => !prev)}>
+				<button type="button" onClick={(e) => {
+					e.stopPropagation()
+					setToggle(prev => !prev)
+				}}>
 					All Customers
 					<ExpandMoreIcon />
 				</button>

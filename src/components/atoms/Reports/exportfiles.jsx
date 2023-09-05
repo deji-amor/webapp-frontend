@@ -96,7 +96,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 
 const ExportFiles = ({ text }) => {
 	const dispatch = useDispatch();
-	const { exportDropdown1, exportPDFDropdown, exportCSVDropdown, exportDocType, customerReport } =
+	const { exportDropdown1, exportPDFDropdown, exportCSVDropdown, exportDocType } =
 		useSelector((state) => state.reports);
 
 	const {
@@ -202,7 +202,9 @@ const ExportFiles = ({ text }) => {
 							onClick={() => dispatch(SET_REPORT_BOARD_STATE_TO_DEFAULT())}
 							className="instant"
 							type="button"
-						>							{(reportTabIndex === 0 && (
+						>
+							{" "}
+							{(reportTabIndex === 0 && (
 								<CSVLink
 									data={
 										selectedService.length != 0 ? selectedService : filteredTicketServiceReports

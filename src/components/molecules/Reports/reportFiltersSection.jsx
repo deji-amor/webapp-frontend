@@ -45,8 +45,8 @@ const ReportFilterBoardWrapper = styled("div")(() => ({
 
 const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, setToggle }) => {
 	const { customerReport } = useSelector((state) => state.reports);
-	const [serviceClick, setServiceClick] = useState(false)
-	const [projectClick, setProjectClick] = useState(false)
+	// const [serviceClick, setServiceClick] = useState(false)
+	// const [projectClick, setProjectClick] = useState(false)
 	const { filteredTickets, filteredProjectTickets, reportTabIndex } = useSelector(
 		(state) => state.ticketReports
 	);
@@ -65,18 +65,18 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 		};
 	};
 
-	const handleClicked = () => {
-		if (serviceClick || projectClick) {
-			if (reportTabIndex === 0) {
-				setServiceClick(false)
-			}else {
-				setProjectClick(false)
-			}
-		}
-	}
+	// const handleClicked = () => {
+	// 	if (serviceClick || projectClick) {
+	// 		if (reportTabIndex === 0) {
+	// 			setServiceClick(false)
+	// 		}else {
+	// 			setProjectClick(false)
+	// 		}
+	// 	}
+	// }
 
 	return (
-		<ReportFilterBoardWrapper onClick={handleClicked}>
+		<ReportFilterBoardWrapper>
 			<div className="tab-sort">
 				<ReportTabs index={reportTabIndex} handleChange={() => handleChange(reportTabIndex)}>
 					{!customerReport && (
@@ -97,9 +97,9 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 					<CustomerFilterBy dropItems={filterCustomers} filteredReports={filteredCustomers} />
 				) : (
 					(reportTabIndex === 0 && (
-						<FilterBy click={serviceClick} handleClick={() => setServiceClick(prev => !prev)} filteredReports={filteredTickets} />
+						<FilterBy filteredReports={filteredTickets} />
 					)) || (
-						<ProjectFilterBy click={projectClick} handleClick={() => setProjectClick(prev => !prev)} filteredReports={filteredProjectTickets} />
+						<ProjectFilterBy filteredReports={filteredProjectTickets} />
 					)
 				)}
 
