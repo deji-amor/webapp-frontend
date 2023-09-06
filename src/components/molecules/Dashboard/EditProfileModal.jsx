@@ -26,8 +26,16 @@ const EditProfileModal = ({ open, onClose }) => {
 		city: "",
 	});
 
-	const { email, first_name, last_name, workspace_name, phone_number, country, city, profile_picture } =
-		useSelector((state) => state.authUser.data);
+	const {
+		email,
+		first_name,
+		last_name,
+		workspace_name,
+		phone_number,
+		country,
+		city,
+		profile_picture,
+	} = useSelector((state) => state.authUser.data);
 
 	const { data } = useSelector((state) => state.authUser);
 	useEffect(() => {
@@ -65,7 +73,6 @@ const EditProfileModal = ({ open, onClose }) => {
 				// Handle error
 			});
 	};
-
 
 	const handleCancel = () => {
 		setSelectedImage(null);
