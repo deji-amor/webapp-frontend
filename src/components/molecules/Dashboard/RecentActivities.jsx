@@ -19,9 +19,8 @@ const RecentActivities = () => {
 	const goToTicketDetail = (activity) => {
 		const {data} = activity
 		const dataParsed = JSON.parse(data)
-		const {id} = dataParsed
-		console.log(id);
-		if(id, data) navigate(`/admin/tickets/view/detail/${id}`);
+		const {ticketId} = dataParsed
+		if(ticketId, data) navigate(`/admin/tickets/view/detail/${ticketId}`);
 	};
 
 	const formatTimestamp = (timestamp) => {

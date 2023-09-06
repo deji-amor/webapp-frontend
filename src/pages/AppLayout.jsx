@@ -16,7 +16,7 @@ import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
 import { getAuthToken, getDeviceName } from '../utilis';
-import { authUserActions } from '../state-manager/reducers/users/authUser';
+import { authUserActions, fetchAuthUser } from '../state-manager/reducers/users/authUser';
 
 // Memoized Sidebar and Navbar components to prevent unnecessary re-renders
 const MemoizedSidebar = memo(Sidebar);
@@ -81,6 +81,7 @@ const AppLayout = () => {
 	const { showAddTicketModal, showTemplateModal } = useSelector((state) => state.ticketCreation);
 
 	useEffect(() => {
+		dispatch(fetchAuthUser())
 		dispatch(fetchUsers())
 		dispatch(fetchCustomers())
 		dispatch(fetchTickets())
