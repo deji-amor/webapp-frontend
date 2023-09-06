@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
+import {uploadFile} from "../../../aws/aws-crud-operations";
 
 // FETCH Analytics Data
 export const fetchData = createAsyncThunk("fetchData", async (_, {rejectWithValue}) => {
@@ -52,51 +53,77 @@ export const recentactivities = createAsyncThunk(
 	}
 );
 
-// EDIT PROFILE
-export const editProfile = createAsyncThunk("editProfile", async (data, {rejectWithValue}) => {
-	console.log(data);
-	try {
-		const token = await getAuthToken();
-		const config = {
-			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify(data),
-		};
-		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/edit-profile`;
-		const response = await fetch(url, config);
-		const result = await response.json();
-		return result.data;
-	} catch (err) {
-		if (err.response && err.response.data.message) {
-			return rejectWithValue(err.response.data.message);
-		} else {
-			return rejectWithValue(err.message);
+// export const updateProfilePicture = createAsyncThunk(
+// 	"updateProfilePicture",
+// 	async (_, {rejectWithValue}) => {
+// 		try {
+// 			const token = await getAuthToken();
+// 			const config = {
+// 				method: "POST",
+// 				headers: {
+// 					"Content-Type": "application/json",
+// 					Authorization: `Bearer ${token}`,
+// 				},
+// 			};
+// 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/update-profile-picture`;
+// 			const response = await fetch(url, config);
+// 			const result = await response.json();
+// 			return result.data.url;
+// 		} catch (err) {
+// 			if (err.response && err.response.data.message) {
+// 				return rejectWithValue(err.response.data.message);
+// 			} else {
+// 				return rejectWithValue(err.message);
+// 			}
+// 		}
+// 	}
+// );
+
+// UPDATE Profile Picture
+export const updateProfilePicture = createAsyncThunk(
+	"updateProfilePicture",
+	async (imageFile, {rejectWithValue}) => {
+		try {
+			const fileUrl = await uploadFile(imageFile);
+			console.log("Uploaded File URL:", fileUrl);
+			const token = await getAuthToken();
+			const formData = new FormData();
+			formData.append("profilePicture", fileUrl);
+			const config = {
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				body: formData,
+			};
+			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/update-profile-picture`;
+			const response = await fetch(url, config);
+			const result = await response.json();
+			return result.data.url;
+		} catch (err) {
+			if (err.response && err.response.data.message) {
+				return rejectWithValue(err.response.data.message);
+			} else {
+				return rejectWithValue(err.message);
+			}
 		}
 	}
-});
+);
 
 const initialState = {
 	loading: false,
 	error: null,
 	analyticsData: null,
-	editProfile: {
-		email: "",
-		first_name: "",
-		last_name: "",
-		phone_number: "",
-		country: "",
-		state: "",
-		workspace_name: "",
-	},
+	pictureUrl: null,
 };
 
 const dashboardSlice = createSlice({
 	name: "dashboard",
 	initialState: initialState,
 	reducers: {},
+	UPDATE_PROFILE_PICTURE: (state, action) => {
+		state.pictureUrl = action.payload;
+	},
 	extraReducers: builder => {
 		builder
 			// ADDCASE FETCH Analytics Data
@@ -128,19 +155,19 @@ const dashboardSlice = createSlice({
 				state.error = action.payload || "Could not fetch data";
 			})
 
-			// ADDCASE EDIT PROFILE
-			.addCase(editProfile.pending, state => {
+			// ADDCASE UPDATE Profile Picture
+			.addCase(updateProfilePicture.pending, (state, action) => {
 				state.loading = true;
 				state.error = null;
 			})
-			.addCase(editProfile.fulfilled, (state, action) => {
+			.addCase(updateProfilePicture.fulfilled, (state, action) => {
+				console.log(action.payload);
 				state.loading = false;
-				state.editProfile = action.payload;
-				state.error = null;
+				state.pictureUrl = action.payload;
 			})
-			.addCase(editProfile.rejected, (state, action) => {
+			.addCase(updateProfilePicture.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.payload || "Provide the required fields!";
+				state.error = action.payload || "Could not fetch picture";
 			});
 	},
 });

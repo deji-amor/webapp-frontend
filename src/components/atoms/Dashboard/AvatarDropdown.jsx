@@ -13,7 +13,7 @@ const AvatarDropdown = ({ onEditClick }) => {
 		font-size: 18px;
 		font-style: normal;
 		font-weight: 600;
-		line-height: 20px; /* 111.111% */
+		line-height: 20px;
 	`;
 	const Recent = styled("h2")`
 		color: #333;
@@ -22,7 +22,7 @@ const AvatarDropdown = ({ onEditClick }) => {
 		font-style: normal;
 		font-weight: 400;
 		padding-bottom: 4px;
-		line-height: 20px; /* 125% */
+		line-height: 20px;
 	`;
 	const Text = styled("p")`
 		color: #333;
@@ -30,7 +30,7 @@ const AvatarDropdown = ({ onEditClick }) => {
 		font-size: 18px;
 		font-style: normal;
 		font-weight: 400;
-		line-height: 20px; /* 111.111% */
+		line-height: 20px;
 	`;
 	const Emails = styled("p")`
 		color: #333;
@@ -38,10 +38,11 @@ const AvatarDropdown = ({ onEditClick }) => {
 		font-size: 18px;
 		font-style: normal;
 		font-weight: 400;
-		line-height: 20px; /* 111.111% */
+		line-height: 20px;
 	`;
 
 	const { firstName, lastName, email, userType } = useSelector((state) => state.authUser.data);
+	const pictureUrl = useSelector((state) => state.dashboard.pictureUrl);
 
 	return (
 		<Box p={3}>
@@ -51,12 +52,20 @@ const AvatarDropdown = ({ onEditClick }) => {
 					variant="circular"
 					style={{ background: "#2b2e72", width: "100px", height: "100px", marginBottom: "10px" }}
 				>
-					<PersonIcon style={{ fontSize: 100 }} />
+					{pictureUrl ? (
+						<img src={pictureUrl} alt="Profile Picture" style={{ width: "100%", height: "100%" }} />
+					) : (
+						<PersonIcon style={{ fontSize: 100 }} />
+					)}
 				</Avatar>
 				<Typography variant="h2">
 					{firstName} {lastName}
 				</Typography>
-				<Text variant="p">{userType}</Text>
+				{userType === "superadmin" ? (
+					<Text variant="p">Super Admin</Text>
+				) : (
+					<Text variant="p">{userType}</Text>
+				)}
 				<Box display="flex" alignItems="center">
 					<MailOutlineIcon style={{ width: "19.749px", height: "15.442px", color: "#706E6E" }} />
 					<Emails variant="p">{email}</Emails>
