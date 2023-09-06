@@ -54,7 +54,8 @@ const EditProfileModal = ({ open, onClose }) => {
 		dispatch(editProfile(editedFields))
 			.then(() => {
 				if (selectedImage) {
-					dispatch(updateProfilePicture(selectedImage)).then(() => {
+					dispatch(updateProfilePicture(selectedImage)).then((imageURL) => {
+						dispatch({ type: 'UPDATE_PROFILE_PICTURE', payload: imageURL });
 						dispatch(authUserActions.setData(editedFields));
 
 						setSelectedImage(null);

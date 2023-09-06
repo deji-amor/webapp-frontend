@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
-import { uploadFile } from "../../../aws/aws-crud-operations";
+import {uploadFile} from "../../../aws/aws-crud-operations";
 
 // FETCH Analytics Data
 export const fetchData = createAsyncThunk("fetchData", async (_, {rejectWithValue}) => {
@@ -83,10 +83,9 @@ export const recentactivities = createAsyncThunk(
 export const updateProfilePicture = createAsyncThunk(
 	"updateProfilePicture",
 	async (imageFile, {rejectWithValue}) => {
-		
 		try {
 			const fileUrl = await uploadFile(imageFile);
-			console.log("Uploaded File URL:", fileUrl)
+			console.log("Uploaded File URL:", fileUrl);
 			const token = await getAuthToken();
 			const formData = new FormData();
 			formData.append("profilePicture", fileUrl);
@@ -122,6 +121,9 @@ const dashboardSlice = createSlice({
 	name: "dashboard",
 	initialState: initialState,
 	reducers: {},
+	UPDATE_PROFILE_PICTURE: (state, action) => {
+		state.pictureUrl = action.payload;
+	},
 	extraReducers: builder => {
 		builder
 			// ADDCASE FETCH Analytics Data
