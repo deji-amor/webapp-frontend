@@ -1,5 +1,7 @@
 import React from 'react'
 import { omitBy, isEqual, intersection, pickBy } from "lodash";
+import { readNotification } from '../../../state-manager/reducers/notifications/notifications';
+import { useDispatch } from 'react-redux';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
@@ -8,7 +10,8 @@ import { useSelector } from 'react-redux';
 const Wrapper = styled("div")`
 	padding: 0.5rem;
 	align-self: stretch;
-	background: rgba(76, 111, 255, 0.04);
+	background: ${({ isRead }) => (isRead ? "rgba(240, 240, 240, 0.7)": "rgba(76, 111, 255, 0.04)" )};
+	cursor: pointer;
 `;
 
 const Tablet = styled("div")`
@@ -86,20 +89,31 @@ function extractTicketStatusChangeStatus(message) {
 	};
 }
 
-const Dot = () => (
+const Dot = ({ isRead }) => (
 	<svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
-		<circle cx="5.5" cy="6" r="5.5" fill="#2B2E72" />
+		<circle cx="5.5" cy="6" r="5.5" fill={`${!isRead ? "#2B2E72" : "rgba(43, 46, 114, 0.24)"}`} />
 	</svg>
 );
+
+Dot.propTypes = {
+	isRead: PropTypes.any
+}
 
 const NotificationItem = ({notification}) => {
 	const {tickets} = useSelector(state => state.tickets)
 	const {customers} = useSelector(state => state.customers)
 	const {users} = useSelector(state => state.users)
+	const dispatch = useDispatch()
+
+	const readNotificationHandler = (notification) => {
+		if(!notification.is_read){
+			console.log(notification.id);
+			dispatch(readNotification({notificationId: notification.id}));
+		}
+	}
 
 	if (notification.type === "customer-creation") {
 		console.log(notification);
-		console.log(customers);
 		const { data, message, timestamp } = notification;
 		const parsedData = JSON.parse(data);
 		const { user_id } = parsedData;
@@ -110,13 +124,16 @@ const NotificationItem = ({notification}) => {
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
 		return (
-			<Wrapper className="">
+			<Wrapper className="" isRead={notification.is_read} onClick={() => readNotificationHandler(notification)}>
 				<Tablet className="mb-[0.75rem] truncate">Customer Account Creation</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
 						<div className="">
 							<Text>
-								<span className="highlighted">{first_name} {last_name}</span> from
+								<span className="highlighted">
+									{first_name} {last_name}
+								</span>{" "}
+								from
 								<span className="highlighted"> {company_name} </span>
 								account has successfully been created
 							</Text>
@@ -124,7 +141,7 @@ const NotificationItem = ({notification}) => {
 						</div>
 					</div>
 					<div className="">
-						<Dot />
+						<Dot isRead={notification.is_read} />
 					</div>
 				</div>
 			</Wrapper>
@@ -141,7 +158,7 @@ const NotificationItem = ({notification}) => {
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
 		return (
-			<Wrapper className="">
+			<Wrapper className="" isRead={notification.is_read} onClick={() => readNotificationHandler(notification)}>
 				<Tablet className="mb-[0.75rem] truncate">Customer Account Onboarding</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
@@ -158,7 +175,7 @@ const NotificationItem = ({notification}) => {
 						</div>
 					</div>
 					<div className="">
-						<Dot />
+						<Dot isRead={notification.is_read} />
 					</div>
 				</div>
 			</Wrapper>
@@ -167,7 +184,6 @@ const NotificationItem = ({notification}) => {
 
 	if (notification.type === "ticket-update") {
 		const { timestamp, user_id, identification_id, message } = notification;
-		console.log(notification);
 		const user = users.find(user => user.id === user_id)
 		const { first_name, last_name} = user;
 		const date = new Date(timestamp);
@@ -175,7 +191,11 @@ const NotificationItem = ({notification}) => {
 		const {previousStatus, newStatus} = extractTicketStatusChangeStatus(message)
 
 		return (
-			<Wrapper className="">
+			<Wrapper
+				className=""
+				isRead={notification.is_read}
+				onClick={() => readNotificationHandler(notification)}
+			>
 				<Tablet className="mb-[0.75rem] truncate">Ticket Update</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
@@ -189,15 +209,15 @@ const NotificationItem = ({notification}) => {
 								<span className="highlighted">
 									{first_name} {last_name}
 								</span>{" "}
-								updated status of Ticket ID {identification_id} from 
-								<span className="highlighted"> {previousStatus} </span> to 
+								updated status of Ticket ID {identification_id} from
+								<span className="highlighted"> {previousStatus} </span> to
 								<span className="highlighted"> {newStatus} </span>
 							</Text>
 							<TimeStamp>{formattedDistance}</TimeStamp>
 						</div>
 					</div>
 					<div className="">
-						<Dot />
+						<Dot isRead={notification.is_read} />
 					</div>
 				</div>
 			</Wrapper>
@@ -220,7 +240,7 @@ const NotificationItem = ({notification}) => {
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
 		return (
-			<Wrapper className="">
+			<Wrapper className="" isRead={notification.is_read} onClick={() => readNotificationHandler(notification)}>
 				<Tablet className="mb-[0.75rem] truncate">Ticket Edit</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
@@ -241,14 +261,14 @@ const NotificationItem = ({notification}) => {
 										{key.replaceAll("_", " ")}
 										{ind + 1 === arr.length ? "" : ","}
 									</span>
-								))} {" "}
+								))}{" "}
 								of Ticket ID {identification_id}
 							</Text>
 							<TimeStamp>{formattedDistance}</TimeStamp>
 						</div>
 					</div>
 					<div className="">
-						<Dot />
+						<Dot isRead={notification.is_read}/>
 					</div>
 				</div>
 			</Wrapper>
@@ -275,7 +295,11 @@ const NotificationItem = ({notification}) => {
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
 		return (
-			<Wrapper className="">
+			<Wrapper
+				className=""
+				isRead={notification.is_read}
+				onClick={() => readNotificationHandler(notification)}
+			>
 				<Tablet className="mb-[0.75rem] truncate">Customer Profile Update</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
@@ -306,7 +330,7 @@ const NotificationItem = ({notification}) => {
 						</div>
 					</div>
 					<div className="">
-						<Dot />
+						<Dot isRead={notification.is_read} />
 					</div>
 				</div>
 			</Wrapper>

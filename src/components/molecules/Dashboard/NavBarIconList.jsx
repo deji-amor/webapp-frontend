@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import useNotifications from "../../../hooks/useNotifications";
+import { uniqWith, isEqual } from "lodash";
 import { styled } from "@mui/material";
 import NotificationsNoneSharpIcon from "@mui/icons-material/NotificationsNoneSharp";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import NavbarDropdown from "./NavbarDropdown";
 import NotificationsDropdown from "./NotificationsDropdown";
 import ProfileDropdownMenu from "../../organisms/Dashboard/ProfileDropdownMenu";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { notificationsActions } from "../../../state-manager/reducers/notifications/notifications";
+import useNotifications from "../../../hooks/useNotifications";
 
 const NavBarIconList = () => {
 	const List = styled("div")`
@@ -20,7 +22,6 @@ const NavBarIconList = () => {
 		}
 	`;
 
-	// absolute inline-flex items-center justify-center w-6 h-6 text-[0.75rem] font-[500] text-white bg-[#2B2E72] rounded-full -top-2 -right-2
 	const Dot = styled("div")`
 		position: absolute;
 		display: inline-flex;
@@ -35,7 +36,22 @@ const NavBarIconList = () => {
 		color: #fff;
 		top: -0.5rem /* -8px */;
 		right: -0.5rem /* -8px */;
-	`;
+		`;
+		
+	const dispatch = useDispatch()
+
+	const {data} = useSelector(state => state.authUser)
+	const userId = data.id
+	const workSpaceId = data.workspaceId;
+	const notifications = useNotifications(userId, workSpaceId)
+		const uniqueNotifications = uniqWith(notifications, isEqual);
+		const numberOfUnReadNotifications = uniqueNotifications.filter(
+			(notification) => notification.is_read === 0
+		).length;
+		const showNotificationDot = numberOfUnReadNotifications > 0;
+
+	console.log(notifications);
+	// console.log(data);
 
 	const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
 	const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
@@ -47,6 +63,7 @@ const NavBarIconList = () => {
 
 	const toggleNotificationHandler = () => {
 		setShowLogoutDropdown(false);
+		dispatch(notificationsActions.updateField({ key: "currentSearchValue", value: "All" }));
 		setShowNotificationDropdown((previousValue) => !previousValue);
 	};
 
@@ -60,8 +77,6 @@ const NavBarIconList = () => {
 		document.addEventListener("click", escapeHandler);
 	}, []);
 
-	const notifications = useSelector(state => state.notifications.notifications)
-	const numberOfNotifications = notifications.length
 	// console.log(notifications);
 		// const authUser = useSelector(state => state.authUser.data)
 		// const { id, workspaceId } = authUser;
@@ -72,7 +87,7 @@ const NavBarIconList = () => {
 			<div className="relative">
 				<span className={`w-[2.5rem] h-[2.5rem] rounded-[0.75rem] p-[0.2rem] ${showNotificationDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
 					<span className="relative">
-						<Dot>{numberOfNotifications}</Dot>
+						{showNotificationDot && <Dot>{numberOfUnReadNotifications}</Dot>}
 						<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
 					</span>
 				</span>
