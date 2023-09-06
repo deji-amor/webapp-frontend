@@ -14,6 +14,7 @@ const Wrapper = styled("div")`
 	top: 150%;
 	right: 0px;
 	padding: 1.5rem 1.25rem;
+	padding-bottom: 1rem;
 	flex-direction: column;
 	border-radius: 0.75rem;
 	background: #fff;
@@ -28,6 +29,16 @@ const OrderText = styled("p")`
 	font-style: normal;
 	font-weight: 600;
 	line-height: 1.25rem; /* 142.857% */
+`;
+
+const InfoText = styled("p")`
+	color: #000;
+	text-align: center;
+	font-family: "Poppins", sans-serif;
+	font-size: 0.75rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1.25rem; /* 166.667% */
 `;
 
 const OrderIcon = ({ className }) => (
@@ -133,11 +144,8 @@ const NotificationsDropdown = () => {
 				return b.id - a.id
 			}
 		})
-
-
 		return list
 	}, [notifications, sortByAscending, currentSearchValue])
-	console.log(notificationsList);
 
 	const r = notificationsList
 
@@ -159,10 +167,17 @@ const NotificationsDropdown = () => {
 			<div className="my-[0.68rem]">
 				<HorizontalRule />
 			</div>
-			<div className="space-y-[1rem] max-h-[25rem] overflow-y-auto">
-				{r.slice().map((notification) => (
-					<NotificationItem notification={notification} key={v4()}/>
-				))}
+			<div className="flex flex-col h-[25rem]">
+				<div className="basis-[85%] space-y-[1rem] max-h-[20rem] overflow-y-auto">
+					{r.slice().map((notification) => (
+						<NotificationItem notification={notification} key={v4()} />
+					))}
+				</div>
+				<div className="basis-[15%] p-[1rem] flex items-center justify-center">
+					<InfoText className="max-w-[12rem] text-center">
+						Showing Notifications within the last 30 days
+					</InfoText>
+				</div>
 			</div>
 		</Wrapper>
 	);

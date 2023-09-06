@@ -41,7 +41,6 @@ const TicketsTablePagination = () => {
 	}, [showServiceRequestsTab, showProjectsTab]);
 
 	useEffect(() => {
-		console.log(totalItems, itemsOnEachPage);
 		if(totalItems.length <= itemsOnEachPage){
 			console.log("98f6d57");
 			dispatch(

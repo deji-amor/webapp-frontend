@@ -24,7 +24,7 @@ const HistoryTicketMessage = ({field, email}) => {
   return (
 		<Message>
 			<span className="blue">{email}</span> updated the field{" "}
-			<span className="blue">{field}</span>
+			<span className="blue capitalize">{field}</span>
 		</Message>
 	);
 }

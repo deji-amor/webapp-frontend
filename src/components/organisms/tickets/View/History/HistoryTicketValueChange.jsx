@@ -53,7 +53,7 @@ const HistoryTicketValueChange = ({ prevValue, newValue }) => {
 		}else{
 			modNewValue.forEach((item) => {
 				const en = Object.entries(item);
-				const res = en.forEach((e) => (string = string += ` ${e[0]}: ${e[1]} `));
+				const res = en.forEach((e) => (string = string += ` ${e[0]}: ${e[1]}, `));
 				return res;
 			});
 		}
@@ -61,7 +61,7 @@ const HistoryTicketValueChange = ({ prevValue, newValue }) => {
 	}
 
 	return (
-		<div className="flex gap-[1rem] items-start flex-wrap">
+		<div className="flex gap-x-[1rem] max-w-full items-center flex-wrap">
 			<ValueText className="">
 				{modPrevValue.trim() === "" ? "Nothing was provided" : modPrevValue}
 			</ValueText>

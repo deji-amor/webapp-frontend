@@ -50,9 +50,6 @@ const NavBarIconList = () => {
 		).length;
 		const showNotificationDot = numberOfUnReadNotifications > 0;
 
-	console.log(notifications);
-	// console.log(data);
-
 	const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
 	const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
 
@@ -77,15 +74,11 @@ const NavBarIconList = () => {
 		document.addEventListener("click", escapeHandler);
 	}, []);
 
-	// console.log(notifications);
-		// const authUser = useSelector(state => state.authUser.data)
-		// const { id, workspaceId } = authUser;
-		// useNotifications(id, workspaceId)
 
 	return (
 		<List id="drop-down">
 			<div className="relative">
-				<span className={`w-[2.5rem] h-[2.5rem] rounded-[0.75rem] p-[0.2rem] ${showNotificationDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
+				<span className={`w-[2.5rem] h-[2.5rem] rounded-full p-[0.2rem] ${showNotificationDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
 					<span className="relative">
 						{showNotificationDot && <Dot>{numberOfUnReadNotifications}</Dot>}
 						<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
@@ -94,7 +87,7 @@ const NavBarIconList = () => {
 				{showNotificationDropdown && <NotificationsDropdown/>}
 			</div>
 			<div className="relative">
-				<span className={`w-[2.5rem] h-[2.5rem] rounded-[0.75rem] p-[0.2rem] ${showLogoutDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
+				<span className={`w-[2.5rem] h-[2.5rem] rounded-full p-[0.2rem] ${showLogoutDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
 					<SettingsOutlinedIcon onClick={toggleLogoutHandler} className="icon" style={{ fontSize: 30 }} />
 				</span>
 				{showLogoutDropdown && <NavbarDropdown />}

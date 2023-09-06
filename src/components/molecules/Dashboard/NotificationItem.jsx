@@ -1,7 +1,10 @@
 import React from 'react'
-import { omitBy, isEqual, intersection, pickBy } from "lodash";
-import { readNotification } from '../../../state-manager/reducers/notifications/notifications';
-import { useDispatch } from 'react-redux';
+import { isEqual, intersection, pickBy } from "lodash";
+// import { readNotification } from '../../../state-manager/reducers/notifications/notifications';
+import { useNavigate } from 'react-router-dom';
+import { Avatar, } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import { useDispatch} from 'react-redux';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
@@ -104,16 +107,22 @@ const NotificationItem = ({notification}) => {
 	const {customers} = useSelector(state => state.customers)
 	const {users} = useSelector(state => state.users)
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	const readNotificationHandler = (notification) => {
-		if(!notification.is_read){
-			console.log(notification.id);
-			dispatch(readNotification({notificationId: notification.id}));
+		if (!notification.is_read) {
+			notification.handleUpdateNotification();
+		}
+		if (notification.type.includes("ticket")){
+			const ticketId = notification.identification_id;
+			navigate(`/admin/tickets/view/detail/${ticketId}`);
+		}
+		if (notification.type.includes("customer")){
+			navigate(`/admin/users`);
 		}
 	}
 
 	if (notification.type === "customer-creation") {
-		console.log(notification);
 		const { data, message, timestamp } = notification;
 		const parsedData = JSON.parse(data);
 		const { user_id } = parsedData;
@@ -183,9 +192,12 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "ticket-update") {
-		const { timestamp, user_id, identification_id, message } = notification;
+		const { timestamp, user_id, identification_id, message, new_data } = notification;
+		const ticketData = JSON.parse(new_data)
 		const user = users.find(user => user.id === user_id)
+		const customer = customers.find(customer => customer.user_id === ticketData.customer_id)
 		const { first_name, last_name} = user;
+		const profilePic = user?.profile_pic
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 		const {previousStatus, newStatus} = extractTicketStatusChangeStatus(message)
@@ -199,11 +211,14 @@ const NotificationItem = ({notification}) => {
 				<Tablet className="mb-[0.75rem] truncate">Ticket Update</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<img
+						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+							<PersonIcon style={{ fontSize: 30 }} />
+						</Avatar>
+						{/* <img
 							className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
 							src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
 							alt="Rounded avatar"
-						></img>
+						></img> */}
 						<div className="">
 							<Text>
 								<span className="highlighted">
@@ -240,15 +255,17 @@ const NotificationItem = ({notification}) => {
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
 		return (
-			<Wrapper className="" isRead={notification.is_read} onClick={() => readNotificationHandler(notification)}>
+			<Wrapper
+				className=""
+				isRead={notification.is_read}
+				onClick={() => readNotificationHandler(notification)}
+			>
 				<Tablet className="mb-[0.75rem] truncate">Ticket Edit</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<img
-							className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
-							src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-							alt="Rounded avatar"
-						></img>
+						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+							<PersonIcon style={{ fontSize: 30 }} />
+						</Avatar>
 						<div className="">
 							<Text>
 								<span className="highlighted">
@@ -268,7 +285,7 @@ const NotificationItem = ({notification}) => {
 						</div>
 					</div>
 					<div className="">
-						<Dot isRead={notification.is_read}/>
+						<Dot isRead={notification.is_read} />
 					</div>
 				</div>
 			</Wrapper>
@@ -303,11 +320,9 @@ const NotificationItem = ({notification}) => {
 				<Tablet className="mb-[0.75rem] truncate">Customer Profile Update</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<img
-							className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
-							src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-							alt="Rounded avatar"
-						></img>
+						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+							<PersonIcon style={{ fontSize: 30 }} />
+						</Avatar>
 						<div className="">
 							<Text>
 								<span className="highlighted">
