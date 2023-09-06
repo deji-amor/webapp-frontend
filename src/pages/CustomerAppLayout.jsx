@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout'
 import { getAuthToken, getDeviceName } from '../utilis'
-import { authUserActions } from '../state-manager/reducers/users/authUser'
+import { authUserActions, fetchAuthUser } from '../state-manager/reducers/users/authUser'
 
 const MemoizedCustomerNavbar = memo(CustomerNavbar)
 const MemoizedCustomerSidebar = memo(CustomerSidebar)
@@ -71,6 +71,7 @@ const CustomerAppLayout = () => {
 		useEffect(() => {
 			// dispatch(fetchUsers());
 			// dispatch(fetchCustomers());
+			dispatch(fetchAuthUser());
 			dispatch(fetchTickets());
 			dispatch(fetchAllCustomers());
 			dispatch(fetchAllTickets());

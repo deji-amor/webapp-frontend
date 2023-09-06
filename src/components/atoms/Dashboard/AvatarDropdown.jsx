@@ -41,8 +41,9 @@ const AvatarDropdown = ({ onEditClick }) => {
 		line-height: 20px;
 	`;
 
-	const { firstName, lastName, email, userType } = useSelector((state) => state.authUser.data);
-	const pictureUrl = useSelector((state) => state.dashboard.pictureUrl);
+	const { first_name, last_name, email, user_type, profile_picture } = useSelector(
+		(state) => state.authUser.data
+	);
 
 	return (
 		<Box p={3}>
@@ -52,19 +53,23 @@ const AvatarDropdown = ({ onEditClick }) => {
 					variant="circular"
 					style={{ background: "#2b2e72", width: "100px", height: "100px", marginBottom: "10px" }}
 				>
-					{pictureUrl ? (
-						<img src={pictureUrl} alt="Profile Picture" style={{ width: "100%", height: "100%" }} />
+					{profile_picture ? (
+						<img
+							src={profile_picture}
+							alt="Profile Picture"
+							style={{ width: "100%", height: "100%", objectFit: "cover" }}
+						/>
 					) : (
 						<PersonIcon style={{ fontSize: 100 }} />
 					)}
 				</Avatar>
 				<Typography variant="h2">
-					{firstName} {lastName}
+					{first_name} {last_name}
 				</Typography>
-				{userType === "superadmin" ? (
+				{user_type === "superadmin" ? (
 					<Text variant="p">Super Admin</Text>
 				) : (
-					<Text variant="p">{userType}</Text>
+					<Text variant="p">{user_type}</Text>
 				)}
 				<Box display="flex" alignItems="center">
 					<MailOutlineIcon style={{ width: "19.749px", height: "15.442px", color: "#706E6E" }} />

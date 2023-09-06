@@ -4,17 +4,19 @@ import UserProfile from "../../molecules/Dashboard/UserProfile";
 import AvatarDropdown from "../../atoms/Dashboard/AvatarDropdown";
 import EditProfileModal from "../../molecules/Dashboard/EditProfileModal";
 
-const ProfileDropdownMenu = () => {
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+const ProfileDropdownMenu = ({
+	isDropdownOpen,
+	toggleDropdown,
+	handleEditClick,
+	isEditModalOpen,
+	setIsEditModalOpen,
+	closeDropdown,
+}) => {
+	console.log(isDropdownOpen);
 
 	const handleDropdownClick = () => {
-		setIsDropdownOpen(!isDropdownOpen);
-	};
-
-	const handleEditClick = () => {
-		setIsEditModalOpen(true);
-		setIsDropdownOpen(false);
+		toggleDropdown();
+		closeDropdown();
 	};
 
 	const closeEditModal = () => {
@@ -38,7 +40,7 @@ const ProfileDropdownMenu = () => {
 						borderRadius="12px"
 						backgroundColor="#FFF"
 						boxShadow="0px 0px 20px 0px rgba(37, 36, 33, 0.24)"
-            padding="10px"
+						padding="10px"
 					>
 						<AvatarDropdown onEditClick={handleEditClick} />
 					</Box>
