@@ -41,7 +41,12 @@ const CustomerAppLayout = () => {
 	}, [dispatch]);
 
   useEffect(() => {
-    if(authUser.userType !== "customer") navigate("/");
+		const userTypePropertyNames = ["user_type", "userType"];
+		if(!userTypePropertyNames.some(propName => authUser[propName] === 'customer')){
+			console.log(authUser);
+			console.log("logout");
+			navigate("/")
+		}
   }, [])
 
 	// checks if token doesnt exit and logs out else and logouts out on timer expiry

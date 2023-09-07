@@ -62,6 +62,8 @@ const TicketsTableBodyItem = ({ ticket }) => {
 
 	const [isThisTicketLoading, setIsThisTicketLoading] = useState(false)
 
+	console.log({isThisTicketLoading, loading});
+
 	useEffect(() => {
 		if (successful === true) {
 			setIsThisTicketLoading(false)
@@ -122,8 +124,8 @@ const TicketsTableBodyItem = ({ ticket }) => {
 									)}
 							/>
 						)}
-						{isThisTicketLoading ? (
-							<Loader />
+						{(isThisTicketLoading && loading) ? (
+							<Loader blue={true}/>
 						) : (
 							<MoreVertIcon fontSize="small" onClick={(event) => setShowStatusDropHandler(event)} />
 						)}

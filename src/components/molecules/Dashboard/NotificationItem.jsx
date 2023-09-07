@@ -1,14 +1,11 @@
 import React from 'react'
 import { isEqual, intersection, pickBy } from "lodash";
-// import { readNotification } from '../../../state-manager/reducers/notifications/notifications';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import { useDispatch} from 'react-redux';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
-import { useSelector } from 'react-redux';
 
 const Wrapper = styled("div")`
 	padding: 0.5rem;
@@ -103,10 +100,6 @@ Dot.propTypes = {
 }
 
 const NotificationItem = ({notification}) => {
-	const { tickets, loading: ticketsLoading} = useSelector((state) => state.tickets);
-	const {customers, loading: customersLoading} = useSelector(state => state.customers)
-	const {users, loading: usersLoading} = useSelector(state => state.users)
-	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
 	const readNotificationHandler = (notification) => {
@@ -123,13 +116,9 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "customer-creation") {
-		const { data, message, timestamp } = notification;
+		const { data, message, timestamp} = notification;
 		const parsedData = JSON.parse(data);
-		const { user_id } = parsedData;
-		// const ticket = tickets.find((ticket) => +ticket.id === +ticketId);
-		const customer = customers.find(customer => +customer.user_id === +user_id )
-		const {first_name, last_name, company_name} = customer
-		console.log({ first_name, last_name, company_name });
+		const {first_name, last_name, company_name} = parsedData
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -159,12 +148,11 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "customer-onboarding") {
-		const { data, timestamp } = notification;
+		const { data, message, timestamp } = notification;
+		console.log(notification);
 		const parsedData = JSON.parse(data);
-		const { id } = parsedData;
-		const customer = customers.find((customer) => +customer.user_id === +id);
-		const { first_name, last_name, company_name } = customer;
-		console.log({ first_name, last_name, company_name });
+		console.log(parsedData);
+		const { first_name, last_name, company_name } = parsedData;
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -194,14 +182,9 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "ticket-update") {
-		const { timestamp, user_id, identification_id, message, new_data } = notification;
-		const ticketData = JSON.parse(new_data)
-		const user = users.find(user => user.id === user_id)
-		const customer = customers.find(customer => customer.user_id === ticketData.customer_id)
-		// console.log(customer);
-		const { first_name, last_name} = user;
-		const profilePic = customer?.profile_picture
-		console.log(profilePic);
+		const { timestamp, identification_id, message, last_name, first_name  } = notification;
+		const profilePic = notification?.profile_picture;
+		console.log(notification);
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 		const {previousStatus, newStatus} = extractTicketStatusChangeStatus(message)
@@ -247,22 +230,17 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "ticket-edit") {
-		const { timestamp, user_id, identification_id, message, old_data, new_data } = notification;
+		const { timestamp, identification_id, message, old_data, new_data, last_name, first_name } = notification;
+		const profilePic = notification?.profile_picture;
 		console.log(notification);
 		const oldDataParsed = JSON.parse(old_data);
 		const newDataParsed = JSON.parse(new_data);
-		const {customer_id} = newDataParsed
-		const customer = customers.find((customer) => customer.user_id === +customer_id);
-		const profilePic = customer?.profile_picture;
 		const commonKeys = intersection(Object.keys(oldDataParsed), Object.keys(newDataParsed));
 		const differences = pickBy(
 			newDataParsed,
 			(value, key) => !isEqual(value, oldDataParsed[key]) && commonKeys.includes(key)
 		);
 		const changedKeys = Object.keys(differences);
-		const user = users.find((user) => user.id === user_id);
-		const { first_name, last_name } = user;
-		console.log({ first_name, last_name });
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -313,22 +291,19 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "customer-update") {
-		const { timestamp, user_id, old_data, new_data, data } = notification;
-		// const customer 
-		const customerParsed = JSON.parse(data)
-		const customer = customers.find(customer => +customer.user_id === +customerParsed.id)
-		const {first_name, last_name, company_name} = customer;
-		const profilePic = customer?.profile_picture;
-		console.log(customer);
+		const { timestamp, user_id, old_data, new_data, first_name, last_name, company_name } =
+			notification;
+		const profilePic = notification?.profile_picture
+		console.log(notification);
 		const oldDataParsed = JSON.parse(old_data);
 		const newDataParsed = JSON.parse(new_data);
+		console.log(newDataParsed);
 		const commonKeys = intersection(Object.keys(oldDataParsed), Object.keys(newDataParsed));
 		const differences = pickBy(
 			newDataParsed,
 			(value, key) => !isEqual(value, oldDataParsed[key]) && commonKeys.includes(key)
 		);
-		const user = users.find((user) => user.id === user_id);
-		const { first_name: userFirstName, last_name: userLastName} = user;
+		const { first_name: customerFirstName, last_name: customerLastName, company_name: CustomerCompanyName } = newDataParsed;
 		const changedKeys = Object.keys(differences).filter((key) => key.toLocaleLowerCase() !== "datetime");
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
@@ -356,7 +331,7 @@ const NotificationItem = ({notification}) => {
 						<div className="">
 							<Text>
 								<span className="highlighted">
-									{userFirstName} {userLastName}
+									{first_name} {last_name}
 								</span>{" "}
 								updated
 								{changedKeys.map((key) => (
@@ -367,9 +342,9 @@ const NotificationItem = ({notification}) => {
 								))}{" "}
 								for customer{" "}
 								<span className="highlighted">
-									{first_name} {last_name}
+									{customerFirstName} {customerLastName}
 								</span>{" "}
-								from <span className="highlighted">{company_name}</span>
+								from <span className="highlighted">{CustomerCompanyName}</span>
 							</Text>
 							<TimeStamp>{formattedDistance}</TimeStamp>
 						</div>

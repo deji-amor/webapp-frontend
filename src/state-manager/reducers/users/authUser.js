@@ -125,7 +125,7 @@ const authUserSlice = createSlice({
 			})
 
 			.addCase(fetchAuthUser.rejected, (state, action) => {
-				state.data = {};
+				// state.data = {};
 			})
 
 			// ADDCASE EDIT PROFILE

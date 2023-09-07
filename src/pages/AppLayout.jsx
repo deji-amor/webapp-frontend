@@ -48,8 +48,11 @@ const AppLayout = () => {
 	}, [dispatch]);
 
 		useEffect(() => {
-			if(authUser.userType !== "superadmin" && authUser.userType !== "admin"){
+			const userTypePropertyNames = ['user_type', 'userType']
+			if(!userTypePropertyNames.some(propName => authUser[propName] === 'superadmin' || authUser[propName] === 'admin')){
+				console.log(authUser);
 				console.log("logout");
+				navigate("/")
 			}
 		}, [])
 

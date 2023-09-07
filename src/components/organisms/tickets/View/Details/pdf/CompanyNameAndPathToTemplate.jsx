@@ -96,7 +96,6 @@ const CompanyNameAndPathToTemplate = ({chosenTemplate, ticket, customer}) => {
 				<Text style={styles.BlueThemeSmall}>-</Text>
 				{path}
 			</View>
-			<View style={styles.hr}></View>
 			<View>
 				<Text style={styles.ticketId}>ID {id}</Text>
 			</View>

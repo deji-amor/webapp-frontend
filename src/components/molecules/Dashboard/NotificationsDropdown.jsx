@@ -161,8 +161,6 @@ const NotificationsDropdown = () => {
 
 	const r = notificationsList
 
-	if (ticketsLoading || customersLoading || usersLoading) return <></>
-
 		return (
 			<Wrapper>
 				<div className="flex justify-between gap-[7rem]">
