@@ -11,6 +11,7 @@ import {
 	editProfile,
 	updateProfilePicture,
 } from "../../../state-manager/reducers/users/authUser";
+import { UIActions } from "../../../state-manager/reducers/UI/ui";
 
 const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
@@ -57,17 +58,26 @@ const EditProfileModal = ({ open, onClose }) => {
 
 	const handleSave = () => {
 		dispatch(editProfile(editedFields))
-			.then((data) => {
-				dispatch(authUserActions.setData(data.payload.data));
-				if (selectedImage) {
-					dispatch(updateProfilePicture(selectedImage)).then((imageData) => {
-						console.log(imageData.payload);
-						dispatch(authUserActions.setData(imageData.payload));
+			.then((response) => {
+				if (response.payload.message != "Workspace name has been used!") {
+					dispatch(authUserActions.setData(response.payload.data));
+					if (selectedImage) {
+						dispatch(updateProfilePicture(selectedImage)).then((imageData) => {
+							dispatch(authUserActions.setData(imageData.payload));
 
-						setSelectedImage(null);
-					});
+							setSelectedImage(null);
+						});
+					}
+					onClose();
+				} else {
+					dispatch(
+						UIActions.showToasts({
+							message: "Use an unexisting workspace name.",
+							title: "Workspace already exists",
+							type: "error",
+						})
+					);
 				}
-				onClose();
 			})
 			.catch((error) => {
 				// Handle error
