@@ -103,9 +103,9 @@ Dot.propTypes = {
 }
 
 const NotificationItem = ({notification}) => {
-	const {tickets} = useSelector(state => state.tickets)
-	const {customers} = useSelector(state => state.customers)
-	const {users} = useSelector(state => state.users)
+	const { tickets, loading: ticketsLoading} = useSelector((state) => state.tickets);
+	const {customers, loading: customersLoading} = useSelector(state => state.customers)
+	const {users, loading: usersLoading} = useSelector(state => state.users)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
@@ -129,6 +129,7 @@ const NotificationItem = ({notification}) => {
 		// const ticket = tickets.find((ticket) => +ticket.id === +ticketId);
 		const customer = customers.find(customer => +customer.user_id === +user_id )
 		const {first_name, last_name, company_name} = customer
+		console.log({ first_name, last_name, company_name });
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -163,6 +164,7 @@ const NotificationItem = ({notification}) => {
 		const { id } = parsedData;
 		const customer = customers.find((customer) => +customer.user_id === +id);
 		const { first_name, last_name, company_name } = customer;
+		console.log({ first_name, last_name, company_name });
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -196,8 +198,10 @@ const NotificationItem = ({notification}) => {
 		const ticketData = JSON.parse(new_data)
 		const user = users.find(user => user.id === user_id)
 		const customer = customers.find(customer => customer.user_id === ticketData.customer_id)
+		// console.log(customer);
 		const { first_name, last_name} = user;
-		const profilePic = user?.profile_pic
+		const profilePic = customer?.profile_picture
+		console.log(profilePic);
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 		const {previousStatus, newStatus} = extractTicketStatusChangeStatus(message)
@@ -211,14 +215,17 @@ const NotificationItem = ({notification}) => {
 				<Tablet className="mb-[0.75rem] truncate">Ticket Update</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
-							<PersonIcon style={{ fontSize: 30 }} />
-						</Avatar>
-						{/* <img
-							className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
-							src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-							alt="Rounded avatar"
-						></img> */}
+						{
+							profilePic ? 
+							<img
+								className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
+								src={profilePic}
+								alt="Rounded avatar"
+							></img> :
+							<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+								<PersonIcon style={{ fontSize: 30 }} />
+							</Avatar>
+						}
 						<div className="">
 							<Text>
 								<span className="highlighted">
@@ -241,8 +248,12 @@ const NotificationItem = ({notification}) => {
 
 	if (notification.type === "ticket-edit") {
 		const { timestamp, user_id, identification_id, message, old_data, new_data } = notification;
+		console.log(notification);
 		const oldDataParsed = JSON.parse(old_data);
 		const newDataParsed = JSON.parse(new_data);
+		const {customer_id} = newDataParsed
+		const customer = customers.find((customer) => customer.user_id === +customer_id);
+		const profilePic = customer?.profile_picture;
 		const commonKeys = intersection(Object.keys(oldDataParsed), Object.keys(newDataParsed));
 		const differences = pickBy(
 			newDataParsed,
@@ -251,6 +262,7 @@ const NotificationItem = ({notification}) => {
 		const changedKeys = Object.keys(differences);
 		const user = users.find((user) => user.id === user_id);
 		const { first_name, last_name } = user;
+		console.log({ first_name, last_name });
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -263,9 +275,17 @@ const NotificationItem = ({notification}) => {
 				<Tablet className="mb-[0.75rem] truncate">Ticket Edit</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
-							<PersonIcon style={{ fontSize: 30 }} />
-						</Avatar>
+						{profilePic ? (
+							<img
+								className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
+								src={profilePic}
+								alt="Rounded avatar"
+							></img>
+						) : (
+							<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+								<PersonIcon style={{ fontSize: 30 }} />
+							</Avatar>
+						)}
 						<div className="">
 							<Text>
 								<span className="highlighted">
@@ -296,8 +316,10 @@ const NotificationItem = ({notification}) => {
 		const { timestamp, user_id, old_data, new_data, data } = notification;
 		// const customer 
 		const customerParsed = JSON.parse(data)
-		const customer = customers.find(customer => customer.user_id === customerParsed.id)
-		const {first_name, last_name, company_name} = customer
+		const customer = customers.find(customer => +customer.user_id === +customerParsed.id)
+		const {first_name, last_name, company_name} = customer;
+		const profilePic = customer?.profile_picture;
+		console.log(customer);
 		const oldDataParsed = JSON.parse(old_data);
 		const newDataParsed = JSON.parse(new_data);
 		const commonKeys = intersection(Object.keys(oldDataParsed), Object.keys(newDataParsed));
@@ -307,7 +329,7 @@ const NotificationItem = ({notification}) => {
 		);
 		const user = users.find((user) => user.id === user_id);
 		const { first_name: userFirstName, last_name: userLastName} = user;
-		const changedKeys = Object.keys(differences);
+		const changedKeys = Object.keys(differences).filter((key) => key.toLocaleLowerCase() !== "datetime");
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -320,9 +342,17 @@ const NotificationItem = ({notification}) => {
 				<Tablet className="mb-[0.75rem] truncate">Customer Profile Update</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
-							<PersonIcon style={{ fontSize: 30 }} />
-						</Avatar>
+						{profilePic ? (
+							<img
+								className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
+								src={profilePic}
+								alt="Rounded avatar"
+							></img>
+						) : (
+							<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+								<PersonIcon style={{ fontSize: 30 }} />
+							</Avatar>
+						)}
 						<div className="">
 							<Text>
 								<span className="highlighted">
