@@ -41,7 +41,7 @@ const ServiceRequestsAndProjectsTable = () => {
 				<LightText>{ticket.ticket_form}</LightText>
 			</td>
 			<td className="py-[0.4rem] pr-[1rem] text-left">
-				<StatusTab status="done" />
+				<StatusTab status={ticket.status} />
 			</td>
 		</tr>
 	));
