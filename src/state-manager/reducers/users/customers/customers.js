@@ -271,7 +271,7 @@ const customersSlice = createSlice({
 			const newCustomerIndex = newCustomers.findIndex(user => +user.id === +newCustomer.id);
 			if (newCustomerIndex !== -1) {
 				newCustomers.splice(newCustomerIndex, 1, newCustomer);
-				state.users = newCustomer;
+				state.users = newCustomers;
 			}
 		},
 	},
