@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import { getAuthToken } from "../../../utilis";
 
 export const fetchUsers = createAsyncThunk("users", async (args, {rejectWithValue}) => {
@@ -39,6 +39,15 @@ const usersSlice = createSlice({
 		clearData: (state, action) => {
 			state.users = [];
 		},
+		updateUser: (state, action) => {
+			const newUser = action.payload
+			const newUsers = current(state).users.slice()
+			const newUserIndex = newUsers.findIndex(user => +user.id === +newUser.id)
+			if(newUserIndex !== -1){
+				newUsers.splice(newUserIndex, 1, newUser)
+				state.users = newUsers
+			}
+		}
 	},
   extraReducers: builder => {
     builder

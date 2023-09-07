@@ -51,14 +51,30 @@ const NavBarIconList = () => {
 		const showNotificationDot = numberOfUnReadNotifications > 0;
 
 	const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
-	const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
+	const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+	const handleEditClick = () => {
+		setIsEditModalOpen(true);
+		setIsDropdownOpen(false);
+		setShowNotificationDropdown(false);
+		setShowLogoutDropdown(false);
+	};
+	const handleOpen = () => {
+		setIsDropdownOpen((prevIsDropdownOpen) => !prevIsDropdownOpen);
+		setShowNotificationDropdown(false);
+		setShowLogoutDropdown(false);
+	};
 
 	const toggleLogoutHandler = () => {
+		setIsDropdownOpen(false);
 		setShowNotificationDropdown(false);
 		setShowLogoutDropdown((previousValue) => !previousValue);
 	};
 
 	const toggleNotificationHandler = () => {
+		setIsDropdownOpen(false);
 		setShowLogoutDropdown(false);
 		dispatch(notificationsActions.updateField({ key: "currentSearchValue", value: "All" }));
 		setShowNotificationDropdown((previousValue) => !previousValue);
@@ -68,12 +84,21 @@ const NavBarIconList = () => {
 		const escapeHandler = (e) => {
 			if (!e.target.closest("#drop-down")) {
 				setShowLogoutDropdown(false);
-				setShowNotificationDropdown(false)
+				setShowNotificationDropdown(false);
+				setIsDropdownOpen(false);
 			}
 		};
 		document.addEventListener("click", escapeHandler);
 	}, []);
 
+	const closeDropdown = () => {
+		setShowNotificationDropdown(false);
+		setShowLogoutDropdown(false);
+	};
+
+	const authUser = useSelector((state) => state.authUser.data);
+	const { id, workspaceId } = authUser;
+	useNotifications(id, workspaceId)
 
 	return (
 		<List id="drop-down">
@@ -84,7 +109,7 @@ const NavBarIconList = () => {
 						<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
 					</span>
 				</span>
-				{showNotificationDropdown && <NotificationsDropdown/>}
+				{showNotificationDropdown && <NotificationsDropdown />}
 			</div>
 			<div className="relative">
 				<span className={`w-[2.5rem] h-[2.5rem] rounded-full p-[0.2rem] ${showLogoutDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
@@ -93,7 +118,15 @@ const NavBarIconList = () => {
 				{showLogoutDropdown && <NavbarDropdown />}
 			</div>
 			<div style={{ display: "flex", alignItems: "center" }}>
-				<ProfileDropdownMenu />
+				<ProfileDropdownMenu
+					onClick={handleOpen}
+					isDropdownOpen={isDropdownOpen}
+					toggleDropdown={() => setIsDropdownOpen(!isDropdownOpen)}
+					isEditModalOpen={isEditModalOpen}
+					setIsEditModalOpen={setIsEditModalOpen}
+					handleEditClick={handleEditClick}
+					closeDropdown={closeDropdown}
+				/>
 			</div>
 		</List>
 	);

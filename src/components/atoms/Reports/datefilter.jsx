@@ -220,7 +220,7 @@ const DateFilter = ({ handleReportDateRange }) => {
 						</div>
 						{(startDate || endDate) && (
 							<div className="clear" onClick={handleClear}>
-								<span>Clear Date</span>
+								<span>Clear Dates</span>
 								<ClearOutlinedIcon />
 							</div>
 						)}

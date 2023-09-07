@@ -264,7 +264,16 @@ const customersSlice = createSlice({
 
 		SET_RESPONSE_NULL: (state, action) => {
 			state.response = null;
-		}
+		},
+		updateCustomer: (state, action) => {
+			const newCustomer = action.payload;
+			const newCustomers = current(state).customers.slice();
+			const newCustomerIndex = newCustomers.findIndex(user => +user.id === +newCustomer.id);
+			if (newCustomerIndex !== -1) {
+				newCustomers.splice(newCustomerIndex, 1, newCustomer);
+				state.users = newCustomer;
+			}
+		},
 	},
 	extraReducers: builder => {
 		builder

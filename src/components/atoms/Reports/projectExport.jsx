@@ -18,7 +18,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 	top: "-15px",
 
 	".exportBut": {
-		width: "210px",
+		width: "184px",
 		borderRadius: "8px",
 		padding: "8px 15px 8px 15px",
 		color: "white",
@@ -52,6 +52,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 
 	".instant-recurring, .pdf-csv": {
 		minWidth: "170px",
+		// height: "84px",
 		padding: "12px 4px 12px 4px",
 		borderRadius: "8px",
 		boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.20)",
@@ -59,6 +60,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "start",
+		// gap: "2px",
 	},
 
 	".instant-recurring button, .pdf-csv button": {
@@ -72,7 +74,7 @@ const ExportFilesWrapper = styled("div")(() => ({
 		borderRadius: "8px",
 		display: "flex",
 		gap: "60px",
-		alignItems: "left",
+		alignItems: "center",
 	},
 
 	".pdf-csv button": {
@@ -89,35 +91,40 @@ const ExportFilesWrapper = styled("div")(() => ({
 
 	".instant-recurring button, .pdf-csv button .arrow": {
 		fontSize: "15px",
-		textAlign: "left",
 	},
 }));
 
-const CustomerExportFiles = ({ text }) => {
-	const [toggle, setToggle] = useState(false)
-	const [csvDrop, setCSVDrop] = useState(false)
-	const { customerReport } =
-		useSelector((state) => state.reports);
+const ProjectExportFiles = ({ text }) => {
+	const [toggle, setToggle] = useState(false);
+	const [csvDrop, setCSVDrop] = useState(false);
 
-	const { filteredCustomers, filteredCustomersByDate, filteredCustomersByStatus } = useSelector(
-		(state) => state.customerReports
-	);
+	const {
+		selectedProjectTickets,
+		filteredProjectTickets,
+		filteredProjectTicketsByDate,
+		filteredProjectTicketsByStatus,
+	} = useSelector((state) => state.ticketReports);
 
-	const filteredCustomerReport =
-		(filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length === 0) ||
-		(filteredCustomersByStatus.length != 0 && filteredCustomersByDate.length != 0)
-			? filteredCustomersByStatus
-			: filteredCustomersByDate.length != 0
-			? filteredCustomersByDate
-			: filteredCustomers;
+	const selectedProject = selectedProjectTickets ? selectedProjectTickets : [];
 
-	const customerCounter = filteredCustomersByStatus.length || filteredCustomersByDate.length;
+	const filteredTicketProjectReport =
+		(filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length != 0) ||
+		(filteredProjectTicketsByStatus.length != 0 && filteredProjectTicketsByDate.length === 0)
+			? filteredProjectTicketsByStatus
+			: filteredProjectTicketsByDate.length != 0
+			? filteredProjectTicketsByDate
+			: filteredProjectTickets;
+
+	const projectCounter =
+		selectedProjectTickets.length ||
+		filteredProjectTicketsByStatus.length ||
+		filteredProjectTicketsByDate.length;
 
 	useEffect(() => {
 		const listener = (e) => {
-			if (!e.target.closest("#customer-drop") || e.target.closest("#customer-drop")) {
+			if (!e.target.closest("#ticket-drop") || e.target.closest("#ticket-drop")) {
 				setToggle(false);
-				setCSVDrop(false)
+				setCSVDrop(false);
 			}
 		};
 
@@ -126,17 +133,17 @@ const CustomerExportFiles = ({ text }) => {
 	}, []);
 
 	return (
-		<ExportFilesWrapper id="customer-drop">
+		<ExportFilesWrapper id="ticket-drop">
 			<button
 				onClick={(e) => {
-					e.stopPropagation()
-					setToggle(prev => !prev)
+					e.stopPropagation();
+					setToggle((prev) => !prev);
 				}}
 				className="exportBut"
 				type="button"
 			>
 				<span>{text}</span>
-				{customerCounter != 0 && (
+				{projectCounter != 0 && (
 					<p
 						style={{
 							borderRadius: "50%",
@@ -150,38 +157,38 @@ const CustomerExportFiles = ({ text }) => {
 							alignItems: "center",
 						}}
 					>
-						{customerCounter}
+						{projectCounter}
 					</p>
 				)}
 				<img className="export-icon" src={ExportImage} alt="export files" />
 			</button>
+
 			<div className="exp">
-				{toggle && (csvDrop && customerReport) && (
+				{toggle && csvDrop && (
 					<div className="instant-recurring">
 						<button
 							onClick={(e) => {
-								e.stopPropagation()
-								setCSVDrop(false)
-								setToggle(false)
+								e.stopPropagation();
+								setToggle(false);
+								setCSVDrop(false);
 							}}
 							className="instant"
 							type="button"
 						>
 							<CSVLink
-								data={filteredCustomerReport}
-								headers={customerHeaders}
-								filename="admin_filtered_customers.csv"
+								data={selectedProject.length != 0 ? selectedProject : filteredTicketProjectReport}
+								headers={ticketHeaders}
+								filename="admin_filtered_project_tickets.csv"
 								target="_blank"
-								className="inst"
 							>
 								Instant Export
 							</CSVLink>
 						</button>
 						<button
 							onClick={(e) => {
-								e.stopPropagation()
-								setCSVDrop(false)
-								setToggle(false)
+								e.stopPropagation();
+								setToggle(false);
+								setCSVDrop(false);
 							}}
 							className="recurring"
 							type="button"
@@ -194,8 +201,8 @@ const CustomerExportFiles = ({ text }) => {
 					<div className="pdf-csv">
 						<button
 							onClick={(e) => {
-								e.stopPropagation()
-								setCSVDrop(prev => !prev)
+								e.stopPropagation();
+								setCSVDrop((prev) => !prev);
 							}}
 							className="but"
 							type="button"
@@ -210,8 +217,8 @@ const CustomerExportFiles = ({ text }) => {
 	);
 };
 
-CustomerExportFiles.propTypes = {
+ProjectExportFiles.propTypes = {
 	text: PropTypes.string,
 };
 
-export default CustomerExportFiles;
+export default ProjectExportFiles;

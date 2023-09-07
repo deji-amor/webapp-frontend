@@ -8,8 +8,10 @@ import {
 	removeMultipleCustomersFilterStatus,
 	filterCustomersByStatus,
 	setMultipleCustomersFilterStatus,
+	setMultipleCustomerDropdownFilterStatus,
 } from "../../../state-manager/reducers/reports/customers/customers";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import FilterDropdownItem from "./filterdropdownitem";
 
 const CustomerFilterByWrapper = styled("div")(() => ({
 	position: "relative",
@@ -30,12 +32,13 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 	},
 
 	".dropdownCard": {
-		width: "190px",
+		width: "228px",
 		height: "130px",
 		overflow: "hidden",
 		background: "white",
 		borderRadius: "8px",
 		position: "absolute",
+		zIndex: "20",
 		padding: "8px 6px 8px 6px",
 		boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.20)",
 		display: "flex",
@@ -49,6 +52,7 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 		height: "38px",
 		display: "flex",
 		alignItems: "center",
+		gap: "16px",
 		fontFamily: "Poppins",
 		fontSize: "14px",
 		fontWeight: "500",
@@ -57,6 +61,7 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 		textAlign: "left",
 		padding: "5px",
 		borderRadius: "5px",
+		color: "rgba(43, 46, 114, 1)",
 	},
 
 	".dropdownCard .item.active": {
@@ -66,7 +71,6 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 	".dropdownCard .item:hover": {
 		width: "100%",
 		border: "0px 0px 1px 0px",
-		gap: "16px",
 		cursor: "pointer",
 		background: "rgba(76, 111, 255, 0.08)",
 	},
@@ -91,61 +95,86 @@ const CustomerFilterByWrapper = styled("div")(() => ({
 	},
 }));
 
-const CustomerFilterBy = ({ dropItems }) => {
+const CustomerFilterBy = () => {
 	const [status, setStatus] = useState("");
+	const [active, setActive] = useState(false);
 	const [toggle, setToggle] = useState(false);
 
-	const { filteredCustomers, filteredCustomersByDate, multipleCustomerStatusFiltering } =
-		useSelector((state) => state.customerReports);
+	const { filteredCustomers, filteredCustomersByDate, customerStatus } = useSelector(
+		(state) => state.customerReports
+	);
 
 	const dispatch = useDispatch();
 
-	const handleClick = (t) => {
-		dispatch(removeMultipleCustomersFilterStatus(t));
+	const handleClick = (active) => {
+		if (active) {
+			setActive(true);
+		} else {
+			setActive(false);
+		}
 	};
 
 	useEffect(() => {
 		if (status != "") {
-			handleFilterByStatus(
-				status,
-				filteredCustomers,
-				filteredCustomersByDate,
-				filterCustomersByStatus,
-				setMultipleCustomersFilterStatus,
-				dispatch
-			);
+			if (!active) {
+				handleFilterByStatus(
+					status,
+					filteredCustomers,
+					filteredCustomersByDate,
+					filterCustomersByStatus,
+					setMultipleCustomersFilterStatus,
+					dispatch
+				);
+			} else {
+				dispatch(removeMultipleCustomersFilterStatus(status));
+			}
 		}
-		setStatus("")
+		setStatus("");
 	}, [status]);
 
+	useEffect(() => {
+		if (status === "active") {
+			dispatch(setMultipleCustomerDropdownFilterStatus({ status, title: "Active Customers" }));
+		} else if (status === "inactive") {
+			dispatch(setMultipleCustomerDropdownFilterStatus({ status, title: "Inactive Customers" }));
+		} else if (status === "suspend") {
+			dispatch(setMultipleCustomerDropdownFilterStatus({ status, title: "Suspended Customers" }));
+		}
+	}, [status]);
+
+	useEffect(() => {
+		const listener = (e) => {
+			if (!e.target.closest("#drop-one") || e.target.closest("#drop-one")) {
+				setToggle(false);
+			}
+		};
+
+		document.body.addEventListener("click", listener);
+		return () => document.body.removeEventListener("click", listener);
+	}, []);
+
 	return (
-		<CustomerFilterByWrapper>
+		<CustomerFilterByWrapper id="drop-one">
 			<div>
-				<button type="button" onClick={() => setToggle((prev) => !prev)}>
+				<button type="button" onClick={(e) => {
+					e.stopPropagation()
+					setToggle(prev => !prev)
+				}}>
 					All Customers
+					<ExpandMoreIcon />
 				</button>
 				{toggle && (
 					<div className="dropdownCard">
-						{dropItems.map((item) => (
-							<div
+						{customerStatus.map((item) => (
+							<FilterDropdownItem
 								key={item.status}
-								className="item"
-								onClick={() => {
-									setStatus(item.status);
-								}}
-							>
-								{item.title}
-							</div>
+								item={item}
+								setStatus={setStatus}
+								handleClick={handleClick}
+							/>
 						))}
 					</div>
 				)}
-			</div>
-			<div className="status">
-				{multipleCustomerStatusFiltering?.map((ticket) => (
-					<span key={ticket} onClick={() => handleClick(ticket)}>
-						{ticket} <ClearOutlinedIcon />
-					</span>
-				))}
 			</div>
 		</CustomerFilterByWrapper>
 	);

@@ -48,6 +48,7 @@ const ReportTableCustomerHeadRowWrapper = styled("tr")(() => ({
 		border: ".5px solid rgba(172, 172, 172, 1)",
 		padding: "4px",
 		cursor: "pointer",
+		color: "rgba(37, 36, 33, 1)",
 	},
 
 	".status": {
@@ -72,6 +73,7 @@ const ReportTableCustomerHeadRowWrapper = styled("tr")(() => ({
 		textAlign: "left",
 		padding: "5px",
 		borderRadius: "5px",
+		color: "rgba(37, 36, 33, 1)"
 	},
 
 	".status-item:hover": {

@@ -96,6 +96,27 @@ export function isValidDateTimeLocal(inputString) {
   return [true, null];
 }
 
+export function isValidDate(inputString) {
+	const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+	if (!regex.test(inputString)) {
+		return [false, "Invalid format. The format should be 'MM-DD-YYYY'."];
+	}
+
+	const [year, month, day] = inputString.split("-");
+	const dateObj = new Date(year, month - 1, day);
+
+	const yearValid = dateObj.getFullYear() == year;
+	const monthValid = dateObj.getMonth() + 1 == month;
+	const dayValid = dateObj.getDate() == day;
+
+	if (!(yearValid && monthValid && dayValid)) {
+		return [false, "Invalid date values."];
+	}
+
+	return [true, null];
+}
+
 export function isHardwareTypeValid(value) {
 	if (value.trim().length === 0) return [false, "Hardware type can not be empty"];
 	else return [true, ""];

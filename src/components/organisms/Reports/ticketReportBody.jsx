@@ -20,12 +20,8 @@ const TicketReportBody = () => {
 		filteredProjectTicketsByDate,
 		filteredProjectTicketsByStatus,
 		reportTabIndex,
-		serviceDateStart,
-		serviceDateEnd,
 	} = useSelector((state) => state.ticketReports);
 	const dispatch = useDispatch();
-
-	console.log(filteredProjectTickets)
 
 	const filteredTickets = reportTabIndex === 0 ? filteredT : filteredProjectTickets;
 	const filteredTicketsByDate = reportTabIndex === 0 ? filteredTBD : filteredProjectTicketsByDate;
@@ -65,7 +61,10 @@ const TicketReportBody = () => {
 	const handleTicketsSort = (type) => {
 		let sortedTickets = null;
 
-		if (filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0) {
+		if (
+			(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length != 0) ||
+			(filteredTicketsByStatus.length != 0 && filteredTicketsByDate.length === 0)
+		) {
 			console.log("Ascending");
 			if (type === "ascending") {
 				sortedTickets = filteredTicketsByStatus
@@ -145,22 +144,13 @@ const TicketReportBody = () => {
 
 	return (
 		<>
-			{(filteredTickets.length != 0 && (
-				<>
-					<TypeFilterBoard
-						handleReportDateRange={handleTicketDateRange}
-						handleReportsSort={handleTicketsSort}
-						toggle={toggle}
-						setToggle={setToggle}
-					/>
-					{(reportTabIndex === 0 && <ReportTicketTable />) || <ReportTicketTable />}
-				</>
-			)) || (
-				<Placeholder
-					messageHeader="seems you don’t have anything here yet!"
-					messageParagraph="Once a report is generated for you, you will be able to view the data here."
-				/>
-			)}
+			<TypeFilterBoard
+				handleReportDateRange={handleTicketDateRange}
+				handleReportsSort={handleTicketsSort}
+				toggle={toggle}
+				setToggle={setToggle}
+			/>
+			{(reportTabIndex === 0 && <ReportTicketTable />) || <ReportTicketTable />}
 		</>
 	);
 };

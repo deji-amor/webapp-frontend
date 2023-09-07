@@ -6,10 +6,12 @@ import {
 	filterTicketsByStatus,
 	setMultipleFilterStatus,
 	removeMultipleFilterStatus,
+	setMultipleDropdownFilterStatus,
 } from "../../../state-manager/reducers/reports/tickets/ticketreport";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { handleFilterByStatus } from "../../organisms/Reports/filters";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import FilterDropdownItem from "./filterdropdownitem";
 
 const FilterByWrapper = styled("div")(() => ({
 	position: "relative",
@@ -30,12 +32,13 @@ const FilterByWrapper = styled("div")(() => ({
 	},
 
 	".dropdownCard": {
-		width: "167px",
+		width: "205px",
 		height: "140px",
 		overflow: "hidden",
 		background: "white",
 		borderRadius: "8px",
 		position: "absolute",
+		zIndex: "20",
 		padding: "8px 6px 8px 6px",
 		boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.20)",
 		display: "flex",
@@ -91,64 +94,85 @@ const FilterByWrapper = styled("div")(() => ({
 	},
 }));
 
-const ProjectFilterBy = ({ dropItems }) => {
-	const [text, setText] = useState("All Tickets");
+const ProjectFilterBy = ({ click, handleClicked }) => {
 	const [status, setStatus] = useState("");
+	const [active, setActive] = useState(false);
 	const [toggle, setToggle] = useState(false);
 
-	const { filteredProjectTicketsByStatus, filteredProjectTickets, filteredProjectTicketsByDate, multipleProjectTicketStatusFiltering } = useSelector(
+	const { filteredProjectTickets, filteredProjectTicketsByDate, projectStatus, reportTabIndex } = useSelector(
 		(state) => state.ticketReports
 	);
 
 	const dispatch = useDispatch();
 
-	const handleClick = (t) => {
-		dispatch(removeMultipleFilterStatus(t));
+	const handleClick = (active) => {
+		if (active) {
+			setActive(true)
+		}else {
+			setActive(false)
+		}
 	};
 
 	useEffect(() => {
 		if (status != "") {
-			handleFilterByStatus(
-				status,
-				filteredProjectTickets,
-				filteredProjectTicketsByDate,
-				filterTicketsByStatus,
-				setMultipleFilterStatus,
-				dispatch
-			);
+			if (!active) {
+				handleFilterByStatus(
+					status,
+					filteredProjectTickets,
+					filteredProjectTicketsByDate,
+					filterTicketsByStatus,
+					setMultipleFilterStatus,
+					dispatch
+				);
+			}else {
+				dispatch(removeMultipleFilterStatus(status))
+			}
 		}
 		setStatus("")
-	}, [status]);
+	}, [status, active]);
+
+	useEffect(() => {
+		if (reportTabIndex === 1) {
+			if (status === 'done') {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Done"}))
+			}else if (status === "in-progress") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Inprogress"}))
+			}else if (status === "pending") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Pending"}))
+			}else if (status === "technician enroute") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Technician Enroute"}))
+			}
+		}
+	}, [status])
+
+	useEffect(() => {
+		const listener = (e) => {
+			if (!e.target.closest("#drop-one") || e.target.closest("#drop-two")) {
+				setToggle(false);
+			}
+		};
+
+		document.body.addEventListener("click", listener);
+		return () => document.body.removeEventListener("click", listener);
+	}, []);
 
 	return (
 		<FilterByWrapper>
 			<div>
-				<button type="button" onClick={() => setToggle((prev) => !prev)}>
+				<button type="button" onClick={(e) => {
+					e.stopPropagation()
+					setToggle((prev) => !prev)
+				}}>
 					All Tickets
 					<ExpandMoreIcon />
 				</button>
 				{toggle && (
 					<div className="dropdownCard">
-						{dropItems.map((item) => (
-							<div
-								key={item.status}
-								className="item"
-								onClick={() => {
-									setStatus(item.status);
-								}}
-							>
-								{item.title}
-							</div>
+						{projectStatus.map((item) => (
+							<FilterDropdownItem key={item.status} item={item} setStatus={setStatus} handleClick={handleClick} />
 						))}
 					</div>
 				)}
-			</div>
-			<div className="status">
-				{multipleProjectTicketStatusFiltering?.map((ticket) => (
-					<span key={ticket} onClick={() => handleClick(ticket)}>
-						{ticket} <ClearOutlinedIcon />
-					</span>
-				))}
 			</div>
 		</FilterByWrapper>
 	);
@@ -157,6 +181,8 @@ const ProjectFilterBy = ({ dropItems }) => {
 ProjectFilterBy.propTypes = {
 	dropItems: PropTypes.array,
 	filteredReports: PropTypes.array,
+	handleClicked: PropTypes.func,
+	click: PropTypes.bool
 };
 
 export default ProjectFilterBy;

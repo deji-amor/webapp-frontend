@@ -5,8 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
 	filterTicketsByStatus,
 	setMultipleFilterStatus,
+	setMultipleDropdownFilterStatus,
 	removeMultipleFilterStatus,
 } from "../../../state-manager/reducers/reports/tickets/ticketreport";
+import FilterDropdownItem from "./filterdropdownitem";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { handleFilterByStatus } from "../../organisms/Reports/filters";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
@@ -30,12 +32,13 @@ const FilterByWrapper = styled("div")(() => ({
 	},
 
 	".dropdownCard": {
-		width: "167px",
+		width: "205px",
 		height: "140px",
 		overflow: "hidden",
 		background: "white",
 		borderRadius: "8px",
 		position: "absolute",
+		zIndex: "20",
 		padding: "8px 6px 8px 6px",
 		boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.20)",
 		display: "flex",
@@ -43,32 +46,6 @@ const FilterByWrapper = styled("div")(() => ({
 		justifyContent: "center",
 		gap: "2px",
 		transition: "all",
-	},
-
-	".dropdownCard .item": {
-		display: "flex",
-		alignItems: "center",
-		fontFamily: "Poppins",
-		fontSize: "14px",
-		fontWeight: "500",
-		lineHeight: "20px",
-		letterSpacing: "0.02em",
-		textAlign: "left",
-		padding: "5px",
-		borderRadius: "5px",
-	},
-
-	".dropdownCard .item.active": {
-		background: "rgba(76, 111, 255, 0.08)",
-	},
-
-	".dropdownCard .item:hover": {
-		width: "100%",
-		height: "38px",
-		border: "0px 0px 1px 0px",
-		gap: "16px",
-		cursor: "pointer",
-		background: "rgba(76, 111, 255, 0.08)",
 	},
 
 	".status": {
@@ -91,63 +68,85 @@ const FilterByWrapper = styled("div")(() => ({
 	},
 }));
 
-const FilterBy = ({ dropItems }) => {
+const FilterBy = ({click, handleClicked}) => {
 	const [status, setStatus] = useState("");
+	const [active, setActive] = useState(false);
 	const [toggle, setToggle] = useState(false);
 
-	const { filteredTickets, filteredTicketsByDate, multipleTicketStatusFiltering } = useSelector(
+	const { filteredTickets, filteredTicketsByDate, serviceStatus, reportTabIndex } = useSelector(
 		(state) => state.ticketReports
 	);
 
 	const dispatch = useDispatch();
 
-	const handleClick = (t) => {
-		dispatch(removeMultipleFilterStatus(t));
-	};
+	const handleClick = (active) => {
+		if (active) {
+			setActive(true)
+		}else {
+			setActive(false)
+		}
+	}
 
 	useEffect(() => {
 		if (status != "") {
-			handleFilterByStatus(
-				status,
-				filteredTickets,
-				filteredTicketsByDate,
-				filterTicketsByStatus,
-				setMultipleFilterStatus,
-				dispatch
-			);
+			if (!active) {
+				handleFilterByStatus(
+					status,
+					filteredTickets,
+					filteredTicketsByDate,
+					filterTicketsByStatus,
+					setMultipleFilterStatus,
+					dispatch
+				);
+			}else {
+				dispatch(removeMultipleFilterStatus(status))
+			}
 		}
-		setStatus("")
-	}, [status]);
+		setStatus("");
+	}, [status, active]);
+
+	useEffect(() => {
+		if (reportTabIndex === 0) {
+			if (status === 'done') {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Done"}))
+			}else if (status === "in-progress") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Inprogress"}))
+			}else if (status === "pending") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Tickets Pending"}))
+			}else if (status === "technician enroute") {
+				dispatch(setMultipleDropdownFilterStatus({status, title: "Technician Enroute"}))
+			}
+		}
+	}, [status])
+
+	useEffect(() => {
+		const listener = (e) => {
+			if (!e.target.closest("#drop-one") || e.target.closest("#drop-two")) {
+				setToggle(false);
+			}
+		};
+
+		document.body.addEventListener("click", listener);
+		return () => document.body.removeEventListener("click", listener);
+	}, []);
 
 	return (
-		<FilterByWrapper>
+		<FilterByWrapper id="drop-two">
 			<div>
-				<button type="button" onClick={() => setToggle((prev) => !prev)}>
+				<button type="button" onClick={(e) => {
+					e.stopPropagation()
+					setToggle((prev) => !prev)
+				}}>
 					All Tickets
 					<ExpandMoreIcon />
 				</button>
 				{toggle && (
 					<div className="dropdownCard">
-						{dropItems.map((item) => (
-							<div
-								key={item.status}
-								className="item"
-								onClick={() => {
-									setStatus(item.status);
-								}}
-							>
-								{item.title}
-							</div>
+						{serviceStatus.map((item) => (
+							<FilterDropdownItem key={item.status} item={item} setStatus={setStatus} handleClick={handleClick} />
 						))}
 					</div>
 				)}
-			</div>
-			<div className="status">
-				{multipleTicketStatusFiltering?.map((ticket) => (
-					<span key={ticket} onClick={() => handleClick(ticket)}>
-						{ticket} <ClearOutlinedIcon />
-					</span>
-				))}
 			</div>
 		</FilterByWrapper>
 	);
@@ -156,6 +155,8 @@ const FilterBy = ({ dropItems }) => {
 FilterBy.propTypes = {
 	dropItems: PropTypes.array,
 	filteredReports: PropTypes.array,
+	handleClicked: PropTypes.func,
+	click: PropTypes.bool
 };
 
 export default FilterBy;

@@ -34,17 +34,17 @@ const HistoryItem = ({ log }) => {
 		if (isOldDetailsAnObject || isNewDetailsAnObject) {
 			const oldDetails = JSON.parse(old_details);
 			if (oldDetails.start_date_time) {
-				oldDetails.start_date_time = formatDate(convertDate(oldDetails.start_date_time));
+				oldDetails.start_date_time = formatDate(convertDate(oldDetails.start_date_time), false);
 			}
 			if (oldDetails.end_date_time) {
-				oldDetails.end_date_time = formatDate(convertDate(oldDetails.end_date_time));
+				oldDetails.end_date_time = formatDate(convertDate(oldDetails.end_date_time), false);
 			}
 			const newDetails = JSON.parse(new_details);
 			if (newDetails.start_date_time) {
-				newDetails.start_date_time = formatDate(convertDate(newDetails.start_date_time));
+				newDetails.start_date_time = formatDate(convertDate(newDetails.start_date_time), false);
 			}
 			if (newDetails.end_date_time) {
-				newDetails.end_date_time = formatDate(convertDate(newDetails.end_date_time));
+				newDetails.end_date_time = formatDate(convertDate(newDetails.end_date_time), false);
 			}
 			const commonKeys = intersection(Object.keys(oldDetails), Object.keys(newDetails));
 			const differences = pickBy(
@@ -52,11 +52,11 @@ const HistoryItem = ({ log }) => {
 				(value, key) => !isEqual(value, oldDetails[key]) && commonKeys.includes(key)
 			);
 			const changedKeys = Object.keys(differences);
-			console.log(changedKeys);
-			console.log(differences);
-			console.log(commonKeys);
-			console.log(oldDetails);
-			console.log(newDetails);
+			// console.log(changedKeys);
+			// console.log(differences);
+			// console.log(commonKeys);
+			// console.log(oldDetails);
+			// console.log(newDetails);
 
 			return changedKeys.map((key) => {
 				return (
