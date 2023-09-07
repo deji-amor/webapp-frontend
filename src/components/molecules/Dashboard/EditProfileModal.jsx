@@ -6,11 +6,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
 import Cover from "../../../assets/daashboard/Cover.png";
 import CustomButton from "../../atoms/Password/customButton";
-import {
-	authUserActions,
-	editProfile,
-	updateProfilePicture,
-} from "../../../state-manager/reducers/users/authUser";
+import { authUserActions, editProfile, updateProfilePicture } from "../../../state-manager/reducers/users/authUser";
+import { updateUser } from "../../../state-manager/reducers/users/users";
+import { customerActions } from "../../../state-manager/reducers/users/customers/customers";
+import { UIActions } from "../../../state-manager/reducers/UI/ui";
 
 const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
@@ -57,17 +56,32 @@ const EditProfileModal = ({ open, onClose }) => {
 
 	const handleSave = () => {
 		dispatch(editProfile(editedFields))
-			.then((data) => {
-				dispatch(authUserActions.setData(data.payload.data));
-				if (selectedImage) {
-					dispatch(updateProfilePicture(selectedImage)).then((imageData) => {
-						console.log(imageData.payload);
-						dispatch(authUserActions.setData(imageData.payload));
+			.then((response) => {
+				if (response.payload.message != "Workspace name has been used!") {
+					dispatch(authUserActions.setData(response.payload.data));
+					if (response.payload.data.user_type === "superadmin") {
+						dispatch(updateUser(response.payload.data));
+					} else {
+						dispatch(customerActions.updateCustomer(response.payload.data));
+					}
 
-						setSelectedImage(null);
-					});
+					if (selectedImage) {
+						dispatch(updateProfilePicture(selectedImage)).then((imageData) => {
+							dispatch(authUserActions.setData(imageData.payload));
+
+							setSelectedImage(null);
+						});
+					}
+					onClose();
+				} else {
+					dispatch(
+						UIActions.showToasts({
+							message: "Use an unexisting workspace name.",
+							title: "Workspace already exists",
+							type: "error",
+						})
+					);
 				}
-				onClose();
 			})
 			.catch((error) => {
 				// Handle error
