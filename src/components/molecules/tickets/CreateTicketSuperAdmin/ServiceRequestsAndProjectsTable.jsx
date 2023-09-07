@@ -18,11 +18,9 @@ const ServiceRequestsAndProjectsTable = () => {
 		const results = tickets
 			.filter((ticket) => {
 				if (showServiceRequestsTab) {
-					console.log(true);
 					return ticket.ticket_type === "service ticket";
 				}
 				if (showProjectsTab) {
-					console.log(true);
 					return ticket.ticket_type === "project ticket";
 				}
 			})

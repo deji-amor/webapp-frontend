@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo} from "react";
+import { ticketDetailsActions } from "../../../state-manager/reducers/tickets/ticketDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets";
 import { UIActions } from "../../../state-manager/reducers/UI/ui";
@@ -69,6 +70,12 @@ const TicketsTableBody = () => {
 			if (successful === true) {
 				if (data) dispatch(ticketsActions.replaceTicket(data));
 				dispatch(
+					ticketDetailsActions.changeMultipleState([
+						{ key: "successful", value: null },
+						{ key: "error", value: null },
+					])
+				);
+				dispatch(
 					UIActions.showToasts({
 						message: "The Ticket Status Was Updated Successfully",
 						title: "Ticket Status Change successful",
@@ -77,6 +84,12 @@ const TicketsTableBody = () => {
 				);
 			}
 			if (error === true) {
+				dispatch(
+					ticketDetailsActions.changeMultipleState([
+						{ key: "successful", value: null },
+						{ key: "error", value: null },
+					])
+				);
 				dispatch(
 					UIActions.showToasts({
 						message: errorMessage,
