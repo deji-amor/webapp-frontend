@@ -5,7 +5,7 @@ import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets"
 import { UIActions } from "../../../state-manager/reducers/UI/ui";
 import { v4 } from "uuid";
 import TicketsTableBodyItem from "./TicketsTableBodyItem";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 
 const TicketsTableBody = () => {
 	const {
@@ -26,8 +26,10 @@ const TicketsTableBody = () => {
 	const {users, loading: usersLoading} = useSelector((state) => state.users)
 	const dispatch = useDispatch()
 
+	const location = useLocation()
+
 	const [searchParams] = useSearchParams();
-	const request = searchParams.get("request").replace("/", "");
+	const request = searchParams.get("request")?.replace("/", "");
 	const showServiceRequestsTab = request === "service";
 	const showProjectsRequestTab = request === "project";
 	

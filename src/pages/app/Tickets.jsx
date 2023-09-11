@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TicketsTableHeading from "../../components/organisms/tickets/TicketsTableHeading";
 import TicketsSearchBar from "../../components/organisms/tickets/TicketsSearchBar";
 import TicketsHeaderActiveTicketType from "../../components/organisms/tickets/TicketsHeaderActiveTicketType";
@@ -9,7 +9,8 @@ import { useSelector } from "react-redux";
 import Placeholder from "../../components/molecules/general/Placeholder";
 import { Triangle } from "react-loader-spinner";
 import { LoaderContainerWrapper, LoaderWrapper } from "../../components/atoms/Password/wrappers";
-import { useNavigate, Outlet, useSearchParams } from "react-router-dom";
+import { useNavigate, Outlet, useLocation, useOutlet, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Wrapper = styled("div")`
 	position: relative;
@@ -49,16 +50,20 @@ const Tickets = () => {
 	} = useSelector((state) => state.users);
 
 	const navigate = useNavigate();
-	const [searchParams] = useSearchParams();
-	const request = searchParams.get("request");
+	const location = useLocation()
+	const [searchParams, setSearchParams] = useSearchParams();
+	// const request = searchParams.get("request")?.replace("/", "");
+	// const showServiceRequestsTab = request === "service";
+	// const showProjectsRequestTab = request === "project";
 
-	useEffect(() => {
-		if(!request){
-			navigate("/admin/tickets?request=service");
-		}
-	}, [request, navigate])
+	// useEffect(() => {
+	// 	// if(!request){
+	// 		// navigate("/admin/tickets/?request=service");
+	// 		// setSearchParams({request: "service"})
+	// 	// }
+	// }, [request, setSearchParams])
 
-	if (ticketsLoading || customersLoading || usersLoading || !request){
+	if (ticketsLoading || customersLoading || usersLoading){
 		return (
 			<div>
 				<LoaderWrapper></LoaderWrapper>
@@ -77,8 +82,7 @@ const Tickets = () => {
 		);
 	}
 	
-	if (ticketsError || customersError || usersError || !request)
-		return <p>An error occurred please refresh</p>;
+	if (ticketsError || customersError || usersError) return <p>An error occurred please refresh</p>;
 
 	const createCustomer = () => {
 		navigate("../users");

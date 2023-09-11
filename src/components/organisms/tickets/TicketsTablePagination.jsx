@@ -20,7 +20,7 @@ const TicketsTablePagination = () => {
 	const dispatch = useDispatch()
 
 	const [searchParams] = useSearchParams();
-	const request = searchParams.get("request").replace("/", "");
+	const request = searchParams.get("request")?.replace("/", "");
 	const showServiceRequestsTab = request === "service";
 	const showProjectsRequestTab = request === "project";
 
