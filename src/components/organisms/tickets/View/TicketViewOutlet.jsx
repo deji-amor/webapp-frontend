@@ -46,7 +46,7 @@ const TicketViewOutlet = () => {
       </div>
 			<div className="flex justify-between gap-[1.5rem] min-h-[17rem]">
 				<div className="basis-[15%]">
-					<LinkButton active={pathname.includes("detail/")} onClick={() => navigate(`../view/detail/${ticketId}`)}>Ticket Details</LinkButton>
+					<LinkButton active={pathname.includes("detail/")} onClick={() => navigate(`../view/detail/${ticketId}`)}>Ticket Detail</LinkButton>
 					<LinkButton active={pathname.includes("history/")} onClick={() => navigate(`../view/history/${ticketId}`)}>Ticket History</LinkButton>
 				</div>
 				<div className="basis-[85%] py-[1rem] px-[1.25rem] self-stretch border-[0.5px] border-[#2B2E72] rounded-[0.75rem]">
