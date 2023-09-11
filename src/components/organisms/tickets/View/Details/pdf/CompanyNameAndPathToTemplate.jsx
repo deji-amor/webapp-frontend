@@ -69,12 +69,6 @@ const CompanyNameAndPathToTemplate = ({chosenTemplate, ticket, customer}) => {
 			fontWeight: 400,
 			marginBottom: 35,
 		},
-		hr: {
-			maxWidth: 400,
-			borderColor: "fff",
-			backgroundColor: "fff",
-			borderWidth: 2,
-		},
 	});
 
 	const path = pathToTemplate.slice().map((p, ind, arr) => {

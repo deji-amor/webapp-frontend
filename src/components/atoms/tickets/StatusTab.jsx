@@ -42,7 +42,7 @@ const StatusTab = ({status}) => {
 	}
 	if(status.toLowerCase() === "technician enroute"){
 		return (
-			<Tab className="capitalize" color={"#E9AB39"} background={"rgba(233,171,57,0.14)"}>
+			<Tab className="capitalize" color={"#AD9E01"} background={"rgba(173,158,1,0.14)"}>
 				Tech. Enroute
 			</Tab>
 		);

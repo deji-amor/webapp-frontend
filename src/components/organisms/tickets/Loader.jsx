@@ -1,14 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Loader = ({children, blue}) => {
+const Loader = ({children}) => {
   const spinner = (
 		<div role="status" className="font-poppins flex items-center gap-[0.5rem]">
 			<svg
 				aria-hidden="true"
-				className={`w-4 h-4 mr-2 text-gray-200 animate-spin ${
-					blue ? "fill-[#2b2e72]" : "fill-[#fff]"
-				}`}
+				className="w-4 h-4 mr-2 text-gray-200 animate-spin fill-[#fff]"
 				viewBox="0 0 100 101"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
@@ -33,8 +31,7 @@ const Loader = ({children, blue}) => {
 }
 
 Loader.propTypes = {
-  children: PropTypes.node,
-	blue: PropTypes.bool,
+  children: PropTypes.node
 }
 
 export default Loader

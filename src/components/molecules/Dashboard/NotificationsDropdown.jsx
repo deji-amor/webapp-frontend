@@ -110,9 +110,6 @@ const NotificationText = styled("h1")`
 `;
 
 const NotificationsDropdown = () => {
-	const { loading: ticketsLoading } = useSelector((state) => state.tickets);
-	const { loading: customersLoading } = useSelector((state) => state.customers);
-	const { loading: usersLoading } = useSelector((state) => state.users);
 	const { sortByAscending, notifications, currentSearchValue } = useSelector(
 		(state) => state.notifications
 	);
@@ -125,80 +122,66 @@ const NotificationsDropdown = () => {
 	}
 
 	const notificationsList = useMemo(() => {
-		const uniqueArray = uniqWith(notifications, isEqual);
-		let list = uniqueArray.filter((notification) => {
-			if (currentSearchValue === "All") return true;
-			if (currentSearchValue === "Account Creation")
-				return notification.type === "customer-creation";
-			if (currentSearchValue === "Account Onboarding")
-				return notification.type === "customer-onboarding";
+		const uniqueArray = uniqWith(notifications, isEqual)
+		let list = uniqueArray.filter(notification => {
+			if(currentSearchValue === "All") return true
+			if(currentSearchValue === "Account Creation") return notification.type === "customer-creation";
+			if(currentSearchValue === "Account Onboarding") return notification.type === "customer-onboarding";
 			if (currentSearchValue === "Profile Update") return notification.type === "customer-update";
 			if (currentSearchValue === "Ticket Update") return notification.type === "ticket-update";
 			if (currentSearchValue === "Ticket Edit") return notification.type === "ticket-edit";
-		});
+		})
 
-		// Sort by unread above read and then by timestamp
-		list = list.sort((a, b) => {
-			if (a.is_read === 1 && b.is_read === 0) {
-				return 1;
-			} else if (a.is_read === 0 && b.is_read === 1) {
-				return -1;
-			} else {
-				// If both are read or both are unread, sort by timestamp
-				const timestampA = new Date(a.timestamp);
-				const timestampB = new Date(b.timestamp);
+		if (!sortByAscending) {
+			list = list.slice().reverse();
+		}
 
-				if (sortByAscending) {
-					return timestampA - timestampB; // Ascending order
-				} else {
-					return timestampB - timestampA; // Descending order
-				}
+		list.sort((a, b) => {
+			if(a.is_read === 1 && b.is_read === 0){
+				return 1
+			}else if (a.is_read === 0 && b.is_read === 1) {
+				return -1
+			}else {
+				return b.id - a.id
 			}
-		});
-
-		return list;
-	}, [notifications, sortByAscending, currentSearchValue]);
+		})
+		return list
+	}, [notifications, sortByAscending, currentSearchValue])
 
 	const r = notificationsList
 
-		return (
-			<Wrapper>
-				<div className="flex justify-between gap-[7rem]">
-					<NotificationText>Notifications</NotificationText>
-					<div className="flex items-center gap-[0.75rem]">
-						<NotificationsFilterDropdown />
-						<OrderText
-							onClick={changeSortOrder}
-							className="truncate flex items-center cursor-pointer hover:underline"
-						>
-							<span>{orderText}</span>
-							<OrderIcon className={sortByAscending ? "" : "rotate-180"} />
-						</OrderText>
-					</div>
+  return (
+		<Wrapper>
+			<div className="flex justify-between gap-[7rem]">
+				<NotificationText>Notifications</NotificationText>
+				<div className="flex items-center gap-[0.75rem]">
+					<NotificationsFilterDropdown />
+					<OrderText
+						onClick={changeSortOrder}
+						className="truncate flex items-center cursor-pointer hover:underline"
+					>
+						<span>{orderText}</span>
+						<OrderIcon className={sortByAscending ? "" : "rotate-180"} />
+					</OrderText>
 				</div>
-				<div className="my-[0.68rem]">
-					<HorizontalRule />
+			</div>
+			<div className="my-[0.68rem]">
+				<HorizontalRule />
+			</div>
+			<div className="flex flex-col h-[25rem]">
+				<div className="basis-[85%] space-y-[1rem] max-h-[20rem] overflow-y-auto">
+					{r.slice().map((notification) => (
+						<NotificationItem notification={notification} key={v4()} />
+					))}
 				</div>
-				<div className="flex flex-col h-[25rem]">
-					{
-						(ticketsLoading || customersLoading || usersLoading) ?
-						<></> :
-						<>						
-							<div className="basis-[85%] space-y-[1rem] max-h-[20rem] overflow-y-auto">
-								{r.slice().map((notification) => (
-									<NotificationItem notification={notification} key={v4()} />
-								))}
-							</div>
-							<div className="basis-[15%] p-[1rem] flex items-center justify-center">
-								<InfoText className="max-w-[12rem] text-center">
-									Showing Notifications within the last 30 days
-								</InfoText>
-							</div>
-						</>
-					}
+				<div className="basis-[15%] p-[1rem] flex items-center justify-center">
+					<InfoText className="max-w-[12rem] text-center">
+						Showing Notifications within the last 30 days
+					</InfoText>
 				</div>
-			</Wrapper>
-		);
+			</div>
+		</Wrapper>
+	);
 }
 
 export default NotificationsDropdown
