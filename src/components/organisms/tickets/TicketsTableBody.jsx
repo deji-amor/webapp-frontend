@@ -5,14 +5,13 @@ import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets"
 import { UIActions } from "../../../state-manager/reducers/UI/ui";
 import { v4 } from "uuid";
 import TicketsTableBodyItem from "./TicketsTableBodyItem";
+import { useSearchParams, useLocation } from "react-router-dom";
 
 const TicketsTableBody = () => {
 	const {
 		tickets,
 		loading: ticketsLoading,
 		searchTicketsValue,
-		showServiceRequestsTab,
-		showProjectsTab,
 		activeTicketsStartPoint,
 		activeTicketsEndPoint,
 		filterByStatus,
@@ -26,6 +25,13 @@ const TicketsTableBody = () => {
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);
 	const {users, loading: usersLoading} = useSelector((state) => state.users)
 	const dispatch = useDispatch()
+
+	const location = useLocation()
+
+	const [searchParams] = useSearchParams();
+	const request = searchParams.get("request")?.replace("/", "");
+	const showServiceRequestsTab = request === "service";
+	const showProjectsRequestTab = request === "project";
 	
 	const filteredActiveTickets = useMemo(() => {
 		let filteredTickets = tickets
@@ -33,7 +39,7 @@ const TicketsTableBody = () => {
 				if (showServiceRequestsTab) {
 					return ticket.ticket_type === "service ticket";
 				}
-				if (showProjectsTab) {
+				if (showProjectsRequestTab) {
 					return ticket.ticket_type === "project ticket";
 				}
 			})
@@ -47,7 +53,7 @@ const TicketsTableBody = () => {
 		
 		if(!sortByAscending) filteredTickets = filteredTickets.reverse()
 		return filteredTickets
-	}, [showServiceRequestsTab, showProjectsTab, tickets, filterByStatus, sortByAscending]);
+	}, [showServiceRequestsTab, showProjectsRequestTab, tickets, filterByStatus, sortByAscending]);
 
 	const filteredSearchTickets = useMemo(() => {
 		return filteredActiveTickets

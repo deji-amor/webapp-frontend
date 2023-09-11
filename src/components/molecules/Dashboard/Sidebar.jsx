@@ -39,30 +39,26 @@ const Sidebar = () => {
 				<Logo />
 			</div>
 			<div className="flex flex-col gap-[1rem]">
-						<SidebarLink
-							link={"dashboard"}
-							name={"dashboard"}
-							icon={<DashboardIcon className="icon" />}
-							isActive={true}
-						/>
-						<SidebarLink
-							link={"tickets"}
-							name={"tickets"}
-							icon={<WorkIcon className="icon" />}
-							isActive={true}
-						/>
-						<SidebarLink
-							link={"users"}
-							name={"users"}
-							icon={<PeopleIcon className="icon" />}
-							isActive={true}
-						/>
-						<SidebarLink
-							link={"reports"}
-							icon={<BarChartSharpIcon className="icon" />}
-							name={"reports"}
-							isActive={true}
-						/>
+				<SidebarLink
+					link={"dashboard"}
+					name={"dashboard"}
+					icon={<DashboardIcon className="icon" />}
+				/>
+				<SidebarLink
+					link={"tickets/?request=service"}
+					name={"tickets"}
+					icon={<WorkIcon className="icon" />}
+				/>
+				<SidebarLink
+					link={"users"}
+					name={"users"}
+					icon={<PeopleIcon className="icon" />}
+				/>
+				<SidebarLink
+					link={"reports"}
+					icon={<BarChartSharpIcon className="icon" />}
+					name={"reports"}
+				/>
 			</div>
 			<div className="logout">
 				<SidebarLink link={"logout"} icon={<LogoutSharpIcon className="icon" />} />

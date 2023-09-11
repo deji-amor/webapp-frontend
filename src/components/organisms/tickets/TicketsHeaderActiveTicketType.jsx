@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
 import SortIcon from "@mui/icons-material/Sort";
 import { styled } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 
 const SortText = styled("p")`
 	color: #000;
@@ -15,31 +16,22 @@ const SortText = styled("p")`
 `;
 
 const TicketsHeaderActiveTicketType = () => {
-    const { showServiceRequestsTab, showProjectsTab, sortByAscending } = useSelector(
+    const { sortByAscending } = useSelector(
 			(state) => state.tickets
 		);
 		const dispatch = useDispatch();
 
+		const [searchParams, setSearchParams] = useSearchParams();
+		const request = searchParams.get("request")?.replace("/", "");
+		const showServiceRequestsTab = request === "service";
+		const showProjectsRequestTab = request === "project";
+
 		const handleServiceRequestTabToggle = () => {
-			if (!showServiceRequestsTab) {
-				dispatch(
-					ticketsActions.updateField([
-						{ key: "showServiceRequestsTab", value: true },
-						{ key: "showProjectsTab", value: false },
-					])
-				);
-			}
+			setSearchParams({request: "service"})
 		};
 
 		const handleShowProjectTabToggle = () => {
-			if (!showProjectsTab) {
-				dispatch(
-					ticketsActions.updateField([
-						{ key: "showServiceRequestsTab", value: false },
-						{ key: "showProjectsTab", value: true },
-					])
-				);
-			}
+			setSearchParams({ request: "project" });
 		};
 
 		const handleSortByToggle = () => {
@@ -57,7 +49,7 @@ const TicketsHeaderActiveTicketType = () => {
 						</Tab>
 					</div>
 					<div className="w-[9rem]">
-						<Tab onClick={handleShowProjectTabToggle} isActive={showProjectsTab}>
+						<Tab onClick={handleShowProjectTabToggle} isActive={showProjectsRequestTab}>
 							Project Requests
 						</Tab>
 					</div>

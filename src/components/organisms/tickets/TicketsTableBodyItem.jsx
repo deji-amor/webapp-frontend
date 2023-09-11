@@ -29,7 +29,7 @@ const TicketsTableBodyItem = ({ ticket }) => {
   const {
     statuses,
   } = useSelector((state) => state.tickets);
-	const { loading, error, successful} = useSelector((state) => state.ticketDetails);
+	const { loading, currentTicketIdThatISEditing } = useSelector((state) => state.ticketDetails);
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -60,22 +60,11 @@ const TicketsTableBodyItem = ({ ticket }) => {
 		}
 	}, [])
 
-	const [isThisTicketLoading, setIsThisTicketLoading] = useState(false)
-
-	console.log({isThisTicketLoading, loading});
-
-	useEffect(() => {
-		if (successful === true) {
-			setIsThisTicketLoading(false)
-		}
-		if (error === true) {
-			setIsThisTicketLoading(false);
-		}
-	}, [successful, error])
+	const isThisTicketLoading = loading && +currentTicketIdThatISEditing === +ticket.id;
 
   const changeTicketStatusHandler = (ticketId, status) => {
     setShowStatusDrop(false);
-		setIsThisTicketLoading(true)
+		// setIsThisTicketLoading(true)
 		let newStatus = status.toLowerCase() === "inprogress" ? "IN-PROGRESS" : status.toUpperCase();
     dispatch(changeATicketStatus({ ticketId: ticketId, status: newStatus }));
   };
@@ -85,15 +74,11 @@ const TicketsTableBodyItem = ({ ticket }) => {
 			className="bg-white border-b hover:bg-gray-50 relative cursor-pointer"
 			onClick={(event) => ViewTicket(event, ticket.id)}
 		>
-			<RecentTicketTableText>
-				{ticket.company_name}
-			</RecentTicketTableText>
+			<RecentTicketTableText>{ticket.company_name}</RecentTicketTableText>
 			<RecentTicketTableText className="max-w-[10rem] border truncate">
 				{ticket.ticket_form}
 			</RecentTicketTableText>
-			<RecentTicketTableText>
-				{ticket.email}
-			</RecentTicketTableText>
+			<RecentTicketTableText>{ticket.email}</RecentTicketTableText>
 			<RecentTicketTableText>
 				<StatusTab status={ticket.status} />
 			</RecentTicketTableText>
@@ -106,7 +91,9 @@ const TicketsTableBodyItem = ({ ticket }) => {
 					</NavLink>
 					<button
 						disabled={loading}
-						className={`changeTicketDropdown ${(loading || isThisTicketLoading) && "cursor-not-allowed"}`}
+						className={`changeTicketDropdown ${
+							(loading || isThisTicketLoading) && "cursor-not-allowed"
+						}`}
 						id={id}
 					>
 						{showStatusDrop && (
@@ -124,8 +111,8 @@ const TicketsTableBodyItem = ({ ticket }) => {
 									)}
 							/>
 						)}
-						{(isThisTicketLoading && loading) ? (
-							<Loader blue={true}/>
+						{isThisTicketLoading && loading ? (
+							<Loader blue={true} />
 						) : (
 							<MoreVertIcon fontSize="small" onClick={(event) => setShowStatusDropHandler(event)} />
 						)}
