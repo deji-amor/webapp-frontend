@@ -6,19 +6,23 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useSelector, useDispatch } from 'react-redux';
 import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
+import { useSearchParams } from 'react-router-dom';
 
 const TicketsTablePagination = () => {
 	const {
 		loading: ticketsLoading,
 		activeTickets,
 		ticketsOnEachPage,
-		showServiceRequestsTab,
-		showProjectsTab,
 	} = useSelector((state) => state.tickets);
 
 	const {loading: customersLoading } = useSelector((state) => state.customers);
 
 	const dispatch = useDispatch()
+
+	const [searchParams] = useSearchParams();
+	const request = searchParams.get("request").replace("/", "");
+	const showServiceRequestsTab = request === "service";
+	const showProjectsRequestTab = request === "project";
 
 	const totalItems = activeTickets.length;
 	const itemsOnEachPage = ticketsOnEachPage;
@@ -37,8 +41,8 @@ const TicketsTablePagination = () => {
 	} = usePagination(totalItems, itemsOnEachPage, maxNumberOfButtons);
 
 	useEffect(() => {
-		reset()
-	}, [showServiceRequestsTab, showProjectsTab]);
+		reset();
+	}, [showServiceRequestsTab, showProjectsRequestTab]);
 
 	useEffect(() => {
 		if(totalItems.length <= itemsOnEachPage){
@@ -57,7 +61,7 @@ const TicketsTablePagination = () => {
 		dispatch(
 			ticketsActions.updateField({ key: "activeTicketsEndPoint", value: itemEndPoint })
 		);
-	}, [itemStartPoint, itemEndPoint, totalItems,dispatch])
+	}, [itemStartPoint, itemEndPoint, totalItems, dispatch, itemsOnEachPage])
 
 	if(ticketsLoading || customersLoading) return <></>
 
