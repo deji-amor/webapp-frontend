@@ -1,9 +1,9 @@
 import React from 'react'
 import Tab from '../../atoms/tickets/CreateTicketSuperAdmin/Tab';
-import { useSelector, useDispatch } from 'react-redux';
-import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
+import { useSelector} from 'react-redux';
 import SortIcon from "@mui/icons-material/Sort";
 import { styled } from '@mui/material';
+import { useSearchParams, NavLink, useNavigate } from 'react-router-dom';
 
 const SortText = styled("p")`
 	color: #000;
@@ -15,35 +15,23 @@ const SortText = styled("p")`
 `;
 
 const TicketsHeaderActiveTicketType = () => {
-    const { showServiceRequestsTab, showProjectsTab, sortByAscending } = useSelector(
+    const {sortByAscending } = useSelector(
 			(state) => state.tickets
 		);
-		const dispatch = useDispatch();
+		const [searchParams] = useSearchParams()
+		const request = searchParams.get("request").replace("/", "")
+		console.log(request);
+		const showServiceRequestsTab = request === "service"
+		const showProjectsRequestTab = request === "project"
+		console.log(showServiceRequestsTab, showProjectsRequestTab);
 
-		const handleServiceRequestTabToggle = () => {
-			if (!showServiceRequestsTab) {
-				dispatch(
-					ticketsActions.updateField([
-						{ key: "showServiceRequestsTab", value: true },
-						{ key: "showProjectsTab", value: false },
-					])
-				);
-			}
-		};
-
-		const handleShowProjectTabToggle = () => {
-			if (!showProjectsTab) {
-				dispatch(
-					ticketsActions.updateField([
-						{ key: "showServiceRequestsTab", value: false },
-						{ key: "showProjectsTab", value: true },
-					])
-				);
-			}
-		};
-
+		const navigate = useNavigate()
 		const handleSortByToggle = () => {
-			dispatch(ticketsActions.updateField({ key: "sortByAscending", value: !sortByAscending }));
+			if(showServiceRequestsTab){
+				navigate("/admin/tickets?request=project");
+			}else {
+				navigate("/admin/tickets?request=service")
+			}
 		}
 
   return (
@@ -51,19 +39,25 @@ const TicketsHeaderActiveTicketType = () => {
 			<div className="flex items-center justify-between">
 				<div className="flex relative">
 					<div className="w-[9rem]">
-						<div className={`border-[#2b2e72] transition-all absolute w-[50%] border-[2px] bottom-0 ${showServiceRequestsTab ? "left-0" : "left-[50%]"}`}></div>
-						<Tab onClick={handleServiceRequestTabToggle} isActive={showServiceRequestsTab}>
-							Service Requests
-						</Tab>
+						<div
+							className={`border-[#2b2e72] transition-all absolute w-[50%] border-[2px] bottom-0 ${
+								showServiceRequestsTab ? "left-0" : "left-[50%]"
+							}`}
+						></div>
+						<NavLink to="/admin/tickets?request=service">
+							<Tab isActive={showServiceRequestsTab}>Service Requests</Tab>
+						</NavLink>
 					</div>
 					<div className="w-[9rem]">
-						<Tab onClick={handleShowProjectTabToggle} isActive={showProjectsTab}>
-							Project Requests
-						</Tab>
+						<NavLink to="/admin/tickets?request=project">
+							<Tab isActive={showProjectsRequestTab}>Project Requests</Tab>
+						</NavLink>
 					</div>
 				</div>
-        <div onClick={handleSortByToggle} className='cursor-pointer'>
-						<SortText>Sort by: <SortIcon className={`${sortByAscending ? "rotate-180" : ""}`}/> </SortText>
+				<div onClick={handleSortByToggle} className="cursor-pointer">
+					<SortText>
+						Sort by: <SortIcon className={`${sortByAscending ? "rotate-180" : ""}`} />{" "}
+					</SortText>
 				</div>
 			</div>
 		</div>

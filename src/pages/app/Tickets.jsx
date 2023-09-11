@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TicketsTableHeading from "../../components/organisms/tickets/TicketsTableHeading";
 import TicketsSearchBar from "../../components/organisms/tickets/TicketsSearchBar";
 import TicketsHeaderActiveTicketType from "../../components/organisms/tickets/TicketsHeaderActiveTicketType";
@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import Placeholder from "../../components/molecules/general/Placeholder";
 import { Triangle } from "react-loader-spinner";
 import { LoaderContainerWrapper, LoaderWrapper } from "../../components/atoms/Password/wrappers";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, useSearchParams } from "react-router-dom";
 
 const Wrapper = styled("div")`
 	position: relative;
@@ -49,8 +49,16 @@ const Tickets = () => {
 	} = useSelector((state) => state.users);
 
 	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
+	const request = searchParams.get("request");
 
-	if (ticketsLoading || customersLoading || usersLoading){
+	useEffect(() => {
+		if(!request){
+			navigate("/admin/tickets?request=service");
+		}
+	}, [request, navigate])
+
+	if (ticketsLoading || customersLoading || usersLoading || !request){
 		return (
 			<div>
 				<LoaderWrapper></LoaderWrapper>
@@ -69,7 +77,8 @@ const Tickets = () => {
 		);
 	}
 	
-	if (ticketsError || customersError || usersError) return <p>An error occurred please refresh</p>;
+	if (ticketsError || customersError || usersError || !request)
+		return <p>An error occurred please refresh</p>;
 
 	const createCustomer = () => {
 		navigate("../users");
