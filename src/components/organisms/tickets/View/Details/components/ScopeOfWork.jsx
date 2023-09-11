@@ -10,6 +10,8 @@ const ScopeOfWork = () => {
 		const ticketInView = tickets.find((ticket) => +ticket.id === +ticketId);
 		const { scope_of_work_description } = ticketInView;
 
+		console.log(scope_of_work_description);
+
   return (
 		<>
 			<div className="flex">

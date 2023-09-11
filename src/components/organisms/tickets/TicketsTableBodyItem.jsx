@@ -29,7 +29,7 @@ const TicketsTableBodyItem = ({ ticket }) => {
   const {
     statuses,
   } = useSelector((state) => state.tickets);
-	const { loading, error, successful} = useSelector((state) => state.ticketDetails);
+	const { loading, currentTicketIdThatISEditing } = useSelector((state) => state.ticketDetails);
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -60,22 +60,11 @@ const TicketsTableBodyItem = ({ ticket }) => {
 		}
 	}, [])
 
-	const [isThisTicketLoading, setIsThisTicketLoading] = useState(false)
-
-	console.log({isThisTicketLoading, loading});
-
-	useEffect(() => {
-		if (successful === true) {
-			setIsThisTicketLoading(false)
-		}
-		if (error === true) {
-			setIsThisTicketLoading(false);
-		}
-	}, [successful, error])
+	const isThisTicketLoading = loading && +currentTicketIdThatISEditing === +ticket.id;
 
   const changeTicketStatusHandler = (ticketId, status) => {
     setShowStatusDrop(false);
-		setIsThisTicketLoading(true)
+		// setIsThisTicketLoading(true)
 		let newStatus = status.toLowerCase() === "inprogress" ? "IN-PROGRESS" : status.toUpperCase();
     dispatch(changeATicketStatus({ ticketId: ticketId, status: newStatus }));
   };
