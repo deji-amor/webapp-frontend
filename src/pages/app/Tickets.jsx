@@ -9,8 +9,7 @@ import { useSelector } from "react-redux";
 import Placeholder from "../../components/molecules/general/Placeholder";
 import { Triangle } from "react-loader-spinner";
 import { LoaderContainerWrapper, LoaderWrapper } from "../../components/atoms/Password/wrappers";
-import { useNavigate, Outlet, useLocation, useOutlet, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
 
 const Wrapper = styled("div")`
 	position: relative;
@@ -50,18 +49,6 @@ const Tickets = () => {
 	} = useSelector((state) => state.users);
 
 	const navigate = useNavigate();
-	const location = useLocation()
-	const [searchParams, setSearchParams] = useSearchParams();
-	// const request = searchParams.get("request")?.replace("/", "");
-	// const showServiceRequestsTab = request === "service";
-	// const showProjectsRequestTab = request === "project";
-
-	// useEffect(() => {
-	// 	// if(!request){
-	// 		// navigate("/admin/tickets/?request=service");
-	// 		// setSearchParams({request: "service"})
-	// 	// }
-	// }, [request, setSearchParams])
 
 	if (ticketsLoading || customersLoading || usersLoading){
 		return (

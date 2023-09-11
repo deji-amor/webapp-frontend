@@ -71,7 +71,7 @@ function App() {
 					{path: "view", element: <ViewTicket/>, children: [
 						{path: "detail/:ticketId", element: <TicketDetail/>},
 						{path: "history/:ticketId", element: <TicketHistory/>}
-					]}
+					] }
 				] },
 				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute>, children: [
 					// {path: "edit/:userId", element: <></>}

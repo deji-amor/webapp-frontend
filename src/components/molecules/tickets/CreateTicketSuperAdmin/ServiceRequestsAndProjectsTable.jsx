@@ -15,7 +15,7 @@ const ServiceRequestsAndProjectsTable = () => {
 	const { customers} = useSelector((state) => state.customers);
 
 	const filteredActiveTickets = useMemo(() => {
-		return tickets
+		const results = tickets
 			.filter((ticket) => {
 				if (showServiceRequestsTab) {
 					return ticket.ticket_type === "service ticket";
@@ -25,13 +25,10 @@ const ServiceRequestsAndProjectsTable = () => {
 				}
 			})
 			.filter((ticket) => {
-				const customerExist = customers.find((customer) => +customer.id === +ticket.customer_id);
-				return customerExist ? true : false;
-			})
-			.filter((ticket) => {
-				return +ticket.customer_id === +customer.id
+				return +ticket.customer_id === +customer.user_id
 			});
-	}, [showServiceRequestsTab, showProjectsTab, tickets]);
+			return results
+	}, [showServiceRequestsTab, showProjectsTab, tickets, customer]);
 
 	const list = filteredActiveTickets.map((ticket, ind) => (
 		<tr key={`${ticket.id}_${v4()}`}>
@@ -42,7 +39,7 @@ const ServiceRequestsAndProjectsTable = () => {
 				<LightText>{ticket.ticket_form}</LightText>
 			</td>
 			<td className="py-[0.4rem] pr-[1rem] text-left">
-				<StatusTab status="done" />
+				<StatusTab status={ticket.status} />
 			</td>
 		</tr>
 	));

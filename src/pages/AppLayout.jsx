@@ -1,4 +1,4 @@
-import React, {useEffect, memo, useState, useMemo} from 'react'
+import React, {useEffect, memo} from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import ToastContainer from '../components/molecules/general/ToastContainer';
 import Sidebar from '../components/molecules/Dashboard/Sidebar';
@@ -48,8 +48,11 @@ const AppLayout = () => {
 	}, [dispatch]);
 
 		useEffect(() => {
-			if(authUser.userType !== "superadmin" && authUser.userType !== "admin"){
+			const userTypePropertyNames = ['user_type', 'userType']
+			if(!userTypePropertyNames.some(propName => authUser[propName] === 'superadmin' || authUser[propName] === 'admin')){
+				console.log(authUser);
 				console.log("logout");
+				navigate("/")
 			}
 		}, [])
 

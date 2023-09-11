@@ -97,8 +97,8 @@ const NavBarIconList = () => {
 	};
 
 	const authUser = useSelector((state) => state.authUser.data);
-	const { id, workspaceId } = authUser;
-	useNotifications(id, workspaceId)
+	const { id, workspace_id } = authUser;
+	useNotifications(id, workspace_id)
 
 	return (
 		<List id="drop-down">

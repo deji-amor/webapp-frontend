@@ -125,23 +125,7 @@ const authUserSlice = createSlice({
 			})
 
 			.addCase(fetchAuthUser.rejected, (state, action) => {
-				state.data = {};
-			})
-
-			// ADDCASE EDIT PROFILE
-			.addCase(editProfile.pending, state => {
-				state.loading = true;
-				state.error = null;
-			})
-			.addCase(editProfile.fulfilled, (state, {payload}) => {
-				const {data} = payload;
-				state.loading = false;
-				state.data = {...data};
-				state.error = null;
-			})
-			.addCase(editProfile.rejected, (state, action) => {
-				state.loading = false;
-				state.error = action.payload || "Provide the required fields!";
+				// state.data = {};
 			})
 
 			// ADDCASE UPDATE Profile Picture

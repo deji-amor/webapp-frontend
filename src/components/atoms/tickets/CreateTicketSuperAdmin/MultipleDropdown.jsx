@@ -56,7 +56,7 @@ const MultipleDropdown = ({options, level: currentLevel}) => {
 			const {customerId} = allPossibleFields
 			const newpath = [...pathToTemplate].slice(0, currentLevel); //
 			newpath[currentLevel] = option; //
-			navigate(`create/${customerId}?ticketPath=${JSON.stringify(newpath)}`);
+			navigate(`/admin/tickets/create/${customerId}?ticketPath=${JSON.stringify(newpath)}`);
 			return;
 		}
 

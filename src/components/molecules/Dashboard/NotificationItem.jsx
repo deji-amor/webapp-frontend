@@ -1,14 +1,11 @@
 import React from 'react'
 import { isEqual, intersection, pickBy } from "lodash";
-// import { readNotification } from '../../../state-manager/reducers/notifications/notifications';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import { useDispatch} from 'react-redux';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material'
-import { useSelector } from 'react-redux';
 
 const Wrapper = styled("div")`
 	padding: 0.5rem;
@@ -103,10 +100,6 @@ Dot.propTypes = {
 }
 
 const NotificationItem = ({notification}) => {
-	const {tickets} = useSelector(state => state.tickets)
-	const {customers} = useSelector(state => state.customers)
-	const {users} = useSelector(state => state.users)
-	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
 	const readNotificationHandler = (notification) => {
@@ -123,12 +116,9 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "customer-creation") {
-		const { data, message, timestamp } = notification;
+		const { data, message, timestamp} = notification;
 		const parsedData = JSON.parse(data);
-		const { user_id } = parsedData;
-		// const ticket = tickets.find((ticket) => +ticket.id === +ticketId);
-		const customer = customers.find(customer => +customer.user_id === +user_id )
-		const {first_name, last_name, company_name} = customer
+		const {first_name, last_name, company_name} = parsedData
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -158,11 +148,11 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "customer-onboarding") {
-		const { data, timestamp } = notification;
+		const { data, message, timestamp } = notification;
+		console.log(notification);
 		const parsedData = JSON.parse(data);
-		const { id } = parsedData;
-		const customer = customers.find((customer) => +customer.user_id === +id);
-		const { first_name, last_name, company_name } = customer;
+		console.log(parsedData);
+		const { first_name, last_name, company_name } = parsedData;
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -192,12 +182,9 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "ticket-update") {
-		const { timestamp, user_id, identification_id, message, new_data } = notification;
-		const ticketData = JSON.parse(new_data)
-		const user = users.find(user => user.id === user_id)
-		const customer = customers.find(customer => customer.user_id === ticketData.customer_id)
-		const { first_name, last_name} = user;
-		const profilePic = user?.profile_pic
+		const { timestamp, identification_id, message, last_name, first_name  } = notification;
+		const profilePic = notification?.profile_picture;
+		console.log(notification);
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 		const {previousStatus, newStatus} = extractTicketStatusChangeStatus(message)
@@ -211,14 +198,17 @@ const NotificationItem = ({notification}) => {
 				<Tablet className="mb-[0.75rem] truncate">Ticket Update</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
-							<PersonIcon style={{ fontSize: 30 }} />
-						</Avatar>
-						{/* <img
-							className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
-							src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-							alt="Rounded avatar"
-						></img> */}
+						{
+							profilePic ? 
+							<img
+								className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
+								src={profilePic}
+								alt="Rounded avatar"
+							></img> :
+							<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+								<PersonIcon style={{ fontSize: 30 }} />
+							</Avatar>
+						}
 						<div className="">
 							<Text>
 								<span className="highlighted">
@@ -240,7 +230,9 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "ticket-edit") {
-		const { timestamp, user_id, identification_id, message, old_data, new_data } = notification;
+		const { timestamp, identification_id, message, old_data, new_data, last_name, first_name } = notification;
+		const profilePic = notification?.profile_picture;
+		console.log(notification);
 		const oldDataParsed = JSON.parse(old_data);
 		const newDataParsed = JSON.parse(new_data);
 		const commonKeys = intersection(Object.keys(oldDataParsed), Object.keys(newDataParsed));
@@ -249,8 +241,6 @@ const NotificationItem = ({notification}) => {
 			(value, key) => !isEqual(value, oldDataParsed[key]) && commonKeys.includes(key)
 		);
 		const changedKeys = Object.keys(differences);
-		const user = users.find((user) => user.id === user_id);
-		const { first_name, last_name } = user;
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -263,9 +253,17 @@ const NotificationItem = ({notification}) => {
 				<Tablet className="mb-[0.75rem] truncate">Ticket Edit</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
-							<PersonIcon style={{ fontSize: 30 }} />
-						</Avatar>
+						{profilePic ? (
+							<img
+								className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
+								src={profilePic}
+								alt="Rounded avatar"
+							></img>
+						) : (
+							<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+								<PersonIcon style={{ fontSize: 30 }} />
+							</Avatar>
+						)}
 						<div className="">
 							<Text>
 								<span className="highlighted">
@@ -293,21 +291,20 @@ const NotificationItem = ({notification}) => {
 	}
 
 	if (notification.type === "customer-update") {
-		const { timestamp, user_id, old_data, new_data, data } = notification;
-		// const customer 
-		const customerParsed = JSON.parse(data)
-		const customer = customers.find(customer => customer.user_id === customerParsed.id)
-		const {first_name, last_name, company_name} = customer
+		const { timestamp, user_id, old_data, new_data, first_name, last_name, company_name } =
+			notification;
+		const profilePic = notification?.profile_picture
+		console.log(notification);
 		const oldDataParsed = JSON.parse(old_data);
 		const newDataParsed = JSON.parse(new_data);
+		console.log(newDataParsed);
 		const commonKeys = intersection(Object.keys(oldDataParsed), Object.keys(newDataParsed));
 		const differences = pickBy(
 			newDataParsed,
 			(value, key) => !isEqual(value, oldDataParsed[key]) && commonKeys.includes(key)
 		);
-		const user = users.find((user) => user.id === user_id);
-		const { first_name: userFirstName, last_name: userLastName} = user;
-		const changedKeys = Object.keys(differences);
+		const { first_name: customerFirstName, last_name: customerLastName, company_name: CustomerCompanyName } = newDataParsed;
+		const changedKeys = Object.keys(differences).filter((key) => key.toLocaleLowerCase() !== "datetime");
 		const date = new Date(timestamp);
 		const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
@@ -320,13 +317,21 @@ const NotificationItem = ({notification}) => {
 				<Tablet className="mb-[0.75rem] truncate">Customer Profile Update</Tablet>
 				<div className="flex justify-between items-start gap-[1.5rem]">
 					<div className="max-w-[28rem] flex gap-x-[0.5rem]">
-						<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
-							<PersonIcon style={{ fontSize: 30 }} />
-						</Avatar>
+						{profilePic ? (
+							<img
+								className="w-10 h-10 rounded-full border-[2px] border-[#2b2e72]"
+								src={profilePic}
+								alt="Rounded avatar"
+							></img>
+						) : (
+							<Avatar alt="User Profile" variant="circular" style={{ background: "#2b2e72" }}>
+								<PersonIcon style={{ fontSize: 30 }} />
+							</Avatar>
+						)}
 						<div className="">
 							<Text>
 								<span className="highlighted">
-									{userFirstName} {userLastName}
+									{first_name} {last_name}
 								</span>{" "}
 								updated
 								{changedKeys.map((key) => (
@@ -337,9 +342,9 @@ const NotificationItem = ({notification}) => {
 								))}{" "}
 								for customer{" "}
 								<span className="highlighted">
-									{first_name} {last_name}
+									{customerFirstName} {customerLastName}
 								</span>{" "}
-								from <span className="highlighted">{company_name}</span>
+								from <span className="highlighted">{CustomerCompanyName}</span>
 							</Text>
 							<TimeStamp>{formattedDistance}</TimeStamp>
 						</div>

@@ -17,8 +17,6 @@ const TicketTemplateCreationOrEditionForm = () => {
 	const ticketForm = ticketPath.at(-1)
 	const chosenTemplate = tree[ticketForm].fields
 
-	console.log("yutcyrxrrxyrxry");
-
 	useEffect(() => {
 		dispatch(createTicketActions.changeAnyState({ key: "pathToTemplate", value: ticketPath }));
 		dispatch(createTicketActions.changeAnyState({ key: "chosenTemplate", value: chosenTemplate }));

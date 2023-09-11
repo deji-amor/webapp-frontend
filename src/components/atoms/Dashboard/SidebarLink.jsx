@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutActions } from "../../../state-manager/reducers/logout/logout";
-import { useLocation } from "react-router-dom";
 
 const SidebarLink = ({ link, icon, name }) => {
 	const Link = styled("div")`
@@ -53,11 +52,9 @@ const SidebarLink = ({ link, icon, name }) => {
 
 	const dispatch = useDispatch();
 	const handleShowLogoutModal = () => {
+		console.log("7tr5ddd77dd57");
 		dispatch(logoutActions.toggleLogoutModal());
 	};
-
-	const location = useLocation()
-	const pathName = location.pathname
 
 	if (link === "logout") {
 		return (
@@ -70,7 +67,7 @@ const SidebarLink = ({ link, icon, name }) => {
 
 	return (
 		<div className="w-[10rem]">
-			<NavLink className={pathName.includes(name) ? "active" : ""} to={link} end={link === "dashboard" ? true : false}>
+			<NavLink className={({ isActive }) => (isActive ? "active" : "")} to={link} end={link === "dashboard" ? true : false}>
 				<Link className="">
 					<span className="icon-span">{icon}</span>
 					<span className="label">{name}</span>
