@@ -10,36 +10,18 @@ const RecentActivities = () => {
 	const recentActivitiesData = useSelector((state) => state.dashboard.recentActivities);
 
 	const recentDataArray = recentActivitiesData?.recentActivities || [];
-	const navigate = useNavigate()
-
-	//   const [selectedActivityId, setSelectedActivityId] = useState(null);
-	//   const [isModalOpen, setIsModalOpen] = useState(false);
-	// dashboard
-	//   reports <-
-	//      testing
-	// users
-	// ticqets
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		dispatch(recentactivities());
 	}, [dispatch]);
 
 	const goToTicketDetail = (activity) => {
-		const {data} = activity
-		const dataParsed = JSON.parse(data)
-		const {id} = dataParsed
-		if(id) navigate(`/admin/tickets/view/detail/${id}`);
+		const { data } = activity;
+		const dataParsed = JSON.parse(data);
+		const { ticketId } = dataParsed;
+		if ((ticketId, data)) navigate(`/admin/tickets/view/detail/${ticketId}`);
 	};
-
-	//   const openModal = (activityId) => {
-	//     setSelectedActivityId(activityId);
-	//     setIsModalOpen(true);
-	//   };
-
-	//   const closeModaL = () => {
-	//     setSelectedActivityId(null);
-	//     setIsModalOpen(false);
-	//   };
 
 	const formatTimestamp = (timestamp) => {
 		const options = {
@@ -125,6 +107,8 @@ const RecentActivities = () => {
 					let activityType = activity.type;
 					if (activity.type === "customer-creation") {
 						activityType = "Created Customer";
+					} else if (activity.type === "ticket-update") {
+						activityType = "Updated Ticket";
 					}
 
 					return (

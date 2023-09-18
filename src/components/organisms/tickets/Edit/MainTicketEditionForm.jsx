@@ -36,10 +36,12 @@ const MainTicketEditionForm = () => {
 		const hasTicketHasChanged = useEditTicketIsAltered();
 		const dispatch = useDispatch();
 		const navigate = useNavigate();
+		const {originalTicket} = useSelector(state => state.ticketEdition)
 
 		const submitHandler = (e) => {
 			e.preventDefault();
 			// console.log(requiredFields);
+			// console.log(originalTicket);
 			dispatch(editTicket(requiredFields));
 		};
 
@@ -48,7 +50,7 @@ const MainTicketEditionForm = () => {
 			navigate(-1);
 		};
 
-		const { loading, error, errorMessage, successful, customer, data } = useSelector(
+		const { loading, error, errorMessage, successful, data } = useSelector(
 			(state) => state.ticketEdition
 		);
 		

@@ -1,4 +1,4 @@
-import React, {useEffect, memo, useState, useMemo} from 'react'
+import React, {useEffect, memo} from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import ToastContainer from '../components/molecules/general/ToastContainer';
 import Sidebar from '../components/molecules/Dashboard/Sidebar';
@@ -16,7 +16,7 @@ import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
 import { getAuthToken, getDeviceName } from '../utilis';
-import { authUserActions } from '../state-manager/reducers/users/authUser';
+import { authUserActions, fetchAuthUser } from '../state-manager/reducers/users/authUser';
 
 // Memoized Sidebar and Navbar components to prevent unnecessary re-renders
 const MemoizedSidebar = memo(Sidebar);
@@ -48,8 +48,11 @@ const AppLayout = () => {
 	}, [dispatch]);
 
 		useEffect(() => {
-			if(authUser.userType !== "superadmin" && authUser.userType !== "admin"){
+			const userTypePropertyNames = ['user_type', 'userType']
+			if(!userTypePropertyNames.some(propName => authUser[propName] === 'superadmin' || authUser[propName] === 'admin')){
+				console.log(authUser);
 				console.log("logout");
+				navigate("/")
 			}
 		}, [])
 
@@ -73,7 +76,7 @@ const AppLayout = () => {
 	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
 	/////////// AUTHENTICATION LOGIC ENDS HERE
 
-	// USE SELECTOR const { loading: usersLoading, users } = useSelector((state) => state.users);
+	const { loading: usersLoading, users } = useSelector((state) => state.users);
 	// USE SELECTOR const { loading: customersLoading, customers } = useSelector((state) => state.customers);
 
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
@@ -81,6 +84,7 @@ const AppLayout = () => {
 	const { showAddTicketModal, showTemplateModal } = useSelector((state) => state.ticketCreation);
 
 	useEffect(() => {
+		dispatch(fetchAuthUser())
 		dispatch(fetchUsers())
 		dispatch(fetchCustomers())
 		dispatch(fetchTickets())

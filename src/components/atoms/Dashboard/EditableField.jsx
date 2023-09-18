@@ -1,26 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Box, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
-const EditableField = ({ label, value, isEditable, }) => {
+const EditableField = ({ label, value, isEditable, onSave, width }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedValue, setEditedValue] = useState(value);
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditedValue(editedValue);
   };
 
   const handleCancel = () => {
     setIsEditing(false);
+    setEditedValue(value); // Reset to the original value on cancel
   };
 
   const handleSave = () => {
     setIsEditing(false);
-    setEditedValue(editedValue);
   };
+
+  useEffect(() => {
+    onSave(editedValue)
+  }, [editedValue])
 
   return (
     <Box>
@@ -34,7 +37,7 @@ const EditableField = ({ label, value, isEditable, }) => {
           lineHeight: "30px",
           display: "flex",
           alignItems: "center",
-          width:'400px',
+          width: '400px',
         }}
       >
         {label}

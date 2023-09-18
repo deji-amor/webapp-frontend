@@ -43,7 +43,7 @@ export const editTicket = createAsyncThunk("ticketEdition", async (args, {reject
 	}
 });
 
-function getTodayAndTomorrow() {
+export function getTodayAndTomorrow() {
 	const today = new Date();
 	const tomorrow = new Date(today);
 	tomorrow.setDate(tomorrow.getDate() + 1);
@@ -52,9 +52,7 @@ function getTodayAndTomorrow() {
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1).padStart(2, "0");
 		const day = String(date.getDate()).padStart(2, "0");
-		const hours = String(date.getHours()).padStart(2, "0");
-		const minutes = String(date.getMinutes()).padStart(2, "0");
-		return `${year}-${month}-${day}T${hours}:${minutes}`;
+		return `${month}-${day}-${year}`;
 	}
 
 	return {
@@ -75,8 +73,8 @@ export const allRequiredFields = {
 	scopeOfWorkDescription: "",
 	scopeOfWorkDocument: null,
 	scopeOfWorkDocumentUrl: "",
-	startDateTime: getTodayAndTomorrow().today,
-	endDateTime: getTodayAndTomorrow().tomorrow,
+	startDateTime: "",
+	endDateTime: "",
 	hardwareComponentTypeList: [],
 	hardwareComponentTypeQuantity: "1",
 	hardwareQuantity: "1",
@@ -228,9 +226,7 @@ const formatToApiDate = dateString => {
 	const year = date.getFullYear();
 	const month = String(date.getMonth() + 1).padStart(2, "0");
 	const day = String(date.getDate()).padStart(2, "0");
-	const hours = String(date.getHours()).padStart(2, "0");
-	const minutes = String(date.getMinutes()).padStart(2, "0");
-	return `${year}-${month}-${day}T${hours}:${minutes}`;
+	return `${year}-${month}-${day}`;
 };
 
 const editTicketSlice = createSlice({

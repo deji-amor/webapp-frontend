@@ -2,19 +2,20 @@ import React from 'react'
 import PropTypes from "prop-types";
 import { StyleSheet, View, Text } from "@react-pdf/renderer";
 
-export function formatDate(inputDate) {
-  const date = new Date(inputDate);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
-  const hours = date.getHours();
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const period = hours >= 12 ? 'pm' : 'am';
-  const formattedHours = (hours % 12 === 0 ? 12 : hours % 12);
-	const paddedFormattedHours = String(formattedHours).padStart(2, "0")
+export function formatDate(inputDate, addTime = true) {
+	const date = new Date(inputDate);
+	const day = String(date.getDate()).padStart(2, "0");
+	const month = String(date.getMonth() + 1).padStart(2, "0");
+	const year = date.getFullYear();
+	const hours = date.getHours();
+	const minutes = String(date.getMinutes()).padStart(2, "0");
+	const period = hours >= 12 ? "pm" : "am";
+	const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+	const paddedFormattedHours = String(formattedHours).padStart(2, "0");
 
-  const formattedDate = `${day}-${month}-${year}/${paddedFormattedHours}:${minutes} ${period}`;
-  return formattedDate;
+	const formattedDate = `${day}-${month}-${year}`;
+	const formattedDateTime = `${day}-${month}-${year}/${paddedFormattedHours}:${minutes} ${period}`;
+	return addTime ? formattedDateTime : formattedDate;
 }
 
 const Duration = ({ ticket }) => {
@@ -58,18 +59,18 @@ const Duration = ({ ticket }) => {
 			</View>
 			<View style={styles.section}>
 				<View style={styles.side}>
-					<Text style={styles.detailText}>Start Date/Time</Text>
+					<Text style={styles.detailText}>Start Date</Text>
 				</View>
 				<View style={styles.side}>
-					<Text style={styles.detailText}>{formatDate(start_date_time)}</Text>
+					<Text style={styles.detailText}>{formatDate(start_date_time, false)}</Text>
 				</View>
 			</View>
 			<View style={styles.section}>
 				<View style={styles.side}>
-					<Text style={styles.detailText}>End Date/time</Text>
+					<Text style={styles.detailText}>End Date</Text>
 				</View>
 				<View style={styles.side}>
-					<Text style={styles.detailText}>{formatDate(end_date_time)}</Text>
+					<Text style={styles.detailText}>{formatDate(end_date_time, false)}</Text>
 				</View>
 			</View>
 		</>

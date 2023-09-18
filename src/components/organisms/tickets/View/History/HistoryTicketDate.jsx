@@ -27,7 +27,7 @@ const formatTime = (timestamp) => {
     const minutes = date.getMinutes();
     
     const meridiem = hours >= 12 ? "pm" : "am";
-    const formattedTime = `${hours % 12 === 0 ? 12 : hours % 12}:${minutes.toString().padStart(2, '0')} ${meridiem}`;
+    const formattedTime = `${(hours % 12 === 0 ? 12 : hours % 12).toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${meridiem}`;
     
     return formattedTime;
 };

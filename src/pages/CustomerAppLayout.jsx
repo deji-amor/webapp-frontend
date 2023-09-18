@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout'
 import { getAuthToken, getDeviceName } from '../utilis'
-import { authUserActions } from '../state-manager/reducers/users/authUser'
+import { authUserActions, fetchAuthUser } from '../state-manager/reducers/users/authUser'
 
 const MemoizedCustomerNavbar = memo(CustomerNavbar)
 const MemoizedCustomerSidebar = memo(CustomerSidebar)
@@ -41,7 +41,12 @@ const CustomerAppLayout = () => {
 	}, [dispatch]);
 
   useEffect(() => {
-    if(authUser.userType !== "customer") navigate("/");
+		const userTypePropertyNames = ["user_type", "userType"];
+		if(!userTypePropertyNames.some(propName => authUser[propName] === 'customer')){
+			console.log(authUser);
+			console.log("logout");
+			navigate("/")
+		}
   }, [])
 
 	// checks if token doesnt exit and logs out else and logouts out on timer expiry
@@ -71,6 +76,7 @@ const CustomerAppLayout = () => {
 		useEffect(() => {
 			// dispatch(fetchUsers());
 			// dispatch(fetchCustomers());
+			dispatch(fetchAuthUser());
 			dispatch(fetchTickets());
 			dispatch(fetchAllCustomers());
 			dispatch(fetchAllTickets());

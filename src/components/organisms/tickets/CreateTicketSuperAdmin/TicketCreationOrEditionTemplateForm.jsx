@@ -30,12 +30,10 @@ const TicketTemplateCreationOrEditionForm = () => {
 
 	return (
 		<>
-			<Overlay onClick={clickHandler}/>
-			<div className="max-w-[75rem] w-full">
-				<Modal>
-					<ModalTemplateContent />
-				</Modal>
-			</div>
+			<Overlay onClick={clickHandler} />
+			<Modal maxWidth="70">
+				<ModalTemplateContent />
+			</Modal>
 		</>
 	);
 }

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import HistoryTicketMessage from "./HistoryTicketMessage";
 import HistoryTicketDate from "./HistoryTicketDate";
 import HistoryTicketValueChange from "./HistoryTicketValueChange";
-import { omitBy, isEqual, isObject, intersection, pick } from "lodash";
+import { isEqual, isObject, intersection, pickBy } from "lodash";
 import { formatDate } from "../Details/components/Duration";
 import { v4 } from "uuid";
 
@@ -16,16 +16,6 @@ function isJSONString(str) {
 	}
 }
 
-function compareValues(value1, value2) {
-	const valuesToExclude = [null, undefined, "null", "undefined"];
-	if (valuesToExclude.includes(value1) || valuesToExclude.includes(value2)) {
-		return true;
-	}
-	if (typeof value1 === "number" || typeof value1 === "string") {
-		return value1 == value2; // Using loose equality
-	}
-	return isEqual(value1, value2);
-}
 
 function convertDate(dateString) {
 	const date = new Date(dateString);
@@ -39,74 +29,44 @@ const HistoryItem = ({ log }) => {
 	const isOldDetailsAnObject = isJSONString(old_details) && isObject(JSON.parse(old_details));
 	const isNewDetailsAnObject = isJSONString(new_details) && isObject(JSON.parse(new_details));
 
-		if (edit_type === "ticket-edit") return <></>
+		// if (edit_type === "ticket-edit") return <></>
 
 		if (isOldDetailsAnObject || isNewDetailsAnObject) {
 			const oldDetails = JSON.parse(old_details);
 			if (oldDetails.start_date_time) {
-				oldDetails.start_date_time = formatDate(convertDate(oldDetails.start_date_time));
+				oldDetails.start_date_time = formatDate(convertDate(oldDetails.start_date_time), false);
 			}
 			if (oldDetails.end_date_time) {
-				oldDetails.end_date_time = formatDate(convertDate(oldDetails.end_date_time));
+				oldDetails.end_date_time = formatDate(convertDate(oldDetails.end_date_time), false);
 			}
 			const newDetails = JSON.parse(new_details);
-
-			const newDetailsModified = {
-				id: oldDetails.id,
-				user_id: oldDetails.user_id,
-				workspace_id: oldDetails.workspace_id,
-				ticket_type: newDetails.ticketType,
-				ticket_form: newDetails.ticketForm,
-				ticket_path: newDetails.ticketPath,
-				point_of_contact_name: newDetails.pointOfContactName,
-				point_of_contact_phone_number: newDetails.pointOfContactPhoneNumber,
-				point_of_contact_address: newDetails.pointOfContactAddress,
-				number_of_technicians: newDetails.numberOfTechnicians,
-				scope_of_work_description: newDetails.scopeOfWorkDescription,
-				scope_of_work_document: newDetails.scopeOfWorkDocument,
-				start_date_time: formatDate(newDetails.startDateTime),
-				end_date_time: formatDate(newDetails.endDateTime),
-				hardware_quantity: newDetails.hardwareQuantity,
-				hardware_name: newDetails.hardwareName,
-				hardware_component_type_list: newDetails.hardwareComponentTypeList,
-				hardware_component_type_quantity: newDetails.hardwareComponentTypeQuantity,
-				locations: newDetails.locations,
-				materials_description: newDetails.materialsDescription,
-				number_of_work_station: newDetails.numberOfWorkStation,
-				number_of_work_systems: newDetails.numberOfWorkSystems,
-				software_customization_quantity: newDetails.softwareCustomizationQuantity,
-				software_customization_name: newDetails.softwareCustomizationName,
-				software_installation_quantity: newDetails.softwareInstallationQuantity,
-				software_installation_name: newDetails.softwareInstallationName,
-				pick_locations: newDetails.pickLocations,
-				drop_off_locations: newDetails.dropOffLocations,
-				customer_id: newDetails.customerId,
-				additional_fields: newDetails.additionalFields.map(({ name, value }) => ({
-					[name]: value,
-				})),
-			};
-
-			const similarKeys = intersection(Object.keys(oldDetails), Object.keys(newDetailsModified));
-			const commonOldDetails = pick(oldDetails, similarKeys);
-			const commonNewDetails = pick(newDetailsModified, similarKeys);
-
-			const differences = omitBy(commonNewDetails, (value, key) =>
-				compareValues(value, commonOldDetails[key])
+			if (newDetails.start_date_time) {
+				newDetails.start_date_time = formatDate(convertDate(newDetails.start_date_time), false);
+			}
+			if (newDetails.end_date_time) {
+				newDetails.end_date_time = formatDate(convertDate(newDetails.end_date_time), false);
+			}
+			const commonKeys = intersection(Object.keys(oldDetails), Object.keys(newDetails));
+			const differences = pickBy(
+				newDetails,
+				(value, key) => !isEqual(value, oldDetails[key]) && commonKeys.includes(key)
 			);
+			const changedKeys = Object.keys(differences);
+			// console.log(changedKeys);
+			// console.log(differences);
+			// console.log(commonKeys);
+			// console.log(oldDetails);
+			// console.log(newDetails);
 
-			const diffArray = Object.keys(differences).map((key) => ({
-				[key]: [commonOldDetails[key], commonNewDetails[key]],
-			}));
-
-			return diffArray.map((item) => {
+			return changedKeys.map((key) => {
 				return (
 					<HistoryItem
 						key={v4()}
 						log={{
 							...log,
-							edit_type: Object.entries(item)[0][0].replaceAll("_", " "),
-							old_details: Object.entries(item)[0][1][0],
-							new_details: Object.entries(item)[0][1][1],
+							edit_type: key.replaceAll("_", " "),
+							old_details: oldDetails[key],
+							new_details: newDetails[key],
 						}}
 					/>
 				);
@@ -132,8 +92,8 @@ HistoryItem.propTypes = {
 	log: PropTypes.shape({
 		id: PropTypes.number.isRequired,
 		user_id: PropTypes.number.isRequired,
-		old_details: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-		new_details: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+		old_details: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.any]).isRequired,
+		new_details: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.any]).isRequired,
 		edit_type: PropTypes.string.isRequired,
 		identification_id: PropTypes.number.isRequired,
 		datetime: PropTypes.string.isRequired,

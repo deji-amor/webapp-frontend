@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 const HistoryItemList = () => {
   const { editLogs, sortByAscending } = useSelector((state) => state.ticketHistory);
-  console.log(editLogs);
 
   const orderedLogs = useMemo(() => {
     let list = editLogs.slice()

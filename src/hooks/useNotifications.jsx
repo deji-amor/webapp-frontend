@@ -1,26 +1,41 @@
 import PropTypes from "prop-types";
 import { io } from "socket.io-client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { notificationsActions } from "../state-manager/reducers/notifications/notifications";
+import { useDispatch, useSelector} from "react-redux";
 
-const useNotifications = (userId = 14, workspaceId = 68) => {
-	const backendUrl = import.meta.env.VITE_BASE_BACKEND_URL;
-	console.log(backendUrl);
-	const socket = io.connect(backendUrl, { secure: true });
-  const [notifications, setNotifications] = []
-
+const useNotifications = (userId, workspaceId) => {
+	const {notifications: allNotifications} = useSelector(state => state.notifications)
+	const dispatch = useDispatch()
+	
 	useEffect(() => {
-		console.log(userId, workspaceId);
+		const backendUrl = import.meta.env.VITE_BASE_BACKEND_URL;
+		const socket = io.connect(backendUrl, { secure: true, reconnect: true });
+
 		socket.on("connect", () => {
 			socket.emit("join-workspace", `workspace_${workspaceId}`, userId);
-			console.log("iyff8f8");
 			socket.on("get-notifications", (notifications) => {
-				console.log(notifications); // []
+				console.log(console.log(notifications));
+				const newNotifications = notifications.slice().map(notification => {
+					const newNotification = {...notification}
+					newNotification.handleUpdateNotification = () => {
+						socket.emit("read-notification", notification.id);
+					}
+					return newNotification
+				})
+				dispatch(notificationsActions.updateField({ key: "notifications", value: newNotifications}))
 			});
 
 			socket.on("updated-notifications", (notifications) => {
-				// listen to get updated notification in case there is new notification
-
 				console.log(notifications);
+				const newNotifications = notifications.slice().map((notification) => {
+					const newNotification = { ...notification };
+					newNotification.handleUpdateNotification = () => {
+						socket.emit("read-notification", notification.id);
+					};
+					return newNotification;
+				});
+				dispatch(notificationsActions.updateField({ key: "notifications", value: newNotifications}))
 			});
 		});
 
@@ -28,20 +43,9 @@ const useNotifications = (userId = 14, workspaceId = 68) => {
 			socket.emit("leave-workspace", `workspace_${workspaceId}`);
 			socket.disconnect();
 		};
-	}, [socket]);
+	}, [userId, workspaceId, dispatch]);
 
-	// a function to mark a notification as read
-
-	// const handleUpdateNotification = (notificationId) => {
-	// 	socket.emit("read-notification", notificationId);
-	// };
-
-	return (
-		<></>
-		// <div className="App">
-		// 	<button onClick={() => handleUpdateNotification(40)}>Read Notification</button>
-		// </div>
-	);
+	return allNotifications
 };
 
 export default useNotifications;

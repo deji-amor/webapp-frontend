@@ -28,11 +28,11 @@ const CustomerNavbar = () => {
 		line-height: 1.5rem;
 	`;
 
-		const { workspaceName } = useSelector((state) => state.authUser.data);
+		const { workspace_name } = useSelector((state) => state.authUser.data);
 
 	return (
 		<NavigationBar>
-			<CompanyName>{workspaceName}</CompanyName>
+			<CompanyName>{workspace_name}</CompanyName>
 			<NavBarIconList />
 		</NavigationBar>
 	);

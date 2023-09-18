@@ -3,7 +3,7 @@ import DetailText from '../DetailText';
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export function formatDate(inputDate) {
+export function formatDate(inputDate, addTime=true) {
   const date = new Date(inputDate);
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -14,8 +14,9 @@ export function formatDate(inputDate) {
   const formattedHours = (hours % 12 === 0 ? 12 : hours % 12);
 	const paddedFormattedHours = String(formattedHours).padStart(2, "0")
 
-  const formattedDate = `${day}-${month}-${year}/${paddedFormattedHours}:${minutes} ${period}`;
-  return formattedDate;
+  const formattedDate = `${day}-${month}-${year}`;
+  const formattedDateTime = `${day}-${month}-${year}/${paddedFormattedHours}:${minutes} ${period}`;
+  return addTime ? formattedDateTime : formattedDate;
 }
 
 const Duration = () => {
@@ -37,18 +38,18 @@ const Duration = () => {
 			</div>
 			<div className="flex">
 				<div className="basis-[50%] py-[0.75rem]">
-					<DetailText>Start Date/Time</DetailText>
+					<DetailText>Start Date</DetailText>
 				</div>
 				<div className="basis-[50%] py-[0.75rem]">
-					<DetailText>{formatDate(start_date_time)}</DetailText>
+					<DetailText>{formatDate(start_date_time, false)}</DetailText>
 				</div>
 			</div>
 			<div className="flex">
 				<div className="basis-[50%] py-[0.75rem]">
-					<DetailText>End Date/time</DetailText>
+					<DetailText>End Date</DetailText>
 				</div>
 				<div className="basis-[50%] py-[0.75rem]">
-					<DetailText>{formatDate(end_date_time)}</DetailText>
+					<DetailText>{formatDate(end_date_time, false)}</DetailText>
 				</div>
 			</div>
 		</>

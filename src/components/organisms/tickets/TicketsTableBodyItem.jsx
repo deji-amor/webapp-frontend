@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import ChangeTicketStatusDropdown from "../../molecules/tickets/ChangeTicketStatusDropdown";
-import { changeATicketStatus, ticketDetailsActions } from "../../../state-manager/reducers/tickets/ticketDetails";
-import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
+import { changeATicketStatus} from "../../../state-manager/reducers/tickets/ticketDetails";
 import RecentTicketTableText from "../../atoms/Dashboard/RecentTicketTableText";
 import StatusTab from "../../atoms/tickets/StatusTab";
 import EditIcon from "@mui/icons-material/Edit";
@@ -26,13 +25,19 @@ const Edit = styled("p")`
 	gap: 0.2rem;
 `;
 
+const test = () => {
+
+	
+
+
+	console.log("test");
+}
+
 const TicketsTableBodyItem = ({ ticket }) => {
   const {
     statuses,
   } = useSelector((state) => state.tickets);
-		const { loading, data, error, successful } = useSelector((state) => state.ticketDetails);
-    const { customers} = useSelector((state) => state.customers);
-		const { users} = useSelector((state) => state.users);
+	const { loading, currentTicketIdThatISEditing } = useSelector((state) => state.ticketDetails);
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -63,33 +68,11 @@ const TicketsTableBodyItem = ({ ticket }) => {
 		}
 	}, [])
 
-	const [isThisTicketLoading, setIsThisTicketLoading] = useState(false)
-
-	useEffect(() => {
-		if (successful === true) {
-			if (data) dispatch(ticketsActions.replaceTicket(data));
-			dispatch(
-				ticketDetailsActions.changeMultipleState([
-					{ key: "successful", value: null },
-					{ key: "error", value: null },
-				])
-			);
-			setIsThisTicketLoading(false)
-		}
-		if (error === true) {
-			dispatch(
-				ticketDetailsActions.changeMultipleState([
-					{ key: "successful", value: null },
-					{ key: "error", value: null },
-				])
-			);
-			setIsThisTicketLoading(false)
-		}
-	}, [successful, error, data, dispatch])
+	const isThisTicketLoading = loading && +currentTicketIdThatISEditing === +ticket.id;
 
   const changeTicketStatusHandler = (ticketId, status) => {
     setShowStatusDrop(false);
-		setIsThisTicketLoading(true)
+		// setIsThisTicketLoading(true)
 		let newStatus = status.toLowerCase() === "inprogress" ? "IN-PROGRESS" : status.toUpperCase();
     dispatch(changeATicketStatus({ ticketId: ticketId, status: newStatus }));
   };
@@ -100,13 +83,13 @@ const TicketsTableBodyItem = ({ ticket }) => {
 			onClick={(event) => ViewTicket(event, ticket.id)}
 		>
 			<RecentTicketTableText>
-				{customers.find((customer) => +customer.id === +ticket.customer_id)?.company_name}
+				{ticket.company_name}
 			</RecentTicketTableText>
 			<RecentTicketTableText className="max-w-[10rem] border truncate">
 				{ticket.ticket_form}
 			</RecentTicketTableText>
 			<RecentTicketTableText>
-				{users.find((user) => +user.id === +ticket.user_id)?.email}
+				{ticket.email}
 			</RecentTicketTableText>
 			<RecentTicketTableText>
 				<StatusTab status={ticket.status} />
@@ -118,7 +101,11 @@ const TicketsTableBodyItem = ({ ticket }) => {
 						Edit Ticket
 						<EditIcon fontSize="small" />
 					</NavLink>
-					<button disabled={loading} className={`changeTicketDropdown relati ${loading && "cursor-not-allowed"}`} id={id}>
+					<button
+						disabled={loading}
+						className={`changeTicketDropdown ${(loading || isThisTicketLoading) && "cursor-not-allowed"}`}
+						id={id}
+					>
 						{showStatusDrop && (
 							<ChangeTicketStatusDropdown
 								onClick={changeTicketStatusHandler}
@@ -134,10 +121,11 @@ const TicketsTableBodyItem = ({ ticket }) => {
 									)}
 							/>
 						)}
-						{
-						isThisTicketLoading ? <Loader/> :
-						<MoreVertIcon fontSize="small" onClick={(event) => setShowStatusDropHandler(event)} />
-						}
+						{(isThisTicketLoading && loading) ? (
+							<Loader blue={true}/>
+						) : (
+							<MoreVertIcon fontSize="small" onClick={(event) => setShowStatusDropHandler(event)} />
+						)}
 					</button>
 				</Edit>
 			</RecentTicketTableText>

@@ -15,11 +15,9 @@ const InitialAdminCreationFormAndModal = () => {
 	return (
 		<>
 			<Overlay onClick={clickHandler}/>
-			<div className="max-w-[74rem] w-full">
-				<Modal>
+				<Modal maxWidth="73">
 					<ModalContent/>
 				</Modal>
-			</div>
 		</>
 	);
 };

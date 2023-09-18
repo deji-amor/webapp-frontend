@@ -7,8 +7,8 @@ export const LoaderWrapper = styled("div")(() => ({
 	top: "0",
 	left: "0",
 	zIndex: "100",
-	backgroundColor: "rgba(255, 255, 255, .15)",
-	backdropFilter: "blur(5px)",
+	backgroundColor: "rgba(0, 0, 0, 0.5)",
+	// backdropFilter: "blur(5px)",
 }));
 
 export const LoaderContainerWrapper = styled("div")(() => ({

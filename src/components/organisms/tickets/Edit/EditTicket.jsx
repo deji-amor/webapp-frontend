@@ -18,11 +18,9 @@ const EditTicket = () => {
   return (
 		<>
 			<Overlay onClick={goBackToTicketHandler}/>
-			<div className="max-w-[75rem] w-full">
-				<Modal>
-					<ModalTemplateContent />
-				</Modal>
-			</div>
+			<Modal maxWidth="70">
+				<ModalTemplateContent />
+			</Modal>
 		</>
 	);
 }

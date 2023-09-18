@@ -29,13 +29,13 @@ const HistoryTicketValueChange = ({ prevValue, newValue }) => {
 		if(modPrevValue.some(item => Object.keys(item).includes("type"))) {
 			modPrevValue.forEach((item, ind) => {
 				const en = Object.entries(item);
-				const res = en.forEach((e) => (string = string += ` ${e[0]}(${ind+1}): ${e[1]}, `));
+				const res = en.forEach((e, i, arr) => (string = string += `${e[0]}(${ind+1}): ${e[1]}${arr.length-1 === i ? ". " : ", "}`));
 				return res;
 			});
 		}else{
 			modPrevValue.forEach((item) => {
 				const en = Object.entries(item);
-				const res = en.forEach((e) => (string = string += ` ${e[0]}: ${e[1]} `));
+				const res = en.forEach((e, i, arr) => (string = string += `${e[0]}: ${e[1]}${arr.length-1 === i ? ". " : ", "}`));
 				return res;
 			});
 		}
@@ -47,13 +47,13 @@ const HistoryTicketValueChange = ({ prevValue, newValue }) => {
 		if (modNewValue.some((item) => Object.keys(item).includes("type"))){
 			modNewValue.forEach((item, ind) => {
 				const en = Object.entries(item);
-				const res = en.forEach((e) => (string = string += ` ${e[0]}(${ind+1}): ${e[1]}, `));
+				const res = en.forEach((e, i, arr) => (string = string += `${e[0]}(${ind+1}): ${e[1]}${arr.length-1 === i ? ". " : ", "}`));
 				return res;
 			});
 		}else{
 			modNewValue.forEach((item) => {
 				const en = Object.entries(item);
-				const res = en.forEach((e) => (string = string += ` ${e[0]}: ${e[1]} `));
+				const res = en.forEach((e, i, arr) => (string = string += `${e[0]}: ${e[1]}${arr.length-1 === i ? ". " : ", "}`));
 				return res;
 			});
 		}
@@ -61,7 +61,7 @@ const HistoryTicketValueChange = ({ prevValue, newValue }) => {
 	}
 
 	return (
-		<div className="flex gap-[1rem] items-start flex-wrap">
+		<div className="flex gap-x-[1rem] max-w-full items-center flex-wrap">
 			<ValueText className="">
 				{modPrevValue.trim() === "" ? "Nothing was provided" : modPrevValue}
 			</ValueText>

@@ -75,7 +75,7 @@ const Tickets = () => {
 		navigate("../users");
 	};
 
-	if (ticketsSuccessful && customersSuccessful && tickets.length === 0)
+	if (ticketsSuccessful && customersSuccessful && customers.length === 0)
 		return (
 			<Placeholder
 				messageHeader={"seems you don’t have anything here yet!"}

@@ -36,7 +36,7 @@ const initialState = {
 	showProjectsTab: false,
 	activeTickets: [],
 	activeTicketsStartPoint: 0,
-	activeTicketsEndPoint: 0,
+	activeTicketsEndPoint: 1,
 	ticketsOnEachPage: 10,
 	sortByAscending: true,
 	filterByStatus: "All",

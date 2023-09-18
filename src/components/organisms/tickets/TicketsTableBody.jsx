@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo} from "react";
+import { ticketDetailsActions } from "../../../state-manager/reducers/tickets/ticketDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets";
+import { UIActions } from "../../../state-manager/reducers/UI/ui";
 import { v4 } from "uuid";
 import TicketsTableBodyItem from "./TicketsTableBodyItem";
 
@@ -16,6 +18,10 @@ const TicketsTableBody = () => {
 		filterByStatus,
 		sortByAscending,
 	} = useSelector((state) => state.tickets);
+
+	const { data, error, successful, errorMessage } = useSelector(
+		(state) => state.ticketDetails
+	);
 
 	const {customers, loading: customersLoading} = useSelector((state) => state.customers);
 	const {users, loading: usersLoading} = useSelector((state) => state.users)
@@ -38,22 +44,16 @@ const TicketsTableBody = () => {
 					filterByStatus.toLowerCase().replaceAll("-", "")
 				);
 			});
-
+		
 		if(!sortByAscending) filteredTickets = filteredTickets.reverse()
 		return filteredTickets
 	}, [showServiceRequestsTab, showProjectsTab, tickets, filterByStatus, sortByAscending]);
 
 	const filteredSearchTickets = useMemo(() => {
 		return filteredActiveTickets
-		.filter(ticket => {
-			const customerExist = customers.find(
-				(customer) => +customer.id === +ticket.customer_id
-			);
-			return customerExist ? true : false
-		})
 		.filter((ticket) => {
 			if(!searchTicketsValue) return true
-			const companyName = customers.find((customer) => +customer.id === +ticket.customer_id).company_name // FOR CUSTOMER
+			const companyName = customers.find((customer) => +customer.user_id === +ticket.customer_id)?.company_name // FOR CUSTOMER
 			const superAdminOrAdminEmail = users.find((user) => +user.id === +ticket.user_id)?.email // FOR ADMINS
 			const ticketForm = ticket.ticket_form;
 			const searchString = ` ${companyName} ${superAdminOrAdminEmail} ${ticketForm}`.toLowerCase()
@@ -65,6 +65,40 @@ const TicketsTableBody = () => {
 	useEffect(() => {
 		dispatch(ticketsActions.updateField({ key: "activeTickets", value: filteredSearchTickets }));
 	}, [filteredSearchTickets, dispatch])
+
+		useEffect(() => {
+			if (successful === true) {
+				if (data) dispatch(ticketsActions.replaceTicket(data));
+				dispatch(
+					ticketDetailsActions.changeMultipleState([
+						{ key: "successful", value: null },
+						{ key: "error", value: null },
+					])
+				);
+				dispatch(
+					UIActions.showToasts({
+						message: "The Ticket Status Was Updated Successfully",
+						title: "Ticket Status Change successful",
+						type: "successful",
+					})
+				);
+			}
+			if (error === true) {
+				dispatch(
+					ticketDetailsActions.changeMultipleState([
+						{ key: "successful", value: null },
+						{ key: "error", value: null },
+					])
+				);
+				dispatch(
+					UIActions.showToasts({
+						message: errorMessage,
+						title: "Ticket Status Change Unsuccessful",
+						type: "error",
+					})
+				);
+			}
+		}, [successful, error, data, errorMessage, dispatch]);
 
 	if(customersLoading || ticketsLoading || usersLoading) return <tbody></tbody>
 

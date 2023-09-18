@@ -31,6 +31,7 @@ const initialState = {
 	errorMessage: "",
 	successful: null,
 	statuses: ["Pending", "Technician Enroute", "In-progress", "Done"],
+	currentTicketIdThatISEditing: null,
 	data: {},
 };
 
@@ -52,13 +53,14 @@ const ticketDetailsSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(changeATicketStatus.pending, (state, action) => {
+				console.log(action)
 				state.loading = true;
+				state.currentTicketIdThatISEditing = action.meta.arg.ticketId;
 			})
-			.addCase(changeATicketStatus.fulfilled, (state, {payload}) => {
-				state.loading = true;
+			.addCase(changeATicketStatus.fulfilled, (state, action) => {
+				console.log(action)
 				state.loading = false;
-				const {status, code, data, message} = payload;
-				console.log(payload);
+				const {status, code, data, message} = action.payload;
 				if (status === "OK" && code === 200) {
 					state.data = data;
 					state.successful = true;
@@ -68,6 +70,7 @@ const ticketDetailsSlice = createSlice({
 					state.errorMessage = message;
 					state.successful = false
 				}
+				state.currentTicketIdThatISEditing = null
 			})
 			.addCase(changeATicketStatus.rejected, (state, {payload}) => {
 				console.log({payload});
@@ -75,6 +78,7 @@ const ticketDetailsSlice = createSlice({
 				state.error = true;
 				state.errorMessage = payload;
 				state.successful = false;
+				state.currentTicketIdThatISEditing = null;
 			});
 	},
 });

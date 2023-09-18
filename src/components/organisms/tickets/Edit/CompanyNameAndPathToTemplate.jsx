@@ -10,10 +10,8 @@ const CompanyNameAndPathToTemplate = () => {
 	const params = useParams();
 	const { ticketId } = params;
 	const { tickets } = useSelector((state) => state.tickets);
-	const { customers } = useSelector((state) => state.customers);
 	const ticket = tickets.find((ticket) => +ticket.id === +ticketId);
-	const customer = customers.find((user) => +user.id === ticket.customer_id);
-	const company_name = customer?.company_name;
+	const {company_name} = ticket
 
 	const path = pathToTemplate.slice().map((p, ind, arr) => {
 		return ind === arr.length - 1 ? (

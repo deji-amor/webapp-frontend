@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const DateInput = ({ placeholder, min, max, value, onChange, onBlur, hasError, id , type, isValid}) => {
+const DateInput = ({ placeholder, min, max, value, onChange, onBlur, hasError, id , type, isValid, disabled}) => {
 	const changeHandler = (e) => onChange(e.target.value);
 	const blurHandler = () => onBlur();
 
@@ -18,7 +18,9 @@ const DateInput = ({ placeholder, min, max, value, onChange, onBlur, hasError, i
 				value={value}
 				className={`w-full accent-[#2b2e72] h-[46px] pl-4 pr-2 pt-3.5 text-[0.875rem] pb-4 rounded-md bg-[#eee] outline-none focus:border focus:border-[#2B2E72] ${
 					isValid && "border border-[#2B2E72]"
-				} ${hasError ? "border border-[#D73D3D]" : ""}`}
+				} ${hasError ? "border border-[#D73D3D]" : ""} ${
+					disabled ? "cursor-not-allowed" : ""
+				} disabled={disabled}`}
 			/>
 		</div>
 	);
@@ -35,6 +37,7 @@ DateInput.propTypes = {
 	min: PropTypes.string,
 	max: PropTypes.string,
 	isValid: PropTypes.bool,
+	disabled: PropTypes.bool,
 };
 
 export default DateInput
