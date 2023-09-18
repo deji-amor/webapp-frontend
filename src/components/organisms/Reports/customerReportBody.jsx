@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import ReportNavigateButs from "../../molecules/Reports/reportNavigateSection";
 import TypeFilterBoard from "../../molecules/Reports/reportFiltersSection";
 import ReportCustomerTable from "../../molecules/Reports/reportCustomerTable";
 import { getDateFromDateTime } from "../../../helpers/date-manipulation";
@@ -9,8 +8,9 @@ import {
 	sortFilteredCustomersByDate,
 	filterCustomersByDate,
 } from "../../../state-manager/reducers/reports/customers/customers";
+import CustomerFilterBoard from "../../molecules/Reports/customerFilterSection";
 import Placeholder from "../../molecules/general/Placeholder";
-import CreateIcon from "@mui/icons-material/Create";
+
 
 const CustomerReportBody = () => {
 	const [toggle, setToggle] = useState(true);
@@ -92,7 +92,7 @@ const CustomerReportBody = () => {
 		<>
 			{(filteredCustomers.length != 0 && (
 				<>
-					<TypeFilterBoard
+					<CustomerFilterBoard
 						handleReportDateRange={handleCustomerDateRange}
 						handleReportsSort={handleCustomersSort}
 						filteredReports={filteredCustomers}

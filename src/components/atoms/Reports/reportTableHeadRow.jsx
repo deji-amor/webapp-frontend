@@ -37,11 +37,11 @@ const ReportTableHeadRow = () => {
 				<span>Ticket Description</span>
 			</ReportTableHeadCell>
 			<ReportTableHeadCell>
-				<span>Ticket Start Date</span>
+				<span>Date Created</span>
 			</ReportTableHeadCell>
-			<ReportTableHeadCell>
+			{/* <ReportTableHeadCell>
 				<span>Ticket End Date</span>
-			</ReportTableHeadCell>
+			</ReportTableHeadCell> */}
 			<ReportTableHeadCell>
 				<span>Status</span>
 			</ReportTableHeadCell>

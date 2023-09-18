@@ -115,10 +115,7 @@ const ProjectExportFiles = ({ text }) => {
 			? filteredProjectTicketsByDate
 			: filteredProjectTickets;
 
-	const projectCounter =
-		selectedProjectTickets.length ||
-		filteredProjectTicketsByStatus.length ||
-		filteredProjectTicketsByDate.length;
+	const projectCounter = selectedProjectTickets.length
 
 	useEffect(() => {
 		const listener = (e) => {

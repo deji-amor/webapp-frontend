@@ -136,23 +136,6 @@ const CustomerExportFiles = ({ text }) => {
 				type="button"
 			>
 				<span>{text}</span>
-				{customerCounter != 0 && (
-					<p
-						style={{
-							borderRadius: "50%",
-							background: "white",
-							color: "rgba(43, 46, 114, 1)",
-							padding: "5px 5px 5px 5px",
-							width: "23px",
-							height: "23px",
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-					>
-						{customerCounter}
-					</p>
-				)}
 				<img className="export-icon" src={ExportImage} alt="export files" />
 			</button>
 			<div className="exp">
