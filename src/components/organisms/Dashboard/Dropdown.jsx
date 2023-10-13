@@ -3,6 +3,7 @@ import TicketDropdown from "./TicketDropdown";
 import CustomerDropdown from "./CustomerDropdown";
 import Checkbox from "../../atoms/Dashboard/Checkbox";
 import { styled } from "@mui/material";
+import arrowImage from "../../../assets/daashboard/chevrondown.svg";
 
 class Dropdown extends Component {
 	state = {
@@ -25,7 +26,7 @@ class Dropdown extends Component {
 			display: "flex",
 			flexDirection: "row",
 			alignItems: "center",
-            justifyContent: "space-between",
+			justifyContent: "space-between",
 		};
 
 		const checkboxContainerStyle = {
@@ -37,8 +38,7 @@ class Dropdown extends Component {
 		const dropdownStyle = {
 			display: "flex",
 			borderRadius: "8px",
-			background: "#2B2E72",
-			padding: "8px 10px",
+			padding: "0 12px",
 			alignItems: "center",
 			flexShrink: "0",
 			color: "#FFFFFF",
@@ -46,9 +46,14 @@ class Dropdown extends Component {
 			fontSize: "20px",
 			fontStyle: "normal",
 			fontWeight: "600",
-			lineHeight: "57.441px",
+			lineHeight: "45px",
 			cursor: "pointer",
 			letterSpacing: "1px",
+			appearance: "none",
+			background: `url(${arrowImage}) no-repeat #2B2E72`,
+			backgroundPosition: "calc(100% - 10px) center",
+			paddingRight: "50px",
+			backgroundSize: "35px",
 		};
 
 		const selectOptionStyle = {

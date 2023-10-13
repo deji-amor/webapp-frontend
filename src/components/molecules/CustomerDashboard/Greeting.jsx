@@ -4,11 +4,11 @@ import HeadGreeting from "../../atoms/CustomerDashboard/HeadGreeting";
 import { useSelector } from "react-redux";
 
 const Greeting = () => {
-	const {firstName} = useSelector((state) => state.authUser.data);
+	const {first_name} = useSelector((state) => state.authUser.data);
 
 	return (
 		<div className="" style={{marginTop: '40px'}}>
-			<HeadGreeting>Hi</HeadGreeting> <HeadName>{firstName},</HeadName>
+			<HeadGreeting>Hi</HeadGreeting> <HeadName>{first_name},</HeadName>
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import StatsCard from "../../molecules/Dashboard/StatsCard";
+import CustomerStatsCard from "../../molecules/CustomerDashboard/CustomerStatsCard";
 import { styled } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -11,7 +11,7 @@ const StyledStatsCardGroup = styled("div")`
 	overflow-x: auto;
 `;
 
-const StatsCardGroup = () => {
+const CustomerStatsCardGroup = () => {
 
   const analyticsData = useSelector((state) => state.dashboard.analyticsData);
   
@@ -80,7 +80,7 @@ const StatsCardGroup = () => {
 		<StyledStatsCardGroup>
 			{cardData.map((card, index) => (
 				<div className="grow" key={index}>
-					<StatsCard
+					<CustomerStatsCard
 						header={card.header}
 						value={card.value}
 						data={card.data}
@@ -92,4 +92,4 @@ const StatsCardGroup = () => {
 	);
 };
 
-export default StatsCardGroup;
+export default CustomerStatsCardGroup;

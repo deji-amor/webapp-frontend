@@ -40,17 +40,31 @@ const LegendLabel = styled("p")`
 `;
 
 const StatsLegend = ({ data }) => {
-	return (
-		<LegendContainer>
-			{data.labels.map((label, index) => (
-				<LegendItem key={index}>
-					<LegendColor color={data.datasets[0].backgroundColor[index]} />
-					<LegendLabel>{label}</LegendLabel>
-				</LegendItem>
-			))}
-		</LegendContainer>
-	);
+    const isEmptyData = data.datasets[0].data.every(value => value === 0);
+    const isNoData = data.datasets[0].data.length === 0;
+
+    if (isEmptyData || isNoData) {
+        return null;
+    }
+
+    return (
+        <LegendContainer>
+            {data.labels.map((label, index) => {
+                if (data.datasets[0].data[index] !== 0) {
+                    return (
+                        <LegendItem key={index}>
+                            <LegendColor color={data.datasets[0].backgroundColor[index]} />
+                            <LegendLabel>{label}</LegendLabel>
+                        </LegendItem>
+                    );
+                }
+                return null;
+            })}
+        </LegendContainer>
+    );
 };
+
+
 
 StatsLegend.propTypes = {
 	data: PropTypes.any,
