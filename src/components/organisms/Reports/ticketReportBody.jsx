@@ -28,7 +28,7 @@ const TicketReportBody = () => {
 	const filteredTicketsByStatus =
 		reportTabIndex === 0 ? filteredTBS : filteredProjectTicketsByStatus;
 
-	const handleTicketDateRange = useCallback(	
+	const handleTicketDateRange = useCallback(
 		(start, end) => {
 			setToggle(true);
 			if (start != "NaN-NaN-NaN" && end != "NaN-NaN-NaN") {
@@ -36,7 +36,7 @@ const TicketReportBody = () => {
 					const filteredDate = filteredTicketsByStatus.slice().filter((ticket) => {
 						const start_date = new Date(start);
 						const end_date = new Date(end);
-						const ticket_start_date = new Date(getDateFromDateTime(ticket.created_at));
+						const ticket_start_date = new Date(getDateFromDateTime(ticket.start_date_time));
 
 						return ticket_start_date >= start_date && ticket_start_date <= end_date;
 					});
@@ -46,7 +46,7 @@ const TicketReportBody = () => {
 					const filteredDate = filteredTickets.slice().filter((ticket) => {
 						const start_date = new Date(start);
 						const end_date = new Date(end);
-						const ticket_start_date = new Date(getDateFromDateTime(ticket.created_at));
+						const ticket_start_date = new Date(getDateFromDateTime(ticket.start_date_time));
 
 						return ticket_start_date >= start_date && ticket_start_date <= end_date;
 					});
@@ -70,9 +70,9 @@ const TicketReportBody = () => {
 				sortedTickets = filteredTicketsByStatus
 					.slice()
 					.sort((t1, t2) =>
-						t1.created_at > t2.created_at
+						t1.start_date_time > t2.start_date_time
 							? 1
-							: t1.created_at < t2.created_at
+							: t1.start_date_time < t2.start_date_time
 							? -1
 							: 0
 					);
@@ -81,9 +81,9 @@ const TicketReportBody = () => {
 				sortedTickets = filteredTicketsByStatus
 					.slice()
 					.sort((t1, t2) =>
-						t1.created_at > t2.created_at
+						t1.start_date_time > t2.start_date_time
 							? -1
-							: t1.created_at < t2.created_at
+							: t1.start_date_time < t2.start_date_time
 							? 1
 							: 0
 					);
@@ -95,9 +95,9 @@ const TicketReportBody = () => {
 				sortedTickets = filteredTicketsByDate
 					.slice()
 					.sort((t1, t2) =>
-						t1.created_at > t2.created_at
+						t1.start_date_time > t2.start_date_time
 							? 1
-							: t1.created_at < t2.created_at
+							: t1.start_date_time < t2.start_date_time
 							? -1
 							: 0
 					);
@@ -106,9 +106,9 @@ const TicketReportBody = () => {
 				sortedTickets = filteredTicketsByDate
 					.slice()
 					.sort((t1, t2) =>
-						t1.created_at > t2.created_at
+						t1.start_date_time > t2.start_date_time
 							? -1
-							: t1.created_at < t2.created_at
+							: t1.start_date_time < t2.start_date_time
 							? 1
 							: 0
 					);
@@ -120,9 +120,9 @@ const TicketReportBody = () => {
 				sortedTickets = filteredTickets
 					.slice()
 					.sort((t1, t2) =>
-						t1.created_at > t2.created_at
+						t1.start_date_time > t2.start_date_time
 							? 1
-							: t1.created_at < t2.created_at
+							: t1.start_date_time < t2.start_date_time
 							? -1
 							: 0
 					);
@@ -131,9 +131,9 @@ const TicketReportBody = () => {
 				sortedTickets = filteredTickets
 					.slice()
 					.sort((t1, t2) =>
-						t1.created_at > t2.created_at
+						t1.start_date_time > t2.start_date_time
 							? -1
-							: t1.created_at < t2.created_at
+							: t1.start_date_time < t2.start_date_time
 							? 1
 							: 0
 					);

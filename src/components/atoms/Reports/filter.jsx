@@ -88,7 +88,6 @@ const FilterBy = ({click, handleClicked}) => {
 	}
 
 	useEffect(() => {
-		console.log(status)
 		if (status != "") {
 			if (!active) {
 				handleFilterByStatus(
@@ -122,7 +121,7 @@ const FilterBy = ({click, handleClicked}) => {
 
 	useEffect(() => {
 		const listener = (e) => {
-			if (!e.target.closest("#drop-two") || e.target.closest("#drop-two")) {
+			if (!e.target.closest("#drop-one") || e.target.closest("#drop-two")) {
 				setToggle(false);
 			}
 		};

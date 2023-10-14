@@ -180,7 +180,6 @@ const ticketReportSlice = createSlice({
 
 		setMultipleDropdownFilterStatus: (state, {payload}) => {
 			if (state.reportTabIndex === 0) {
-				console.log(payload)
 				const allStatus = current(state).serviceStatus.slice();
 				let status = current(state).serviceStatus.find(status => status.status === payload.status);
 				let index = current(state).serviceStatus.findIndex(stat => stat.status === payload.status);

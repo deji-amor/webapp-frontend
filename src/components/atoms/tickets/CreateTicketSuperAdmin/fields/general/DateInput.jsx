@@ -1,29 +1,45 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+import PropTypes from "prop-types";
 
-const DateInput = ({ placeholder, min, max, value, onChange, onBlur, hasError, id , type, isValid, disabled}) => {
-	const changeHandler = (e) => onChange(e.target.value);
-	const blurHandler = () => onBlur();
-
+const DateInput = ({ label, value, onChange, onBlur, hasError, id, isValid, disabled, min, max }) => {
 	return (
-		<div>
-			<input
-				min={min}
-				max={max}
-				id={id}
-				placeholder={placeholder}
-				onChange={changeHandler}
-				onBlur={blurHandler}
-				type={type}
+		<LocalizationProvider dateAdapter={AdapterDayjs}>
+			<DatePicker
+				className={`bg-[#eee] outline-none`}
 				value={value}
-				className={`w-full accent-[#2b2e72] h-[46px] pl-4 pr-2 pt-3.5 text-[0.875rem] pb-4 rounded-md bg-[#eee] outline-none focus:border focus:border-[#2B2E72] ${
-					isValid && "border border-[#2B2E72]"
-				} ${hasError ? "border border-[#D73D3D]" : ""} ${
-					disabled ? "cursor-not-allowed" : ""
-				}`}
+				onChange={(data) => {
+					const newDate = dayjs(data.$d).format("MM-DD-YYYY");
+					onChange(newDate);
+				}}
+				// sx={{
+				// 	width: "100%",
+				// 	"& .MuiOutlinedInput-notchedOutline": { borderColor: "red" },
+				// 	"& .MuiInputLabel-root.Mui-focused": { color: "#2B2E72" }, //styles the label
+				// 	"& .MuiOutlinedInput-root": {
+				// 		"&:hover > fieldset": { borderColor: "#2B2E72" },
+				// 	},
+				// }}
 				disabled={disabled}
+				onBlur={onBlur}
+				popperModifiers={{
+					flip: {
+						behavior: ["bottom-end"],
+					},
+					preventOverflow: {
+						enabled: false,
+					},
+					hide: {
+						enabled: false,
+					},
+				}}
+				minDate={min ? dayjs(min) : null}
+				maxDate={max ? dayjs(max) : null}
 			/>
-		</div>
+		</LocalizationProvider>
 	);
 };
 
@@ -39,6 +55,7 @@ DateInput.propTypes = {
 	max: PropTypes.string,
 	isValid: PropTypes.bool,
 	disabled: PropTypes.bool,
+	label: PropTypes.string,
 };
 
-export default DateInput
+export default DateInput;

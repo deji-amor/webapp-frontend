@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useMemo} from "react";
 import { useSelector } from "react-redux";
 import { allRequiredFields } from "../state-manager/reducers/tickets/ticketEdition";
-import { isEqual } from "lodash";
+import { isEqual, omit } from "lodash";
 
 const filterObjectsByKey = (objectsArray, baseObject) => {
 	const baseKeys = Object.keys(baseObject);
@@ -21,14 +21,29 @@ const filterObjectsByKey = (objectsArray, baseObject) => {
 
 
 const useEditTicketIsAltered = () => {
-	const {originalTicket, allPossibleFields} = useSelector(
-		(state) => state.ticketEdition
-	);
+  const { originalTicket, allPossibleFields } = useSelector(
+    (state) => state.ticketEdition
+  );
 
-  const t = filterObjectsByKey([originalTicket, allPossibleFields], allRequiredFields)
-  const [objA, objB] = t
-  const areEqual = isEqual(objA, objB)
-	return areEqual;
+  // Use useMemo to memoize the result
+  const requiredAdditionalFields = useMemo(() => {
+    const allPossibleFieldsClone = structuredClone(allPossibleFields);
+    const requiredAdditionalFields = allPossibleFieldsClone.additionalFields.map((obj) =>
+      omit(obj, ["isValid", "errorMessage", "hasError", "isTouched"])
+    );
+    allPossibleFieldsClone.additionalFields = requiredAdditionalFields;
+    return allPossibleFieldsClone;
+  }, [allPossibleFields]);
+
+  const [objA, objB] = useMemo(() => filterObjectsByKey(
+    [originalTicket, requiredAdditionalFields],
+    allRequiredFields
+  ), [originalTicket, requiredAdditionalFields]);
+
+  // Calculate 'areEqual' only when 'objA' and 'objB' change
+  const areEqual = useMemo(() => isEqual(objA, objB), [objA, objB]);
+
+  return areEqual;
 };
 
 export default useEditTicketIsAltered;

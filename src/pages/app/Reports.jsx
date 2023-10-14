@@ -10,9 +10,8 @@ const Reports = () => {
 		<>
 			<ReportNavigateButs reportTitle={"Reports"} />
 			{(ticketReport && <TicketReportBody />) ||
-				(customerReport && <CustomerReportBody />) 
-				|| (technicianReport && <TechnicianReportBody />)
-			}
+				(customerReport && <CustomerReportBody />) ||
+				(technicianReport && <TechnicianReportBody />)}
 		</>
 	);
 };

@@ -69,11 +69,6 @@ const EditFromPdf = ({ ticket, user }) => {
 				<View style={styles}>
 					<Text style={styles.info}>Ticket Information</Text>
 				</View>
-				<View style={styles}>
-					<Link src={`https://web.amorservtech.net/admin/tickets/edit/${id}`} style={styles.icon}>
-						Edit Ticket
-					</Link>
-				</View>
 			</View>
 			<View style={styles.oneLine}>
 				<Text style={styles.detailText}>Created by: </Text>

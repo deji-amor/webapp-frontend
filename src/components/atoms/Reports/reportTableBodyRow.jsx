@@ -75,6 +75,7 @@ const ReportTableBodyRow = ({ ticket }) => {
 		}
 	};
 
+	// console.log(selectedProjectTickets);
 	return (
 		<ReportTableBodyRowWrapper checked={checked}>
 			<ReportTableBodyCell>
@@ -95,14 +96,14 @@ const ReportTableBodyRow = ({ ticket }) => {
 			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
-					<p>{getDateFromDateTime(ticket?.created_at)}</p>
+					<p>{getDateFromDateTime(ticket?.start_date_time)}</p>
 				</span>
 			</ReportTableBodyCell>
-			{/* <ReportTableBodyCell>
+			<ReportTableBodyCell>
 				<span>
 					<p>{getDateFromDateTime(ticket?.end_date_time)}</p>
 				</span>
-			</ReportTableBodyCell> */}
+			</ReportTableBodyCell>
 			<ReportTableBodyCell>
 				<span>
 					<p>{ticket?.status}</p>

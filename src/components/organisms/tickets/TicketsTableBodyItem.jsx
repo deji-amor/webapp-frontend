@@ -25,14 +25,6 @@ const Edit = styled("p")`
 	gap: 0.2rem;
 `;
 
-const test = () => {
-
-	
-
-
-	console.log("test");
-}
-
 const TicketsTableBodyItem = ({ ticket }) => {
   const {
     statuses,

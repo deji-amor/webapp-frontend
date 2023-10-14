@@ -69,9 +69,11 @@ const Duration = () => {
 			}
 		}, [startDateIsValid, endDateIsValid])
 
+		console.log(startDateIsValid, startDateValue, "/////startDateIsValid");
+
   return (
 		<div className="flex items-start justify-start gap-[2.5rem]">
-			<div className="min-w-[13rem]">
+			<div className="min-w-[13rem] flex gap-[0.25rem] flex-col">
 				<BlueThemedXtraSm>Start Date</BlueThemedXtraSm>
 				<DateInput
 					id={startDateId}
@@ -89,7 +91,7 @@ const Duration = () => {
 					</ValidationErrorText>
 				)}
 			</div>
-			<div className="min-w-[13rem]">
+			<div className="min-w-[13rem] flex gap-[0.25rem] flex-col">
 				<BlueThemedXtraSm>End Date</BlueThemedXtraSm>
 				<DateInput
 					id={endDateId}

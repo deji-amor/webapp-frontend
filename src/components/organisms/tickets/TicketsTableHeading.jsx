@@ -15,12 +15,12 @@ const TicketsTableHeading = () => {
   return (
 		<thead className="border-b-2 border-b-[#ECECEC]">
 			<tr>
-				<RecentTicketsTableHeader>Company Name</RecentTicketsTableHeader>
+				<RecentTicketsTableHeader >Company Name</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Ticket Type</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Created By</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Status</RecentTicketsTableHeader>
-				<RecentTicketsTableHeader>Start Date</RecentTicketsTableHeader>
-				<RecentTicketsTableHeader>
+				<RecentTicketsTableHeader>Date Created</RecentTicketsTableHeader>
+				<RecentTicketsTableHeader alignment={"right"}>
 					<span className="flex items-center gap-[0.75rem]">
 						<span>Filter By:</span>
 						<span>

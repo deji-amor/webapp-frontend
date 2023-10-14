@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
 
-const RecentTicketsTableHeader = ({ children }) => {
+const RecentTicketsTableHeader = ({ children, alignment }) => {
 	const Heading = styled("th")`
 		color: #1a1a1a;
 		font-family: "Poppins", sans-serif;
@@ -14,13 +14,15 @@ const RecentTicketsTableHeader = ({ children }) => {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		text-align: ${({alignment}) => alignment ? alignment : "left"};
 	`;
 
-	return <Heading>{children}</Heading>;
+	return <Heading alignment={alignment}>{children}</Heading>;
 };
 
 RecentTicketsTableHeader.propTypes = {
 	children: PropTypes.node,
+	alignment: PropTypes.string
 };
 
 export default RecentTicketsTableHeader;

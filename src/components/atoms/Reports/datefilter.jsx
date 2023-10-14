@@ -145,7 +145,7 @@ const DateFilter = ({ handleReportDateRange }) => {
 				<DemoContainer components={["DatePicker", "DatePicker"]}>
 					<div className="dates">
 						<div className="date">
-							<label htmlFor="start">Start Date - End Date</label>
+							<label htmlFor="start">Start Date</label>
 							<DatePicker
 								id="start"
 								slotProps={{
@@ -183,7 +183,7 @@ const DateFilter = ({ handleReportDateRange }) => {
 							/>
 						</div>
 						<div className="date">
-							<label htmlFor="end">{"."}</label>
+							<label htmlFor="end">End Date</label>
 							<DatePicker
 								id="end"
 								slotProps={{

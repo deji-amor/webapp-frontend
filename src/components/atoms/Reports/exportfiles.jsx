@@ -115,7 +115,8 @@ const ExportFiles = ({ text }) => {
 			? filteredTicketsByDate
 			: filteredTickets;
 
-	const serviceCounter = selectedTickets.length
+	const serviceCounter =
+		selectedTickets.length || filteredTicketsByStatus.length || filteredTicketsByDate.length;
 
 	useEffect(() => {
 		const listener = (e) => {

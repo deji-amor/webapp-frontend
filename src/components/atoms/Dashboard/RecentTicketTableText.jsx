@@ -16,10 +16,10 @@ const RecentTicketTableText = ({ children, isID }) => {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		z-index: 10;
-		max-width: 11rem;
+		max-width: 13rem;
 	`;
 
-	return <Text className="max-w-[16rem]">{children}</Text>;
+	return <Text className="">{children}</Text>;
 };
 
 RecentTicketTableText.propTypes = {

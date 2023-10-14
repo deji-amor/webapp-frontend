@@ -60,6 +60,11 @@ const HistoryTicketValueChange = ({ prevValue, newValue }) => {
 		modNewValue = string;
 	}
 
+	if(typeof modPrevValue !== "string" || typeof modNewValue !== "string"){
+		modNewValue = String(modNewValue)
+		modPrevValue = String(modPrevValue)
+	}
+
 	return (
 		<div className="flex gap-x-[1rem] max-w-full items-center flex-wrap">
 			<ValueText className="">

@@ -97,13 +97,13 @@ export function isValidDateTimeLocal(inputString) {
 }
 
 export function isValidDate(inputString) {
-	const regex = /^\d{4}-\d{2}-\d{2}$/;
+	const regex = /^\d{2}-\d{2}-\d{4}$/;
 
 	if (!regex.test(inputString)) {
 		return [false, "Invalid format. The format should be 'MM-DD-YYYY'."];
 	}
 
-	const [year, month, day] = inputString.split("-");
+	const [month, day, year] = inputString.split("-");
 	const dateObj = new Date(year, month - 1, day);
 
 	const yearValid = dateObj.getFullYear() == year;

@@ -21,6 +21,7 @@ const Wrapper = styled("div")`
 		width: 100%;
 		text-align: left;
 		padding: 0.8rem;
+		border-collapse: collapse;
 		// border-radius: 0.75rem 0.75rem 0rem 0rem;
 	}
 `;
