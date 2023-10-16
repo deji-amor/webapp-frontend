@@ -5,7 +5,6 @@ import { styled } from "@mui/material";
 const RecentTicketTableText = ({ children, isID }) => {
 	const Text = styled("td")`
 		color: ${isID ? "#2B2E72" : "#706E6E"};
-		// position: relative;
 		font-family: Poppins;
 		font-size: 1rem;
 		font-style: normal;
