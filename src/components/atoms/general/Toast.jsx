@@ -13,6 +13,7 @@ const Container = styled("div")`
 	gap: 0.75rem;
 	border-radius: 0.5rem;
 	background: ${({ type }) => (type === "successful" ? "#D3DED4" : "rgb(254 226 226)")};
+	margin-bottom: 5px;
 	z-index: 110;
 	.error-icon {
 		width: 1.5rem;
@@ -39,7 +40,7 @@ const Container = styled("div")`
 	}
 `;
 
-const Toasts = ({ onClose, message, title, type }) => {
+const Toasts = ({ onClose, message, title, type, className }) => {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			onClose();
@@ -49,7 +50,7 @@ const Toasts = ({ onClose, message, title, type }) => {
 	}, [onClose]);
 
 	return (
-		<Container className="" type={type}>
+		<Container className={className} type={type}>
 			{type === "successful" ? (
 				<CheckCircleIcon className="text-[#04850D]" />
 			) : (
@@ -69,6 +70,7 @@ Toasts.propTypes = {
 	message: PropTypes.string,
 	title: PropTypes.string,
   type: PropTypes.string,
+	className: PropTypes.string
 };
 
 export default Toasts;

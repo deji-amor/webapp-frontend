@@ -11,7 +11,6 @@ import { fetchCustomers } from '../state-manager/reducers/users/customers/custom
 import { fetchAllCustomers } from '../state-manager/reducers/reports/customers/customers';
 import { fetchAllTickets } from '../state-manager/reducers/reports/tickets/ticketreport';
 import { fetchTickets } from '../state-manager/reducers/tickets/tickets';
-import { fetchNotifications } from '../state-manager/reducers/notifications/notifications';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
 import ResetPassword from "../components/organisms/Password/resetpassword";
@@ -22,7 +21,6 @@ import { authUserActions, fetchAuthUser } from '../state-manager/reducers/users/
 const MemoizedSidebar = memo(Sidebar);
 const MemoizedNavbar = memo(Navbar);
 const MemoizedInitialAdminCreationFormAndModal = memo(InitialAdminCreationFormAndModal);
-const MemoizedTicketTemplateCreationOrEditionForm = memo(TicketTemplateCreationOrEditionForm)
 const MemoizedToastContainer = memo(ToastContainer)
 
 const AppLayout = () => {

@@ -67,7 +67,7 @@ const MainTicketEditionForm = () => {
 				dispatch(
 					UIActions.showToasts({
 						message: errorMessage,
-						title: "Ticket Edition Unsuccessful",
+						title: "Ticket Edit Unsuccessful",
 						type: "error",
 					})
 				);

@@ -61,6 +61,23 @@ const DownIcon = () => (
 	</svg>
 );
 
+function capitalizeTitleCase(inputString) {
+	if (inputString.length === 0) {
+		return inputString;
+	} else {
+		// Split the string into words
+		const words = inputString.split(" ");
+
+		// Capitalize the first letter of each word and convert the rest to lowercase
+		const capitalizedWords = words.map(
+			(word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+		);
+
+		// Join the words back together
+		return capitalizedWords.join(" ");
+	}
+}
+
 const ChangeTicketStatus = () => {
 	const params = useParams();
 	const { ticketId } = params;
@@ -125,7 +142,7 @@ const ChangeTicketStatus = () => {
 					<Loader>Updating ticket</Loader>
 				) : (
 					<>
-						<span>{currentStatus}</span>
+						<span className="">{capitalizeTitleCase(currentStatus).replace("-", "")}</span>
 						<span>
 							<DownIcon />
 						</span>
