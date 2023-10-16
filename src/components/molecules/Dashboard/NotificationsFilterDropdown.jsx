@@ -65,6 +65,7 @@ const NotificationsFilterDropdown = () => {
     dispatch(
 			notificationsActions.updateField({ key: "currentSearchValue", value: newSearchValue })
 		);
+		
 		setShowDrop(false)
   }
 
