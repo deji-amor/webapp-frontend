@@ -1,29 +1,47 @@
 import React from 'react'
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+import { isValidDate } from '../../../../../../helpers/validation';
 import PropTypes from 'prop-types'
 
 const DateInput = ({ placeholder, min, max, value, onChange, onBlur, hasError, id , type, isValid, disabled}) => {
-	const changeHandler = (e) => onChange(e.target.value);
-	const blurHandler = () => onBlur();
-
-	return (
-		<div>
-			<input
-				min={min}
-				max={max}
-				id={id}
-				placeholder={placeholder}
-				onChange={changeHandler}
-				onBlur={blurHandler}
-				type={type}
-				value={value}
-				className={`w-full accent-[#2b2e72] h-[46px] pl-4 pr-2 pt-3.5 text-[0.875rem] pb-4 rounded-md bg-[#eee] outline-none focus:border focus:border-[#2B2E72] ${
-					isValid && "border border-[#2B2E72]"
-				} ${hasError ? "border border-[#D73D3D]" : ""} ${
-					disabled ? "cursor-not-allowed" : ""
-				} disabled={disabled}`}
-			/>
-		</div>
-	);
+	const FORMAT = "YYYY-MM-DD";
+	// if (isValidDate(value)) console.log("isvalid!!!!!");
+		return (
+			<LocalizationProvider dateAdapter={AdapterDayjs}>
+				<DatePicker
+					className={`bg-[#eee] outline-none`}
+					value={isValidDate(value) ? dayjs(value) : null}
+					onChange={(data) => {
+						const newDate = dayjs(data.$d).format(FORMAT);
+						onChange(newDate);
+					}}
+					slotProps={{
+						textField: {
+							error: hasError ? true : false,
+						},
+					}}
+					disabled={disabled}
+					onBlur={onBlur}
+					popperModifiers={{
+						flip: {
+							behavior: ["bottom-end"],
+						},
+						preventOverflow: {
+							enabled: false,
+						},
+						hide: {
+							enabled: false,
+						},
+					}}
+					format={FORMAT}
+					minDate={min ? dayjs(min) : null}
+					maxDate={max ? dayjs(max) : null}
+				/>
+			</LocalizationProvider>
+		);
 };
 
 DateInput.propTypes = {

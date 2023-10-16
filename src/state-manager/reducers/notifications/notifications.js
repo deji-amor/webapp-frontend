@@ -67,8 +67,23 @@ const initialState = {
 		"Ticket Update",
 		"Ticket Edit",
 	],
+	searchByForCustomers: [
+		"All",
+		"Account Creation",
+		"Account Onboarding",
+		"Profile Update",
+		"Ticket Update",
+		"Ticket Edit",
+	],
+	searchByForAdmins: [
+		"All",
+		"Account Creation",
+		"Account Onboarding",
+		"Profile Update",
+		"Ticket Update",
+		"Ticket Edit",
+	],
 	sortByAscending: true,
-
 };
 
 const notificationsSlice = createSlice({

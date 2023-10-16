@@ -6,23 +6,21 @@ import dayjs from "dayjs";
 import PropTypes from "prop-types";
 
 const DateInput = ({ label, value, onChange, onBlur, hasError, id, isValid, disabled, min, max }) => {
+	const FORMAT = "YYYY-MM-DD";
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<DatePicker
 				className={`bg-[#eee] outline-none`}
 				value={value}
 				onChange={(data) => {
-					const newDate = dayjs(data.$d).format("MM-DD-YYYY");
+					const newDate = dayjs(data.$d).format(FORMAT);
 					onChange(newDate);
 				}}
-				// sx={{
-				// 	width: "100%",
-				// 	"& .MuiOutlinedInput-notchedOutline": { borderColor: "red" },
-				// 	"& .MuiInputLabel-root.Mui-focused": { color: "#2B2E72" }, //styles the label
-				// 	"& .MuiOutlinedInput-root": {
-				// 		"&:hover > fieldset": { borderColor: "#2B2E72" },
-				// 	},
-				// }}
+				slotProps={{
+					textField: {
+						error: hasError ? true : false,
+					},
+				}}
 				disabled={disabled}
 				onBlur={onBlur}
 				popperModifiers={{
@@ -36,6 +34,7 @@ const DateInput = ({ label, value, onChange, onBlur, hasError, id, isValid, disa
 						enabled: false,
 					},
 				}}
+				format={FORMAT}
 				minDate={min ? dayjs(min) : null}
 				maxDate={max ? dayjs(max) : null}
 			/>

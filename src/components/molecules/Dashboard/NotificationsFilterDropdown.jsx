@@ -54,6 +54,7 @@ const NotificationsFilterDropdown = () => {
     searchBy,
     currentSearchValue,
 	} = useSelector((state) => state.notifications);
+		const { user_type } = useSelector((state) => state.authUser.data);
   const dispatch = useDispatch()
   const [showDrop, setShowDrop] = useState(false);
 
@@ -91,6 +92,11 @@ const NotificationsFilterDropdown = () => {
 			{showDrop && (
 				<Wrapper className='absolute top-[105%] right-0'>
 					{searchBy
+						.filter(item => {
+							if(user_type === "admin") return true
+							if(user_type === "superadmin") return true
+							else return true
+						})
 						.filter((item) => item !== currentSearchValue)
 						.map((item) => (
 							<Item onClick={(event) => {

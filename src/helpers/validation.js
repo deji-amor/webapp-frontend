@@ -1,30 +1,31 @@
+import {isValid, parse} from "date-fns";
+
 export function isValidEmail(email) {
-  // Regular expression pattern for email validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
-  // REGULAR return emailPattern.test(email);
-  if(email.trim().length === 0) return [false, "Email can not be empty"]
-  if (!emailPattern.test(email)) {
-    return [false, "Invalid email format"]
-  } else {
-    return [true, ""]
-  }
+	// Regular expression pattern for email validation
+	const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+	// REGULAR return emailPattern.test(email);
+	if (email.trim().length === 0) return [false, "Email can not be empty"];
+	if (!emailPattern.test(email)) {
+		return [false, "Invalid email format"];
+	} else {
+		return [true, ""];
+	}
 }
 
-
 export function isNotEmpty(value) {
-  if(value.trim().length === 0) return [false, "Password can not be empty"]
-  else return [true, ""]
+	if (value.trim().length === 0) return [false, "Password can not be empty"];
+	else return [true, ""];
 }
 
 export function isFieldNameEmpty(value) {
-  if(value.trim().length === 0) return [false, "Field name can not be empty"]
-  else return [true, ""]
+	if (value.trim().length === 0) return [false, "Field name can not be empty"];
+	else return [true, ""];
 }
 
 export function isFieldValueEmpty(value) {
-  if(value.trim().length === 0) return [false, "Field value can not be empty"]
-  else return [true, ""]
+	if (value.trim().length === 0) return [false, "Field value can not be empty"];
+	else return [true, ""];
 }
 
 export function isNameEmpty(value) {
@@ -59,63 +60,72 @@ export function isScopeOfWorkEmpty(value) {
 }
 
 export function isValidFile(file) {
-  const filename = file?.name?.trim();
+	const filename = file?.name?.trim();
 	if (!(file instanceof File)) {
 		return false;
-	}else if(filename === "") {
+	} else if (filename === "") {
 		return false;
-	}else if (file.size === 0) {
+	} else if (file.size === 0) {
 		return false;
-	}else {
-    return true;
-  }
+	} else {
+		return true;
+	}
 }
 
 export function isValidDateTimeLocal(inputString) {
-  const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
-
-  if (!regex.test(inputString)) {
-    return [false, "Invalid format. The format should e.g '2022-07-05T04:32'."];
-  }
-
-  const [datePart, timePart] = inputString.split('T');
-  const [year, month, day] = datePart.split('-');
-  const [hours, minutes] = timePart.split(':');
-
-  const dateObj = new Date(year, month - 1, day, hours, minutes);
-  const yearValid = dateObj.getFullYear() == year;
-  const monthValid = dateObj.getMonth() + 1 == month;
-  const dayValid = dateObj.getDate() == day;
-  const hoursValid = dateObj.getHours() == hours;
-  const minutesValid = dateObj.getMinutes() == minutes;
-
-  if (!(yearValid && monthValid && dayValid && hoursValid && minutesValid)) {
-    return [false, "Invalid date or time values."];
-  }
-
-  return [true, null];
-}
-
-export function isValidDate(inputString) {
-	const regex = /^\d{2}-\d{2}-\d{4}$/;
+	const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
 
 	if (!regex.test(inputString)) {
-		return [false, "Invalid format. The format should be 'MM-DD-YYYY'."];
+		return [false, "Invalid format. The format should e.g '2022-07-05T04:32'."];
 	}
 
-	const [month, day, year] = inputString.split("-");
-	const dateObj = new Date(year, month - 1, day);
+	const [datePart, timePart] = inputString.split("T");
+	const [year, month, day] = datePart.split("-");
+	const [hours, minutes] = timePart.split(":");
 
+	const dateObj = new Date(year, month - 1, day, hours, minutes);
 	const yearValid = dateObj.getFullYear() == year;
 	const monthValid = dateObj.getMonth() + 1 == month;
 	const dayValid = dateObj.getDate() == day;
+	const hoursValid = dateObj.getHours() == hours;
+	const minutesValid = dateObj.getMinutes() == minutes;
 
-	if (!(yearValid && monthValid && dayValid)) {
-		return [false, "Invalid date values."];
+	if (!(yearValid && monthValid && dayValid && hoursValid && minutesValid)) {
+		return [false, "Invalid date or time values."];
 	}
 
 	return [true, null];
 }
+
+const FORMAT = "yyyy-MM-dd"
+
+export function isValidDate(inputString) {
+	const date = parse(inputString, FORMAT , new Date())
+
+	if(!isValid(date)) return [false, `Invalid format. The format should be '${FORMAT.toLocaleUpperCase()}'.`];
+	else return [true, null];
+}
+
+// export function isValidDate(inputString) {
+// 	const regex = /^\d{2}-\d{2}-\d{4}$/;
+
+// 	if (!regex.test(inputString)) {
+// 		return [false, "Invalid format. The format should be 'MM-DD-YYYY'."];
+// 	}
+
+// 	const [month, day, year] = inputString.split("-");
+// 	const dateObj = new Date(year, month - 1, day);
+
+// 	const yearValid = dateObj.getFullYear() == year;
+// 	const monthValid = dateObj.getMonth() + 1 == month;
+// 	const dayValid = dateObj.getDate() == day;
+
+// 	if (!(yearValid && monthValid && dayValid)) {
+// 		return [false, "Invalid date values."];
+// 	}
+
+// 	return [true, null];
+// }
 
 export function isHardwareTypeValid(value) {
 	if (value.trim().length === 0) return [false, "Hardware type can not be empty"];

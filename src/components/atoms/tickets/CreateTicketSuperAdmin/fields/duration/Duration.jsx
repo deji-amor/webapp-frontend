@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 // IMPORT DATEINPUT
 // import DateInput from '../general/DateInput'
 import { createTicketActions } from '../../../../../../state-manager/reducers/tickets/ticketCreation'
+import { parse } from 'date-fns';
 import DateInput from '../general/DateInput'
 import ValidationErrorText from '../../../../Login/ValidationErrorText'
 import BlueThemedXtraSm from '../../BlueThemedXtraSm'
@@ -11,6 +12,14 @@ import { useDispatch } from 'react-redux'
 import { getTodayAndTomorrow } from '../../../../../../state-manager/reducers/tickets/ticketCreation'
 
 const rightNow = getTodayAndTomorrow().today
+
+export const isDateGreaterThan = (d1, d2) => {
+	const FORMAT = 'yyyy-MM-dd'
+	const date1 = parse(d1, FORMAT, new Date());
+	const date2 = parse(d2, FORMAT, new Date());
+
+	return date1 > date2
+}
 
 const Duration = () => {
     const {
@@ -36,10 +45,10 @@ const Duration = () => {
 			enteredValue: endDateValue,
 			errorMessage: endDateErrorMessage,
 			// END DATE
-			// setErrorMessage: endDateSetErrorMessage,
+			setErrorMessage: endDateSetErrorMessage,
 			hasError: endDateHasError,
 			// END DATE
-			// setHasError: endDateSetHasError,
+			setHasError: endDateSetHasError,
 			valueChangeHandler: endDateChangeHandler,
 			valueBlurHandler: endDateBlurHandler,
 			valueIsValid: endDateIsValid,
@@ -53,12 +62,19 @@ const Duration = () => {
 
 		const dispatch = useDispatch()
 
+		const [wereBothStartDateAndEndDateValid, setWereBothStartDateAndEndDateValid] = useState(false);
+
 		useEffect(() => {
-			dispatch(createTicketActions.updateField({ key: "endDateTime", value: "" }));
-		}, [startDateValue]);
+			if(startDateValue && wereBothStartDateAndEndDateValid && isDateGreaterThan(startDateValue, endDateValue)){
+				endDateSetHasError(true)
+				endDateSetErrorMessage("End date must be after start date")
+				// dispatch(createTicketActions.updateField({ key: "endDateTime", value: "" }));
+			}
+		}, [startDateValue, endDateValue]);
 
 		useEffect(() => {
 			if(startDateIsValid && endDateIsValid){
+				setWereBothStartDateAndEndDateValid(true)
 				dispatch(
 					createTicketActions.updateField({ key: "durationIsValid", value: true })
 				);
@@ -68,8 +84,6 @@ const Duration = () => {
 				);
 			}
 		}, [startDateIsValid, endDateIsValid])
-
-		console.log(startDateIsValid, startDateValue, "/////startDateIsValid");
 
   return (
 		<div className="flex items-start justify-start gap-[2.5rem]">
@@ -84,6 +98,7 @@ const Duration = () => {
 					placeholder={""}
 					value={startDateValue}
 					isValid={startDateIsValid}
+					hasError={startDateHasError}
 				/>
 				{startDateHasError && (
 					<ValidationErrorText errorFromServer={startDateErrFromServer}>
@@ -103,6 +118,7 @@ const Duration = () => {
 					value={endDateValue}
 					isValid={endDateIsValid}
 					disabled={!startDateIsValid}
+					hasError={endDateHasError}
 				/>
 				{endDateHasError && (
 					<ValidationErrorText errorFromServer={endDateErrFromServer}>

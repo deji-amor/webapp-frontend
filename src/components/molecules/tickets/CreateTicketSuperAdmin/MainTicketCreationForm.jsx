@@ -37,7 +37,7 @@ const MainTicketCreationForm = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		console.log(requiredFields);
+		// console.log(requiredFields);
 		dispatch(createTicket(requiredFields));
 	};
 
@@ -75,7 +75,6 @@ const MainTicketCreationForm = () => {
 	const isFormValid = useCreateTicketFormValidator();
 	const isFormDisabled = !isFormValid;
 
-	
 	const chosenTemplate = useSelector((state) => state.ticketCreation.chosenTemplate);
 	const pointOfContact = chosenTemplate.includes("pointOfContact");
 	const numberOfTechniciansNeeded = chosenTemplate.includes("numberOfTechniciansNeeded");
@@ -142,6 +141,7 @@ const MainTicketCreationForm = () => {
 					Back
 				</FormButton>
 				<FormButton highLighted={true} type="submit" disabled={isFormDisabled || loading}>
+				{/* <FormButton highLighted={true} type="submit" disabled={false}> */}
 					{loading ? <Loader>Creating Ticket...</Loader> : "Save Ticket"}
 				</FormButton>
 			</div>

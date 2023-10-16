@@ -16,7 +16,7 @@ const Tab = styled("span")`
 	font-style: normal;
 	font-weight: 600;
 	line-height: 1.25rem; /* 142.857% */
-	max-width: 6.4rem;
+	max-width: 6.5rem;
 `;
 
 const StatusTab = ({status}) => {

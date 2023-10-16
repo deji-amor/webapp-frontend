@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../utilis";
 import {uploadFile, deleteFileByUrl} from "../../../aws/aws-crud-operations";
+import {format} from "date-fns";
 import tree from "./ticketCreationMultiplePath";
 
 export const editTicket = createAsyncThunk("ticketEdition", async (args, {rejectWithValue}) => {
@@ -43,23 +44,28 @@ export const editTicket = createAsyncThunk("ticketEdition", async (args, {reject
 	}
 });
 
-export function getTodayAndTomorrow() {
+export function getTodayAndTomorrow(formatString) {
 	const today = new Date();
 	const tomorrow = new Date(today);
 	tomorrow.setDate(tomorrow.getDate() + 1);
 
 	function formatDate(date) {
-		const year = date.getFullYear();
-		const month = String(date.getMonth() + 1).padStart(2, "0");
-		const day = String(date.getDate()).padStart(2, "0");
-		return `${month}-${day}-${year}`;
+		if (formatString) {
+			return format(date, formatString);
+		} else {
+			const year = date.getFullYear();
+			const month = String(date.getMonth() + 1).padStart(2, "0");
+			const day = String(date.getDate()).padStart(2, "0");
+			return `${month}-${day}-${year}`;
+		}
 	}
 
 	return {
-		today: formatDate(today),
-		tomorrow: formatDate(tomorrow),
+		today: formatDate(today, formatString),
+		tomorrow: formatDate(tomorrow, formatString),
 	};
 }
+
 
 const addressItem = {address: "", type: "governmental"};
 const addressList = [addressItem];
@@ -265,6 +271,7 @@ const editTicketSlice = createSlice({
 			// SCOPE OF WORK OF WORK SECTION ENDS HERE
 
 			// SCOPE OF WORK OF DURATION STARTS HERE
+			console.log(ticketToEdit.start_date_time);
 			state.allPossibleFields.startDateTime = formatToApiDate(ticketToEdit.start_date_time);
 			state.allPossibleFields.endDateTime = formatToApiDate(ticketToEdit.end_date_time);
 			// SCOPE OF WORK OF DURATION STARTS HERE
