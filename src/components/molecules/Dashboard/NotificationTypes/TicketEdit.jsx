@@ -22,13 +22,19 @@ const TicketEdit = ({ notification, readNotificationHandler }) => {
 	const date = new Date(timestamp);
 	const formattedDistance = formatDistanceToNow(date, { addSuffix: true });
 
+	const newKeyNames = {
+		point_of_contact_name: "point of contact",
+		point_of_contact_phone_number: "point of contact",
+		point_of_contact_address: "point of contact",
+	}
+
 	return (
 		<Wrapper
 			className=""
 			isRead={notification.is_read}
 			onClick={() => readNotificationHandler(notification)}
 		>
-			<Tablet className="mb-[0.75rem] truncate">Ticket Edit</Tablet>
+			<Tablet className="mb-[0.75rem] truncate">Ticket Update</Tablet>
 			<div className="flex justify-between items-start gap-[1.5rem]">
 				<div className="max-w-[28rem] flex gap-x-[0.5rem]">
 					{profilePic ? (
@@ -51,7 +57,7 @@ const TicketEdit = ({ notification, readNotificationHandler }) => {
 							{changedKeys.map((key, ind, arr) => (
 								<span key={key} className="highlighted capitalize">
 									{" "}
-									{key.replaceAll("_", " ")}
+									{newKeyNames[key] ? newKeyNames[key] : key.replaceAll("_", " ")}
 									{ind + 1 === arr.length ? "" : ","}
 								</span>
 							))}{" "}

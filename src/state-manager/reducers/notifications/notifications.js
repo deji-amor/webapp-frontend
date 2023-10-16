@@ -65,15 +65,11 @@ const initialState = {
 		"Account Onboarding",
 		"Profile Update",
 		"Ticket Update",
-		"Ticket Edit",
+	"Ticket Edit",
 	],
 	searchByForCustomers: [
 		"All",
-		"Account Creation",
-		"Account Onboarding",
-		"Profile Update",
 		"Ticket Update",
-		"Ticket Edit",
 	],
 	searchByForAdmins: [
 		"All",

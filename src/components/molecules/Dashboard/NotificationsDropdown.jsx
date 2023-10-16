@@ -160,7 +160,6 @@ const NotificationsDropdown = () => {
 	}, [notifications, sortByAscending, currentSearchValue]);
 
 	const r = notificationsList
-	console.log(r);
 
 		return (
 			<Wrapper>

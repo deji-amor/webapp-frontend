@@ -50,10 +50,9 @@ const Item = styled("div")`
 `;
 
 const NotificationsFilterDropdown = () => { 
-  const {
-    searchBy,
-    currentSearchValue,
-	} = useSelector((state) => state.notifications);
+  const { searchBy, currentSearchValue, searchByForAdmins, searchByForCustomers } = useSelector(
+		(state) => state.notifications
+	);
 		const { user_type } = useSelector((state) => state.authUser.data);
   const dispatch = useDispatch()
   const [showDrop, setShowDrop] = useState(false);
@@ -80,6 +79,11 @@ const NotificationsFilterDropdown = () => {
       document.body.removeEventListener("click", listener)
     }
   }, [])
+
+	let searchByFilters = []
+	if(user_type === "admin") searchByFilters = searchBy
+	if(user_type == "admin") searchByFilters = searchByForAdmins
+	if(user_type == "customer") searchByFilters = searchByForCustomers
   
   return (
 		<div className="relative" id="notificationFilterDropdown">
@@ -91,12 +95,7 @@ const NotificationsFilterDropdown = () => {
 			</DropDownTablet>
 			{showDrop && (
 				<Wrapper className='absolute top-[105%] right-0'>
-					{searchBy
-						.filter(item => {
-							if(user_type === "admin") return true
-							if(user_type === "superadmin") return true
-							else return true
-						})
+					{searchByFilters
 						.filter((item) => item !== currentSearchValue)
 						.map((item) => (
 							<Item onClick={(event) => {

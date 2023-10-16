@@ -16,7 +16,7 @@ const RecentTicketTableText = ({ children, isID }) => {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		z-index: 10;
-		max-width: 13rem;
+		max-width: 15rem;
 	`;
 
 	return <Text className="">{children}</Text>;

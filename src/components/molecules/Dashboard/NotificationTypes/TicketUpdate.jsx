@@ -38,7 +38,7 @@ const TicketUpdate = ({ notification, readNotificationHandler }) => {
 			isRead={notification.is_read}
 			onClick={() => readNotificationHandler(notification)}
 		>
-			<Tablet className="mb-[0.75rem] truncate">Ticket Update</Tablet>
+			<Tablet className="mb-[0.75rem] truncate">Status Update</Tablet>
 			<div className="flex justify-between items-start gap-[1.5rem]">
 				<div className="max-w-[28rem] flex gap-x-[0.5rem]">
 					{profilePic ? (

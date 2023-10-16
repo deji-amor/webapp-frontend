@@ -143,8 +143,7 @@ const MainTicketEditionForm = () => {
 				<FormButton highLighted={false} onClick={goBackHandler} type="button">
 					Back
 				</FormButton>
-				<FormButton highLighted={true} type="submit" disabled={false}>
-				{/* <FormButton highLighted={true} type="submit" disabled={isFormDisabled || loading}> */}
+				<FormButton highLighted={true} type="submit" disabled={isFormDisabled || loading}>
 					{loading ? <Loader>Updating Ticket...</Loader> : "Save And Update Changes"}
 				</FormButton>
 			</div>
