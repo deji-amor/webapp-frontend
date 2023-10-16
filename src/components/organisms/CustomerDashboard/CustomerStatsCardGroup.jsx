@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CustomerStatsCard from "../../molecules/CustomerDashboard/CustomerStatsCard";
 import { styled } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "../../../state-manager/reducers/dashboard/customerDashboard";
 
 const StyledStatsCardGroup = styled("div")`
 	display: flex;
@@ -13,7 +14,13 @@ const StyledStatsCardGroup = styled("div")`
 
 const CustomerStatsCardGroup = () => {
 
-  const analyticsData = useSelector((state) => state.dashboard.analyticsData);
+	const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
+
+  const analyticsData = useSelector((state) => state.customerDashboard.analyticsData);
   
 	const cardData = [
 		{

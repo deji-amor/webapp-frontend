@@ -1,5 +1,6 @@
-import Greeting from '../../components/molecules/CustomerDashboard/Greeting'
+import Greeting from '../../components/molecules/CustomerDashboard/Greeting';
 import Placeholder from '../../components/molecules/general/Placeholder';
+import Board from '../../components/organisms/CustomerDashboard/Board';
 import CustomerStatsCardGroup from '../../components/organisms/CustomerDashboard/CustomerStatsCardGroup';
 
 const Dashboard = () => {
@@ -7,7 +8,8 @@ const Dashboard = () => {
     <div className='space-y-[1.25rem]'>
       <Greeting />
       <CustomerStatsCardGroup />
-      <Placeholder messageHeader="seems you don’t have anything here yet!" messageParagraph="Once a ticket has been created for you, you will be able to view the data here." />
+      <Board />
+      {/* <Placeholder messageHeader="seems you don’t have anything here yet!" messageParagraph="Once a ticket has been created for you, you will be able to view the data here." /> */}
     </div>
   )
 }
