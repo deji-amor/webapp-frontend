@@ -1,7 +1,8 @@
-import React from "react";
-import StatsCard from "../../molecules/Dashboard/StatsCard";
+import React, { useEffect } from "react";
+import CustomerStatsCard from "../../molecules/CustomerDashboard/CustomerStatsCard";
 import { styled } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "../../../state-manager/reducers/dashboard/customerDashboard";
 
 const StyledStatsCardGroup = styled("div")`
 	display: flex;
@@ -11,9 +12,15 @@ const StyledStatsCardGroup = styled("div")`
 	overflow-x: auto;
 `;
 
-const StatsCardGroup = () => {
+const CustomerStatsCardGroup = () => {
 
-  const analyticsData = useSelector((state) => state.dashboard.analyticsData);
+	const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
+
+  const analyticsData = useSelector((state) => state.customerDashboard.analyticsData);
   
 	const cardData = [
 		{
@@ -80,7 +87,7 @@ const StatsCardGroup = () => {
 		<StyledStatsCardGroup>
 			{cardData.map((card, index) => (
 				<div className="grow" key={index}>
-					<StatsCard
+					<CustomerStatsCard
 						header={card.header}
 						value={card.value}
 						data={card.data}
@@ -92,4 +99,4 @@ const StatsCardGroup = () => {
 	);
 };
 
-export default StatsCardGroup;
+export default CustomerStatsCardGroup;

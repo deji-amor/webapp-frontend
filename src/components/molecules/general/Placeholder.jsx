@@ -54,7 +54,7 @@ const ActionButton = styled("button")`
 `;
 
 const Placeholder = ({ messageHeader, messageParagraph, buttonText, onClick, isThereActionButton }) => {
-  const {firstName} = useSelector(state => state.authUser.data)
+  const {first_name} = useSelector(state => state.authUser.data)
 
 
 	return (
@@ -62,7 +62,7 @@ const Placeholder = ({ messageHeader, messageParagraph, buttonText, onClick, isT
 			<img src={placeholderImg} className="mb-[1rem] w-[18rem] h-[15rem]" />
 			<div className="space-y-[1.25rem] mb-[1rem] flex flex-col items-center">
 				<BigText>
-					Hi <span className="highlighted">{firstName},</span> {messageHeader}
+					Hi <span className="highlighted">{first_name},</span> {messageHeader}
 				</BigText>
 				<SmallText>
 					{messageParagraph}

@@ -59,14 +59,14 @@ export const Breakdown = () => {
 					data: [analyticsData?.customersCount?.totalActiveCustomers || 0, 
 						analyticsData?.customersCount?.totalInactiveCustomers || 0, 
 						analyticsData?.customersCount?.totalSuspendedCustomers || 0],
-					backgroundColor: ["#04850D", "#ED5A11", "#CC961D"],
+					backgroundColor: ["#4C6FFF", "#5CE4FF", "#6453E0"],
 				},
 			],
 		},
 		details: [
-			{ color: "#04850D", figure: analyticsData?.customersCount?.totalActiveCustomers || 0, label: "Active" },
-			{ color: "#ED5A11", figure: analyticsData?.customersCount?.totalInactiveCustomers || 0, label: "Inactive" },
-			{ color: "#CC961D", figure: analyticsData?.customersCount?.totalSuspendedCustomers || 0, label: "Suspended" },
+			{ color: "#4C6FFF", figure: analyticsData?.customersCount?.totalActiveCustomers || 0, label: "Active" },
+			{ color: "#5CE4FF", figure: analyticsData?.customersCount?.totalInactiveCustomers || 0, label: "Inactive" },
+			{ color: "#6453E0", figure: analyticsData?.customersCount?.totalSuspendedCustomers || 0, label: "Suspended" },
 		],
 	};
 

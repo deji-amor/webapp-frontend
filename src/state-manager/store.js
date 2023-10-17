@@ -20,6 +20,7 @@ import ticketReportReducer from "./reducers/reports/tickets/ticketreport"
 import customerReportReducer from "./reducers/reports/customers/customers"
 import notificationsReducer from "./reducers/notifications/notifications"
 import dashboardReducer from "./reducers/dashboard/dashboard"
+import customerDashboardReducer from "./reducers/dashboard/customerDashboard"
 import storage from "redux-persist/lib/storage"
 import { persistReducer, persistStore } from "redux-persist"
 import thunk from "redux-thunk"
@@ -46,7 +47,8 @@ const persistConfig = {
         "notifications",
         "ticketReports",
         "customerReports",
-        "dashboard"
+        "dashboard",
+        "customerDashboard"
 	],
 };
 
@@ -72,6 +74,7 @@ const rootReducers = combineReducers({
     ticketReports: ticketReportReducer,
     customerReports: customerReportReducer,
     dashboard: dashboardReducer,
+    customerDashboard: customerDashboardReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducers)
