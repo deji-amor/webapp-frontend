@@ -4,7 +4,7 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto"; // NOSONAR
 import ChartDataLabel from "chartjs-plugin-datalabels";
 
-const StatsPieChart = ({ data }) => {
+const CustomerStatsPieChart = ({ data }) => {
     const options = {
         maintainAspectRatio: false,
         plugins: {
@@ -42,8 +42,8 @@ const StatsPieChart = ({ data }) => {
     return <Pie data={data} options={options} plugins={[ChartDataLabel]} />;
 };
 
-StatsPieChart.propTypes = {
+CustomerStatsPieChart.propTypes = {
 	data: PropTypes.any,
 };
 
-export default StatsPieChart;
+export default CustomerStatsPieChart;
