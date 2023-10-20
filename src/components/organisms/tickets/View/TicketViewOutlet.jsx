@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import CompanyNameAndPathToTemplate from '../Edit/CompanyNameAndPathToTemplate'
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { editTicketActions } from '../../../../state-manager/reducers/tickets/ticketEdition'
@@ -46,8 +46,12 @@ const TicketViewOutlet = () => {
       </div>
 			<div className="flex justify-between gap-[1.5rem] min-h-[17rem]">
 				<div className="basis-[15%]">
-					<LinkButton active={pathname.includes("detail/")} onClick={() => navigate(`../view/detail/${ticketId}`)}>Ticket Details</LinkButton>
-					<LinkButton active={pathname.includes("history/")} onClick={() => navigate(`../view/history/${ticketId}`)}>Ticket History</LinkButton>
+					<NavLink to={`../view/detail/${ticketId}`}>
+						<LinkButton active={pathname.includes("detail/")}>Ticket Details</LinkButton>
+					</NavLink>
+					<NavLink to={`../view/history/${ticketId}`}>
+						<LinkButton active={pathname.includes("history/")}>Ticket History</LinkButton>
+					</NavLink>
 				</div>
 				<div className="basis-[85%] py-[1rem] px-[1.25rem] self-stretch border-[0.5px] border-[#2B2E72] rounded-[0.75rem]">
 					<Outlet />

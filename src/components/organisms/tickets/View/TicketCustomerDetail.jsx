@@ -19,7 +19,6 @@ const Customer = styled("p")`
 
 const CustomerName = styled("p")`
 	display: flex;
-	width: 11.1875rem;
 	height: 1.6875rem;
 	flex-direction: column;
 	justify-content: center;
@@ -57,9 +56,9 @@ const TicketCustomerDetail = () => {
 		const {first_name, last_name, company_email} = customer
 
   return (
-		<div>
+		<div className=''>
 			<Customer className='mb-[1rem]'>Customer</Customer>
-			<CustomerName className='mb-[0.12rem]'>{first_name} {last_name}</CustomerName>
+			<CustomerName className='mb-[0.12rem] truncate'>{first_name} {last_name}</CustomerName>
 			<CustomerEmail>{company_email}</CustomerEmail>
 		</div>
 	);

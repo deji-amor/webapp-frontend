@@ -39,7 +39,7 @@ const SoftwareApplicationInstallation = () => {
 	};
 
 	return (
-		<div className="flex items-center justify-between">
+		<div className="flex items-center justify-start gap-[2.5rem]">
 			<div className="">
 				<GrayThemedLighterText>Software Application Name*</GrayThemedLighterText>
 				<div className="w-[21rem]">

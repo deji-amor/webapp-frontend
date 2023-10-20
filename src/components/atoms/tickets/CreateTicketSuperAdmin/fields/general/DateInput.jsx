@@ -10,7 +10,7 @@ const DateInput = ({ label, value, onChange, onBlur, hasError, id, isValid, disa
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<DatePicker
-				className={`bg-[#eee] outline-none`}
+				className={`bg-[#eee] outline-none ${disabled && "cursor-not-allowed"}`}
 				value={value}
 				onChange={(data) => {
 					const newDate = dayjs(data.$d).format(FORMAT);
