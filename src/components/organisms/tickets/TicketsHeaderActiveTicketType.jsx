@@ -44,32 +44,28 @@ const TicketsHeaderActiveTicketType = () => {
 	const dispatch = useDispatch();
 	const [ticketTypeTabIndex, setTicketTypeTabIndex] = useState(0);
 
-		const handleChange = (ind) => {
-			setTicketTypeTabIndex(ind);
-		};
+	const handleChange = (ind) => {
+		setTicketTypeTabIndex(ind);
+	};
 
 	const handleServiceRequestTabToggle = () => {
 		handleChange(0)
-		if (!showServiceRequestsTab) {
-			dispatch(
-				ticketsActions.updateField([
-					{ key: "showServiceRequestsTab", value: true },
-					{ key: "showProjectsTab", value: false },
-				])
-			);
-		}
+		dispatch(
+			ticketsActions.updateField([
+				{ key: "showServiceRequestsTab", value: true },
+				{ key: "showProjectsTab", value: false },
+			])
+		);
 	};
 
 	const handleShowProjectTabToggle = () => {
 		handleChange(1);
-		if (!showProjectsTab) {
-			dispatch(
-				ticketsActions.updateField([
-					{ key: "showServiceRequestsTab", value: false },
-					{ key: "showProjectsTab", value: true },
-				])
-			);
-		}
+		dispatch(
+			ticketsActions.updateField([
+				{ key: "showServiceRequestsTab", value: false },
+				{ key: "showProjectsTab", value: true },
+			])
+		);
 	};
 
 	const handleSortByToggle = () => {
