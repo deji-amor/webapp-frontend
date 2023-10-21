@@ -49,8 +49,8 @@ const TicketsHeaderActiveTicketType = () => {
 		};
 
 	const handleServiceRequestTabToggle = () => {
+		handleChange(0)
 		if (!showServiceRequestsTab) {
-			handleChange(0)
 			dispatch(
 				ticketsActions.updateField([
 					{ key: "showServiceRequestsTab", value: true },
@@ -61,8 +61,8 @@ const TicketsHeaderActiveTicketType = () => {
 	};
 
 	const handleShowProjectTabToggle = () => {
+		handleChange(1);
 		if (!showProjectsTab) {
-			handleChange(1);
 			dispatch(
 				ticketsActions.updateField([
 					{ key: "showServiceRequestsTab", value: false },

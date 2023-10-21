@@ -21,10 +21,10 @@ const TicketsTableHeading = () => {
 				<RecentTicketsTableHeader>Status</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Date Created</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader alignment={"right"}>
-					<span className="flex items-center gap-[1.1rem]">
+					<span className="flex items-center gap-x-[1.3rem]">
 						<span>Filter By:</span>
 						<span>
-							<FormControl size="small">
+							<FormControl size="small" className=''>
 								<Select value={filterByStatus} onChange={handleStatusChange}>
 									{statuses.map((status) => (
 										<MenuItem key={status} value={status} className='capitalize'>
