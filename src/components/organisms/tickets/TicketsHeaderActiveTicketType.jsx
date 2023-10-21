@@ -1,9 +1,12 @@
-import React from 'react'
-import Tab from '../../atoms/tickets/CreateTicketSuperAdmin/Tab';
-import { useSelector, useDispatch } from 'react-redux';
-import { ticketsActions } from '../../../state-manager/reducers/tickets/tickets';
-import { styled } from '@mui/material';
-import PropTypes from "prop-types"
+import React, { useState } from "react";
+import Tab from "../../atoms/tickets/CreateTicketSuperAdmin/Tab";
+import ReportTabs from "../../atoms/Reports/tabs";
+import { CustomTab } from "../users/CustomerSuperAdmin/UserTabs";
+import ReportSort from "../../atoms/Reports/sort";
+import { useSelector, useDispatch } from "react-redux";
+import { ticketsActions } from "../../../state-manager/reducers/tickets/tickets";
+import { styled } from "@mui/material";
+import PropTypes from "prop-types";
 
 const SortText = styled("p")`
 	color: #000;
@@ -31,61 +34,66 @@ const SortIcon = ({ sortByAscending }) => (
 );
 
 SortIcon.propTypes = {
-	sortByAscending: PropTypes.bool
-}
+	sortByAscending: PropTypes.bool,
+};
 
 const TicketsHeaderActiveTicketType = () => {
-    const { showServiceRequestsTab, showProjectsTab, sortByAscending } = useSelector(
-			(state) => state.tickets
-		);
-		const dispatch = useDispatch();
+	const { showServiceRequestsTab, showProjectsTab, sortByAscending } = useSelector(
+		(state) => state.tickets
+	);
+	const dispatch = useDispatch();
+	const [ticketTypeTabIndex, setTicketTypeTabIndex] = useState(0);
 
-		const handleServiceRequestTabToggle = () => {
-			if (!showServiceRequestsTab) {
-				dispatch(
-					ticketsActions.updateField([
-						{ key: "showServiceRequestsTab", value: true },
-						{ key: "showProjectsTab", value: false },
-					])
-				);
-			}
+		const handleChange = (ind) => {
+			setTicketTypeTabIndex(ind);
 		};
 
-		const handleShowProjectTabToggle = () => {
-			if (!showProjectsTab) {
-				dispatch(
-					ticketsActions.updateField([
-						{ key: "showServiceRequestsTab", value: false },
-						{ key: "showProjectsTab", value: true },
-					])
-				);
-			}
-		};
-
-		const handleSortByToggle = () => {
-			dispatch(ticketsActions.updateField({ key: "sortByAscending", value: !sortByAscending }));
+	const handleServiceRequestTabToggle = () => {
+		if (!showServiceRequestsTab) {
+			handleChange(0)
+			dispatch(
+				ticketsActions.updateField([
+					{ key: "showServiceRequestsTab", value: true },
+					{ key: "showProjectsTab", value: false },
+				])
+			);
 		}
+	};
 
-  return (
-		<div className="border-b-2 rounded-t-[0.75rem] border-b-[#ECECEC] bg-white pt-[0.8rem] px-[0.8rem]">
-			<div className="flex items-center justify-between">
-				<div className="flex relative">
-					<div className="w-[9rem]">
-						<div
-							className={`border-[#2b2e72] transition-all absolute w-[50%] border-[2px] bottom-0 ${
-								showServiceRequestsTab ? "left-0" : "left-[50%]"
-							}`}
-						></div>
-						<Tab onClick={handleServiceRequestTabToggle} isActive={showServiceRequestsTab}>
-							Service Requests
-						</Tab>
-					</div>
-					<div className="w-[9rem]">
-						<Tab onClick={handleShowProjectTabToggle} isActive={showProjectsTab}>
-							Project Requests
-						</Tab>
-					</div>
-				</div>
+	const handleShowProjectTabToggle = () => {
+		if (!showProjectsTab) {
+			handleChange(1);
+			dispatch(
+				ticketsActions.updateField([
+					{ key: "showServiceRequestsTab", value: false },
+					{ key: "showProjectsTab", value: true },
+				])
+			);
+		}
+	};
+
+	const handleSortByToggle = () => {
+		dispatch(ticketsActions.updateField({ key: "sortByAscending", value: !sortByAscending }));
+	};
+
+	const a11yProps = (ind) => {
+		return {
+			id: `simple-tab-${ind}`,
+			"aria-controls": `simple-tabpanel-${ind}`,
+		};
+	};
+
+	return (
+		<div className="border-b-2 rounded-t-[0.75rem] border-b-[#ECECEC] bg-white">
+			<div className="flex items-center justify-between pr-[0.8rem]">
+				<ReportTabs
+					index={ticketTypeTabIndex}
+					handleChange={() => handleChange(ticketTypeTabIndex)}
+				>
+					<CustomTab label="Service Tickets" {...a11yProps(0)} onClick={handleServiceRequestTabToggle} />
+					<CustomTab label="Project Tickets" {...a11yProps(1)} onClick={handleShowProjectTabToggle} />
+				</ReportTabs>
+
 				<div onClick={handleSortByToggle} className="cursor-pointer flex gap-[0.5rem] items-center">
 					<SortText>Sort by: </SortText>
 					<SortIcon sortByAscending={sortByAscending} />
@@ -93,6 +101,6 @@ const TicketsHeaderActiveTicketType = () => {
 			</div>
 		</div>
 	);
-}
+};
 
-export default TicketsHeaderActiveTicketType
+export default TicketsHeaderActiveTicketType;
