@@ -75,9 +75,8 @@ Dot.propTypes = {
 
 const NotificationItem = ({ notification }) => {
 	const navigate = useNavigate();
-	const { workspace_name, user_type } = useSelector((state) => state.authUser.data);
+	const {user_type } = useSelector((state) => state.authUser.data);
 	const isACustomer = user_type === "customer"
-	console.log(workspace_name, user_type);
 
 	const readNotificationHandler = (notification) => {
 		if (!notification.is_read) {
