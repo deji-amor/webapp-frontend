@@ -18,13 +18,19 @@ const Checkbox = ({ onChange, isActive, children }) => {
 	return (
 		<div className="flex items-center gap-[0.75rem]">
 			<input
+				autoComplete="off"
 				type="checkbox"
 				checked={isActive}
 				className="w-[1.25rem] h-[1.25rem] p-[0.1875rem] rounded-[0.375rem] accent-[#2b2e72] cursor-pointer"
 				onChange={() => onChange(children)}
 				id={id}
 			/>
-			<Label htmlFor={id} className="text-[#2b2e72] text-[0.875rem] font-[500] capitalize leading-[1.5rem]">{children}</Label>
+			<Label
+				htmlFor={id}
+				className="text-[#2b2e72] text-[0.875rem] font-[500] capitalize leading-[1.5rem]"
+			>
+				{children}
+			</Label>
 		</div>
 	);
 };

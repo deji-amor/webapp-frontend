@@ -14,6 +14,7 @@ const Input = ({ placeholder, type, value, onChange, onBlur, hasError, id, isVal
 				onBlur={blurHandler}
 				type={type}
 				value={value}
+				autoComplete="off"
 				className={`w-full h-[46px] pl-4 pr-[50px] pt-3.5 text-[0.875rem] pb-4 rounded-md bg-[#eee] outline-none focus:border focus:border-[#2B2E72] ${
 					isValid && "border border-[#2B2E72]"
 				} ${hasError ? "border border-[#D73D3D]" : ""}`}

@@ -17,7 +17,6 @@ const Button = styled("button")`
 	font-size: 1.125rem;
 	font-style: normal;
 	font-weight: 600;
-	// line-height: 2.57006rem; /* 228.448% */
 `;
 
 

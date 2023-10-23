@@ -238,8 +238,8 @@ const formatToApiDate = dateString => {
 const editTicketSlice = createSlice({
 	name: "editTicket",
 	initialState: initialState,
-  reducers: {
-    setTicketToEdit: (state, action) => {
+	reducers: {
+		setTicketToEdit: (state, action) => {
 			const ticketToEdit = action.payload;
 			// TICkET METADATA STARTS HERE
 			state.pathToTemplate = JSON.parse(ticketToEdit.ticket_path);
@@ -357,13 +357,16 @@ const editTicketSlice = createSlice({
 			state.allPossibleFields.locationAddressIsValid = true;
 
 			const additionalFieldsList = JSON.parse(ticketToEdit.additional_fields);
-			state.allPossibleFields.additionalFields = additionalFieldsList.map(item => ({name: Object.entries(item)[0][0], value: Object.entries(item)[0][1]}));
+			state.allPossibleFields.additionalFields = additionalFieldsList.map(item => ({
+				name: Object.entries(item)[0][0],
+				value: Object.entries(item)[0][1],
+			}));
 			state.originalTicket = state.allPossibleFields;
 		},
-    reset: () => {
-      return initialState
-    },
-    updateField: (state, action) => {
+		reset: () => {
+			return initialState;
+		},
+		updateField: (state, action) => {
 			const payload = action.payload;
 
 			if (Array.isArray(payload)) {
@@ -375,7 +378,17 @@ const editTicketSlice = createSlice({
 				state.allPossibleFields[key] = value;
 			}
 		},
-  },
+		changeAnyState: (state, action) => {
+			const {key, value} = action.payload;
+			state[key] = value;
+		},
+		changeMultipleState: (state, action) => {
+			const array = action.payload;
+			array.forEach(({key, value}) => {
+				state[key] = value;
+			});
+		},
+	},
 	extraReducers: builder => {
 		builder
 			.addCase(editTicket.pending, (state, action) => {

@@ -82,9 +82,10 @@ const NotificationsFilterDropdown = () => {
   }, [])
 
 	let searchByFilters = []
-	if(user_type === "admin") searchByFilters = searchBy
+	if(user_type === "superadmin") searchByFilters = searchBy
 	if(user_type == "admin") searchByFilters = searchByForAdmins
 	if(user_type == "customer") searchByFilters = searchByForCustomers
+
   
   return (
 		<div className="relative" id="notificationFilterDropdown">
