@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Open+Sans&family=Poppins&display=swap');
 
 *,
 *::after,
@@ -6,8 +6,18 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif, serif;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ppp {
+    @apply shadow-[0_2px_2px_rgb(0_0_0_/_0.2)];
+}

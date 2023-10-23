@@ -1,0 +1,19 @@
+/* Define the toast enter animation */
+.notification-toast-enter {
+  transform: translateX(100%);
+}
+
+.notification-toast-enter-active {
+  transform: translateX(0);
+  transition: transform 500ms;
+}
+
+/* Define the notification-toast exit animation */
+.notification-toast-exit {
+  transform: translateX(0);
+}
+
+.notification-toast-exit-active {
+  transform: translateX(100%);
+  transition: transform 500ms;
+}

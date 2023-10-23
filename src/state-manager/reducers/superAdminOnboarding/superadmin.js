@@ -1,18 +1,85 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {encrypt} from "n-krypta";
+import axios from "axios";
 
-export const superAdmin = createAsyncThunk("superAdmin", async(args, {rejectWithValue}) => {
+export const superAdminCreate = createAsyncThunk("superAdminCreate", async(args, {rejectWithValue}) => {
+
+    const {firstName, lastName, workspaceName, companyEmail, country, city, phoneNumber, password, confirmPassword, privacy} = args
+
+    const config = {
+        headers: {
+        'Content-Type': 'application/json',
+        }
+    };
+
+    const body = JSON.stringify({
+        firstName,
+        lastName,
+        workspaceName,
+        companyEmail,
+        country,
+        city,
+        phoneNumber,
+        password: encrypt(password, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+        confirmPassword: encrypt(confirmPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+        privacy
+    })
+
+    try {
+        const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-onboarding/`;
+        const res = await axios.post(url, body, config);
+        return res.data.message;
+
+    }catch (err) {
+        if (err.response && err.response.data.message) {
+            return rejectWithValue(err.response.data.message)
+        }else {
+            return rejectWithValue(err.message)
+        }
+    }
+})
+
+export const superAdminVerify = createAsyncThunk("superAdminVerify", async(args, {rejectWithValue}) => {
     const config = {
         method: 'POST',
+
         headers: {
         'Content-Type': 'application/json',
         },
+
         body: JSON.stringify(args),
     };
 
     try {
-        const url = `${import.meta.env.VITE_BASE_URL}/superAdminOnboarding`;
+        const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-email-verification`;
         const res = await fetch(url, config);
-        console.log(res.json())
+        return res.data;
+
+    }catch (err) {
+        if (err.response && err.response.data.message) {
+            return rejectWithValue(err.response.data.message)
+        }else {
+            return rejectWithValue(err.message)
+        }
+    }
+})
+
+export const superAdminSendEmail = createAsyncThunk("superAdminSendEmail", async(email, {rejectWithValue}) => {
+    const config = {
+        method: 'POST',
+
+        headers: {
+        'Content-Type': 'application/json',
+        },
+
+        body: JSON.stringify({email: email}),
+    };
+
+    try {
+        const url = `${import.meta.env.VITE_BASE_AUTH_URL}/api/v1/auth/super-admin-resend-email-verification`;
+        const res = await fetch(url, config);
+        console.log(res)
+
     }catch (err) {
         if (err.response && err.response.data.message) {
             return rejectWithValue(err.response.data.message)
@@ -24,36 +91,77 @@ export const superAdmin = createAsyncThunk("superAdmin", async(args, {rejectWith
 
 const initialState = {
     loading: false,
+    email: null,
+    response: null,
+
 }
 
 
-const loginAdminSlice = createSlice({
-    name: "password",
+const superAdminSlice = createSlice({
+    name: "superadminonboarding",
     initialState,
     reducers: {
-        // dummy: (state, action) => {
-            
-        // },
+        SET_RESPONSE_NULL_ADMIN: (state, {payload}) => {
+          state.response = null 
+        },
+
+        SET_EMAIL_ADMIN: (state, {payload: email}) => {
+            state.email = email
+          },
     },
     extraReducers: builder => {
         builder
 
             //  Reset Password
-            .addCase(superAdmin.pending, (state, actions) => {
-                state.loginLoading = true
+            .addCase(superAdminCreate.pending, (state, payload) => {
+                state.loading = true
+                state.response = null
             })
 
-            .addCase(superAdmin.fulfilled, (state, {payload}) => {
-                state.loginLoading = false
-                state.token = payload
+            .addCase(superAdminCreate.fulfilled, (state, payload) => {
+                state.loading = false
+                state.response = payload
             })
 
-            .addMatcher(superAdmin.rejected, (state, {payload}) => {
-                state.loginLoading = false
+            .addCase(superAdminCreate.rejected, (state, {payload}) => {
+                state.loading = false
+                state.response = payload
+            })
+
+            //  Reset Password Verification
+            .addCase(superAdminVerify.pending, (state, payload) => {
+                state.loading = true
+                state.response = null
+            })
+
+            .addCase(superAdminVerify.fulfilled, (state, payload) => {
+                state.loading = false
+                state.response = payload
+            })
+
+            .addCase(superAdminVerify.rejected, (state, {payload}) => {
+                state.response = payload
+                state.loading = false
+            })
+
+            //  Resend Email
+            .addCase(superAdminSendEmail.pending, (state, payload) => {
+                state.loading = true
+                state.response = null
+            })
+
+            .addCase(superAdminSendEmail.fulfilled, (state, payload) => {
+                state.loading = false
+                state.response = payload
+            })
+
+            .addMatcher(superAdminSendEmail.rejected, (state, {payload}) => {
+                state.loading = false
+                state.response = payload
             })
     }
 })
 
-// export const { } = passwordSlice.actions
+export const { SET_RESPONSE_NULL_ADMIN, SET_EMAIL_ADMIN } = superAdminSlice.actions
 
-export default loginAdminSlice.reducer;
+export default superAdminSlice.reducer;

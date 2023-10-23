@@ -1,58 +1,76 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import {encrypt} from "n-krypta";
+import {getAuthToken} from "../../../utilis";
 
-export const resetPassword = createAsyncThunk("resetpassword", async({currentPassword, newPassword, confirmNewPassword, id}, {rejectWithValue}) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    }
+export const resetPassword = createAsyncThunk("resetpassword", async (args, {rejectWithValue}) => {
+	const {currentPassword, newPassword, confirmPassword} = args;
+	
+	const token = await getAuthToken();
 
-    const body = JSON.stringify({currentPassword: currentPassword, password: newPassword, password2: confirmNewPassword});
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	};
 
-    try {
-        const res = await axios.put(`${import.meta.env.VITE_BASE_URL}`, body, config);
-        return res.data
-    }catch (err) {
-        if (err.response && err.response.data.message) {
-            return rejectWithValue(err.response.data.message)
-        }else {
-            return rejectWithValue(err.message)
-        }
-    }
-})
+	const body = JSON.stringify({
+		currentPassword: encrypt(currentPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+		newPassword: encrypt(newPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`),
+		confirmPassword: encrypt(confirmPassword, `${import.meta.env.VITE_ENCRYPT_KEY}`)
+	});
+
+	try {
+		const res = await axios.post(
+			`${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/reset-password`,
+			body,
+			config
+		);
+		return res.data.message;
+	} catch (err) {
+		if (err.response && err.response.data.message) {
+			return rejectWithValue(err.response.data.message);
+		} else {
+			return rejectWithValue(err.message);
+		}
+	}
+});
 
 const initialState = {
-    loading: false
-}
-
+	loading: false,
+	serverResetResponse: null,
+};
 
 const resetPasswordSlice = createSlice({
-    name: "password",
-    initialState,
-    reducers: {
-        // dummy: (state, action) => {
-            
-        // },
-    },
-    extraReducers: builder => {
-        builder
+	name: "resetpassword",
+	initialState,
+	reducers: {
+		SET_SERVER_RESET_NULL: (state, action) => {
+			state.serverResetResponse = null;
+		},
+	},
+	extraReducers: builder => {
+		builder
 
-            //  Reset Password
-            .addCase(resetPassword.pending, (state, actions) => {
-                state.loginLoading = true
-            })
+			//  Reset Password
+			.addCase(resetPassword.pending, (state, {payload}) => {
+				state.loginLoading = true;
+				state.serverResetResponse = null;
+			})
 
-            .addCase(resetPassword.fulfilled, (state, {payload}) => {
-                state.loginLoading = false
-            })
+			.addCase(resetPassword.fulfilled, (state, {payload}) => {
+				state.loginLoading = false;
+				state.serverResetResponse = payload;
+			})
 
-            .addMatcher(resetPassword.rejected, (state, {payload}) => {
-                state.loginLoading = false
-            })
-    }
-})
+			.addMatcher(resetPassword.rejected, (state, {payload}) => {
+				state.loginLoading = false;
+				state.serverResetResponse = payload;
+			});
+	},
+});
 
-// export const { } = passwordSlice.actions
+export const {SET_SERVER_RESET_NULL} = resetPasswordSlice.actions;
 
 export default resetPasswordSlice.reducer;
