@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material";
 import CustomerCreation from "./NotificationTypes/CustomerCreation";
@@ -74,11 +75,15 @@ Dot.propTypes = {
 
 const NotificationItem = ({ notification }) => {
 	const navigate = useNavigate();
+	const { workspace_name, user_type } = useSelector((state) => state.authUser.data);
+	const isACustomer = user_type === "customer"
+	console.log(workspace_name, user_type);
 
 	const readNotificationHandler = (notification) => {
 		if (!notification.is_read) {
 			notification.handleUpdateNotification();
 		}
+		if(isACustomer) return
 		if (notification.type.includes("ticket")) {
 			const ticketId = notification.identification_id;
 			navigate(`/admin/tickets/view/detail/${ticketId}`);

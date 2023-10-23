@@ -1,9 +1,13 @@
+.ppp{
+    @apply basis-[15%] bg-[#2b2e72] relative py-[2.2rem];
+}
 /* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
+
 
 .logo {
   height: 6em;

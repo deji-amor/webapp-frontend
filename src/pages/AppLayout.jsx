@@ -96,11 +96,9 @@ const AppLayout = () => {
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
 			{showAddTicketModal && <MemoizedInitialAdminCreationFormAndModal />}
-			{/* {showTemplateModal && <MemoizedTicketTemplateCreationOrEditionForm />} */}
-
-			<div className="flex h-screen max-h-screen">
+			<div className="flex min-h-screen max-h-screen">
 				<MemoizedSidebar />
-				<div className="basis-[85%] flex flex-col max-w-[85%]">
+				<div className="max-w-full overflow-x-hidden sm:basis-[85%] flex flex-col sm:max-w-[85%]">
 					<MemoizedNavbar />
 					<div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] overflow-y-auto overflow-x-auto">
 						<Outlet />

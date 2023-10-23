@@ -2,6 +2,7 @@ import {createSlice, current} from "@reduxjs/toolkit";
 
 const initialState = {
 	toasts: [],
+	showSidebar: false,
 };
 
 const UISlice = createSlice({
@@ -24,6 +25,9 @@ const UISlice = createSlice({
 		resetToasts: (state, action) => {
 			state.toasts = [];
 		},
+		toggleSidebar: (state, action) => {
+			state.showSidebar = !state.showSidebar;
+		}
 	},
 });
 
