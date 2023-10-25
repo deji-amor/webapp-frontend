@@ -10,7 +10,7 @@ const searchBarStyles = {
   fontFamily: "Poppins",
 };
 
-const SearchBar = () => (
+const SearchBar = ({ searchValue, onSearch }) => (
   <TextField
     variant="outlined"
     InputProps={{
@@ -20,7 +20,10 @@ const SearchBar = () => (
       style: searchBarStyles,
     }}
     placeholder="Enter Ticket ID"
+    value={searchValue}
+    onChange={(e) => onSearch(e.target.value)}
   />
 );
+
 
 export default SearchBar;
