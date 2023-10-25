@@ -46,15 +46,6 @@ const FilterButton = ({
 	const handleStatusMenuItemClick = (value) => {
 		onStatusFilterSelect(value);
 	};
-console.log(selectedFilters);
-	const isTypeItemSelected = (value) => {
-    console.log("Type Clicked");
-	return selectedFilters.types && selectedFilters.types.includes(value);
-	};
-	const isStatusItemSelected = (value) => {
-    console.log("Status Clicked");
-	return selectedFilters.statuses && selectedFilters.statuses.includes(value);
-	};
 
 	const menuStyle = {
 		borderRadius: "8px",
@@ -122,7 +113,7 @@ console.log(selectedFilters);
 							key={type}
 							onClick={() => handleTypeMenuItemClick(type)}
 							style={{
-								background: isTypeItemSelected(type) ? "rgba(76, 111, 255, 0.08)" : "transparent",
+								background: "transparent",
 								margin: "8px",
 								color: "#2B2E72",
 								fontSize: "16px",
@@ -134,7 +125,7 @@ console.log(selectedFilters);
 							}}
 						>
 							<div>{type}</div>
-							{isTypeItemSelected(type) && <CheckIcon style={{ marginLeft: "15px" }} />}
+							{/* <CheckIcon style={{ marginLeft: "15px" }} /> */}
 						</MenuItem>
 					))}
 				</Menu>
@@ -150,9 +141,7 @@ console.log(selectedFilters);
 							key={status}
 							onClick={() => handleStatusMenuItemClick(status)}
 							style={{
-								background: isStatusItemSelected(status)
-									? "rgba(76, 111, 255, 0.08)"
-									: "transparent",
+								background: "transparent",
 								margin: "8px",
 								color: "#2B2E72",
 								fontSize: "16px",
@@ -164,7 +153,7 @@ console.log(selectedFilters);
 							}}
 						>
 							<div>{status}</div>
-							{isStatusItemSelected(status) && <CheckIcon style={{ marginLeft: "15px" }} />}
+							{/* <CheckIcon style={{ marginLeft: "15px" }} /> */}
 						</MenuItem>
 					))}
 				</Menu>

@@ -33,7 +33,7 @@ const FilterBox = ({ typeOptions, statusOptions, onFilterChange, tickets  }) => 
     onFilterChange(selectedFilters.types, updatedStatuses);
   };
 
-  console.log('tickets:', tickets);
+  // console.log('tickets:', tickets);
 
 
   const handleSearch = (searchValue) => {
@@ -44,7 +44,7 @@ const FilterBox = ({ typeOptions, statusOptions, onFilterChange, tickets  }) => 
       return ticketId.toLowerCase() === searchValue.toLowerCase();
     });
   
-    console.log('filteredResults:', filteredResults);
+    // console.log('filteredResults:', filteredResults);
   
     setFilteredTickets(filteredResults);
   };
