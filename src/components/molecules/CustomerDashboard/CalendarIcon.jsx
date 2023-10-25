@@ -7,7 +7,7 @@ import "react-calendar/dist/Calendar.css";
 const CalendarIcon = () => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(null);
   const [searchText, setSearchText] = useState("");
-
+console.log(isCalendarOpen);
   const handleCalendarClick = (event) => {
     setIsCalendarOpen(event.currentTarget);
   };
@@ -15,6 +15,10 @@ const CalendarIcon = () => {
   const handleCloseCalendar = () => {
     setIsCalendarOpen(null);
   };
+
+  const handleChange = (e) => {
+
+  }
 
   const open = Boolean(isCalendarOpen);
 
@@ -49,14 +53,15 @@ const CalendarIcon = () => {
       >
         <div style={{ padding: "16px" }}>
           <TextField
-            label="Search"
+            // label="Search"
             fullWidth
+            placeholder="DD/MM/YYYY"
             variant="outlined"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
           <div style={{ marginTop: "16px" }}>
-            <Calendar value={new Date()} showNavigation={true} />
+            <Calendar value={new Date()} showNavigation={true} onChange={handleChange} />
           </div>
         </div>
       </Popover>
