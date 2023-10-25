@@ -21,7 +21,7 @@ const TicketsTableHeading = () => {
 				<RecentTicketsTableHeader>Status</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Date Created</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader alignment={"right"}>
-					<span className="flex items-center gap-x-[1.3rem]">
+					<span className="flex items-center gap-x-[1.8rem]">
 						<span>Filter By:</span>
 						<span>
 							<FormControl size="small" className=''>
