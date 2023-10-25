@@ -13,15 +13,14 @@ const StyledStatsCardGroup = styled("div")`
 `;
 
 const CustomerStatsCardGroup = () => {
-
 	const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
+	useEffect(() => {
+		dispatch(fetchData());
+	}, [dispatch]);
 
-  const analyticsData = useSelector((state) => state.customerDashboard.analyticsData);
-  
+	const analyticsData = useSelector((state) => state.customerDashboard.analyticsData);
+
 	const cardData = [
 		{
 			header: "Total Tickets",
@@ -30,8 +29,10 @@ const CustomerStatsCardGroup = () => {
 				labels: ["Service", "Project"],
 				datasets: [
 					{
-						data: [analyticsData?.ticketsCount?.serviceTickets?.totalServiceTickets,
-							analyticsData?.ticketsCount?.projectTickets?.totalProjectTickets,],
+						data: [
+							analyticsData?.ticketsCount?.serviceTickets?.totalServiceTickets,
+							analyticsData?.ticketsCount?.projectTickets?.totalProjectTickets,
+						],
 						backgroundColor: ["#CEDFF0", "#5057E5"],
 						borderColor: "transparent",
 						borderWidth: 0,
@@ -48,10 +49,12 @@ const CustomerStatsCardGroup = () => {
 				labels: ["Pending", "Technician en Route", "In Progress", "Done"],
 				datasets: [
 					{
-						data: [analyticsData?.ticketsCount?.serviceTickets?.totalServiceTicketsPending,
+						data: [
+							analyticsData?.ticketsCount?.serviceTickets?.totalServiceTicketsPending,
 							analyticsData?.ticketsCount?.serviceTickets?.totalServiceTicketsTechnicianEnroute,
 							analyticsData?.ticketsCount?.serviceTickets?.totalServiceTicketsInprogress,
-							analyticsData?.ticketsCount?.serviceTickets?.totalServiceTicketsDone,],
+							analyticsData?.ticketsCount?.serviceTickets?.totalServiceTicketsDone,
+						],
 						backgroundColor: ["#2B2E72", "#5CE4FF", "#9265E5", "#5057E5"],
 						borderColor: "transparent",
 						borderWidth: 0,
@@ -68,10 +71,12 @@ const CustomerStatsCardGroup = () => {
 				labels: ["Pending", "Technician en Route", "In Progress", "Done"],
 				datasets: [
 					{
-						data: [analyticsData?.ticketsCount?.projectTickets?.totalProjectTicketsPending,
+						data: [
+							analyticsData?.ticketsCount?.projectTickets?.totalProjectTicketsPending,
 							analyticsData?.ticketsCount?.projectTickets?.totalProjectTicketsTechnicianEnroute,
 							analyticsData?.ticketsCount?.projectTickets?.totalProjectTicketsInprogress,
-							analyticsData?.ticketsCount?.projectTickets?.totalProjectTicketsDone,],
+							analyticsData?.ticketsCount?.projectTickets?.totalProjectTicketsDone,
+						],
 						backgroundColor: ["#2B2E72", "#5CE4FF", "#9265E5", "#5057E5"],
 						borderColor: "transparent",
 						borderWidth: 0,

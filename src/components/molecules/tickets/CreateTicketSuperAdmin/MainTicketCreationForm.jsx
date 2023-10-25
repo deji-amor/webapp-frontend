@@ -32,12 +32,14 @@ import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/Horizo
 const MainTicketCreationForm = () => {
 	const requiredFields = useCreateTicketFields();
 	const dispatch = useDispatch();
-	const navigate = useNavigate()
-	const {customer, data} = useSelector((state) => state.ticketCreation);
+	const navigate = useNavigate();
+	const { data } = useSelector((state) => state.ticketCreation);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(requiredFields);
+		console.log("////////////////////////////////");
+		console.log(requiredFields);
+		console.log("////////////////////////////////");
 		dispatch(createTicket(requiredFields));
 	};
 
@@ -46,29 +48,39 @@ const MainTicketCreationForm = () => {
 		dispatch(createTicketActions.reset());
 	};
 
-	const {loading, error, errorMessage, successful } = useSelector(
-		(state) => state.ticketCreation
-	);
+	const { loading, error, errorMessage, successful } = useSelector((state) => state.ticketCreation);
 	useEffect(() => {
 		if (successful === true) {
-			if(data) dispatch(ticketsActions.addNewTicket(data))
+			if (data) dispatch(ticketsActions.addNewTicket(data));
 			dispatch(
 				UIActions.showToasts({
 					message: "You have successfully created a new Ticket for the customer.",
 					title: "Ticket Created Successfully",
-					type: "successful"
+					type: "successful",
 				})
 			);
-			goBackHandler()
+			dispatch(
+				createTicketActions.changeMultipleState([
+					{ key: "error", value: null },
+					{ key: "successful", value: null },
+				])
+			);
+			goBackHandler();
 		}
 		if (error === true) {
-				dispatch(
-					UIActions.showToasts({
-						message: errorMessage,
-						title: "Ticket Creation Unsuccessful",
-						type: "error",
-					})
-				);
+			dispatch(
+				UIActions.showToasts({
+					message: errorMessage,
+					title: "Ticket Creation Unsuccessful",
+					type: "error",
+				})
+			);
+			dispatch(
+				createTicketActions.changeMultipleState([
+					{ key: "error", value: null },
+					{ key: "successful", value: null },
+				])
+			);
 		}
 	}, [error, successful, data]);
 

@@ -38,7 +38,7 @@ const TicketsSearchBar = () => {
   return (
 		<div className="flex items-center justify-between">
 			<div className="">
-				<BlueHeader>All Tickets</BlueHeader>
+				<BlueHeader>All Ticket</BlueHeader>
 			</div>
 			<div className="flex items-center gap-[2rem]">
 				<div className="w-[30rem]">

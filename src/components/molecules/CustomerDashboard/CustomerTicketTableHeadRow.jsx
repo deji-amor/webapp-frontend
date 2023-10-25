@@ -5,11 +5,13 @@ const CustomerTicketTableHeadRow = (props) => {
 	return (
 		<thead className="border-b-2 border-b-[#ECECEC]">
 			<tr>
-				<RecentTicketsTableHeader>Ticket ID</RecentTicketsTableHeader>
+				<RecentTicketsTableHeader>Ticket Title</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Ticket Type</RecentTicketsTableHeader>
-				<RecentTicketsTableHeader>Category</RecentTicketsTableHeader>
-				<RecentTicketsTableHeader>Updated on</RecentTicketsTableHeader>
+				<RecentTicketsTableHeader>Ticket Description</RecentTicketsTableHeader>
+				<RecentTicketsTableHeader>Ticket Start Date</RecentTicketsTableHeader>
+				<RecentTicketsTableHeader>Ticket End Date</RecentTicketsTableHeader>
 				<RecentTicketsTableHeader>Status</RecentTicketsTableHeader>
+				<RecentTicketsTableHeader>Locations</RecentTicketsTableHeader>
 			</tr>
 		</thead>
 	);

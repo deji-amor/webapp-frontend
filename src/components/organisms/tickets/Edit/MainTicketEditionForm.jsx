@@ -1,16 +1,19 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from "react";
 import FormButton from "../../../atoms/tickets/CreateTicketSuperAdmin/FormButton";
 import GrayThemedLightText from "../../../atoms/tickets/CreateTicketSuperAdmin/GrayThemedLightText";
 import Loader from "../../../organisms/tickets/Loader";
-import useEditTicketFormValidator from '../../../../hooks/useEditTicketFormValidator';
-import useEditTicketFields from '../../../../hooks/useEditTicketFields';
-import { useNavigate } from 'react-router-dom';
+import useEditTicketFormValidator from "../../../../hooks/useEditTicketFormValidator";
+import useEditTicketFields from "../../../../hooks/useEditTicketFields";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { UIActions } from "../../../../state-manager/reducers/UI/ui";
-import { ticketsActions} from "../../../../state-manager/reducers/tickets/tickets";
-import useEditTicketIsAltered from '../../../../hooks/useEditTicketIsAltered';
-import { editTicketActions, editTicket } from '../../../../state-manager/reducers/tickets/ticketEdition';
-import PointOfContact from '../../../atoms/tickets/EditTickets/fields/point-of-contact/PointOfContact';
+import { ticketsActions } from "../../../../state-manager/reducers/tickets/tickets";
+import useEditTicketIsAltered from "../../../../hooks/useEditTicketIsAltered";
+import {
+	editTicketActions,
+	editTicket,
+} from "../../../../state-manager/reducers/tickets/ticketEdition";
+import PointOfContact from "../../../atoms/tickets/EditTickets/fields/point-of-contact/PointOfContact";
 import MaterialsProcurement from "../../../atoms/tickets/EditTickets/fields/materials-procurement/MaterialsProcurement";
 import ScopeOfWork from "../../../atoms/tickets/EditTickets/fields/scope-of-work/ScopeOfWork";
 import Duration from "../../../atoms/tickets/EditTickets/fields/duration/Duration";
@@ -25,79 +28,91 @@ import PickUpLocation from "../../../atoms/tickets/EditTickets/fields/pick-up-lo
 import DropOffLocation from "../../../atoms/tickets/EditTickets/fields/drop-off-location/DropOffLocation";
 import AddExtraFields from "../../../atoms/tickets/EditTickets/fields/extra-fields/AddExtraFields";
 import Location from "../../../atoms/tickets/EditTickets/fields/location/Location";
-import HorizontalRule from '../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule';
+import HorizontalRule from "../../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule";
 
 const MainTicketEditionForm = () => {
-		const requiredFields = useEditTicketFields();
-		const hasTicketHasChanged = useEditTicketIsAltered();
-		const dispatch = useDispatch();
-		const navigate = useNavigate();
-		const {originalTicket} = useSelector(state => state.ticketEdition)
+	const requiredFields = useEditTicketFields();
+	const hasTicketHasChanged = useEditTicketIsAltered();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { originalTicket } = useSelector((state) => state.ticketEdition);
 
-		const submitHandler = (e) => {
-			e.preventDefault();
-			// console.log(requiredFields);
-			// console.log(originalTicket);
-			dispatch(editTicket(requiredFields));
-		};
+	const submitHandler = (e) => {
+		e.preventDefault();
+		// console.log(requiredFields);
+		// console.log(originalTicket);
+		dispatch(editTicket(requiredFields));
+	};
 
-		const goBackHandler = () => {
+	const goBackHandler = () => {
+		dispatch(editTicketActions.reset());
+		navigate(-1);
+	};
+
+	const { loading, error, errorMessage, successful, data } = useSelector(
+		(state) => state.ticketEdition
+	);
+
+	useEffect(() => {
+		if (successful === true) {
+			if (data) dispatch(ticketsActions.replaceTicket(data));
 			dispatch(editTicketActions.reset());
+			dispatch(
+				UIActions.showToasts({
+					message: "You have successfully edited the Ticket for the customer.",
+					title: "Ticket edition successful",
+					type: "successful",
+				})
+			);
+			dispatch(
+				editTicketActions.changeMultipleState([
+					{ key: "error", value: null },
+					{ key: "successful", value: null },
+				])
+			);
 			navigate(-1);
-		};
+		}
+		if (error === true) {
+			dispatch(
+				UIActions.showToasts({
+					message: errorMessage,
+					title: "Ticket Edit Unsuccessful",
+					type: "error",
+				})
+			);
+			dispatch(
+				editTicketActions.changeMultipleState([
+					{ key: "error", value: null },
+					{ key: "successful", value: null },
+				])
+			);
+		}
+	}, [error, data, successful]);
 
-		const { loading, error, errorMessage, successful, data } = useSelector(
-			(state) => state.ticketEdition
-		);
-		
-		useEffect(() => {
-			if (successful === true) {
-				if (data) dispatch(ticketsActions.replaceTicket(data));
-				dispatch(editTicketActions.reset())
-				dispatch(
-					UIActions.showToasts({
-						message: "You have successfully edited the Ticket for the customer.",
-						title: "Ticket edition successful",
-						type: "successful",
-					})
-				);
-				navigate(-1)
-			}
-			if (error === true) {
-				dispatch(
-					UIActions.showToasts({
-						message: errorMessage,
-						title: "Ticket Edit Unsuccessful",
-						type: "error",
-					})
-				);
-			}
-		}, [error, data, successful]);
+	const isFormValid = useEditTicketFormValidator() && !hasTicketHasChanged;
+	// console.log({isFormValid});
+	const isFormDisabled = !isFormValid;
 
-    const isFormValid = useEditTicketFormValidator() && !hasTicketHasChanged;
-		// console.log({isFormValid});
-		const isFormDisabled = !isFormValid;
-
-		const chosenTemplate = useSelector((state) => state.ticketEdition.chosenTemplate);
-		const pointOfContact = chosenTemplate.includes("pointOfContact");
-		const numberOfTechniciansNeeded = chosenTemplate.includes("numberOfTechniciansNeeded");
-		const scopeOfWork = chosenTemplate.includes("scopeOfWork");
-		const duration = chosenTemplate.includes("duration");
-		const hardwareComponentQuantity = chosenTemplate.includes("hardwareComponentQuantity");
-		const hardwareComponentType = chosenTemplate.includes("hardwareComponentType");
-		const location = chosenTemplate.includes("location");
-		const materialsProcurement = chosenTemplate.includes("materialsProcurement");
-		const numberOfWorkStation = chosenTemplate.includes("numberOfWorkStation");
-		const numberOfWorkSystems = chosenTemplate.includes("numberOfWorkSystems");
-		const softwareApplicationInstallation = chosenTemplate.includes(
-			"softwareApplicationInstallation"
-		);
-		const softwareApplicationCustomization = chosenTemplate.includes(
-			"softwareApplicationCustomization"
-		);
-		const pickUpLocation = chosenTemplate.includes("pickUpLocation");
-		const dropOffLocation = chosenTemplate.includes("dropOffLocation");
-		const additionalFields = chosenTemplate.includes("additionalFields");
+	const chosenTemplate = useSelector((state) => state.ticketEdition.chosenTemplate);
+	const pointOfContact = chosenTemplate.includes("pointOfContact");
+	const numberOfTechniciansNeeded = chosenTemplate.includes("numberOfTechniciansNeeded");
+	const scopeOfWork = chosenTemplate.includes("scopeOfWork");
+	const duration = chosenTemplate.includes("duration");
+	const hardwareComponentQuantity = chosenTemplate.includes("hardwareComponentQuantity");
+	const hardwareComponentType = chosenTemplate.includes("hardwareComponentType");
+	const location = chosenTemplate.includes("location");
+	const materialsProcurement = chosenTemplate.includes("materialsProcurement");
+	const numberOfWorkStation = chosenTemplate.includes("numberOfWorkStation");
+	const numberOfWorkSystems = chosenTemplate.includes("numberOfWorkSystems");
+	const softwareApplicationInstallation = chosenTemplate.includes(
+		"softwareApplicationInstallation"
+	);
+	const softwareApplicationCustomization = chosenTemplate.includes(
+		"softwareApplicationCustomization"
+	);
+	const pickUpLocation = chosenTemplate.includes("pickUpLocation");
+	const dropOffLocation = chosenTemplate.includes("dropOffLocation");
+	const additionalFields = chosenTemplate.includes("additionalFields");
 
 	return (
 		<form onSubmit={submitHandler}>
@@ -149,6 +164,6 @@ const MainTicketEditionForm = () => {
 			</div>
 		</form>
 	);
-}
+};
 
-export default MainTicketEditionForm
+export default MainTicketEditionForm;

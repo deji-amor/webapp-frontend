@@ -12,6 +12,7 @@ const EnterFieldInput = ({ placeholder, value, onChange, onBlur, hasError, id,is
 			onChange={changeHandler}
 			onBlur={blurHandler}
 			value={value}
+			autoComplete="off"
 			className={`w-full py-[0.25rem] px-[0.75rem] rounded-[0.25rem] border outline-none border-[#c1c1c1] text-[#706E6E] font-poppins text-sm font-[400] focus:border-[#2B2E72] ${
 				isValid && "border border-[#2B2E72]"
 			} ${hasError ? "border border-[#D73D3D]" : ""}`}
