@@ -1,7 +1,7 @@
 import {createSlice, current, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../../utilis";
 
-export const fetchCustomerTickets = createAsyncThunk("customerDashboardTickets", async (args, {rejectWithValue}) => {
+export const fetchCustomerDashboardTickets = createAsyncThunk("fetchCustomerDashboardTickets", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
 		const config = {
@@ -38,6 +38,8 @@ const initialState = {
 		filterDate : false,
 		filterStatus : false,
 	},
+
+	// Filter Lists
 	filterTicketsById: [],
 	filterTicketsByStatus: [],
 	filterTicketsByType: [],
@@ -55,11 +57,11 @@ const customerDashboardTicketsSlice = createSlice({
 	},
 	extraReducers: builder => {
 		builder
-			.addCase(fetchCustomerTickets.pending, (state, action) => {
+			.addCase(fetchCustomerDashboardTickets.pending, (state, action) => {
 				state.loading = true;
 				state.tickets = [];
 			})
-			.addCase(fetchCustomerTickets.fulfilled, (state, action) => {
+			.addCase(fetchCustomerDashboardTickets.fulfilled, (state, action) => {
 				const {status, code, data} = action.payload;
 				state.loading = false;
 				if (code === 200 && status === "OK") {
@@ -72,7 +74,7 @@ const customerDashboardTicketsSlice = createSlice({
 					state.errorMessage = "Could not fetch all customers";
 				}
 			})
-			.addCase(fetchCustomerTickets.rejected, (state, action) => {
+			.addCase(fetchCustomerDashboardTickets.rejected, (state, action) => {
 				state.loading = false;
 				state.tickets = [];
 				state.successful = false;
