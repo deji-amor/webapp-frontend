@@ -1,6 +1,5 @@
 import {createSlice, createAsyncThunk, current} from "@reduxjs/toolkit";
 import {getAuthToken} from "../../../../utilis";
-import {encrypt} from "n-krypta";
 
 export const fetchAllCustomers = createAsyncThunk("customers", async (args, {rejectWithValue}) => {
 	try {
@@ -49,6 +48,7 @@ const initialState = {
 	errorMessage: "",
 	successful: null,
 	customers: [],
+	isCustomersListFiltered: false,
 	filteredCustomers: [],
 	filteredCustomersByStatus: [],
 	filteredCustomersByDate: [],
@@ -160,5 +160,3 @@ export const {
 	removeMultipleCustomersFilterStatus,
 	setMultipleCustomerDropdownFilterStatus
 } = customerReportSlice.actions;
-
-// 
