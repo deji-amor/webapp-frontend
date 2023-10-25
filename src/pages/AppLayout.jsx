@@ -9,6 +9,7 @@ import { fetchUsers } from '../state-manager/reducers/users/users';
 import { fetchCustomers } from '../state-manager/reducers/users/customers/customers';
 import { fetchAllCustomers } from '../state-manager/reducers/reports/customers/customers';
 import { fetchAllTickets } from '../state-manager/reducers/reports/tickets/ticketreport';
+import { fetchCustomerTickets } from '../state-manager/reducers/dashboard/customer/customerDashboardTickets';
 import { fetchTickets } from '../state-manager/reducers/tickets/tickets';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
@@ -47,8 +48,8 @@ const AppLayout = () => {
 		useEffect(() => {
 			const userTypePropertyNames = ['user_type', 'userType']
 			if(!userTypePropertyNames.some(propName => authUser[propName] === 'superadmin' || authUser[propName] === 'admin')){
-				console.log(authUser);
-				console.log("logout");
+				// console.log(authUser);
+				// console.log("logout");
 				navigate("/")
 			}
 		}, [])
@@ -81,6 +82,7 @@ const AppLayout = () => {
 	const { showAddTicketModal, showTemplateModal } = useSelector((state) => state.ticketCreation);
 
 	useEffect(() => {
+		dispatch(fetchCustomerTickets())
 		dispatch(fetchAuthUser())
 		dispatch(fetchUsers())
 		dispatch(fetchCustomers())

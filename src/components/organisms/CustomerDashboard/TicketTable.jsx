@@ -19,10 +19,9 @@ const CustomerTicketTable = ({ filteredTickets }) => {
 			border-radius: 0.75rem 0.75rem 0rem 0rem;
 		}
 	`;
-	const analyticsData = useSelector((state) => state.tickets);
+	const {tickets, isFiltered} = useSelector((state) => state.customerDashboardTickets);
 
-
-	const tickets = analyticsData?.tickets || [];
+	const generalTickets = isFiltered === false ? tickets : [];
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 8;
@@ -30,10 +29,10 @@ const CustomerTicketTable = ({ filteredTickets }) => {
 	const getPaginatedTickets = () => {
 		const startIndex = (currentPage - 1) * itemsPerPage;
 		const endIndex = startIndex + itemsPerPage;
-		return tickets.slice(startIndex, endIndex);
+		return generalTickets.slice(startIndex, endIndex);
 	};
 
-	const totalTickets = tickets.length;
+	const totalTickets = generalTickets.length;
 	const totalPages = Math.ceil(totalTickets / itemsPerPage);
 
 	const handlePageChange = (event, page) => {

@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Board = () => {
 	const typeOptions = ["Project", "Service"];
-	const statusOptions = ["All", "Done", "Pending", "Technician enroute", "Inprogress", "Overdue"];
+	const statusOptions = ["Done", "Pending", "Technician enroute", "Inprogress"];
 
 	const [filteredTickets, setFilteredTickets] = useState([]);
 
-	const { tickets } = useSelector((state) => state.tickets);
+	const { tickets } = useSelector((state) => state.customerDashboardTickets);
 
 	const handleFilterChange = (selectedTypes, selectedStatuses) => {
-		console.log("Selected Types:", selectedTypes);
-		console.log("Selected Statuses:", selectedStatuses);
+		// console.log("Selected Types:", selectedTypes);
+		// console.log("Selected Statuses:", selectedStatuses);
 
 		const filteredResults = tickets.filter((ticket) => {
 			const isTypeMatch = selectedTypes.length === 0 || selectedTypes.includes(ticket.ticket_type);
