@@ -10,7 +10,7 @@ const RecentTicketsTableHeader = ({ children, alignment }) => {
 		font-style: normal;
 		font-weight: 600;
 		line-height: 2.25rem; /* 225% */
-		padding: 0.8rem 0.8rem;
+		padding: 0.8rem 0.7rem;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
