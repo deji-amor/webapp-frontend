@@ -107,10 +107,6 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 					<ProjectDateFilter handleReportDateRange={handleReportDateRange} />
 				)}
 			</div>
-
-			<div>
-				
-			</div>
 		</ReportFilterBoardWrapper>
 	);
 };
