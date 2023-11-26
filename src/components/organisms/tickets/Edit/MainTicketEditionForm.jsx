@@ -60,7 +60,7 @@ const MainTicketEditionForm = () => {
 			dispatch(
 				UIActions.showToasts({
 					message: "You have successfully edited the Ticket for the customer.",
-					title: "Ticket edition successful",
+					title: "Ticket Edit Successful",
 					type: "successful",
 				})
 			);
