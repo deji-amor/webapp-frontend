@@ -5,7 +5,7 @@ import { styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import Pagination from "../../atoms/users/CustomerSuperAdmin/UserPagination";
 
-const CustomerTicketTable = ({ filteredTickets }) => {
+const CustomerTicketTable = ({ allTickets }) => {
 	const Wrapper = styled("div")`
 		position: relative;
 		overflow-x: auto;
@@ -19,9 +19,6 @@ const CustomerTicketTable = ({ filteredTickets }) => {
 			border-radius: 0.75rem 0.75rem 0rem 0rem;
 		}
 	`;
-	const {tickets, isFiltered} = useSelector((state) => state.customerDashboardTickets);
-
-	const generalTickets = isFiltered === false ? tickets : [];
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 8;
@@ -29,10 +26,10 @@ const CustomerTicketTable = ({ filteredTickets }) => {
 	const getPaginatedTickets = () => {
 		const startIndex = (currentPage - 1) * itemsPerPage;
 		const endIndex = startIndex + itemsPerPage;
-		return generalTickets.slice(startIndex, endIndex);
+		return allTickets.slice(startIndex, endIndex);
 	};
 
-	const totalTickets = generalTickets.length;
+	const totalTickets = allTickets.length;
 	const totalPages = Math.ceil(totalTickets / itemsPerPage);
 
 	const handlePageChange = (event, page) => {
@@ -44,7 +41,7 @@ const CustomerTicketTable = ({ filteredTickets }) => {
 			<table className="">
 				<CustomerTicketTableHeadRow />
 				<tbody>
-					<CustomerTicketTableList tickets={getPaginatedTickets(filteredTickets)} />
+					<CustomerTicketTableList tickets={getPaginatedTickets(allTickets)} />
 				</tbody>
 			</table>
 			<Pagination

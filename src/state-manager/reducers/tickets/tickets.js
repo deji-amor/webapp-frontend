@@ -42,20 +42,27 @@ const initialState = {
 	filterByStatus: "All",
 	statuses: ["All", "Done", "Pending", "Technician enroute", "Inprogress", "Overdue"],
 
-	
 	// STATE FOR CUSTOMER DASHBOARD
-	isFiltered: false,
-	filterDependencies: {
-		filterType : false,
-		filterDate : false,
-		filterStatus : false,
+	isCustomerFiltered: false,
+	isCustomerFilteredByDate: false,
+	isCustomerFilteredByType: false,
+	isCustomerFilteredByStatus: false,
+	isCustomerFilteredById: false,
+
+	filteredCustomerDependencies: {
+		filterType: false,
+		filterStatus: false,
+		filterDate: false,
 	},
-	filterTicketsById: [],
-	filterTicketsByStatus: [],
-	filterTicketsByType: [],
+
+	customerTicketId: "",
+	customerTicketDate: "",
+	filteredCustomerTicketsById: [],
+	filteredCustomerTicketsByStatus: [],
+	filteredCustomerTicketsByType: [],
 
 	//GENERAL CUSTOMER TICKETS
-	filterTicketsByDate: [],
+	filteredCustomerTicketsByDate: [],
 };
 
 const ticketsSlice = createSlice({
@@ -84,13 +91,88 @@ const ticketsSlice = createSlice({
 		},
 		replaceTicket: (state, action) => {
 			const newTicket = action.payload;
-			console.log({newTicket})
-			const tickets = current(state).tickets.slice()
+			console.log({newTicket});
+			const tickets = current(state).tickets.slice();
 			const ticketInd = tickets.findIndex(ticket => ticket.id === newTicket.id);
-			tickets.splice(ticketInd, 1, newTicket)
-			state.tickets = tickets
-		}
+			tickets.splice(ticketInd, 1, newTicket);
+			state.tickets = tickets;
+		},
+
+		// CUSTOMER FILTER REDUCERS
+
+		filterCustomerTicketsByID: (state, {payload}) => {
+			if (payload.id.length != 0) {
+				state.isCustomerFilteredById = true;
+				state.isCustomerFiltered = true;
+				state.customerTicketId = payload.id;
+			} else {
+				state.isCustomerFilteredById = false;
+				state.isCustomerFiltered = false;
+				state.customerTicketId = "";
+			}
+
+			if (state.filteredCustomerTicketsByDate.length != 0 && state.isCustomerFilteredByDate) {
+				state.filteredCustomerTicketsById = current(state)
+					.filteredCustomerTicketsByDate.slice()
+					.filter(ticket => ticket.id.toString().includes(payload.id));
+			} else if (
+				state.filteredCustomerTicketsByType.length &&
+				state.isCustomerFilteredByDate &&
+				state.isCustomerFilteredByType
+			) {
+				state.filteredCustomerTicketsById = current(state)
+					.filteredCustomerTicketsByType.slice()
+					.filter(ticket => ticket.id.toString().includes(payload.id));
+			} else if (
+				state.filteredCustomerTicketsByStatus.length &&
+				state.isCustomerFilteredByDate &&
+				state.isCustomerFilteredByType &&
+				state.isCustomerFilteredByStatus
+			) {
+				state.filteredCustomerTicketsById = current(state)
+					.filteredCustomerTicketsByStatus.slice()
+					.filter(ticket => ticket.id.toString().includes(payload.id));
+			} else {
+				state.filteredCustomerTicketsById = current(state)
+					.tickets.slice()
+					.filter(ticket => ticket.id.toString().includes(payload.id));
+			}
+		},
+
+		filterCustomerTicketsByType: (state, {payload}) => {
+			state.filteredCustomerTicketsByType = payload;
+		},
+
+		filterCustomerTicketsByStatus: (state, {payload}) => {
+			const {data, status} = payload;
+			if (state.filteredTicketsByStatus.includes(status)) {
+				console.log("Already exist.");
+			} else {
+				state.filteredCustomerTicketsByStatus = current(state).filteredTicketsByStatus.concat(data);
+			}
+		},
+
+		filterCustomerTicketsByDate: (state, {payload}) => {
+			if (payload.date.length != 0) {
+				state.isCustomerFiltered = true;
+				state.isCustomerFilteredByDate = true;
+				state.customerTicketDate = payload.date;
+			} else {
+				state.isCustomerFiltered = false;
+				state.isCustomerFilteredByDate = false;
+				state.customerTicketDate = "";
+			}
+
+			if (state.tickets.length != 0) {
+				state.filteredCustomerTicketsByDate = current(state).tickets.slice().filter(ticket =>
+					ticket.created_at.includes(payload.date)
+				);
+			}else {
+				console.log("No data to filter from.")
+			}
+		},
 	},
+
 	extraReducers: builder => {
 		builder
 			.addCase(fetchTickets.pending, (state, action) => {

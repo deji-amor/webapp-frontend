@@ -1,30 +1,34 @@
+body {
+	overflow-x: hidden;
+}
+
 @media screen and (max-width: 1800px) {
 	.placeholder {
-        padding: 250px;
+        padding-bottom: 250px;
 	}
 }
 
 @media screen and (max-width: 1750px) {
 	.placeholder {
-        padding: 240px;
+        padding-bottom: 240px;
 	}
 }
 
 @media screen and (max-width: 1700px) {
 	.placeholder {
-        padding: 230px;
+        padding-bottom: 230px;
 	}
 }
 
 @media screen and (max-width: 1650px) {
 	.placeholder {
-        padding: 220px;
+        padding-bottom: 220px;
 	}
 }
 
 @media screen and (max-width: 1600px) {
 	.placeholder {
-        padding: 215px;
+        padding-bottom: 215px;
 	}
 }
 
@@ -40,31 +44,31 @@
 
 @media screen and (max-width: 1500px) {
 	.placeholder {
-        padding: 190px;
+        padding-bottom: 190px;
 	}
 }
 
 @media screen and (max-width: 1450px) {
 	.placeholder {
-        padding: 180px;
+        padding-bottom: 180px;
 	}
 }
 
 @media screen and (max-width: 1400px) {
 	.placeholder {
-        padding: 160px;
+        padding-bottom: 160px;
     }
 }
 
 @media screen and (max-width: 1350px) {
 	.placeholder {
-        padding: 150px;
+        padding-bottom: 150px;
     }
 }
 
 @media screen and (max-width: 1300px) {
 	.placeholder {
-		padding: 140px;
+		padding-bottom: 140px;
 	}
 }
 
@@ -93,68 +97,76 @@
 	}
 
 	.tableWrapper {
-		width: 90% !important;
+		/* width: 90% !important; */
 		/* z-index: 200 !important; */
 	}
 }
 
 @media screen and (max-width: 1250px) {
 	.placeholder {
-		padding: 125px;
+		padding-bottom: 125px;
 	}
 }
 
 @media screen and (max-width: 1200px) {
 	.placeholder {
-		padding: 115px;
+		padding-bottom: 115px;
 	}
 }
 
 @media screen and (max-width: 1160px) {
 	.placeholder {
-		padding: 105px;
+		padding-bottom: 105px;
 	}
 }
 
 @media screen and (max-width: 1130px) {
 	.placeholder {
-		padding: 100px;
+		padding-bottom: 100px;
 	}
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1090px) {
 	.placeholder {
-		padding: 90px;
+		padding: 110px;
 	}
 }
 
 @media screen and (max-width: 1050px) {
 	.placeholder {
-		padding: 80px;
+		padding-bottom: 100px;
 	}
 }
 
 @media screen and (max-width: 1000px) {
 	.placeholder {
-		padding: 70px;
+		padding-bottom: 110px;
 	}
 }
 
+@media screen and (max-width: 990px) {
+	.absolute-slide {
+		position: absolute;
+		/* right: -100px; */
+	}
+}
+
+
 @media screen and (max-width: 950px) {
 	.placeholder {
-		padding: 60px;
+		padding-bottom: 70px;
 	}
 }
 
 @media screen and (max-width: 920px) {
 	.placeholder {
-		padding: 55px;
+		padding-bottom: 60px;
 	}
 }
 
 @media screen and (max-width: 900px) {
 	.placeholder {
-		padding: 40px;
+		padding-bottom: 40px;
 	}
 
 	.content h1 {
@@ -168,5 +180,16 @@
 	.containerh2 {
 		width: 100% !important;
 		font-size: 30px !important;
+	}
+
+	.absolute-slide {
+		position: absolute;
+		/* right: -100px; */
+	}
+}
+
+@media screen and (max-width: 750px) {
+	.placeholder {
+		padding-bottom: 20px;
 	}
 }

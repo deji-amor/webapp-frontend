@@ -8,10 +8,9 @@ const FeatureWrapper = styled("div")(({color, background, color2, shadow}) => ({
     height: "317px",
     margin: "20px 0",
     border: "1px solid #4C6FFF",
-    background: background ? background : "#ffffff",
+    background: "#ffffff",
     borderRadius: "8px",
     padding: "20px 20px",
-    paddingTop: "50px",
     display: "flex",
     justifyContent: "space-between",
     flexDirection: "column",
@@ -26,12 +25,21 @@ const FeatureWrapper = styled("div")(({color, background, color2, shadow}) => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: color ? color : "rgba(80, 87, 229, 0.12)",
+        background: "rgba(80, 87, 229, 0.12)",
+    },
+
+    ":hover": {
+        background: background,
+    },
+
+    ":hover .commentContainer": {
+        background: "#fff",
     },
 
     img: {
         width: "24px",
         height: "24px",
+        color: "#fff"
     },
 
     h3: {
@@ -41,7 +49,11 @@ const FeatureWrapper = styled("div")(({color, background, color2, shadow}) => ({
         fontWeight: "600",
         lineHeight: "125%",
         letterSpacing: ".08%",
-        color: color ? color : "#2B2E72"
+        color: "#2B2E72"
+    },
+
+    ":hover h3": {
+        color: color,
     },
 
     p: {
@@ -51,8 +63,12 @@ const FeatureWrapper = styled("div")(({color, background, color2, shadow}) => ({
         fontWeight: "400",
         lineHeight: "20px",
         letterSpacing: ".5%",
-        color: color2 ? color2 : "#78787F"
-    }
+        color: "#78787F"
+    },
+
+    ":hover p": {
+        color: color2,
+    },
 }))
 
 const Feature = ({color, color2, background, title, description, shadow}) => {

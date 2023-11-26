@@ -9,7 +9,6 @@ import { fetchUsers } from '../state-manager/reducers/users/users';
 import { fetchCustomers } from '../state-manager/reducers/users/customers/customers';
 import { fetchAllCustomers } from '../state-manager/reducers/reports/customers/customers';
 import { fetchAllTickets } from '../state-manager/reducers/reports/tickets/ticketreport';
-import { fetchCustomerDashboardTickets } from '../state-manager/reducers/dashboard/customer/customerDashboardTickets';
 import { fetchTickets } from '../state-manager/reducers/tickets/tickets';
 import { logoutActions, logout } from '../state-manager/reducers/logout/logout';
 import { useSelector, useDispatch } from 'react-redux';
@@ -86,7 +85,6 @@ const AppLayout = () => {
 		dispatch(fetchUsers())
 		dispatch(fetchCustomers())
 		dispatch(fetchTickets())
-		dispatch(fetchCustomerDashboardTickets())
 		dispatch(fetchAllCustomers())
 		dispatch(fetchAllTickets())
 		// dispatch(fetchNotifications())

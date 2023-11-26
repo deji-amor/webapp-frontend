@@ -25,13 +25,12 @@ const Features = () => {
 		<FeaturesWrapper>
 			<Header
 				title="Core Features"
-				description="We will also facilitate the business marketing of these products with our SEO experts so that they become a ready-to-use website and help sell a product from the company"
-				// width=""
+				description="Our IT Service Management web app comes with a host of features tailored to help streamline your business processes. "
 			/>
 			<div className="features">
 				<Feature
 					title="Ticket Management"
-					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities"
+					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities."
 					color="#ffffff"
 					color2="#EFEFEF"
 					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
@@ -40,28 +39,33 @@ const Features = () => {
 
 				<Feature
 					title="Project Management"
-					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities"
+					description="Our robust application helps your team effectively track and manage project and service requests efficiently without the fuss of using different applications."
+					color="#ffffff"
+					color2="#EFEFEF"
+					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
+					background="#2B2E72"
+
 				/>
 
 				<Feature
 					title="Record Keeping"
-					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities"
+					description="No more lost data or missing records, easily utilise our cloud based application to store and retrieve your operational data, whenever you want it, how you want it."
+					color="#ffffff"
+					color2="#EFEFEF"
+					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
+					background="#2B2E72"
+
 				/>
 
 				<Feature
 					title="Customer Transparency"
-					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities"
-				/>
+					description="Our application also helps you provide a single source of truth view for transparency to your clients and customers on their tickets and projects."
+					color="#ffffff"
+					color2="#EFEFEF"
+					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
+					background="#2B2E72"
 
-				{/* <Feature
-					title=""
-					description=""
 				/>
-
-				<Feature
-					title=""
-					description=""
-				/> */}
 			</div>
 		</FeaturesWrapper>
 	);

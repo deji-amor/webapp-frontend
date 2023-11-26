@@ -1,26 +1,18 @@
-import { styled } from "@mui/material";
+import { styled, useMediaQuery } from "@mui/material";
 import "./board.css";
 import DecorCircle from "../../atoms/landing/decorCircle";
-import Avatar1 from "../../../assets/password/avatar1.png";
-import Range1 from "../../../assets/password/range1.png";
-import Avatar2 from "../../../assets/password/avatar2.png";
-import Range2 from "../../../assets/password/range2.png";
-import Avatar3 from "../../../assets/password/avatar3.png";
-import Range3 from "../../../assets/password/range3.png";
-import Avatar4 from "../../../assets/password/avatar4.png";
-import Range4 from "../../../assets/password/range4.png";
-import Avatar5 from "../../../assets/password/avatar5.png";
-import Range5 from "../../../assets/password/range5.png";
-import Avatar6 from "../../../assets/password/avatar6.png";
-import Range6 from "../../../assets/password/range6.png";
-import Avatar7 from "../../../assets/password/avatar7.png";
-import Range7 from "../../../assets/password/range7.png";
+import Slide from "../../molecules/landing/slide";
+import SimplifiedImg from "../../../assets/password/simplified.webp";
+import SimplifiedCardImg from "../../../assets/password/simplified-card.webp";
+import SimplifiedBottomImg from "../../../assets/password/simplified-bottom-card.webp";
 
-const ManagementWrapper = styled("div")(() => ({
+
+const ManagementWrapper = styled("div")(({query}) => ({
 	width: "90%",
 	height: "auto",
 	position: "relative",
 	margin: "0 auto",
+	marginBottom: "100px",
 	display: "flex",
 	justifyContent: "space-around",
 	alignItems: "center",
@@ -70,81 +62,46 @@ const ManagementWrapper = styled("div")(() => ({
 
 	".tableWrapper": {
 		width: "650px",
+		position: "relative",
 		borderRadius: "10px",
-		border: "1px solid #EAECF0",
-		boxShadow:
-			"0px 1.495449423789978px 2.990898847579956px -1.495449423789978px rgba(16, 24, 40, 0.06), 0px 2.990898847579956px 5.981797695159912px -1.495449423789978px rgba(16, 24, 40, 0.10)",
 	},
 
-	table: {
+	".simplified-img": {
 		width: "100%",
+		height: "100%",
 	},
 
-	"table thead tr": {
-		height: "33px",
-		borderRadius: "10px",
-		background: "#F9FAFB",
-		textAlign: "left",
-		color: "#667085",
+	".simplified-img img": {
+		width: "100%",
+		height: "100%",
+		objectFit: "cover",
 	},
 
-	"th, td": {
-		fontSize: "12px",
-		fontFamily: "inter",
-		fontWeight: "500",
-		lineHeight: "18px",
+	".absolute-slide": {
+		position: "absolute",
+		top: "75px",
+		right: query ? "-50px" : "-120px",
+		padding: "0"
 	},
 
-	th: {
-		paddingLeft: "20px",
+	".absolute-slide img": {
+		width: "100%",
+		height: "100%"
 	},
 
-	td: {
-		padding: "15px",
-	},
-
-	h6: {
-		fontSize: "14px",
-		fontWeight: "400",
-		lineHeight: "20px",
-		color: "#101828",
-	},
-
-	p: {
-		color: "#667085",
-		fontSize: "12px",
-		fontWeight: "400",
-		lineHeight: "20px",
-	},
-
-	".approve": {
-		background: "#ECFDF3",
-		textAlign: "center",
-		padding: "7px",
-		borderRadius: "20px",
-		color: "#027A48",
-	},
-
-	".open": {
-		background: "#F2F4F7",
-		textAlign: "center",
-		padding: "7px",
-		borderRadius: "20px",
-		color: "#027A48",
-	},
-
-	tr: {
-		borderBottom: "1px solid #EAECF0",
-	},
+	".relative-slide": {
+		position: "absolute",
+		bottom: "-160px",
+		padding: "0"
+	}
 }));
 
-// const TableWrapper = styled("div")(() => ({
-
-// }));
 
 const Management = () => {
+	let query = useMediaQuery("(max-width: 800px)");
+
 	return (
-		<ManagementWrapper className="management">
+		<ManagementWrapper className="management" query={query}>
 			<DecorCircle
 				top="40px"
 				left="-200px"
@@ -152,19 +109,94 @@ const Management = () => {
 				filter="blur(120.32733917236328px)"
 			/>
 			<div className="content">
-				<h1>Streamline IT operations with unified management</h1>
+				<h1>Simplify your IT operations with unified management</h1>
 				<div className="contBut">
 					<p>
-						Develop a website by finding a product identity that has value and branding to become a
-						characteristic of a company. We will also facilitate the business marketing of these
-						products with our SEO experts so that they become a ready-to-use website and help sell a
-						product from the company.
+					Are you tired of managing your IT operations manually? Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
 					</p>
 					<button type="button">Try For Free</button>
 				</div>
 			</div>
 			<div className="tableWrapper">
-				<table>
+				<div className="simplified-img">
+					<img src={SimplifiedImg} alt="simplified image" />
+				</div>
+				<Slide>
+					<img className="side-card" src={SimplifiedCardImg} alt="simplied card" />
+				</Slide>
+				<Slide position="relative">
+					<img className="bottom-card" src={SimplifiedBottomImg} alt="simplied card" />
+				</Slide>
+			</div>
+		</ManagementWrapper>
+	);
+};
+
+export default Management;
+
+// table: {
+// 	width: "100%",
+// },
+
+// "table thead tr": {
+// 	height: "33px",
+// 	borderRadius: "10px",
+// 	background: "#F9FAFB",
+// 	textAlign: "left",
+// 	color: "#667085",
+// },
+
+// "th, td": {
+// 	fontSize: "12px",
+// 	fontFamily: "inter",
+// 	fontWeight: "500",
+// 	lineHeight: "18px",
+// },
+
+// th: {
+// 	paddingLeft: "20px",
+// },
+
+// td: {
+// 	padding: "15px",
+// },
+
+// h6: {
+// 	fontSize: "14px",
+// 	fontWeight: "400",
+// 	lineHeight: "20px",
+// 	color: "#101828",
+// },
+
+// p: {
+// 	color: "#667085",
+// 	fontSize: "12px",
+// 	fontWeight: "400",
+// 	lineHeight: "20px",
+// },
+
+// ".approve": {
+// 	background: "#ECFDF3",
+// 	textAlign: "center",
+// 	padding: "7px",
+// 	borderRadius: "20px",
+// 	color: "#027A48",
+// },
+
+// ".open": {
+// 	background: "#F2F4F7",
+// 	textAlign: "center",
+// 	padding: "7px",
+// 	borderRadius: "20px",
+// 	color: "#027A48",
+// },
+
+// tr: {
+// 	borderBottom: "1px solid #EAECF0",
+// },
+
+
+{/* <table>
 					<thead>
 						<tr>
 							<th>Status</th>
@@ -361,10 +393,4 @@ const Management = () => {
 							<td>Page 1 of 10</td>
 						</tr>
 					</tbody>
-				</table>
-			</div>
-		</ManagementWrapper>
-	);
-};
-
-export default Management;
+				</table> */}

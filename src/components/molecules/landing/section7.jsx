@@ -24,23 +24,55 @@ const FaqWrapper = styled("div")(() => ({
 }));
 
 const Faq = () => {
-	const query = useMediaQuery("(max-width: 1100px)")
+	const query = useMediaQuery("(max-width: 1100px)");
 
 	return (
 		<FaqWrapper>
 			<Header
 				title="Frequently Asked Questions"
-				description="We will also facilitate the business marketing of these products with our SEO experts so that they become a ready-to-use website and help sell a product from the company"
-				width= {query? "380px" : "450px"}
+				description="Here are some frequently asked questions about our IT Service Management web app:"
+				width={query ? "380px" : "450px"}
 				containerWidth="80%"
 			/>
 			<div className="questions">
-				<Question />
-				<Question />
-				<Question />
-				<Question />
-				<Question />
-				<Question />
+				<Question
+					question={"How does your app help me manage my IT operations?"}
+					answer={
+						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+					}
+				/>
+				<Question
+					question={
+						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery?"
+					}
+					answer={
+						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+					}
+				/>
+				<Question
+					question={"What are the benefits of using your app?"}
+					answer={
+						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+					}
+				/>
+				<Question
+					question={"What core features does your app have?"}
+					answer={
+						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+					}
+				/>
+				<Question
+					question={"How do i get started with Cusmits?"}
+					answer={
+						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+					}
+				/>
+				<Question
+					question={"Can I register more than one business with Cusmits ITSM application?"}
+					answer={
+						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+					}
+				/>
 				<DecorCircle
 					top="100px"
 					right="0px"
