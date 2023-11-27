@@ -1,5 +1,6 @@
 import React, {memo, useEffect} from 'react'
 import { Outlet } from 'react-router-dom'
+import ToastContainer from "../components/molecules/general/ToastContainer";
 import CustomerNavbar from '../components/molecules/CustomerDashboard/CustomerNavbar'
 import CustomerSidebar from '../components/molecules/CustomerDashboard/CustomerSidebar'
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay'
@@ -18,6 +19,7 @@ import { authUserActions, fetchAuthUser } from '../state-manager/reducers/users/
 
 const MemoizedCustomerNavbar = memo(CustomerNavbar)
 const MemoizedCustomerSidebar = memo(CustomerSidebar)
+const MemoizedToastContainer = memo(ToastContainer);
 
 const CustomerAppLayout = () => {
 	/////////// AUTHENTICATION LOGIC STARTS HERE
@@ -85,6 +87,7 @@ const CustomerAppLayout = () => {
 
 	return (
 		<>
+			{<MemoizedToastContainer />}
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
 

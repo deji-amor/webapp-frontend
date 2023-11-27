@@ -30,7 +30,14 @@ const ProductDetails = () => {
 	const {customerId} = useSelector((state) => state.ticketCreation.allPossibleFields);
 	const customers = useSelector(state => state.customers.customers)
 	const customer = customers.find(customer => +customer.id === +customerId)
-	const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
+	// const { company_name, first_name, last_name, email, phone_number, datetime, status } = customer;
+	const company_name = customer?.company_name || "—";
+	const first_name = customer?.first_name || "—"
+	const last_name = customer?.last_name || "—"
+	const email = customer?.email || "—"
+	const phone_number = customer?.phone_number || "—"
+	const datetime = customer?.datetime || "—"
+	const status = customer?.status || "—"
 
 	const handleUpdateStatus = (customerId, newStatus, comment) => {
 		dispatch(suspendUnsuspend(customerId, newStatus, comment));

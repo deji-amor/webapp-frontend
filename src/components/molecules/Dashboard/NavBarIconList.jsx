@@ -36,19 +36,19 @@ const NavBarIconList = () => {
 		color: #fff;
 		top: -0.5rem /* -8px */;
 		right: -0.5rem /* -8px */;
-		`;
-		
-	const dispatch = useDispatch()
+	`;
 
-	const {data} = useSelector(state => state.authUser)
-	const userId = data.id
+	const dispatch = useDispatch();
+
+	const { data } = useSelector((state) => state.authUser);
+	const userId = data.id;
 	const workSpaceId = data.workspaceId;
-	const notifications = useNotifications(userId, workSpaceId)
-		const uniqueNotifications = uniqWith(notifications, isEqual);
-		const numberOfUnReadNotifications = uniqueNotifications.filter(
-			(notification) => notification.is_read === 0
-		).length;
-		const showNotificationDot = numberOfUnReadNotifications > 0;
+	const notifications = useNotifications(userId, workSpaceId);
+	const uniqueNotifications = uniqWith(notifications, isEqual);
+	const numberOfUnReadNotifications = uniqueNotifications.filter(
+		(notification) => notification.is_read === 0
+	).length;
+	const showNotificationDot = numberOfUnReadNotifications > 0;
 
 	const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
 	const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
@@ -98,22 +98,38 @@ const NavBarIconList = () => {
 
 	const authUser = useSelector((state) => state.authUser.data);
 	const { id, workspace_id } = authUser;
-	useNotifications(id, workspace_id)
+	useNotifications(id, workspace_id);
 
 	return (
 		<List id="drop-down">
 			<div className="relative">
-				<span className={`w-[2.5rem] h-[2.5rem] rounded-full p-[0.2rem] ${showNotificationDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
+				<span
+					className={`w-[2.5rem] h-[2.5rem] rounded-full p-[0.2rem] ${
+						showNotificationDropdown && "bg-[rgba(76,111,255,0.12)]"
+					}`}
+				>
 					<span className="relative">
 						{showNotificationDot && <Dot>{numberOfUnReadNotifications}</Dot>}
-						<NotificationsNoneSharpIcon onClick={toggleNotificationHandler} className="icon" style={{ fontSize: 30 }} />
+						<NotificationsNoneSharpIcon
+							onClick={toggleNotificationHandler}
+							className="icon"
+							style={{ fontSize: 30 }}
+						/>
 					</span>
 				</span>
 				{showNotificationDropdown && <NotificationsDropdown />}
 			</div>
 			<div className="relative">
-				<span className={`w-[2.5rem] h-[2.5rem] rounded-full p-[0.2rem] ${showLogoutDropdown && "bg-[rgba(76,111,255,0.12)]"}`}>
-					<SettingsOutlinedIcon onClick={toggleLogoutHandler} className="icon" style={{ fontSize: 30 }} />
+				<span
+					className={`w-[2.5rem] h-[2.5rem] rounded-full p-[0.2rem] ${
+						showLogoutDropdown && "bg-[rgba(76,111,255,0.12)]"
+					}`}
+				>
+					<SettingsOutlinedIcon
+						onClick={toggleLogoutHandler}
+						className="icon"
+						style={{ fontSize: 30 }}
+					/>
 				</span>
 				{showLogoutDropdown && <NavbarDropdown />}
 			</div>
