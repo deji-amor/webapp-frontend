@@ -41,6 +41,9 @@ const TicketDetail = () => {
 		const { tickets } = useSelector((state) => state.tickets);
 		const {users} = useSelector(state => state.users)
 		const ticketToEdit = tickets.find((ticket) => +ticket.id === +ticketId);
+		const { data } = useSelector((state) => state.authUser);
+		const userType = data.user_type;
+		const isCustomer = userType === "customer";
 		const user = users.find(user => user.id === ticketToEdit.user_id)
 		const { first_name, last_name, email } = user;
 
@@ -48,12 +51,15 @@ const TicketDetail = () => {
 		<div className="">
 			<div className="flex items-center justify-between mb-[0.5rem]">
 				<SmallHeader>Ticket Information</SmallHeader>
-				<NavLink to={`../../edit/${ticketId}`}>
-					<EditText className="flex gap-[0.5rem]">
-						<EditIcon />
-						<span>Edit Ticket</span>
-					</EditText>
-				</NavLink>
+				{
+					!isCustomer &&
+					<NavLink to={`../../edit/${ticketId}`}>
+						<EditText className="flex gap-[0.5rem]">
+							<EditIcon />
+							<span>Edit Ticket</span>
+						</EditText>
+					</NavLink>
+				}
 			</div>
 			<div className="flex pb-[0.5rem] border-b-2 border-b-[#ECECEC] space-x-2">
 				<DetailText>Created by:</DetailText>

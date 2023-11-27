@@ -10,6 +10,7 @@ import Placeholder from "../../components/molecules/general/Placeholder";
 import { Triangle } from "react-loader-spinner";
 import { LoaderContainerWrapper, LoaderWrapper } from "../../components/atoms/Password/wrappers";
 import { useNavigate, Outlet } from "react-router-dom";
+import authUser from "../../state-manager/reducers/users/authUser";
 
 const Wrapper = styled("div")`
 	position: relative;
@@ -49,6 +50,8 @@ const Tickets = () => {
 		loading: usersLoading,
 	} = useSelector((state) => state.users);
 
+	const {data} = useSelector(state => state.authUser)
+
 	const navigate = useNavigate();
 
 	if (ticketsLoading || customersLoading || usersLoading){
@@ -70,7 +73,12 @@ const Tickets = () => {
 		);
 	}
 	
-	if (ticketsError || customersError || usersError) return <p>An error occurred please refresh</p>;
+	console.log(data);
+
+	if(data.user_type === "customer") return <Outlet />;
+
+
+	if ((ticketsError || customersError || usersError)) return <p>An error occurred please refresh</p>;
 
 	const createCustomer = () => {
 		navigate("../users");

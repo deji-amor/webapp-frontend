@@ -2,6 +2,7 @@ import React from 'react'
 import { styled } from '@mui/material'
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import authUser from '../../../../state-manager/reducers/users/authUser';
 
 const Customer = styled("p")`
 	display: flex;
@@ -49,9 +50,19 @@ const TicketCustomerDetail = () => {
 		const { ticketId } = params;
 		const { tickets } = useSelector((state) => state.tickets);
 		const {customers} = useSelector(state => state.customers)
+		const {data} = useSelector(state => state.authUser)
 		const ticketToEdit = tickets.find((ticket) => +ticket.id === +ticketId);
 
-		const customer = customers.find(customer => customer.user_id === ticketToEdit.customer_id)
+		const userType = data.user_type
+		const isCustomer = userType === "customer";
+		let customer
+
+		if(userType === "customer"){
+			customer = data
+		}else {
+			customer = customers.find(customer => customer.user_id === ticketToEdit.customer_id)
+		}
+
 		if (!customer) return <></>
 		const {first_name, last_name, company_email} = customer
 
@@ -59,7 +70,7 @@ const TicketCustomerDetail = () => {
 		<div className=''>
 			<Customer className='mb-[1rem]'>Customer</Customer>
 			<CustomerName className='mb-[0.12rem] truncate'>{first_name} {last_name}</CustomerName>
-			<CustomerEmail>{company_email}</CustomerEmail>
+			<CustomerEmail>{isCustomer ? customer.email :  company_email}</CustomerEmail>
 		</div>
 	);
 }
