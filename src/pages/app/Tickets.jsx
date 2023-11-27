@@ -73,11 +73,6 @@ const Tickets = () => {
 		);
 	}
 	
-	console.log(data);
-
-	if(data.user_type === "customer") return <Outlet />;
-
-
 	if ((ticketsError || customersError || usersError)) return <p>An error occurred please refresh</p>;
 
 	const createCustomer = () => {
