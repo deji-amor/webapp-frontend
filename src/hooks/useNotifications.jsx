@@ -15,7 +15,7 @@ const useNotifications = (userId, workspaceId) => {
 		socket.on("connect", () => {
 			socket.emit("join-workspace", `workspace_${workspaceId}`, userId);
 			socket.on("get-notifications", (notifications) => {
-				console.log(console.log(notifications));
+				// console.log(console.log(notifications));
 				const newNotifications = notifications.slice().map(notification => {
 					const newNotification = {...notification}
 					newNotification.handleUpdateNotification = () => {
@@ -27,7 +27,7 @@ const useNotifications = (userId, workspaceId) => {
 			});
 
 			socket.on("updated-notifications", (notifications) => {
-				console.log(notifications);
+				// console.log(notifications);
 				const newNotifications = notifications.slice().map((notification) => {
 					const newNotification = { ...notification };
 					newNotification.handleUpdateNotification = () => {

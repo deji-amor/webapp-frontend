@@ -32,7 +32,7 @@ export const solutions = [
 	},
 ];
 
-export const features = ["Team Management", "Tasks Schedule", "File Manager"]
+export const features = ["Team Management", "Ticket Management", "Project Management", "Customer Management"]
 
 export const resources = ["Blog", "Support", "NewsLetter"]
 

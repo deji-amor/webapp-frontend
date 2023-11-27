@@ -46,9 +46,10 @@ const ReportFilterBoardWrapper = styled("div")(() => ({
 
 const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, setToggle }) => {
 	const { customerReport } = useSelector((state) => state.reports);
-	const { filteredTickets, filteredProjectTickets, reportTabIndex } = useSelector(
+	const { filteredTickets, filteredProjectTickets, reportTabIndex, multipleTicketStatusFiltering } = useSelector(
 		(state) => state.ticketReports
 	);
+
 	const { filteredCustomers } = useSelector((state) => state.customerReports);
 
 	const dispatch = useDispatch();
@@ -63,6 +64,8 @@ const TypeFilterBoard = ({ handleReportDateRange, handleReportsSort, toggle, set
 			"aria-controls": `simple-tabpanel-${ind}`,
 		};
 	};
+
+	console.log(multipleTicketStatusFiltering)
 
 	return (
 		<ReportFilterBoardWrapper>

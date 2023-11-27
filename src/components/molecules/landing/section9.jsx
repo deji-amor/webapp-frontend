@@ -36,6 +36,7 @@ const Footer = () => {
 					justifyContent: "space-between",
 					alignItems: "center",
 					margin: "auto",
+					marginTop: "50px",
 				}}
 			>
 				<CustomLogo color="#2B2E72" style={{ position: "relative", top: "0" }} />

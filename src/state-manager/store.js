@@ -48,7 +48,7 @@ const persistConfig = {
         "ticketReports",
         "customerReports",
         "dashboard",
-        "customerDashboard"
+        "customerDashboard",
 	],
 };
 

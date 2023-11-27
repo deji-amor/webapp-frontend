@@ -8,7 +8,7 @@ const CustomLogo = ({color, style}) => {
     <Link to="/">
       <LogoWrapper color={color} style={style}>
           <img src={logoImage} alt="Logo" />
-          <span>LogoIpsum</span>
+          <span>CUSMITS</span>
       </LogoWrapper>
     </Link>
   )

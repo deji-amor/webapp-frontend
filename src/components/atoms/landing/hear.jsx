@@ -7,6 +7,7 @@ const HeadingWrapper = styled("div")(({ width }) => ({
 	height: "240px",
 	display: "flex",
 	flexDirection: "column",
+	justifyContent: "space-between",
 	gap: "25px",
 	padding: "40px 20px",
 	borderRadius: "8px",

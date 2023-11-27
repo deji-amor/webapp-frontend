@@ -21,7 +21,7 @@ const SearchBar = ({ searchValue, onSearch }) => (
     }}
     placeholder="Enter Ticket ID"
     value={searchValue}
-    onChange={(e) => onSearch(e.target.value)}
+    onChange={onSearch}
   />
 );
 

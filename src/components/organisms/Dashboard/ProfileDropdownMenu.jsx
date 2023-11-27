@@ -12,7 +12,8 @@ const ProfileDropdownMenu = ({
 	setIsEditModalOpen,
 	closeDropdown,
 }) => {
-	console.log(isDropdownOpen);
+	
+	// console.log(isDropdownOpen);
 
 	const handleDropdownClick = () => {
 		toggleDropdown();

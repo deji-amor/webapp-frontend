@@ -4,7 +4,6 @@ import Ornament from "../../../assets/password/Ornament.png";
 const NewsLetterWrapper = styled("div")(() => ({
 	maxWidth: "100%",
 	height: "auto",
-	// margin: "auto",
 
 	".container": {
 		width: "80%",
@@ -51,7 +50,6 @@ const NewsLetterWrapper = styled("div")(() => ({
 		display: "flex",
 		height: "56px",
 		width: "200px",
-		// padding: "15px 24px",
 		justifyContent: "center",
 		alignItems: "center",
 		gap: "10px",

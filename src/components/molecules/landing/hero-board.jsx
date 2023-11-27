@@ -3,8 +3,10 @@ import "./board.css";
 import NavLinks from "./navlinks";
 import Circle from "../../atoms/landing/circle";
 import HeroMessage from "./hero-message";
-import HeroImage from "../../../assets/password/ticket.png";
+import HeroImage from "../../../assets/password/tickets.webp";
+import SideImg from "../../../assets/password/side-img.webp";
 import DecorCircle from "../../atoms/landing/decorCircle";
+import Slide from "./slide";
 
 const BoardParentWrapper = styled("div")(() => ({
 	maxWidth: "100%",
@@ -28,20 +30,27 @@ const BoardWrapper = styled("div")(() => ({
 	},
 }));
 
-const HeroImageWrapper = styled("div")(({ query}) => ({
-	width: "100%",
-	height: "670px",
+const HeroImageWrapper = styled("div")(({ query1 }) => ({
+	width: "90%",
+	height: "700px",
 	position: "absolute",
 	zIndex: "10",
-	top: "490px",
+	top: query1 ? "410px" : "390px",
 	left: "50%",
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "start",
+	paddingTop: "70px",
 	transform: "translate(-50%, 0%)",
 
+	".inner-container": {
+		width: "100%",
+		height: "100%",
+		position: "relative",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "start",
+	},
+
 	".ticketImage": {
-		width: query ? "90%" : "80%",
+		width: "90%",
 		position: "relative",
 		display: "flex",
 	},
@@ -54,10 +63,34 @@ const HeroImageWrapper = styled("div")(({ query}) => ({
 		zIndex: "20",
 		filter: "drop-shadow(4px 8px 20px rgba(76, 111, 255, 0.16))",
 	},
+
+	".absolute-slide": {
+		position: "absolute",
+		top: "400px",
+		right: "-50px",
+		zIndex: "21",
+		display: "flex",
+		justifyContent: "flex-end",
+	},
+
+	".image-container": {
+		width: query1 ? "350px" : "100%",
+		height: query1 ? "350px" : "100%",
+		position: "relative",
+	},
+
+	".image-container .side": {
+		width: "100%",
+		height: "100%",
+		// position: "absolute",
+		// right: "0",
+		objectFit: "contain",
+	},
 }));
 
 const HeroBoard = () => {
 	let query = useMediaQuery("(max-width: 1200px)");
+	let query1 = useMediaQuery("(max-width: 950px)");
 
 	return (
 		<BoardParentWrapper>
@@ -73,9 +106,16 @@ const HeroBoard = () => {
 					<HeroMessage />
 				</div>
 			</BoardWrapper>
-			<HeroImageWrapper query2={query}>
-				<div className="ticketImage">
-					<img className="heroImage" src={HeroImage} alt="Hero-Banner-Image" />
+			<HeroImageWrapper query2={query} query1={query1}>
+				<div className="inner-container">
+					<div className="ticketImage">
+						<img className="heroImage" src={HeroImage} alt="Hero-Banner-Image" />
+					</div>
+					<Slide y_axis_start={100} y_axis_end={query1 ? -250 : -200}>
+						<div className="image-container">
+							<img className="side" src={SideImg} alt="Side-Image" />
+						</div>
+					</Slide>
 				</div>
 			</HeroImageWrapper>
 		</BoardParentWrapper>

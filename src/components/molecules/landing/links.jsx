@@ -17,7 +17,7 @@ const Links = ({style}) => {
 
   return (
     <LinkWrapper matches={matches} style={style}>
-        <CustomLink text="Home" link="/" />
+        {/* <CustomLink text="Home" link="/" /> */}
         <CustomLink text="Products" name="services" link="services" type="dropdown" dropDownValues={services} />
         <CustomLink text="Solutions" name="solutions" link="solutions" type="dropdown" dropDownValues={solutions} />
         <CustomLink text="Pricing" link="pricing" />

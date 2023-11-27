@@ -119,7 +119,7 @@ const authUserSlice = createSlice({
 				const {status, code, data} = action.payload;
 				state.loading = false;
 				if (code === 200 && status === "OK") {
-					console.log(data.userData);
+					// console.log(data.userData);
 					state.data = data.userData;
 				}
 			})

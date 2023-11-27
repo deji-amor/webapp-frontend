@@ -95,9 +95,9 @@ const MobileLink = () => {
 	return (
 		<MobileLinkWrapper>
 			<ul className="mobileL">
-				<li className="li">
+				{/* <li className="li">
 					<NavLink>Home</NavLink>
-				</li>
+				</li> */}
 				<li className="serv li">
 					<ChevronLeftIcon />
 					<NavLink>Products</NavLink>
