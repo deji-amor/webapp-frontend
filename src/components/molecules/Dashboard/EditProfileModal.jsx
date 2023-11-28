@@ -171,7 +171,9 @@ const EditProfileModal = ({ open, onClose }) => {
 								{hasUploadedImage || profile_picture ? (
 									<Avatar
 										alt="Profile Picture"
-										src={profile_picture || ""}
+										src={
+											hasUploadedImage ? URL.createObjectURL(selectedImage) : profile_picture || ""
+										}
 										style={{
 											width: "95px",
 											height: "95px",
