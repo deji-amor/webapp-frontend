@@ -7,7 +7,7 @@ export const createTicket = createAsyncThunk("ticketCreation", async (args, {rej
 		const token = await getAuthToken();
 			if(args.scopeOfWorkDocument){
 				const {scopeOfWorkDocument} = args
-				const fileUrl = await uploadFile(scopeOfWorkDocument)
+				const fileUrl = await uploadFile(scopeOfWorkDocument, "tickets", "documents")
 				console.log(fileUrl)
 				if(fileUrl){
 					// const {Location: scopeOfWorkDocumentUrl} = result;
