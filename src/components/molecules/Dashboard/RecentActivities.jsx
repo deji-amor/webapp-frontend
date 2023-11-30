@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { recentactivities } from "../../../state-manager/reducers/dashboard/dashboard";
 import { useNavigate } from "react-router-dom";
 
-const RecentActivities = () => {
+const RecentActivities = ({onClickAway}) => {
 	const dispatch = useDispatch();
 	const recentActivitiesData = useSelector((state) => state.dashboard.recentActivities);
-
+	const { data } = useSelector((state) => state.authUser);
+	const userType = data.user_type;
+	const isCustomer = userType === "customer";
 	const recentDataArray = recentActivitiesData?.recentActivities || [];
 	const navigate = useNavigate();
 
@@ -36,29 +38,31 @@ const RecentActivities = () => {
 			const { data } = activity;
 			const dataParsed = JSON.parse(data);
 			const { id: ticketId } = dataParsed;
-			return navigate(`/admin/tickets/view/detail/${ticketId}`);
+			return navigate(`/${isCustomer ? "customer" : "admin"}/tickets/view/detail/${ticketId}`);
 		}
 
 		if (type === "ticket-update") {
 			const { data } = activity;
 			const dataParsed = JSON.parse(data);
 			const { ticketId } = dataParsed;
-			return navigate(`/admin/tickets/view/detail/${ticketId}`);
+			return navigate(`/${isCustomer ? "customer" : "admin"}/tickets/view/detail/${ticketId}`);
 		}
+
+		if(isCustomer) return onClickAway()
 
 		if (type === "customer-onboarding") {
 			const {data} = activity
 			const customerParsedData = JSON.parse(data);
-			navigate(`/admin/users`);
+			navigate(`/${isCustomer ? "customer" : "admin"}/users`);
 			return showEditUserHandler(customerParsedData);
 		}
 
 		if (type === "customer-update") {
-			return navigate(`/admin/users`);
+			return navigate(`/${isCustomer ? "customer" : "admin"}/users`);
 		}
 
 		if (type === "customer-creation") {
-			return navigate(`/admin/users`);
+			return navigate(`/${isCustomer ? "customer" : "admin"}/users`);
 		}
 	};
 

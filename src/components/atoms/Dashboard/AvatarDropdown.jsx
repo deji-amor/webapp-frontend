@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
 import RecentActivities from "../../molecules/Dashboard/RecentActivities";
 
-const AvatarDropdown = ({ onEditClick }) => {
+const AvatarDropdown = ({ onEditClick, onClickAway }) => {
 	const Typography = styled("h2")`
 		color: #2b2e72;
 		font-family: Poppins;
@@ -88,7 +88,7 @@ const AvatarDropdown = ({ onEditClick }) => {
 			</Box>
 			<Box mt={3}>
 				<Recent variant="body1">Recent Activity</Recent>
-				<RecentActivities />
+				<RecentActivities onClickAway={onClickAway} />
 			</Box>
 		</Box>
 	);

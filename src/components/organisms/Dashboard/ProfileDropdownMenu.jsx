@@ -25,7 +25,8 @@ const ProfileDropdownMenu = ({
 	};
 
 	const handleClickAway = () => {
-		setIsDropdownOpen(false);
+		// closeDropdown()
+		// setIsDropdownOpen(false);
 	};
 
 	return (
@@ -43,7 +44,7 @@ const ProfileDropdownMenu = ({
 						boxShadow="0px 0px 20px 0px rgba(37, 36, 33, 0.24)"
 						padding="10px"
 					>
-						<AvatarDropdown onEditClick={handleEditClick} />
+						<AvatarDropdown onEditClick={handleEditClick} onClickAway={handleClickAway} />
 					</Box>
 				</ClickAwayListener>
 			)}
