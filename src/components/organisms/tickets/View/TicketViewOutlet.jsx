@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import CompanyNameAndPathToTemplate from '../Edit/CompanyNameAndPathToTemplate'
-import { Outlet, useNavigate, useLocation, NavLink } from 'react-router-dom'
+import { Outlet, useLocation, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { editTicketActions } from '../../../../state-manager/reducers/tickets/ticketEdition'
@@ -15,9 +15,11 @@ const TicketViewOutlet = () => {
     const params = useParams();
 		const { ticketId } = params;
 		const { tickets } = useSelector((state) => state.tickets);
+		const { data } = useSelector((state) => state.authUser);
+		const userType = data.user_type;
+		const isCustomer = userType === "customer";
 		const ticketToEdit = tickets.find((ticket) => +ticket.id === +ticketId);
 		const dispatch = useDispatch();
-    const navigate = useNavigate()
     const location = useLocation()
     const {pathname} = location
 
@@ -33,7 +35,7 @@ const TicketViewOutlet = () => {
 			<div className="flex items-center justify-between">
 				<BigBlueText>ID {ticketId}</BigBlueText>
 				<div className="flex items-center gap-[1.25rem]">
-					<ChangeTicketStatus />
+					{!isCustomer && <ChangeTicketStatus />}
 					<ExportTicket />
 				</div>
 			</div>
@@ -41,9 +43,9 @@ const TicketViewOutlet = () => {
 				<HorizontalRule />
 			</div>
 			<TicketCustomerDetail />
-      <div className='mb-[1.2rem]'>
-        <HorizontalRule></HorizontalRule>
-      </div>
+			<div className="mb-[1.2rem]">
+				<HorizontalRule></HorizontalRule>
+			</div>
 			<div className="flex justify-between gap-[1.5rem] min-h-[17rem]">
 				<div className="basis-[15%]">
 					<NavLink to={`../view/detail/${ticketId}`}>

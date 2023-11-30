@@ -56,7 +56,8 @@ const TicketsTableBody = () => {
 			const companyName = customers.find((customer) => +customer.user_id === +ticket.customer_id)?.company_name // FOR CUSTOMER
 			const superAdminOrAdminEmail = users.find((user) => +user.id === +ticket.user_id)?.email // FOR ADMINS
 			const ticketForm = ticket.ticket_form;
-			const searchString = ` ${companyName} ${superAdminOrAdminEmail} ${ticketForm}`.toLowerCase()
+			const ticketId = ticket.id;
+			const searchString = ` ${companyName} ${superAdminOrAdminEmail} ${ticketForm} ${ticketId}`.toLowerCase()
 			const includes = searchString.includes(searchTicketsValue.trim().toLowerCase());
 			return includes
 		})

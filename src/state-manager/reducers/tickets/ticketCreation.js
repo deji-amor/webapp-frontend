@@ -7,7 +7,7 @@ export const createTicket = createAsyncThunk("ticketCreation", async (args, {rej
 		const token = await getAuthToken();
 			if(args.scopeOfWorkDocument){
 				const {scopeOfWorkDocument} = args
-				const fileUrl = await uploadFile(scopeOfWorkDocument)
+				const fileUrl = await uploadFile(scopeOfWorkDocument, "tickets", "documents")
 				console.log(fileUrl)
 				if(fileUrl){
 					// const {Location: scopeOfWorkDocumentUrl} = result;
@@ -248,6 +248,7 @@ const createTicketSlice = createSlice({
 			if(window.location.pathname.includes("/tickets")){
 				return initialState
 			}else {
+				console.log(action.payload)
 				state.customer = action.payload
 				state.chosenTemplate = [];
 				state.showAddTicketModal = true;
@@ -256,6 +257,10 @@ const createTicketSlice = createSlice({
 				const customerId = current(state).allPossibleFields.customerId
 				state.allPossibleFields = {...allPossibleFields, customerId};
 			}
+			console.log("same")
+		},
+		ttt: (state, action) => {
+			state.showAddTicketModal = true
 		},
 		updateField: (state, action) => {
 			const payload = action.payload;

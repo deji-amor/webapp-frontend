@@ -131,103 +131,105 @@ const DateFilter = ({ handleReportDateRange }) => {
 	}, [start, end]);
 
 	return (
-		<DateFilterWrapper>
-			<p>
-				Filter By Date:
-				{
-					toggleErr && (
-						<span className="errordate">Start Date cannot be greater than End Date.</span>
-					)
-					// || (toggleEmpty && <span className="empty">No data for this date range.</span>)
-				}
-			</p>
-			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<DemoContainer components={["DatePicker", "DatePicker"]}>
-					<div className="dates">
-						<div className="date">
-							<label htmlFor="start">Start Date</label>
-							<DatePicker
-								id="start"
-								slotProps={{
-									textField: {
-										size: "small",
-										error: false,
-									},
-								}}
-								value={startDate}
-								disableFuture={true}
-								className="input"
-								renderInput={(params) => <TextField {...params} error={false} />}
-								onChange={(data) => setValues({ ...values, startDate: data })}
-								popperPlacement="bottom-end"
-								popperModifiers={{
-									flip: {
-										behavior: ["bottom-end"],
-									},
-									preventOverflow: {
-										enabled: false,
-									},
-									hide: {
-										enabled: false,
-									},
-								}}
-								sx={{
-									"& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-										boxShadow: "0px 0px 1px 0px rgba(50, 50, 71, 0.2)",
-									},
-									"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-										border: "1px solid rgba(43, 46, 114, 1)",
-										outline: "none",
-									},
-								}}
-							/>
-						</div>
-						<div className="date">
-							<label htmlFor="end">End Date</label>
-							<DatePicker
-								id="end"
-								slotProps={{
-									textField: {
-										size: "small",
-										error: false,
-									},
-								}}
-								value={endDate}
-								className="input"
-								disableFuture={true}
-								onChange={(data) => setValues({ ...values, endDate: data })}
-								popperPlacement="bottom-end"
-								popperModifiers={{
-									flip: {
-										behavior: ["bottom"],
-									},
-									preventOverflow: {
-										enabled: false,
-									},
-									hide: {
-										enabled: false,
-									},
-								}}
-								sx={{
-									"& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-										boxShadow: "0px 0px 1px 0px rgba(50, 50, 71, 0.2)",
-									},
-									"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-										border: "1px solid rgba(43, 46, 114, 1)",
-									},
-								}}
-							/>
-						</div>
-						{(startDate || endDate) && (
-							<div className="clear" onClick={handleClear}>
-								<span>Clear Dates</span>
-								<ClearOutlinedIcon />
+		<>		
+			<DateFilterWrapper>
+				<p>
+					Filter By Date:
+					{
+						toggleErr && (
+							<span className="errordate">Start Date cannot be greater than End Date.</span>
+						)
+						// || (toggleEmpty && <span className="empty">No data for this date range.</span>)
+					}
+				</p>
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DemoContainer components={["DatePicker", "DatePicker"]}>
+						<div className="dates">
+							<div className="date">
+								<label htmlFor="start">Start Date</label>
+								<DatePicker
+									id="start"
+									slotProps={{
+										textField: {
+											size: "small",
+											error: false,
+										},
+									}}
+									value={startDate}
+									disableFuture={true}
+									className="input"
+									renderInput={(params) => <TextField {...params} error={false} />}
+									onChange={(data) => setValues({ ...values, startDate: data })}
+									popperPlacement="bottom-end"
+									popperModifiers={{
+										flip: {
+											behavior: ["bottom-end"],
+										},
+										preventOverflow: {
+											enabled: false,
+										},
+										hide: {
+											enabled: false,
+										},
+									}}
+									sx={{
+										"& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+											boxShadow: "0px 0px 1px 0px rgba(50, 50, 71, 0.2)",
+										},
+										"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+											border: "1px solid rgba(43, 46, 114, 1)",
+											outline: "none",
+										},
+									}}
+								/>
 							</div>
-						)}
-					</div>
-				</DemoContainer>
-			</LocalizationProvider>
-		</DateFilterWrapper>
+							<div className="date">
+								<label htmlFor="end">End Date</label>
+								<DatePicker
+									id="end"
+									slotProps={{
+										textField: {
+											size: "small",
+											error: false,
+										},
+									}}
+									value={endDate}
+									className="input"
+									disableFuture={true}
+									onChange={(data) => setValues({ ...values, endDate: data })}
+									popperPlacement="bottom-end"
+									popperModifiers={{
+										flip: {
+											behavior: ["bottom"],
+										},
+										preventOverflow: {
+											enabled: false,
+										},
+										hide: {
+											enabled: false,
+										},
+									}}
+									sx={{
+										"& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+											boxShadow: "0px 0px 1px 0px rgba(50, 50, 71, 0.2)",
+										},
+										"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+											border: "1px solid rgba(43, 46, 114, 1)",
+										},
+									}}
+								/>
+							</div>
+							{(startDate || endDate) && (
+								<div className="clear" onClick={handleClear}>
+									<span>Clear Dates</span>
+									<ClearOutlinedIcon />
+								</div>
+							)}
+						</div>
+					</DemoContainer>
+				</LocalizationProvider>
+			</DateFilterWrapper>
+		</>
 	);
 };
 

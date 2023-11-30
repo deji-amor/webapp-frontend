@@ -1,8 +1,13 @@
 import s3Client from "./aws-config";
 import {PutObjectCommand, DeleteObjectCommand} from "@aws-sdk/client-s3";
 
-export const uploadFile = async file => {
-	const uniqueFileName = `file_${Date.now()}_${file.name}`.replaceAll(" ", "");
+export const uploadFile = async (file, ...routes) => {
+	let uniqueFileName
+	if(routes.length === 0) uniqueFileName = `afms/file_${Date.now()}_${file.name}`.replaceAll(" ", "");
+	else {
+		const routesStr = routes.map(route => `${route}/`).join("")
+		uniqueFileName = `afms/${routesStr}file_${Date.now()}_${file.name}`.replaceAll(" ", "");
+	}
 
 	const params = {
 		Bucket: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_BUCKET_NAME, // Replace with your S3 bucket name
@@ -16,6 +21,7 @@ export const uploadFile = async file => {
 
 		// Construct the URL using the S3 bucket, region, and key (object name)
 		const fileUrl = `https://${params.Bucket}.s3.amazonaws.com/${params.Key}`;
+		console.log(fileUrl, "FILEURL")
 
 		return fileUrl; // Return the constructed URL
 		// return await s3Client.send(new PutObjectCommand(params));
@@ -24,10 +30,13 @@ export const uploadFile = async file => {
 	}
 };
 
+function removeSchemeHostAndSlash(url) {
+	const withoutSchemeAndHost = url.replace(/^(https?|ftp):\/\/[^/\s]+/, "");
+	return withoutSchemeAndHost.replace(/^\/*/, "");
+}
+
 export const deleteFileByUrl = async fileUrl => {
-	// Extract the file key from the URL
-	const urlParts = fileUrl.split("/");
-	const fileKey = urlParts[urlParts.length - 1];
+	const fileKey = removeSchemeHostAndSlash(fileUrl);
 
 	const params = {
 		Bucket: import.meta.env.VITE_NEXT_PUBLIC_APP_AWS_BUCKET_NAME,

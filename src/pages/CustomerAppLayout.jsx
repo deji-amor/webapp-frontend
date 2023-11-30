@@ -1,5 +1,7 @@
 import React, {memo, useEffect} from 'react'
 import { Outlet } from 'react-router-dom'
+import { jwtDecode } from "jwt-decode";
+import ToastContainer from "../components/molecules/general/ToastContainer";
 import CustomerNavbar from '../components/molecules/CustomerDashboard/CustomerNavbar'
 import CustomerSidebar from '../components/molecules/CustomerDashboard/CustomerSidebar'
 import LogoutOverlay from '../components/organisms/Logout/LogoutOverlay'
@@ -18,6 +20,7 @@ import { authUserActions, fetchAuthUser } from '../state-manager/reducers/users/
 
 const MemoizedCustomerNavbar = memo(CustomerNavbar)
 const MemoizedCustomerSidebar = memo(CustomerSidebar)
+const MemoizedToastContainer = memo(ToastContainer);
 
 const CustomerAppLayout = () => {
 	/////////// AUTHENTICATION LOGIC STARTS HERE
@@ -50,41 +53,47 @@ const CustomerAppLayout = () => {
   }, [])
 
 	// checks if token doesnt exit and logs out else and logouts out on timer expiry
-	useEffect(() => {
-		const checkIfTokenExistsAndIsValid = async () => {
-			dispatch(logoutActions.countDownSeconds());
-			const token = await getAuthToken();
-			if (allowedTimeOfInactivityInSeconds <= 0 && token && !logoutProcessLoading) {
+useEffect(() => {
+	const checkIfTokenExistsAndIsValid = async () => {
+		dispatch(logoutActions.countDownSeconds());
+
+		const token = await getAuthToken();
+
+		if (token) {
+			const decodedToken = jwtDecode(token);
+			const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+
+			if (decodedToken.exp && !logoutProcessLoading && decodedToken.exp < currentTimeInSeconds) {
+				// Token has expired
 				const deviceName = getDeviceName();
 				dispatch(authUserActions.clearData());
-				dispatch(logout({ deviceName: deviceName }));
+				dispatch(logout({ deviceName }));
 			}
-			if (!token) {
-				navigate("/");
-			}
-		};
+		} else {
+			// Token does not exist
+			navigate("/");
+		}
+	};
 
-		const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
-		return () => clearInterval(id);
-	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
+	const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
+	return () => clearInterval(id);
+}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
 	/////////// AUTHENTICATION LOGIC ENDS HERE
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
 	const showResetModal = useSelector((state) => state.logout.showResetModal);
 
-	const t = useSelector(state => state.tickets)
-
 		useEffect(() => {
-			// dispatch(fetchUsers());
-			// dispatch(fetchCustomers());
 			dispatch(fetchAuthUser());
 			dispatch(fetchTickets());
 			dispatch(fetchAllCustomers());
 			dispatch(fetchAllTickets());
-			// dispatch(fetchNotifications());
+			dispatch(fetchUsers());
+			dispatch(fetchCustomers())
 		}, []);
 
 	return (
 		<>
+			{<MemoizedToastContainer />}
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
 

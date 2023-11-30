@@ -64,7 +64,7 @@ export const updateProfilePicture = createAsyncThunk(
 	"updateProfilePicture",
 	async (imageFile, {rejectWithValue}) => {
 		try {
-			const fileUrl = await uploadFile(imageFile);
+			const fileUrl = await uploadFile(imageFile, "users", "profiles");
 			const token = await getAuthToken();
 			const config = {
 				method: "POST",

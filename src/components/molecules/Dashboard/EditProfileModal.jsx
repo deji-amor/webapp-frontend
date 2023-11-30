@@ -6,10 +6,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
 import Cover from "../../../assets/daashboard/Cover.png";
 import CustomButton from "../../atoms/Password/customButton";
-import { authUserActions, editProfile, updateProfilePicture } from "../../../state-manager/reducers/users/authUser";
+import {
+	authUserActions,
+	editProfile,
+	updateProfilePicture,
+} from "../../../state-manager/reducers/users/authUser";
 import { updateUser } from "../../../state-manager/reducers/users/users";
 import { customerActions } from "../../../state-manager/reducers/users/customers/customers";
 import { UIActions } from "../../../state-manager/reducers/UI/ui";
+import { id } from "date-fns/locale";
 
 const EditProfileModal = ({ open, onClose }) => {
 	const dispatch = useDispatch();
@@ -55,25 +60,37 @@ const EditProfileModal = ({ open, onClose }) => {
 	};
 
 	const handleSave = () => {
-		dispatch(editProfile(editedFields))
-			.then((response) => {
-				if (response.payload.message != "Workspace name has been used!") {
-					dispatch(authUserActions.setData(response.payload.data));
-					if (response.payload.data.user_type === "superadmin") {
-						dispatch(updateUser(response.payload.data));
-					} else {
-						dispatch(customerActions.updateCustomer(response.payload.data));
-					}
+		if (selectedImage) {
+			dispatch(updateProfilePicture(selectedImage)).then((imageData) => {
+				console.log(imageData, "imagedata");
+				dispatch(authUserActions.setData(imageData.payload));
+				setSelectedImage(null);
+			});
+		}
 
-					if (selectedImage) {
-						dispatch(updateProfilePicture(selectedImage)).then((imageData) => {
-							dispatch(authUserActions.setData(imageData.payload));
+		dispatch(editProfile(editedFields)).then((response) => {
+			const payload = response.payload;
+			const data = payload.data;
+			const userType = data.user_type;
+			const message = payload.message;
 
-							setSelectedImage(null);
-						});
-					}
-					onClose();
+			if (+payload.code === 200 && payload.status === "OK") {
+				dispatch(
+					UIActions.showToasts({
+						message: "You have successfully updated your profile",
+						title: "Profile Updated Successfully",
+						type: "successful",
+					})
+				);
+				dispatch(authUserActions.setData(data));
+				if (userType === "superadmin" || userType === "admin") {
+					dispatch(updateUser(data));
 				} else {
+					dispatch(customerActions.updateCustomer(data));
+				}
+				return onClose();
+			} else {
+				if (message === "Workspace name has been used!") {
 					dispatch(
 						UIActions.showToasts({
 							message: "Use an unexisting workspace name.",
@@ -81,11 +98,17 @@ const EditProfileModal = ({ open, onClose }) => {
 							type: "error",
 						})
 					);
+				} else {
+					dispatch(
+						UIActions.showToasts({
+							message: "Profile update was not successful",
+							title: "Profile Updated Unsuccessful",
+							type: "error",
+						})
+					);
 				}
-			})
-			.catch((error) => {
-				// Handle error
-			});
+			}
+		});
 	};
 
 	const handleCancel = () => {
@@ -148,7 +171,9 @@ const EditProfileModal = ({ open, onClose }) => {
 								{hasUploadedImage || profile_picture ? (
 									<Avatar
 										alt="Profile Picture"
-										src={profile_picture || ""}
+										src={
+											hasUploadedImage ? URL.createObjectURL(selectedImage) : profile_picture || ""
+										}
 										style={{
 											width: "95px",
 											height: "95px",

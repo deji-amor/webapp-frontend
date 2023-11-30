@@ -11,14 +11,14 @@ export const editTicket = createAsyncThunk("ticketEdition", async (args, {reject
 			console.log("a new document was uploaded to the ui")
 			await deleteFileByUrl(args.scopeOfWorkDocumentUrl);
 			const {scopeOfWorkDocument} = args;
-			const fileUrl = await uploadFile(scopeOfWorkDocument);
+			const fileUrl = await uploadFile(scopeOfWorkDocument, "tickets", "documents")
 			if (fileUrl) {
 				args.scopeOfWorkDocumentUrl = fileUrl;
 			}
 		}else if(args.scopeOfWorkDocument){
 			console.log("first time document upload")
 			const {scopeOfWorkDocument} = args;
-			const fileUrl = await uploadFile(scopeOfWorkDocument);
+			const fileUrl = await uploadFile(scopeOfWorkDocument, "tickets", "documents")
 			if (fileUrl) {
 				args.scopeOfWorkDocumentUrl = fileUrl;
 			}

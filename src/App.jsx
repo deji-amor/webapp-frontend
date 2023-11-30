@@ -1,5 +1,6 @@
 import React, {memo} from "react";
 import {
+	Outlet,
 	RouterProvider,
 	createBrowserRouter,
 } from "react-router-dom";
@@ -84,6 +85,12 @@ function App() {
 			element: <ProtectedRoute><CustomerAppLayout /></ProtectedRoute>,
 			children: [
 				{ path: "dashboard", element:<MemoizedProtectedRoute> <CustomerDashboard/> </MemoizedProtectedRoute>, index: true },
+				{ path: "tickets", element: <Outlet/>, children: [
+					{path: "view", element: <ViewTicket/>, children: [
+						{path: "detail/:ticketId", element: <TicketDetail/>},
+						{path: "history/:ticketId", element: <TicketHistory/>}
+					] }
+				] },
 				{ path: "reports", element:<MemoizedProtectedRoute> <CustomerReports/> </MemoizedProtectedRoute>},
 			],
 		},

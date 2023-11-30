@@ -100,7 +100,10 @@ const CustomeTableRow = ({ customer, showEditUserHandler, handleUpdateStatus  })
 			<CustomTableCell>
 				<Box sx={{ display: "flex", alignItems: "center", gap: "1", flex: "1 0 0" }}>
 					<Link
-						onClick={() => showEditUserHandler(customer)}
+						onClick={(e) => {
+							e.preventDefault()
+							showEditUserHandler(customer);
+						}}
 						style={{
 							color: "#2B2E72",
 							fontWeight: "600",

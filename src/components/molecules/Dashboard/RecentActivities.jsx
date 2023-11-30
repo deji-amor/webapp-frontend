@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Box, styled } from "@mui/material";
+import React, { useEffect } from "react";
+import {styled } from "@mui/material";
+import { createTicketActions } from "../../../state-manager/reducers/tickets/ticketCreation";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useDispatch, useSelector } from "react-redux";
 import { recentactivities } from "../../../state-manager/reducers/dashboard/dashboard";
@@ -16,11 +17,49 @@ const RecentActivities = () => {
 		dispatch(recentactivities());
 	}, [dispatch]);
 
-	const goToTicketDetail = (activity) => {
-		const { data } = activity;
-		const dataParsed = JSON.parse(data);
-		const { ticketId } = dataParsed;
-		if ((ticketId, data)) navigate(`/admin/tickets/view/detail/${ticketId}`);
+	const showEditUserHandler = (customer) => {
+		dispatch(
+			createTicketActions.updateField({
+				key: "customerId",
+				value: customer.id,
+			})
+		);
+		dispatch(createTicketActions.goBackToAddTicketModal(customer));
+		// dispatch(createTicketActions.ttt())
+	};
+
+	const handleActivityClick = (activity) => {
+		const { type } = activity;
+		// console.log(type);
+		if (type === "ticket-edit") {
+			console.log(activity);
+			const { data } = activity;
+			const dataParsed = JSON.parse(data);
+			const { id: ticketId } = dataParsed;
+			return navigate(`/admin/tickets/view/detail/${ticketId}`);
+		}
+
+		if (type === "ticket-update") {
+			const { data } = activity;
+			const dataParsed = JSON.parse(data);
+			const { ticketId } = dataParsed;
+			return navigate(`/admin/tickets/view/detail/${ticketId}`);
+		}
+
+		if (type === "customer-onboarding") {
+			const {data} = activity
+			const customerParsedData = JSON.parse(data);
+			navigate(`/admin/users`);
+			return showEditUserHandler(customerParsedData);
+		}
+
+		if (type === "customer-update") {
+			return navigate(`/admin/users`);
+		}
+
+		if (type === "customer-creation") {
+			return navigate(`/admin/users`);
+		}
 	};
 
 	const formatTimestamp = (timestamp) => {
@@ -115,10 +154,12 @@ const RecentActivities = () => {
 						<BoxContainer
 							key={activity.id}
 							data={activity}
-							onClick={() => goToTicketDetail(activity)}
+							onClick={() => handleActivityClick(activity)}
 						>
 							<div>
-								<Typography variant="subtitle1">{activityType}</Typography>
+								<Typography variant="subtitle1" className="capitalize">
+									{activityType.replaceAll("-", " ")}
+								</Typography>
 								<Text variant="subtitle2">{formatTimestamp(activity.timestamp)}</Text>
 							</div>
 							<ArrowForwardIosIcon style={{ color: "#2B2E72" }} />

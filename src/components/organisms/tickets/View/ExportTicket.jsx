@@ -81,7 +81,17 @@ const ExportTicket = () => {
 	const { customers } = useSelector((state) => state.customers);
 	const { users } = useSelector((state) => state.users);
 	const ticket = tickets.find(ticket => +ticket.id === +ticketId)
-	const customer = customers.find((customer) => +customer.user_id === +ticket.customer_id);
+	const { data } = useSelector((state) => state.authUser);
+	const userType = data.user_type;
+	const isCustomer = userType === "customer";
+
+	let customer
+	if(isCustomer){
+		customer = data
+	}else {
+		customer = customers.find((customer) => +customer.user_id === +ticket.customer_id);
+	}
+
 	const user = users.find((user) => +user.id === +ticket.user_id);
 	const [showDropdown, setShowDropdown] = useState(false)
 

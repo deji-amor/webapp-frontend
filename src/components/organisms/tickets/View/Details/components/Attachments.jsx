@@ -41,15 +41,15 @@ const ClipIcon = () => (
 	</svg>
 );
 
-	export function extractCleanFilenameFromUrl(url) {
-		const parts = url.split("/");
-		const filenameWithPrefix = parts.pop(); // Get the last part of the array (the filename)
+export function extractCleanFilenameFromUrl(url) {
+	const parts = url.split("/");
+	const filenameWithPrefix = parts.pop(); // Get the last part of the array (the filename)
 
-		// Remove the "file_*****_" prefix from the filename
-		const cleanedFilename = filenameWithPrefix.replace(/^file_[0-9]+_/, "");
+	// Remove the "file_*****_" prefix from the filename
+	const cleanedFilename = filenameWithPrefix.replace(/^file_[0-9]+_/, "");
 
-		return cleanedFilename;
-	}
+	return cleanedFilename;
+}
 
 const Attachments = () => {
   const params = useParams();
