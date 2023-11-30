@@ -9,12 +9,12 @@ import DecorCircle from "../../atoms/landing/decorCircle";
 import Slide from "./slide";
 
 const BoardParentWrapper = styled("div")(() => ({
-	maxWidth: "100%",
+	width: "100%",
 	height: "auto",
 	position: "relative",
 }));
 
-const BoardWrapper = styled("div")(() => ({
+const BoardWrapper = styled("div")(({query}) => ({
 	width: "100%",
 	height: "857px",
 	flexShrink: "0",
@@ -23,14 +23,16 @@ const BoardWrapper = styled("div")(() => ({
 	background: "#2B2E72",
 
 	".hero-message": {
+		width: query ? "500px" : "100%",
 		position: "absolute",
 		top: "21rem",
 		left: "50%",
+		zIndex: "15",
 		transform: "translate(-50%, -50%)",
 	},
 }));
 
-const HeroImageWrapper = styled("div")(({ query1 }) => ({
+const HeroImageWrapper = styled("div")(({ query1, query2 }) => ({
 	width: "90%",
 	height: "700px",
 	position: "absolute",
@@ -50,9 +52,9 @@ const HeroImageWrapper = styled("div")(({ query1 }) => ({
 	},
 
 	".ticketImage": {
-		width: "90%",
+		width: query2 ? "100%" : "90%",
 		position: "relative",
-		display: "flex",
+		top: query2 ? "100px" : "",
 	},
 
 	".heroImage": {
@@ -82,8 +84,6 @@ const HeroImageWrapper = styled("div")(({ query1 }) => ({
 	".image-container .side": {
 		width: "100%",
 		height: "100%",
-		// position: "absolute",
-		// right: "0",
 		objectFit: "contain",
 	},
 }));
@@ -91,10 +91,11 @@ const HeroImageWrapper = styled("div")(({ query1 }) => ({
 const HeroBoard = () => {
 	let query = useMediaQuery("(max-width: 1200px)");
 	let query1 = useMediaQuery("(max-width: 950px)");
+	let query2 = useMediaQuery("(max-width: 850px)");
 
 	return (
 		<BoardParentWrapper>
-			<BoardWrapper>
+			<BoardWrapper query={query2}>
 				<NavLinks />
 				<Circle></Circle>
 				<Circle width="1600px" height="1600px" top="945px"></Circle>
@@ -106,7 +107,7 @@ const HeroBoard = () => {
 					<HeroMessage />
 				</div>
 			</BoardWrapper>
-			<HeroImageWrapper query2={query} query1={query1}>
+			<HeroImageWrapper query={query} query1={query1} query2={query2}>
 				<div className="inner-container">
 					<div className="ticketImage">
 						<img className="heroImage" src={HeroImage} alt="Hero-Banner-Image" />

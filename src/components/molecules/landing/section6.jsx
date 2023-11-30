@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import { Link } from "react-router-dom";
 import Banner from "../../../assets/password/prem.png";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 
@@ -72,7 +73,9 @@ const Premium = () => {
 			<div className="prem">
 				<h1>Premium user and endpoint management experience</h1>
 				<div className="butIcon">
-					<button type="button">Free Trial</button>
+					<Link to="/super-admin-onboarding">
+						<button type="button">Free Trial</button>
+					</Link>
 					<div className="icon">
 						<PlayCircleIcon style={{ color: "#ffffff" }} />
 						<span>See how it works</span>

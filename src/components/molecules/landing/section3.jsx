@@ -1,4 +1,5 @@
 import { styled, useMediaQuery } from "@mui/material";
+import { Link } from "react-router-dom";
 import "./board.css";
 import DecorCircle from "../../atoms/landing/decorCircle";
 import Slide from "../../molecules/landing/slide";
@@ -114,7 +115,9 @@ const Management = () => {
 					<p>
 					Are you tired of managing your IT operations manually? Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
 					</p>
-					<button type="button">Try For Free</button>
+					<Link to="/super-admin-onboarding">
+						<button type="button">Try For Free</button>
+					</Link>
 				</div>
 			</div>
 			<div className="tableWrapper">
