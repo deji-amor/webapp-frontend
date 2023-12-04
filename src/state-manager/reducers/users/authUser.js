@@ -5,6 +5,8 @@ import {uploadFile} from "../../../aws/aws-crud-operations";
 export const fetchAuthUser = createAsyncThunk("fetchAuthUser", async (args, {rejectWithValue}) => {
 	try {
 		const token = await getAuthToken();
+
+		console.log(token, "tovennnn/////")
 		const config = {
 			method: "GET",
 			headers: {

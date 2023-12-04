@@ -92,6 +92,7 @@ const DateFilterWrapper = styled("div")(() => ({
 }));
 
 const DateFilter = ({ handleReportDateRange }) => {
+	const { serviceDateStart, serviceDateEnd } = useSelector((state) => state.ticketReports);
 	const [values, setValues] = useState({ startDate: "", endDate: "" });
 	const [toggleErr, setToggleErr] = useState(false);
 	// const [toggleEmpty, setToggleEmpty] = useState(false);

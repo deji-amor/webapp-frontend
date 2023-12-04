@@ -27,6 +27,8 @@ const TicketViewOutlet = () => {
 			if (ticketToEdit) dispatch(editTicketActions.setTicketToEdit(ticketToEdit));
 		}, [ticketToEdit, dispatch, ticketId]);
 
+		console.log(ticketToEdit);
+
 		if (!ticketToEdit) return <></>;
 
   return (

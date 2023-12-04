@@ -41,6 +41,7 @@ export const recentactivities = createAsyncThunk(
 			const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/setting/my-profile`;
 			const response = await fetch(url, config);
 			const result = await response.json();
+			console.log(result)
 			return result.data;
 		} catch (err) {
 			if (err.response && err.response.data.message) {
@@ -92,6 +93,7 @@ const dashboardSlice = createSlice({
 			})
 			.addCase(recentactivities.fulfilled, (state, action) => {
 				state.loading = false;
+				console.log(action.payload)
 				state.recentActivities = action.payload;
 			})
 			.addCase(recentactivities.rejected, (state, action) => {

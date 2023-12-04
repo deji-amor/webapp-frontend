@@ -12,6 +12,7 @@ import {
 } from "../../../state-manager/reducers/reports/report";
 import { ticketHeaders, customerHeaders } from "./headers";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { UIActions } from "../../../state-manager/reducers/UI/ui";
 
 const ExportFilesWrapper = styled("div")(() => ({
 	position: "relative",
@@ -98,6 +99,7 @@ const ProjectExportFiles = ({ text }) => {
 	const [toggle, setToggle] = useState(false);
 	const [csvDrop, setCSVDrop] = useState(false);
 
+	const dispatch = useDispatch();
 	const {
 		selectedProjectTickets,
 		filteredProjectTickets,
@@ -119,6 +121,18 @@ const ProjectExportFiles = ({ text }) => {
 		selectedProjectTickets.length ||
 		filteredProjectTicketsByStatus.length ||
 		filteredProjectTicketsByDate.length;
+
+	const showInvaliDateErr = () => {
+		let message = ""
+
+		dispatch(
+			UIActions.showToasts({
+				message: "",
+				title: "",
+				type: "error",
+			})
+		);
+	};
 
 	useEffect(() => {
 		const listener = (e) => {

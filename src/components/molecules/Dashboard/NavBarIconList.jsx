@@ -98,6 +98,7 @@ const NavBarIconList = () => {
 
 	const authUser = useSelector((state) => state.authUser.data);
 	const { id, workspace_id } = authUser;
+	console.log(authUser);
 	useNotifications(id, workspace_id);
 
 	return (

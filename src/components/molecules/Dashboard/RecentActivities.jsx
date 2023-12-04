@@ -12,7 +12,12 @@ const RecentActivities = ({onClickAway}) => {
 	const { data } = useSelector((state) => state.authUser);
 	const userType = data.user_type;
 	const isCustomer = userType === "customer";
-	const recentDataArray = recentActivitiesData?.recentActivities || [];
+	let recentDataArray = [];
+	if(isCustomer){
+		recentDataArray = recentActivitiesData?.recentActivitiesCustomer || [];
+	}else{
+		recentDataArray = recentActivitiesData?.recentActivities || [];
+	}
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -29,6 +34,8 @@ const RecentActivities = ({onClickAway}) => {
 		dispatch(createTicketActions.goBackToAddTicketModal(customer));
 		// dispatch(createTicketActions.ttt())
 	};
+
+	console.log(recentDataArray);
 
 	const handleActivityClick = (activity) => {
 		const { type } = activity;
@@ -48,7 +55,7 @@ const RecentActivities = ({onClickAway}) => {
 			return navigate(`/${isCustomer ? "customer" : "admin"}/tickets/view/detail/${ticketId}`);
 		}
 
-		if(isCustomer) return onClickAway()
+		if(isCustomer) return
 
 		if (type === "customer-onboarding") {
 			const {data} = activity
