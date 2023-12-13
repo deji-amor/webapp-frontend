@@ -3,7 +3,7 @@ name: Build and Deploy app to cloud
 on:
   push:
     branches:
-      - "dev"
+      - "main"
 
 jobs:
   build-analyze-scan:
