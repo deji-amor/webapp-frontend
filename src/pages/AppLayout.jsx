@@ -31,7 +31,6 @@ const AppLayout = () => {
 	const logoutProcessLoading = useSelector((state) => state.logout.loading);
 	const authUser = useSelector((state) => state.authUser.data);
 
-
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -45,63 +44,67 @@ const AppLayout = () => {
 		});
 	}, [dispatch]);
 
-		useEffect(() => {
-			const userTypePropertyNames = ['user_type', 'userType']
-			if(!userTypePropertyNames.some(propName => authUser[propName] === 'superadmin' || authUser[propName] === 'admin')){
-				// console.log(authUser);
-				// console.log("logout");
-				navigate("/")
-			}
-		}, [])
+	useEffect(() => {
+		const userTypePropertyNames = ["user_type", "userType"];
+		if (
+			!userTypePropertyNames.some(
+				(propName) => authUser[propName] === "superadmin" || authUser[propName] === "admin"
+			)
+		) {
+			navigate("/");
+		}
+	}, []);
 
 	// checks if token doesnt exit and logs out else and logouts out on timer expiry
-useEffect(() => {
-	const checkIfTokenExistsAndIsValid = async () => {
-		dispatch(logoutActions.countDownSeconds());
+	useEffect(() => {
+		const checkIfTokenExistsAndIsValid = async () => {
+			if (logoutProcessLoading) return;
 
-		const token = await getAuthToken();
-
-		if (token) {
-			const decodedToken = jwtDecode(token);
-			const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-
-			if (decodedToken.exp && !logoutProcessLoading && decodedToken.exp < currentTimeInSeconds) {
-				// Token has expired
+			if (allowedTimeOfInactivityInSeconds <= 0) {
 				const deviceName = getDeviceName();
 				dispatch(authUserActions.clearData());
 				dispatch(logout({ deviceName }));
+				return navigate("/login-admin");
 			}
-		} else {
-			// Token does not exist
-			navigate("/");
-		}
-	};
 
-	const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
-	return () => clearInterval(id);
-}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
+			const token = await getAuthToken();
+			if (!token) {
+				return navigate("/login-admin");
+			}
+
+			const decodedToken = jwtDecode(token);
+			const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+			const hasJWTTokenExpired = decodedToken?.exp && decodedToken?.exp < currentTimeInSeconds;
+
+			if (hasJWTTokenExpired) {
+				navigate("/login-admin");
+			}
+
+			dispatch(logoutActions.countDownSeconds());
+		};
+
+		const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
+		return () => clearInterval(id);
+	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds, logoutProcessLoading]);
 	/////////// AUTHENTICATION LOGIC ENDS HERE
-
-	const { loading: usersLoading, users } = useSelector((state) => state.users);
-	// USE SELECTOR const { loading: customersLoading, customers } = useSelector((state) => state.customers);
 
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
 	const showResetModal = useSelector((state) => state.logout.showResetModal);
-	const { showAddTicketModal, showTemplateModal } = useSelector((state) => state.ticketCreation);
+	const { showAddTicketModal } = useSelector((state) => state.ticketCreation);
 
 	useEffect(() => {
-		dispatch(fetchAuthUser())
-		dispatch(fetchUsers())
-		dispatch(fetchCustomers())
-		dispatch(fetchTickets())
-		dispatch(fetchAllCustomers())
-		dispatch(fetchAllTickets())
+		dispatch(fetchAuthUser());
+		dispatch(fetchUsers());
+		dispatch(fetchCustomers());
+		dispatch(fetchTickets());
+		dispatch(fetchAllCustomers());
+		dispatch(fetchAllTickets());
 		// dispatch(fetchNotifications())
-	}, [])
+	}, []);
 
 	return (
 		<>
-			{<MemoizedToastContainer/>}
+			{<MemoizedToastContainer />}
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
 			{showAddTicketModal && <MemoizedInitialAdminCreationFormAndModal />}

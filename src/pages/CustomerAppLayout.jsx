@@ -46,39 +46,43 @@ const CustomerAppLayout = () => {
   useEffect(() => {
 		const userTypePropertyNames = ["user_type", "userType"];
 		if(!userTypePropertyNames.some(propName => authUser[propName] === 'customer')){
-			console.log(authUser);
-			console.log("logout");
 			navigate("/")
 		}
   }, [])
 
 	// checks if token doesnt exit and logs out else and logouts out on timer expiry
-useEffect(() => {
-	const checkIfTokenExistsAndIsValid = async () => {
-		dispatch(logoutActions.countDownSeconds());
+	useEffect(() => {
+		const checkIfTokenExistsAndIsValid = async () => {
+			if(logoutProcessLoading) return
 
-		const token = await getAuthToken();
-
-		if (token) {
-			const decodedToken = jwtDecode(token);
-			const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-
-			if (decodedToken.exp && !logoutProcessLoading && decodedToken.exp < currentTimeInSeconds) {
-				// Token has expired
+			if(allowedTimeOfInactivityInSeconds <= 0){
 				const deviceName = getDeviceName();
 				dispatch(authUserActions.clearData());
 				dispatch(logout({ deviceName }));
+				return navigate("/login-customer");
 			}
-		} else {
-			// Token does not exist
-			navigate("/");
-		}
-	};
 
-	const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
-	return () => clearInterval(id);
-}, [navigate, dispatch, allowedTimeOfInactivityInSeconds]);
+			const token = await getAuthToken();
+			if(!token) {
+				return navigate("/login-customer");
+			}
+
+			const decodedToken = jwtDecode(token);
+			const currentTimeInSeconds = Math.floor(Date.now() / 1000);		
+			const hasJWTTokenExpired = decodedToken?.exp && decodedToken?.exp < currentTimeInSeconds
+
+			if (hasJWTTokenExpired) {
+				navigate("/login-customer");
+			}
+
+			dispatch(logoutActions.countDownSeconds());
+		};
+
+		const id = setInterval(checkIfTokenExistsAndIsValid, 1000);
+		return () => clearInterval(id);
+	}, [navigate, dispatch, allowedTimeOfInactivityInSeconds, logoutProcessLoading]);
 	/////////// AUTHENTICATION LOGIC ENDS HERE
+
 	const showLogoutModal = useSelector((state) => state.logout.showModal);
 	const showResetModal = useSelector((state) => state.logout.showResetModal);
 
