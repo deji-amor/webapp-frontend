@@ -181,7 +181,7 @@ const CustomerFormComponent = () => {
 	const isButtonDisabled = !(passwordIsValid && usernameIsValid);
 
 	return (
-		<form onSubmit={submitHandler} className="max-w-[26.56rem]">
+		<form onSubmit={submitHandler} className="w-full max-w-[26.56rem]">
 			<div className="mb-[1.2rem]">
 				<EmojiHeader position={"left"}>👋</EmojiHeader>
 			</div>
