@@ -6,53 +6,65 @@ import { useDispatch } from "react-redux";
 import { logoutActions } from "../../../state-manager/reducers/logout/logout";
 
 const SidebarLink = ({ link, icon, name }) => {
-	const Link = styled("div")`
-		display: flex;
-		align-items: center;
-		padding-left: 1.62rem;
-		width: 100%;
-		border-top-right-radius: 0.5rem;
-		border-bottom-right-radius: 0.5rem;
-		padding-top: 0.5rem /* 8px */;
-		padding-bottom: 0.5rem /* 8px */;
-		text-transform: capitalize;
-		background: #2b2e72;
-		cursor: pointer;
+const Link = styled("div")`
+	display: flex;
+	align-items: center;
+	padding-left: 1.62rem;
+	width: 100%;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	text-transform: capitalize;
+	background: #2b2e72;
+	cursor: pointer;
+	transition: background 0.1s, color 0.1s;
 
-		.active & {
-			background: #fff;
-		}
+	.active & {
+		background: #fff;
+	}
 
-		.icon-span {
-			margin-right: 0.5rem;
-		}
+	.active & .icon {
+		color: #2b2e72;
+	}
+
+	.active & .label {
+		color: #2b2e72;
+	}
+
+	&:hover {
+		background: #fff;
 
 		.icon {
-			width: 1.5rem;
-			height: 1.5rem;
-			color: #fff;
-		}
-
-		.active & .icon {
 			color: #2b2e72;
 		}
 
 		.label {
-			color: #fff;
-			color: 1rem;
-			font-weight: 500;
-			font-family: "Poppins", sans-serif;
-			color: #fff;
-		}
-
-		.active & .label {
 			color: #2b2e72;
 		}
-	`;
+	}
+
+	.icon-span {
+		margin-right: 0.5rem;
+	}
+
+	.icon {
+		width: 1.5rem;
+		height: 1.5rem;
+		color: #fff;
+	}
+
+	.label {
+		color: #fff;
+		font-size: 1rem;
+		font-weight: 500;
+		font-family: "Poppins", sans-serif;
+	}
+`;
+
 
 	const dispatch = useDispatch();
 	const handleShowLogoutModal = () => {
-		console.log("7tr5ddd77dd57");
 		dispatch(logoutActions.toggleLogoutModal());
 	};
 

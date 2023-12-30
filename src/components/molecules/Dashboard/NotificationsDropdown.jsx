@@ -4,7 +4,7 @@ import { styled } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux';
 import { notificationsActions } from '../../../state-manager/reducers/notifications/notifications';
 import PropTypes from "prop-types";
-import HorizontalRule from '../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule';
+// import HorizontalRule from '../../atoms/tickets/CreateTicketSuperAdmin/HorizontalRule';
 import NotificationItem from './NotificationItem';
 import NotificationsFilterDropdown from './NotificationsFilterDropdown';
 import { v4 } from 'uuid';
@@ -177,7 +177,7 @@ const NotificationsDropdown = () => {
 					</div>
 				</div>
 				<div className="my-[0.68rem]">
-					<HorizontalRule />
+					{/* <HorizontalRule /> */}
 				</div>
 				<div className="flex flex-col h-[25rem]">
 					{

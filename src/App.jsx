@@ -16,19 +16,19 @@ import ForgotPasswordEmailSuccess from "./pages/ForgotPasswordEmailSuccess";
 import CustomerForgotPasswordPage from "./pages/CustomerForgotPassword";
 import SuperAdminOnboarding from "./pages/SuperAdminOnboarding";
 import { ProtectedRoute } from "./utilis";
-import AppLayout from "./pages/AppLayout";
-import CustomerAppLayout from "./pages/CustomerAppLayout";
-import Dashboard from "./pages/app/Dashboard";
-import CustomerDashboard from "./pages/customerApp/Dashboard";
-import Tickets from "./pages/app/Tickets";
-import InitialAdminCreationFormAndModal from "./components/organisms/tickets/CreateTicketSuperAdmin/InitialAdminCreationFormAndModal";
-import TicketTemplateCreationOrEditionForm from "./components/organisms/tickets/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm";
-import EditTicket from "./components/organisms/tickets/Edit/EditTicket";
-import ViewTicket from "./components/organisms/tickets/View/ViewTicket";
-import TicketDetail from "./components/organisms/tickets/View/Details/TicketDetail";
-import TicketHistory from "./components/organisms/tickets/View/History/TicketHistory";
-import Users from "./pages/app/Users";
-import Reports from "./pages/app/Reports";
+import AdminLayout from "./pages/AdminLayout";
+// import CustomerAppLayout from "./pages/CustomerAppLayout";
+import Dashboard from "./pages/adminApp/Dashboard";
+// import CustomerDashboard from "./pages/customerApp/Dashboard";
+import Tickets from "./pages/adminApp/Tickets";
+// import InitialAdminCreationFormAndModal from "./components/organisms/tickets/CreateTicketSuperAdmin/InitialAdminCreationFormAndModal";
+// import TicketTemplateCreationOrEditionForm from "./components/organisms/tickets/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm";
+// import EditTicket from "./components/organisms/tickets/Edit/EditTicket";
+// import ViewTicket from "./components/organisms/tickets/View/ViewTicket";
+// import TicketDetail from "./components/organisms/tickets/View/Details/TicketDetail";
+// import TicketHistory from "./components/organisms/tickets/View/History/TicketHistory";
+import Users from "./pages/adminApp/Users";
+import Reports from "./pages/adminApp/Reports";
 import CustomerReports from "./pages/customerApp/Reports";
 import SuperAdminVerifyEmail from "./pages/SuperAdminVerifyEmail";
 import SuperAdminOnboardingSuccess from "./pages/SuperAdminOnboardingSuccess";
@@ -63,16 +63,16 @@ function App() {
 		},
 		{
 			path: "/admin",
-			element: <ProtectedRoute><AppLayout /></ProtectedRoute>,
+			element: <ProtectedRoute><AdminLayout /></ProtectedRoute>,
 			children: [
 				{ path: "dashboard", element:<MemoizedProtectedRoute><Dashboard /></MemoizedProtectedRoute>, index: true },
 				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute>, children: [
-					{path: "create/:customerId", element: <TicketTemplateCreationOrEditionForm/> },
-					{path: "edit/:ticketId", element: <EditTicket/> },
-					{path: "view", element: <ViewTicket/>, children: [
-						{path: "detail/:ticketId", element: <TicketDetail/>},
-						{path: "history/:ticketId", element: <TicketHistory/>}
-					] }
+					// {path: "create/:customerId", element: <></> },
+					// {path: "edit/:ticketId", element: <EditTicket/> },
+					// {path: "view", element: <ViewTicket/>, children: [
+					// 	{path: "detail/:ticketId", element: <TicketDetail/>},
+					// 	{path: "history/:ticketId", element: <TicketHistory/>}
+					// ] }
 				] },
 				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute>, children: [
 					// {path: "edit/:userId", element: <></>}
@@ -80,20 +80,20 @@ function App() {
 				{ path: "reports", element: <MemoizedProtectedRoute><Reports /></MemoizedProtectedRoute> },
 			],
 		},
-		{
-			path: "/customer",
-			element: <ProtectedRoute><CustomerAppLayout /></ProtectedRoute>,
-			children: [
-				{ path: "dashboard", element:<MemoizedProtectedRoute> <CustomerDashboard/> </MemoizedProtectedRoute>, index: true },
-				{ path: "tickets", element: <Outlet/>, children: [
-					{path: "view", element: <ViewTicket/>, children: [
-						{path: "detail/:ticketId", element: <TicketDetail/>},
-						{path: "history/:ticketId", element: <TicketHistory/>}
-					] }
-				] },
-				{ path: "reports", element:<MemoizedProtectedRoute> <CustomerReports/> </MemoizedProtectedRoute>},
-			],
-		},
+		// {
+		// 	path: "/customer",
+		// 	element: <ProtectedRoute><CustomerAppLayout /></ProtectedRoute>,
+		// 	children: [
+		// 		{ path: "dashboard", element:<MemoizedProtectedRoute> <CustomerDashboard/> </MemoizedProtectedRoute>, index: true },
+		// 		{ path: "tickets", element: <Outlet/>, children: [
+		// 			{path: "view", element: <ViewTicket/>, children: [
+		// 				{path: "detail/:ticketId", element: <TicketDetail/>},
+		// 				{path: "history/:ticketId", element: <TicketHistory/>}
+		// 			] }
+		// 		] },
+		// 		{ path: "reports", element:<MemoizedProtectedRoute> <CustomerReports/> </MemoizedProtectedRoute>},
+		// 	],
+		// },
 	]);
 	return <RouterProvider router={router} />;
 }

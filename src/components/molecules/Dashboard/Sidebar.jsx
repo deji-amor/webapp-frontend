@@ -40,25 +40,21 @@ const Sidebar = () => {
 					link={"dashboard"}
 					name={"dashboard"}
 					icon={<DashboardIcon className="icon" />}
-					isActive={true}
 				/>
 				<SidebarLink
 					link={"tickets"}
 					name={"tickets"}
 					icon={<WorkIcon className="icon" />}
-					isActive={true}
 				/>
 				<SidebarLink
 					link={"users"}
 					name={"users"}
 					icon={<PeopleIcon className="icon" />}
-					isActive={true}
 				/>
 				<SidebarLink
 					link={"reports"}
 					icon={<BarChartSharpIcon className="icon" />}
 					name={"reports"}
-					isActive={true}
 				/>
 			</div>
 			<div className="logout">
