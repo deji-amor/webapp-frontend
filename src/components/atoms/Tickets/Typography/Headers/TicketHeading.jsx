@@ -1,32 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { cva } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
-const heading = cva(["text-[#2B2E72]", "not-italic", "leading-[normal]"], {
-	variants: {
-		intent: {
-			primary: [],
-			secondary: [],
-		},
-		size: {
-			sm: ["text-xl", "font-medium"],
-			md: ["text-xl", "font-medium"],
-			lg: ["text-2xl", "font-semibold"],
-		},
-	},
-	compoundVariants: [],
-	defaultVariants: {},
-});
-
-const TicketHeading = ({children}) => {
+const TicketHeading = ({children, className}) => {
   return (
-    <h1>{children}</h1>
-  )
+		<h1
+			className={twMerge(
+				`text-[#2B2E72] text-2xl not-italic font-semibold leading-[normal] font-poppins ${className}`
+			)}
+		>
+			{children}
+		</h1>
+	);
 }
 
 TicketHeading.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+	className: PropTypes.string
 }
 
 export default TicketHeading
