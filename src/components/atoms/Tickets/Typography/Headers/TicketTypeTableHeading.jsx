@@ -6,7 +6,7 @@ const TicketTypeTableHeading = ({className, children}) => {
   return (
 		<h1
 			className={twMerge(
-				`text-[#333] text-base not-italic font-medium leading-9 font-poppins ${className}`
+				`text-[#333] text-base not-italic font-semibold leading-9 font-poppins ${className}`
 			)}
 		>
 			{children}

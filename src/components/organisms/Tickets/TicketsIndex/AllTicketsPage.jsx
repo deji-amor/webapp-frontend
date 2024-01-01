@@ -4,10 +4,10 @@ import TicketsTable from "./TicketsTable";
 
 const AllTicketsPage = () => {
 	return (
-		<>
+		<div>
 			<TicketsTopHeader />
 			<TicketsTable />
-		</>
+		</div>
 	);
 };
 

@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import TicketsTableHead from "./TicketsTableHead";
+import TicketsTableBody from "./TicketsTableBody";
 
 const TicketsTable = () => {
   return (
-    <div>TicketsTable</div>
+    <>    
+      <TicketsTableHead/>
+      <TicketsTableBody/>
+    </>
   )
-}
+};
 
-export default TicketsTable
+export default TicketsTable;

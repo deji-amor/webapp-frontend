@@ -30,7 +30,7 @@ const Sidebar = () => {
 		<Aside
 			className={`basis-[15%] bg-[#2b2e72] fixed max-w-[60%] ${
 				showSidebar ? "-left-full top-0" : ""
-			} min-h-full z-[50] sm:relative py-[2.2rem]`}
+			} min-h-full z-50 sm:relative py-[2.2rem]`}
 		>
 			<div className="logo">
 				<Logo />

@@ -20,10 +20,12 @@ const SearchIcon = ({ className }) => (
 	</svg>
 );
 
-const SearchInput = ({ className, placeholder, value, onChange, onFocus, onBlur }) => {
+const SearchInput = (props) => {
+	const { className, placeholder, value, onChange, onFocus, onBlur } = props
 	return (
 		<span className="relative">
 			<input
+				{...props}
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
 				onFocus={onFocus}
