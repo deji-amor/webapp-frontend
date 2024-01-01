@@ -20,6 +20,7 @@ const TicketsTableHead = () => {
 
 	const handleChange = (ind) => {
 		dispatch(ticketsActions.updateField({ key: "ticketTabIndex", value: ind }));
+		dispatch(ticketsActions.updateField({ key: "currentPage", value: 1 }));
 	};
 
   const handleSorting = () => {
@@ -51,5 +52,5 @@ const TicketsTableHead = () => {
 export default TicketsTableHead
 
 SortIcon.propTypes = {
-	ascending: PropTypes.node,
+	ascending: PropTypes.bool,
 };

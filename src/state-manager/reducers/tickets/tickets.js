@@ -37,12 +37,8 @@ const initialState = {
 	currentPage: 1,
 	activeTicketsStartPoint: 0,
 	activeTicketsEndPoint: 1,
-	// searchCustomersValue: "",
-	// showServiceRequestsTab: true,
-	// showProjectsTab: false,
-	// activeTickets: [],
-	// filterByStatus: "All",
-	// statuses: ["All", "Done", "Pending", "Technician enroute", "Inprogress", "Overdue"],
+	filterByStatus: "All",
+	statuses: ["All", "Done", "Pending", "Technician enroute", "Inprogress", "Overdue"],
 
 	// STATE FOR CUSTOMER DASHBOARD
 	isCustomerFiltered: false,

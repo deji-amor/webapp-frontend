@@ -17,6 +17,8 @@ const ToastContainer = () => {
 	const toasts = useSelector((state) => state.ui.toasts);
 	const dispatch = useDispatch();
 
+	console.log(toasts);
+
 	const removeOldestToast = () => {
 		if (toasts.length > 0) {
 			dispatch(UIActions.hideToast(toasts[0].id));

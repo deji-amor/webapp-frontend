@@ -1,5 +1,5 @@
 .ppp{
-    @apply text-[#333] text-base not-italic font-medium leading-9;
+    @apply text-[#2B2E72] text-sm not-italic font-medium leading-5 tracking-[0.0175rem];
     font-family: Poppins;
-    /* 225% */
+    /* 142.857% */
 }

@@ -12,6 +12,7 @@ export const changeATicketStatus = createAsyncThunk("changeATicketStatus", async
 			},
 			body: JSON.stringify(args),
 		};
+		console.log(args);
 		const url = `${import.meta.env.VITE_BASE_ACTIVITY_URL}/api/v1/ticket/change-status`;
 		const response = await fetch(url, config);
 		const result = await response.json();
