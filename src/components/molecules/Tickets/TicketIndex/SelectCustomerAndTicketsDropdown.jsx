@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
-import { createTicketActions } from "../../../state-manager/reducers/tickets/ticketCreation";
-import SearchInput from "../../atoms/Tickets/Input/SearchInput";
+import { createTicketActions } from "../../../../state-manager/reducers/tickets/ticketCreation";
+import SearchInput from "../../../atoms/Tickets/Input/SearchInput";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";

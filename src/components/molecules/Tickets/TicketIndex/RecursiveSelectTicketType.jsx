@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
 import SingleTicketTypeBlock from './SingleTicketTypeBlock';
-import tree from '../../../state-manager/reducers/tickets/ticketCreationMultiplePath';
+import tree from '../../../../state-manager/reducers/tickets/ticketCreationMultiplePath';
 
 const initialTicketType = ["Project Tickets", "Service Tickets"];
 

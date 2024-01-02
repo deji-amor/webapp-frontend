@@ -4,7 +4,7 @@ import ClickAwayComp from "../../../atoms/general/ClickAwayComp";
 import TicketHeading from "../../../atoms/Tickets/Typography/Headers/TicketHeading";
 import SearchInput from "../../../atoms/Tickets/Input/SearchInput";
 import GeneralActionBtn from "../../../atoms/Tickets/Button/GeneralActionBtn";
-import SelectCustomerAndTicketsDropdown from "../../../molecules/Tickets/SelectCustomerAndTicketsDropdown";
+import SelectCustomerAndTicketsDropdown from "../../../molecules/Tickets/TicketIndex/SelectCustomerAndTicketsDropdown";
 import { useSelector, useDispatch } from "react-redux";
 
 const TicketsTopHeader = () => {

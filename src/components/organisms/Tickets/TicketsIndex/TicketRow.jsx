@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ClickAwayComp from "../../../atoms/general/ClickAwayComp";
 import {
-	ticketDetailsActions,
 	changeATicketStatus,
 } from "../../../../state-manager/reducers/tickets/ticketDetails";
-import { UIActions } from "../../../../state-manager/reducers/UI/ui";
 import { parseISO, format } from "date-fns";
 import TicketTypeTableBodyText from "../../../atoms/Tickets/Typography/Paragraphs/TicketTypeTableBodyText";
 import TicketStatusTablet from "../../../atoms/Tickets/Typography/Paragraphs/TicketStatusTablet";
@@ -121,7 +119,7 @@ const TicketRow = ({ ticket }) => {
 	const formattedDate = format(dateObject, "MM/dd/yyyy");
 
 	return (
-		<tr className="border-b-2 border-b-[#ECECEC] hover:bg-[#F1F2FD] transition duration-300 ease-in-out">
+		<tr className="border-b-2 border-b-[#ECECEC] hover:bg-[#F1F2FD] transition duration-300 ease-in-out cursor-pointer">
 			<td scope="ro" className="pl-4 py-4">
 				<TicketTypeTableBodyText>{ticket?.company_name}</TicketTypeTableBodyText>
 			</td>

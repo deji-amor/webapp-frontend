@@ -21,6 +21,9 @@ import AdminLayout from "./pages/AdminLayout";
 import Dashboard from "./pages/adminApp/Dashboard";
 // import CustomerDashboard from "./pages/customerApp/Dashboard";
 import Tickets from "./pages/adminApp/Tickets";
+import ViewTicketsLayout from "./components/organisms/Tickets/ViewTickets/ViewTicketsLayout";
+import TicketDetail from "./components/organisms/Tickets/ViewTickets/TicketDetail";
+import TicketHistory from "./components/organisms/Tickets/ViewTickets/TicketHistory";
 // import InitialAdminCreationFormAndModal from "./components/organisms/tickets/CreateTicketSuperAdmin/InitialAdminCreationFormAndModal";
 // import TicketTemplateCreationOrEditionForm from "./components/organisms/tickets/CreateTicketSuperAdmin/TicketCreationOrEditionTemplateForm";
 // import EditTicket from "./components/organisms/tickets/Edit/EditTicket";
@@ -69,10 +72,10 @@ function App() {
 				{ path: "tickets", element: <MemoizedProtectedRoute><Tickets /></MemoizedProtectedRoute>, children: [
 					// {path: "create/:customerId", element: <></> },
 					// {path: "edit/:ticketId", element: <EditTicket/> },
-					// {path: "view", element: <ViewTicket/>, children: [
-					// 	{path: "detail/:ticketId", element: <TicketDetail/>},
-					// 	{path: "history/:ticketId", element: <TicketHistory/>}
-					// ] }
+					{path: "view", element: <ViewTicketsLayout/>, children: [
+						{path: "detail/:ticketId", element: <TicketDetail/>},
+						{path: "history/:ticketId", element: <TicketHistory/>}
+					] }
 				] },
 				{ path: "users", element: <MemoizedProtectedRoute><Users /></MemoizedProtectedRoute>, children: [
 					// {path: "edit/:userId", element: <></>}

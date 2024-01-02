@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import tree from "../../../state-manager/reducers/tickets/ticketCreationMultiplePath";
+import tree from "../../../../state-manager/reducers/tickets/ticketCreationMultiplePath";
 import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
 

@@ -35,7 +35,7 @@ const TicketsTableHead = () => {
 	};
 
 	return (
-		<div className="w-full bg-white rounded-[0.75rem_0.75rem_0rem_0rem] flex items-center justify-between pr-[1.5rem]">
+		<div className="w-full bg-white rounded-[0.75rem_0.75rem_0rem_0rem] border-b-2 border-b-[#ECECEC] flex items-center justify-between pr-[1.5rem]">
 			<ReportTabs index={ticketTabIndex} handleChange={() => handleChange(ticketTabIndex)}>
 				<CustomTab label="Service Tickets" {...a11yProps(0)} onClick={() => handleChange(0)} />
 				<CustomTab label="Project Tickets" {...a11yProps(1)} onClick={() => handleChange(1)} />
