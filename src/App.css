@@ -1,6 +1,6 @@
 .ppp{
-    @apply rounded-xl border-[0.5px] border-solid border-[#2B2E72];
-    background: #FFF;
+    @apply text-[#333] text-sm not-italic font-medium leading-5 tracking-[0.00938rem];
+    font-family: Poppins;
 }
 .pt{
     @apply flex w-[11.1875rem] h-[1.6875rem] flex-col justify-center text-[#2B2E72] text-2xl not-italic font-semibold leading-[2.57006rem];

@@ -10,6 +10,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
+import { useNavigate } from "react-router-dom";
 
 const EditIcon = () => (
 	<svg
@@ -115,11 +116,16 @@ const EditText = ({ ticket }) => {
 };
 
 const TicketRow = ({ ticket }) => {
+	const navigate = useNavigate()
 	const dateObject = parseISO(ticket?.created_at);
 	const formattedDate = format(dateObject, "MM/dd/yyyy");
 
+	const viewTicketHandler = () => {
+		navigate(`view/detail/${ticket.id}`)
+	}
+
 	return (
-		<tr className="border-b-2 border-b-[#ECECEC] hover:bg-[#F1F2FD] transition duration-300 ease-in-out cursor-pointer">
+		<tr onClick={viewTicketHandler} className="border-b-2 border-b-[#ECECEC] hover:bg-[#F1F2FD] transition duration-300 ease-in-out cursor-pointer">
 			<td scope="ro" className="pl-4 py-4">
 				<TicketTypeTableBodyText>{ticket?.company_name}</TicketTypeTableBodyText>
 			</td>

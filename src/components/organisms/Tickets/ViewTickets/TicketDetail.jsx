@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 import PropTypes from "prop-types";
-import { useSelector } from 'react-redux'
-import TicketDetailItem from '../../../molecules/Tickets/TicketDetails/TicketDetailItem';
-import { NavLink, useParams } from 'react-router-dom';
-import { twMerge } from 'tailwind-merge';
+import { useSelector } from "react-redux";
+import TicketDetailItem from "../../../molecules/Tickets/TicketDetails/TicketDetailItem";
+import { NavLink, useParams } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
 
 const EditIcon = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none">
@@ -24,7 +24,7 @@ const Info = ({ className, children }) => (
 	</p>
 );
 
-const Edit = ({className, to, children}) => (
+const Edit = ({ className, to, children }) => (
 	<NavLink
 		to={to}
 		className={twMerge(
@@ -36,26 +36,24 @@ const Edit = ({className, to, children}) => (
 );
 
 const TicketDetail = () => {
-  const params = useParams();
+	const params = useParams();
 	const { ticketId } = params;
 	const { tickets, loading: ticketsLoading } = useSelector((state) => state.tickets);
-	const { customers, loading: customersLoading } = useSelector((state) => state.customers);
+	// const { customers, loading: customersLoading } = useSelector((state) => state.customers);
+	const { users, loading: usersLoading } = useSelector((state) => state.users);
 	const { data } = useSelector((state) => state.authUser);
+		const userType = data.user_type;
+		const isCustomer = userType === "customer";
+
 
 	let ticket = tickets.find((tic) => +tic.id === +ticketId);
-	if (ticketsLoading || !ticket || customersLoading) return <></>;
+	if (ticketsLoading || !ticket || usersLoading) return <></>;
 
-  let customer 
-  customer = customers.find((cust) => +cust.id === +ticket.user_id);
-  console.log(ticket);
-  console.log(data);
-  console.log(customers);
-  console.log(customer);
-  if(!customer) return <></>
+	let customer;
+	customer = users.find((user) => +user.id === +ticket.user_id);
+	console.log(ticket);
 
-  console.log(ticket);
-
-  return (
+	return (
 		<div>
 			<div className="flex items-center justify-between mb-[1rem]">
 				<Info>Ticket Information</Info>
@@ -68,7 +66,7 @@ const TicketDetail = () => {
 				<span className="text-[#706E6E] text-sm not-italic font-normal leading-5 tracking-[0.00938rem] ">
 					Created by:{" "}
 					<span className="text-[#333] text-sm not-italic font-medium leading-5 tracking-[0.00938rem]">
-						John Doe (j.doe@company.com)
+						{customer?.first_name} {customer?.last_name} ({customer?.email})
 					</span>
 				</span>
 			</div>
@@ -81,7 +79,7 @@ const TicketDetail = () => {
 			<TicketDetailItem field="yubyutycyuv" value="bvyctyuyvi" />
 		</div>
 	);
-}
+};
 
 Info.propTypes = {
 	className: PropTypes.string,
@@ -94,4 +92,4 @@ Edit.propTypes = {
 	children: PropTypes.node,
 };
 
-export default TicketDetail
+export default TicketDetail;

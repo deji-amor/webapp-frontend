@@ -1,12 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
+import { useNavigate} from "react-router-dom";
 
 const GenModal = (props) => {
   const { children, className } = props
+	const navigate = useNavigate()
+
+	const goBackHandler = () => {
+		navigate("../");
+	}
+
 	return (
 		<div>
 			<div
+				onClick={goBackHandler}
 				className="bg-black bg-opacity-50 fixed top-0 left-0 w-screen h-screen z-[1000] cursor-pointer"
 			></div>
 			<div
