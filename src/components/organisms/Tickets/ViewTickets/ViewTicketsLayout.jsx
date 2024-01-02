@@ -28,12 +28,12 @@ const ViewTicketsLayout = () => {
 				</div>
 			</div>
 			<TicketCustomerDetail ticket={ticket} className="mb-[1.5rem]" />
-			<div className="flex gap-[1.5rem] h-auto">
+			<div className="flex gap-[1.5rem]">
 				<div className="basis-[20%] space-y-[0.5rem]">
 					<TicketNav to={`../view/detail/${ticket.id}`} text="Ticket Details" />
 					<TicketNav to={`../view/history/${ticket.id}`} text="Ticket History" />
 				</div>
-				<div className="basis-[80%] self-stretch rounded-xl border-[0.5px] border-solid border-[#2B2E72] bg-white">
+				<div className="basis-[80%] self-stretch rounded-xl border-[1px] border-solid border-[#2B2E72] bg-white p-[1.5rem] max-h-[18rem] overflow-y-auto">
 					<Outlet />
 				</div>
 			</div>
