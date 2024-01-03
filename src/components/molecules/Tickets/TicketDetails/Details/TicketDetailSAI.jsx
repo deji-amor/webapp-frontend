@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import TicketDetailItem from "../TicketDetailItem";
 
 const TicketDetailSAI = ({ ticket }) => {
-	const { number_of_technicians } = ticket;
+	const { software_installation_quantity, software_installation_name } = ticket;
 
 	return (
 		<>
-			<TicketDetailItem field="Number of Technicians" value={number_of_technicians} />
+			<TicketDetailItem field="Software Application Name" value={software_installation_name} />
+			<TicketDetailItem field="Software Application Device(s)" value={software_installation_quantity} />
 		</>
 	);
 };

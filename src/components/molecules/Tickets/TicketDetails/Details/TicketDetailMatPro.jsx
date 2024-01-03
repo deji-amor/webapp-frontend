@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import TicketDetailItem from "../TicketDetailItem";
 
 const TicketDetailMatPro = ({ticket}) => {
-  const { number_of_technicians } = ticket;
+  const { materialsDescription } = ticket;
 
 	return (
 		<>
-			<TicketDetailItem field="Number of Technicians" value={number_of_technicians} />
+			<TicketDetailItem field="Materials" value={materialsDescription} />
 		</>
 	);
 }
