@@ -3,11 +3,19 @@ import PropTypes from "prop-types";
 import TicketDetailItem from "../TicketDetailItem";
 
 const TicketDetailAddFields = ({ ticket }) => {
-	const { number_of_technicians } = ticket;
+	const { additional_fields } = ticket;
+
+	const fields = JSON.parse(additional_fields)
 
 	return (
 		<>
-			<TicketDetailItem field="Number of Technicians" value={number_of_technicians} />
+			{fields.map((field, ind) => (
+				<TicketDetailItem
+					key={Object.entries(field)[ind][0]}
+					field={Object.entries(field)[ind][0]}
+					value={Object.entries(field)[ind][1]}
+				/>
+			))}
 		</>
 	);
 };

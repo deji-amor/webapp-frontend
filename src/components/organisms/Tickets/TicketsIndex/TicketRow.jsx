@@ -32,7 +32,8 @@ const ChangeStatus = ({ className, status, ticket, setShowBlock }) => {
 	const dispatch = useDispatch();
 	const { statuses } = useSelector((state) => state.tickets);
 
-	const updateHandler = (status) => {
+	const updateHandler = (e, status) => {
+		e.stopPropagation()
 		let formattedStatus = status;
 		if (status === "Done") formattedStatus = "DONE";
 		if (status === "Technician enroute") formattedStatus = "TECHNICIAN ENROUTE";
@@ -64,7 +65,7 @@ const ChangeStatus = ({ className, status, ticket, setShowBlock }) => {
 					})
 					.map((stat) => (
 						<li
-							onClick={() => updateHandler(stat)}
+							onClick={(e) => updateHandler(e, stat)}
 							key={stat}
 							className="text-[#2B2E72] text-sm text-left not-italic font-medium leading-5 cursor-pointer tracking-[0.0175rem] hover:bg-[#F1F2FD] transition duration-300 ease-in-out"
 						>

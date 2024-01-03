@@ -71,7 +71,7 @@ const SingleTicketTypeBlock = ({ className, types }) => {
 					/>
 				))}
 				<SingleTicketTypeBlock
-					className="absolute right-full top-0 w-full z-[1000]"
+					className="absolute right-full top-0 w-full z-[1000] bg-white"
 					types={nextTypes}
 				/>
 			</motion.ul>

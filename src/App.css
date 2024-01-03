@@ -1,11 +1,12 @@
 .ppp{
-    @apply text-[#333] text-sm not-italic font-medium leading-5 tracking-[0.00938rem];
+    @apply text-[#706E6E] text-sm not-italic font-light leading-5 tracking-[0.00938rem];
     font-family: Poppins;
+    /* 142.857% */
 }
 .pt{
-    @apply flex w-[11.1875rem] h-[1.6875rem] flex-col justify-center text-[#2B2E72] text-2xl not-italic font-semibold leading-[2.57006rem];
+    @apply text-[#706E6E] text-sm not-italic font-medium leading-5 tracking-[0.00938rem];
     font-family: Poppins;
-    /* 171.336% */
+    /* 142.857% */
 }
 .pt1{
     @apply flex w-[14.375rem] h-[1.6875rem] flex-col justify-center text-[#706E6E] text-lg not-italic font-normal leading-[2.57006rem];

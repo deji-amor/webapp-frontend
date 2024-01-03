@@ -37,10 +37,10 @@ const requiredSections = tree[ticket_form].fields;
 			{requiredSections.includes("numberOfWorkSystems") && <TicketDetailNumSys ticket={ticket}/>}
 			{requiredSections.includes("softwareApplicationInstallation") && <TicketDetailSAI ticket={ticket}/>}
 			{requiredSections.includes("softwareApplicationCustomization") && <TicketDetailSAC ticket={ticket}/>}
-			{/* {requiredSections.includes("location") && <TicketDetailLoc ticket={ticket}/>}  */}
-			{/* {requiredSections.includes("pickUpLocation") && <TicketDetailPUL ticket={ticket}/>} */}
-			{/* {requiredSections.includes("dropOffLocation") && <TicketDetailDOL ticket={ticket}/>}  */}
-			{/* {requiredSections.includes("additionalFields") && <TicketDetailAddFields ticket={ticket}/>} */}
+			{requiredSections.includes("location") && <TicketDetailLoc ticket={ticket}/>} 
+			{requiredSections.includes("pickUpLocation") && <TicketDetailPUL ticket={ticket}/>}
+			{requiredSections.includes("dropOffLocation") && <TicketDetailDOL ticket={ticket}/>} 
+			{requiredSections.includes("additionalFields") && <TicketDetailAddFields ticket={ticket}/>}
 		</>
 	);
 }
