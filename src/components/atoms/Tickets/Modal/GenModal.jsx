@@ -1,14 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
-import { useNavigate} from "react-router-dom";
+import { useNavigate, useLocation} from "react-router-dom";
 
 const GenModal = (props) => {
   const { children, className } = props
 	const navigate = useNavigate()
+	const {pathname} = useLocation()
 
 	const goBackHandler = () => {
-		navigate("../");
+		if (pathname.startsWith("/customer")) {
+			navigate("/customer/dashboard");
+		} else {
+			navigate("../");
+		}
 	}
 
 	return (

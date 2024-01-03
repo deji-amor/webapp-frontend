@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import TicketDetailItem from "../../../molecules/Tickets/TicketDetails/TicketDetailItem";
 import { NavLink, useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import TicketDetailContainer from "../../../molecules/Tickets/TicketDetails/TicketDetailContainer";
 
 const EditIcon = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none">
@@ -62,7 +63,7 @@ const TicketDetail = () => {
 					<span>Edit Ticket</span>
 				</Edit>
 			</div>
-			<div className="py-[1rem]">
+			<div className="mb-[1.2rem]">
 				<span className="text-[#706E6E] text-sm not-italic font-normal leading-5 tracking-[0.00938rem] ">
 					Created by:{" "}
 					<span className="text-[#333] text-sm not-italic font-medium leading-5 tracking-[0.00938rem]">
@@ -70,13 +71,7 @@ const TicketDetail = () => {
 					</span>
 				</span>
 			</div>
-			<TicketDetailItem field="yubyutycyuv" value="bvyctyuyvi" />
-			<TicketDetailItem field="yubyutycyuv" value="bvyctyuyvi" />
-			<TicketDetailItem field="yubyutycyuv" value="bvyctyuyvi" />
-			<TicketDetailItem field="yubyutycyuv" value="bvyctyuyvi" />
-			<TicketDetailItem field="yubyutycyuv" value="bvyctyuyvi" />
-			<TicketDetailItem field="yubyutycyuv" value="bvyctyuyvi" />
-			<TicketDetailItem field="yubyutycyuv" value="bvyctyuyvi" />
+			<TicketDetailContainer ticket={ticket}/>
 		</div>
 	);
 };
