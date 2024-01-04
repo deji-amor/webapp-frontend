@@ -55,7 +55,7 @@ const TicketDetail = () => {
 	console.log(ticket);
 
 	return (
-		<div>
+		<div className="w-full h-full max-h-full overflow-y-auto">
 			<div className="flex items-center justify-between mb-[1rem]">
 				<Info>Ticket Information</Info>
 				<Edit className="flex items-center gap-[0.5rem] hover:underline">
@@ -71,7 +71,7 @@ const TicketDetail = () => {
 					</span>
 				</span>
 			</div>
-			<TicketDetailContainer ticket={ticket}/>
+			<TicketDetailContainer ticket={ticket} />
 		</div>
 	);
 };

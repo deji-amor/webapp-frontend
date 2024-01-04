@@ -1,9 +1,10 @@
 import s3Client from "./aws-config";
 import {PutObjectCommand, DeleteObjectCommand} from "@aws-sdk/client-s3";
+import {v4 as uuidv4} from "uuid";
 
 export const uploadFile = async (file, ...routes) => {
 	let uniqueFileName
-	if(routes.length === 0) uniqueFileName = `afms/file_${Date.now()}_${file.name}`.replaceAll(" ", "");
+	if(routes.length === 0) uniqueFileName = `afms/file_${uuidv4()}`.replaceAll(" ", "");
 	else {
 		const routesStr = routes.map(route => `${route}/`).join("")
 		uniqueFileName = `afms/${routesStr}file_${Date.now()}_${file.name}`.replaceAll(" ", "");
@@ -30,9 +31,17 @@ export const uploadFile = async (file, ...routes) => {
 	}
 };
 
-function removeSchemeHostAndSlash(url) {
+export const removeSchemeHostAndSlash = (url) => {
 	const withoutSchemeAndHost = url.replace(/^(https?|ftp):\/\/[^/\s]+/, "");
 	return withoutSchemeAndHost.replace(/^\/*/, "");
+}
+
+export const extractFileName = (url) =>  {
+	const urlParts = url.split("/");
+	const fileNameWithExt = urlParts.pop();
+	const fileNameParts = fileNameWithExt.split("_");
+	const fileNameAndExt = fileNameParts.pop();
+	return fileNameAndExt;
 }
 
 export const deleteFileByUrl = async fileUrl => {

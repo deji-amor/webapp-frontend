@@ -30,9 +30,9 @@ const initialState = {
 	errorMessage: "",
 	successful: null,
 	ticketData: {},
-	editLogs: {},
+	editLogs: [],
 	modifiedLogs: [],
-	sortByAscending: true,
+	sortByAscending: false,
 };
 
 const ticketHistorySlice = createSlice({

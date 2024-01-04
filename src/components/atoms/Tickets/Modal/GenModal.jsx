@@ -24,7 +24,7 @@ const GenModal = (props) => {
 			></div>
 			<div
 				className={twMerge(
-					`fixed w-full max-w-[65rem] min-h-[90vh] top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-8 rounded-xl bg-white z-[1001] ${className}`
+					`fixed w-full max-w-[65rem] h-full max-h-[90vh] top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-8 rounded-xl bg-white z-[1001] ${className}`
 				)}
 			>
 				{children}
