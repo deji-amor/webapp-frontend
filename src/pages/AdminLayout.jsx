@@ -106,11 +106,11 @@ const AdminLayout = () => {
 			{showLogoutModal && <LogoutOverlay />}
 			{showResetModal && <ResetPassword />}
 			{/* {showAddTicketModal && <MemoizedInitialAdminCreationFormAndModal />} */}
-			<div className="flex min-h-screen max-h-screen overflow-scroll">
+			<div className="flex min-h-screen max-h-screen">
 				<MemoizedSidebar />
 				<div className="max-w-full overflow-x-hidden sm:basis-[85%] flex flex-col sm:max-w-[85%]">
 					<MemoizedNavbar />
-					<div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] z">
+					<div className="bg-[#F8FAFC] py-[1.125rem] px-[2.5rem] grow space-y-[1.25rem] overflow-y-auto overflow-x-auto">
 						<Outlet />
 					</div>
 				</div>

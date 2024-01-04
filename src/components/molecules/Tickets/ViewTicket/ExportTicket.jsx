@@ -1,5 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import TicketPDFIndex from "../TicketPDF/TicketPDFIndex";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+// import styled from "@emotion/styled";
+import ClickAwayComp from "../../../atoms/general/ClickAwayComp";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { twMerge } from "tailwind-merge";
+import { CSVLink } from "react-csv";
+import { ticketHeaders } from "../../../atoms/Reports/headers";
 
 const ExportIcon = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -17,17 +26,108 @@ const ExportIcon = () => (
 	</svg>
 );
 
-const ExportTicket = ({ ticket }) => {
+export const removeNullishValuesFromTickets = (ticket, removeAllNullish = true) => {
+	const ticketCopy = structuredClone(ticket);
+	const valuesToExclude = ["", "[]", "undefined", "null", null, undefined];
+	Object.keys(ticket).forEach((key) => {
+		if (valuesToExclude.includes(ticket[key])) {
+			if (removeAllNullish) {
+				delete ticketCopy[key];
+			} else {
+				ticketCopy[key] = "";
+			}
+		}
+	});
+	return ticketCopy;
+};
+
+const DropDown = ({ setShowDropdown, className }) => {
+	const params = useParams();
+	const { ticketId } = params;
+	const { tickets } = useSelector((state) => state.tickets);
+	const { customers } = useSelector((state) => state.customers);
+	const { users } = useSelector((state) => state.users);
+	const ticket = tickets.find((ticket) => +ticket.id === +ticketId);
+	const { data } = useSelector((state) => state.authUser);
+	const userType = data.user_type;
+	const isCustomer = userType === "customer";
+
+	let customer;
+	if (isCustomer) {
+		customer = data;
+	} else {
+		customer = customers.find((customer) => +customer.user_id === +ticket.customer_id);
+	}
+
+	const user = users.find((user) => +user.id === +ticket.user_id);
+	const list = [removeNullishValuesFromTickets(ticket, true)];
+
 	return (
-		<button className="flex items-center gap-2 px-2 p-1 rounded-md border-[0.5px] border-solid border-[#2B2E72] text-[#2B2E72] text-lg not-italic font-medium font-poppins transition duration-300 ease-in-out transform active:scale-95 hover:bg-opacity-95">
-			<span>Export</span>
-			<ExportIcon />
-		</button>
+		<div
+			className={twMerge(
+				`min-w-[12rem] shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] p-2 rounded-xl bg-white ${className}`
+			)}
+		>
+			<CSVLink
+				data={list}
+				headers={ticketHeaders}
+				filename={`ticket-${ticket.id}-${new Date()}-csv`}
+				target="_blank"
+				className="block w-full px-4 py-3 cursor-pointer hover:bg-[#F1F2FD] text-[#2B2E72] font-medium transition duration-300 ease-in-out"
+			>
+				CSV
+			</CSVLink>
+			<PDFDownloadLink
+				document={<TicketPDFIndex ticket={ticket} customer={customer} user={user} />}
+				fileName={`ticket-${ticket.id}-${new Date()}-pdf`}
+				onClick={(event) => event.stopPropagation()}
+				className="inline-block w-full px-4 py-3 cursor-pointer hover:bg-[#F1F2FD] text-[#2B2E72] font-medium transition duration-300 ease-in-out"
+			>
+				{({ blob, url, loading, error }) => (loading ? "Loading PDF..." : "PDF")}
+			</PDFDownloadLink>
+		</div>
+	);
+};
+
+const ExportTicket = () => {
+	const [showDropdown, setShowDropdown] = useState(false);
+
+	return (
+		<div className="relative w-full">
+			<button
+				onClick={(e) => {
+					e.stopPropagation();
+					setShowDropdown((pv) => !pv);
+				}}
+				className="flex items-center gap-2 px-2 p-1 rounded-md border-[0.5px] border-solid border-[#2B2E72] text-[#2B2E72] text-lg not-italic font-medium font-poppins transition duration-300 ease-in-out transform active:scale-95 hover:bg-opacity-95"
+			>
+				<span>Export</span>
+				<ExportIcon />
+			</button>
+			{showDropdown && (
+				<ClickAwayComp
+					onClickAway={() => {
+						setShowDropdown(false);
+					}}
+				>
+					<DropDown
+						className="w-full absolute top-[110%] right-0"
+						setShowDropdown={setShowDropdown}
+					/>
+				</ClickAwayComp>
+			)}
+		</div>
 	);
 };
 
 ExportTicket.propTypes = {
 	ticket: PropTypes.object,
+	customer: PropTypes.object,
+};
+
+DropDown.propTypes = {
+	setShowDropdown: PropTypes.func,
+	className: PropTypes.string,
 };
 
 export default ExportTicket;

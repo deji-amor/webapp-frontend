@@ -9,6 +9,7 @@ import {
 } from "../TicketStatusText";
 import { formatDateAndTime } from "../log-date-format";
 import { extractFileName } from "../../../../../aws/aws-crud-operations";
+import { formatDateString } from "../../TicketDetails/Details/TicketDetailDuration";
 
 const newFieldNames = {
 	id: "ID",
@@ -58,7 +59,7 @@ const fieldContainsArrays = {
 	locations: true,
 	additional_fields: true,
 	pick_locations: true,
-	drop_off_locations: true
+	drop_off_locations: true,
 };
 
 const TicketEdit = ({ log }) => {
@@ -73,25 +74,38 @@ const TicketEdit = ({ log }) => {
 	);
 
 	const fieldLogs = Object.keys(difference);
-  console.log(fieldLogs);
+	console.log(fieldLogs);
 
 	return (
 		<>
 			{fieldLogs.map((fieldLog) => {
-        let oldD = oldDetails[fieldLog]
-        let newD = newDetails[fieldLog]
+				let oldD = oldDetails[fieldLog];
+				let newD = newDetails[fieldLog];
 
-        if (fieldLog === "scope_of_work_document"){
-						oldD = extractFileName(oldD);
-						newD = extractFileName(newD);
-        }
-        
-					if (fieldContainsArrays[fieldLog]) {
-            if(Array.isArray(oldD) && Array.isArray(newD)){
-              oldD = JSON.stringify(oldD)?.replaceAll(`"`, "")?.replace("[{", "")?.replace("}]", "")?.replace(" ,", ", ")
-              newD = JSON.stringify(oldD)?.replaceAll(`"`, "")?.replace("[{", "")?.replace("}]", "")?.replace(" ,", ", ")
-            }
+				if (fieldLog === "scope_of_work_document") {
+					oldD = extractFileName(oldD);
+					newD = extractFileName(newD);
+				}
+
+				if (fieldLog == "start_date_time" || fieldLog == "end_date_time") {
+					oldD = formatDateString(oldD);
+					newD = formatDateString(newD);
+				}
+
+				if (fieldContainsArrays[fieldLog]) {
+					if (Array.isArray(oldD) && Array.isArray(newD)) {
+						oldD = JSON.stringify(oldD)
+							?.replaceAll(`"`, "")
+							?.replace("[{", "")
+							?.replace("}]", "")
+							?.replace(" ,", ", ");
+						newD = JSON.stringify(oldD)
+							?.replaceAll(`"`, "")
+							?.replace("[{", "")
+							?.replace("}]", "")
+							?.replace(" ,", ", ");
 					}
+				}
 
 				return (
 					<div key={fieldLog} className="max-w-full w-full overflow-x-hidden">

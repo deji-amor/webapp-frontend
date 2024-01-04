@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import TicketDetailItem from "../TicketDetailItem";
 import { format } from "date-fns";
 
-const formatDateString = (date) => {
+export const formatDateString = (date) => {
 		const inputDate = new Date(date);
 		const formattedDate = format(inputDate, "dd-MM-yyyy/hh:mm a");
 
