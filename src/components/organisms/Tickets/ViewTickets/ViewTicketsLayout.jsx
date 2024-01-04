@@ -33,7 +33,7 @@ const ViewTicketsLayout = () => {
 					<TicketNav to={`../view/detail/${ticket.id}`} text="Ticket Details" />
 					<TicketNav to={`../view/history/${ticket.id}`} text="Ticket History" />
 				</div>
-				<div className="basis-[80%] self-stretch rounded-xl border-[1px] border-solid border-[#2B2E72] bg-white p-[1.5rem] max-h-[18rem] overflow-y-auto">
+				<div className="basis-[80%] self-stretch rounded-xl border-[1px] border-solid border-[#2B2E72] bg-white p-[1.5rem] max-h-[21rem] overflow-y-auto">
 					<Outlet />
 				</div>
 			</div>

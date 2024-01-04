@@ -5,20 +5,24 @@ import TicketDetailItem from "../TicketDetailItem";
 const FormatLocation = ({loc, ind}) => {
 	const {address, type} = loc
 	return (
-		<span className='flex flex-col'>
-			<span className="text-[#706E6E] inline-block text-sm not-italic font-light leading-5 tracking-[0.00938rem]">
-				Location {ind} address:
+		<div className="space-y-[0.1rem] mb-[0.5rem]">
+			<span className="inline-block">
+				<span className="text-[#706E6E] block text-sm not-italic font-light leading-5 tracking-[0.00938rem]">
+					Location {ind} address:
+				</span>
+				<span className="text-[#706E6E] block text-sm not-italic font-semibold leading-5 tracking-[0.00938rem]">
+					{address || "null"}
+				</span>
 			</span>
-			<span className="text-[#706E6E] text-sm not-italic font-semibold leading-5 tracking-[0.00938rem] mb-[0.5rem]">
-				{address}
+			<span className="inline-block">
+				<span className="text-[#706E6E] block text-sm not-italic font-light leading-5 tracking-[0.00938rem]">
+					Location {ind} building type:
+				</span>
+				<span className="text-[#706E6E] block text-sm not-italic font-semibold capitalize leading-5 tracking-[0.00938rem]">
+					{type || "null"}
+				</span>
 			</span>
-			<span className="text-[#706E6E] inline-block text-sm not-italic font-light leading-5 tracking-[0.00938rem]">
-				Location {ind} building type:
-			</span>
-			<span className="text-[#706E6E] text-sm not-italic font-semibold capitalize leading-5 tracking-[0.00938rem]">
-				{type}
-			</span>
-		</span>
+		</div>
 	);
 }
 
@@ -26,8 +30,9 @@ const TicketDetailLoc = ({ticket}) => {
   const { locations } = ticket;
 
 	const locs = JSON.parse(locations)
+	console.log(locs);
 
-	const locDet = locs.map((loc, ind) => <span key={loc} className="space-y-[1.25rem]">
+	const locDet = locs.map((loc, ind) => <span key={loc} className="">
 		<FormatLocation loc={loc} ind={ind+1}/>
 	</span>);
 

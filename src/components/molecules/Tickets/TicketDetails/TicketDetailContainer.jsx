@@ -15,6 +15,7 @@ import TicketDetailSAC from './Details/TicketDetailSAC'
 import TicketDetailPUL from './Details/TicketDetailPUL'
 import TicketDetailDOL from './Details/TicketDetailDOL'
 import TicketDetailAddFields from './Details/TicketDetailAddFields'
+import TicketDetailAttach from './Details/TicketDetailAttach'
 import tree from '../../../../state-manager/reducers/tickets/ticketCreationMultiplePath'
 
 const TicketDetailContainer = ({ticket}) => {
@@ -26,21 +27,32 @@ const requiredSections = tree[ticket_form].fields;
 
   return (
 		<>
-			{requiredSections.includes("pointOfContact") && <TicketDetailPOC ticket={ticket}/>}
-			{requiredSections.includes("numberOfTechniciansNeeded") && <TicketDetailNumOfTech ticket={ticket}/>} 
-			{requiredSections.includes("scopeOfWork") && <TicketDetailSOW ticket={ticket}/>} 
-			{requiredSections.includes("duration") && <TicketDetailDuration ticket={ticket}/>}
-			{requiredSections.includes("hardwareComponentQuantity") && <TicketDetailHardQuan ticket={ticket}/>}
-			{requiredSections.includes("hardwareComponentType") && <TicketDetailHardType ticket={ticket}/>}
-			{requiredSections.includes("materialsProcurement") && <TicketDetailMatPro ticket={ticket}/>}
-			{requiredSections.includes("numberOfWorkStation") && <TicketDetailNumSta ticket={ticket}/>}
-			{requiredSections.includes("numberOfWorkSystems") && <TicketDetailNumSys ticket={ticket}/>}
-			{requiredSections.includes("softwareApplicationInstallation") && <TicketDetailSAI ticket={ticket}/>}
-			{requiredSections.includes("softwareApplicationCustomization") && <TicketDetailSAC ticket={ticket}/>}
-			{requiredSections.includes("location") && <TicketDetailLoc ticket={ticket}/>} 
-			{requiredSections.includes("pickUpLocation") && <TicketDetailPUL ticket={ticket}/>}
-			{requiredSections.includes("dropOffLocation") && <TicketDetailDOL ticket={ticket}/>} 
-			{requiredSections.includes("additionalFields") && <TicketDetailAddFields ticket={ticket}/>}
+			{requiredSections.includes("pointOfContact") && <TicketDetailPOC ticket={ticket} />}
+			{requiredSections.includes("numberOfTechniciansNeeded") && (
+				<TicketDetailNumOfTech ticket={ticket} />
+			)}
+			{requiredSections.includes("scopeOfWork") && <TicketDetailSOW ticket={ticket} />}
+			{requiredSections.includes("duration") && <TicketDetailDuration ticket={ticket} />}
+			{requiredSections.includes("hardwareComponentQuantity") && (
+				<TicketDetailHardQuan ticket={ticket} />
+			)}
+			{requiredSections.includes("hardwareComponentType") && (
+				<TicketDetailHardType ticket={ticket} />
+			)}
+			{requiredSections.includes("materialsProcurement") && <TicketDetailMatPro ticket={ticket} />}
+			{requiredSections.includes("numberOfWorkStation") && <TicketDetailNumSta ticket={ticket} />}
+			{requiredSections.includes("numberOfWorkSystems") && <TicketDetailNumSys ticket={ticket} />}
+			{requiredSections.includes("softwareApplicationInstallation") && (
+				<TicketDetailSAI ticket={ticket} />
+			)}
+			{requiredSections.includes("softwareApplicationCustomization") && (
+				<TicketDetailSAC ticket={ticket} />
+			)}
+			{requiredSections.includes("location") && <TicketDetailLoc ticket={ticket} />}
+			{requiredSections.includes("pickUpLocation") && <TicketDetailPUL ticket={ticket} />}
+			{requiredSections.includes("dropOffLocation") && <TicketDetailDOL ticket={ticket} />}
+			{requiredSections.includes("additionalFields") && <TicketDetailAddFields ticket={ticket} />}
+			{requiredSections.includes("scopeOfWork") && <TicketDetailAttach ticket={ticket} />}
 		</>
 	);
 }
