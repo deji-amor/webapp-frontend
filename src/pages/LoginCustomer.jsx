@@ -1,16 +1,14 @@
 import React from "react";
-import CustomerSide from "../components/molecules/Login/CustomerSide";
 import CustomerFormComponent from "../components/molecules/Login/CustomerFormComponent";
 import CustomerLoginToastContainer from "../components/molecules/Login/CustomerLoginToastContainer";
 import CustomerBanner from "../components/molecules/Password/customerpasswordbanner";
-import CustomLogo from "../components/atoms/Password/customLogo";
-import Logo from "../components/atoms/Login/Logo";
+import Logo from "../components/atoms/Login/Logo"
 
 const LoginCustomer = () => {
 	return (
 		<div className="min-h-screen h-screen">
 			<CustomerLoginToastContainer />
-			<CustomLogo color="#E9E5E5" />
+			<Logo isAbsolute={true}/>
 			<div className="flex h-full">
 				<CustomerBanner
 					title="Streamlined IT Service Management."

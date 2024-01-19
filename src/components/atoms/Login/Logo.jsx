@@ -1,27 +1,27 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../../../assets/login/dark.png";
-import { styled } from "@mui/material";
+import logo from "../../../assets/login/ProjectInfo.png";
+import PropTypes from "prop-types";
+import { twMerge } from "tailwind-merge";
 
-const Logo = () => {
-	const Text = styled("p")`
-		color: #e9e5e5;
-		text-align: center;
-		font-family: "Inter", sans-serif;
-		font-size: 1.25rem;
-		font-style: normal;
-		font-weight: 700;
-		line-height: 136.023%; /* 1.70031rem */
-	`;
-
+const Logo = ({ isAbsolute, className }) => {
 	return (
-		<NavLink to={"/"}>
-			<div className="flex items-center ">
-				<img src={logo} className="mr-2" />
-				<Text>LogoIpsum</Text>
-			</div>
+		<NavLink
+			className={twMerge(
+				`mr-2 bg-[#2B2E72] inline-block p-[0.5rem] rounded cursor-pointer  ${
+					isAbsolute && "absolute top-[25px] left-[50px] z-[10] bg-transparent"
+				} ${className}`
+			)}
+			to={"/"}
+		>
+			<img src={logo} className="mr-2 cursor-pointer" />
 		</NavLink>
 	);
+};
+
+Logo.propTypes = {
+	isAbsolute: PropTypes.bool,
+	className: PropTypes.string
 };
 
 export default Logo;
