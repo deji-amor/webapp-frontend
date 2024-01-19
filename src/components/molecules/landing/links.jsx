@@ -21,8 +21,9 @@ const Links = ({style}) => {
         {/* <CustomLink text="Products" name="services" link="services" type="dropdown" dropDownValues={services} /> */}
         {/* <CustomLink text="Solutions" name="solutions" link="solutions" type="dropdown" dropDownValues={solutions} /> */}
         <CustomLink text="About" link="about" />
-        <CustomLink text="Pricing" link="pricing" />
-        <CustomLink text="Contact" link="contact" />
+        <CustomLink text="Features" link="features" />
+        {/* <CustomLink text="Pricing" link="pricing" /> */}
+        {/* <CustomLink text="Contact" link="contact" /> */}
     </LinkWrapper>
   )
 }

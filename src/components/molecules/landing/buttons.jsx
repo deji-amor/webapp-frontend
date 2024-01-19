@@ -70,7 +70,7 @@ const NavigateButtons = () => {
 		<NavigationButtonWrapper>
 			<Link to="/super-admin-onboarding">
 				<button className="try" type="button">
-					Try For Free
+					Contact Us
 				</button>
 			</Link>
 			<div className="logins">

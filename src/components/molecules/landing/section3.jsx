@@ -102,36 +102,40 @@ const Management = () => {
 	let query = useMediaQuery("(max-width: 800px)");
 
 	return (
-		<ManagementWrapper className="management" query={query}>
-			<DecorCircle
-				top="40px"
-				left="-200px"
-				color="rgba(76, 111, 255, 0.12)"
-				filter="blur(120.32733917236328px)"
-			/>
-			<div className="content">
-				<h1>Simplify your IT operations with unified management</h1>
-				<div className="contBut">
-					<p>
-					Are you tired of managing your IT operations manually? Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
-					</p>
-					<Link to="/super-admin-onboarding">
-						<button type="button">Try For Free</button>
-					</Link>
+		<>
+		<div className="placeholder">
+		</div>
+			<ManagementWrapper className="management" query={query}>
+				<DecorCircle
+					top="40px"
+					left="-200px"
+					color="rgba(76, 111, 255, 0.12)"
+					filter="blur(120.32733917236328px)"
+				/>
+				<div className="content">
+					<h1>Simplify your IT operations with unified management</h1>
+					<div className="contBut">
+						<p>
+						Are you tired of managing your IT operations manually? Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
+						</p>
+						<Link to="/super-admin-onboarding">
+							<button type="button">Contact Us</button>
+						</Link>
+					</div>
 				</div>
-			</div>
-			<div className="tableWrapper">
-				<div className="simplified-img">
-					<img src={SimplifiedImg} alt="simplified image" />
+				<div className="tableWrapper">
+					<div className="simplified-img">
+						<img src={SimplifiedImg} alt="simplified image" />
+					</div>
+					<Slide>
+						<img className="side-card" src={SimplifiedCardImg} alt="simplied card" />
+					</Slide>
+					<Slide position="relative">
+						<img className="bottom-card" src={SimplifiedBottomImg} alt="simplied card" />
+					</Slide>
 				</div>
-				<Slide>
-					<img className="side-card" src={SimplifiedCardImg} alt="simplied card" />
-				</Slide>
-				<Slide position="relative">
-					<img className="bottom-card" src={SimplifiedBottomImg} alt="simplied card" />
-				</Slide>
-			</div>
-		</ManagementWrapper>
+			</ManagementWrapper>
+		</>
 	);
 };
 

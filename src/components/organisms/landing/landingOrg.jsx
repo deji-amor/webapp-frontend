@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
 import HeroBoard from "../../molecules/landing/hero-board";
-import Organizations from "../../molecules/landing/section2";
+// import Organizations from "../../molecules/landing/section2";
 import Management from "../../molecules/landing/section3";
 import Features from "../../molecules/landing/section4";
 import Users from "../../molecules/landing/section5";
@@ -24,7 +24,7 @@ const LandingOrg = () => {
 	return (
 		<LandingOrgWrapper>
 			<HeroBoard />
-			<Organizations />
+			{/* <Organizations /> */}
 			<div className="cont">
 				<Management />
 				<Features />

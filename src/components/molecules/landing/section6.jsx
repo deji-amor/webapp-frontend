@@ -74,12 +74,12 @@ const Premium = () => {
 				<h1>Premium user and endpoint management experience</h1>
 				<div className="butIcon">
 					<Link to="/super-admin-onboarding">
-						<button type="button">Free Trial</button>
+						<button type="button">Contact Us</button>
 					</Link>
-					<div className="icon">
+					{/* <div className="icon">
 						<PlayCircleIcon style={{ color: "#ffffff" }} />
 						<span>See how it works</span>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</PremiumWrapper>

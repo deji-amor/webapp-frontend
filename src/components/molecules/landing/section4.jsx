@@ -59,7 +59,7 @@ const Features = () => {
 
 				<Feature
 					title="Customer Transparency"
-					description="Our application also helps you provide a single source of truth view for transparency to your clients and customers on their tickets and projects."
+					description="No more lost data or missing records, easily utilise our cloud based application to store and retrieve your operational data, whenever you want it, how you want it."
 					color="#ffffff"
 					color2="#EFEFEF"
 					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
