@@ -38,39 +38,39 @@ const Faq = () => {
 				<Question
 					question={"How does your app help me manage my IT operations?"}
 					answer={
-						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+						"Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier."
 					}
 				/>
 				<Question
 					question={
-						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery?"
+						"What is IT Field Management and how does ProjectInfo help me and my team to manage our service delivery?"
 					}
 					answer={
-						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+						"IT Field service management is a system that organizations use to coordinate resources to deliver service outside of their company property. This includes equipment installation, maintenance, break/fix, and asset monitoring. Our app is designed to help you streamline your IT operations and make your life easier."
 					}
 				/>
 				<Question
 					question={"What are the benefits of using your app?"}
 					answer={
-						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+						"Enhancing your day to day operations and giving you a dashboard view for clear transparency and tracking."
 					}
 				/>
 				<Question
 					question={"What core features does your app have?"}
 					answer={
-						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+						"Ticket Management. Project Management, Team Management. Customer Management."
 					}
 				/>
 				<Question
-					question={"How do i get started with Cusmits?"}
+					question={"How do i get started with ProjectInfo?"}
 					answer={
-						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+						"Contact us to get started."
 					}
 				/>
 				<Question
-					question={"Can I register more than one business with Cusmits ITSM application?"}
+					question={"Can I register more than one business with ProjectInfo application?"}
 					answer={
-						"What is IT Service Management and how does Cusmits help me and my team to manage our service delivery"
+						"Depending on the plan that you're subscribed to, you’ll be able to register more than one company on the Product."
 					}
 				/>
 				<DecorCircle

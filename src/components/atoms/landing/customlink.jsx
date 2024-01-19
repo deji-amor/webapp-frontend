@@ -3,6 +3,8 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Link } from "react-scroll";
+
 
 const LinkWrapper = styled("li")(({matches}) => ({
 	position: 'relative',
@@ -14,6 +16,8 @@ const LinkWrapper = styled("li")(({matches}) => ({
 		fontStyle: "normal",
 		lineHeight: "120%",
 		letterSpacing: "1px",
+		color: "#fff",
+		cursor: "pointer"
 	},
 
 	".dropdown": {
@@ -61,12 +65,9 @@ const CustomLink = ({ text, type, link, onClickValue, name, dropDownValues }) =>
 	return (
 		<LinkWrapper matches={matches}>
 			{type != "dropdown" ? (
-				<NavLink to={link} className="title" style={({isActive}) => ({
-                    color: isActive ? '#fff' : '#FEFEFE',
-                    fontWeight: isActive ? "600" : "200",
-                  })}>
+				<Link className="link title" spy={true} smooth={true} offset={-200} duration={2000} to={link}>
 					{text}
-				</NavLink>
+				</Link>
 			) : (
 				<div style={{cursor: "pointer"}} onClick={() => setIsToggle(prev => !prev)}>
 					<span style={{color: '#FEFEFE'}}>{text}</span>

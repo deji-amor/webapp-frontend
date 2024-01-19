@@ -12,13 +12,15 @@ const HeroMessageWrapper = styled("div")(({query, query2}) => ({
     alignItems: "center",
     gap: "40px",
 	margin: "0 auto",
+	position: "relative",
+	zIndex: "60",
 
 	h1: {
 		fontSize: query2 ? "40px" : query ? "50px" : "60px",
 		fontStyle: "normal",
 		fontWeight: "600",
 		lineHeight: "120%",
-		letterSpacing: "0.18px",
+		letterSpacing: "0.18px"
 	},
 
 	p: {

@@ -105,7 +105,7 @@ const Management = () => {
 		<>
 		<div className="placeholder">
 		</div>
-			<ManagementWrapper className="management" query={query}>
+			<ManagementWrapper className="management" id="about" query={query}>
 				<DecorCircle
 					top="40px"
 					left="-200px"

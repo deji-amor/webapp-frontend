@@ -38,6 +38,7 @@ const NavWrapper = styled("div")(() => ({
 		borderRadius: "10px",
 		position: "relative",
 		top: "50px",
+		zIndex: "1000",
 		background: "#ffffff",
 	},
 }));

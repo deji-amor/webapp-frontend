@@ -7,7 +7,7 @@ import Users from "../../molecules/landing/section5";
 import Premium from "../../molecules/landing/section6";
 import Faq from "../../molecules/landing/section7";
 import NewsLetter from "../../molecules/landing/section8";
-import Footer from "../../molecules/landing/section9";
+import Footer from "../../molecules/landing/footer";
 
 const LandingOrgWrapper = styled("div")(() => ({
 	width: "100%",

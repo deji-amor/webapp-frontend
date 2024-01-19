@@ -40,4 +40,4 @@ export const community = ["Twitter", "Instagram", "Facebook", "Youtube"]
 
 export const support = ["My Account", "Help & Support", "Contact Us"]
 
-export const company = ["Privacy Policy", "Terms of Service", "Code of Conduct"]
+export const company = ["Privacy Policy", "Terms of Service"]

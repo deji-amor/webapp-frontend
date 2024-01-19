@@ -27,7 +27,7 @@ const Features = () => {
 				title="Core Features"
 				description="Our IT Service Management web app comes with a host of features tailored to help streamline your business processes. "
 			/>
-			<div className="features">
+			<div className="features" id="features">
 				<Feature
 					title="Ticket Management"
 					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities."

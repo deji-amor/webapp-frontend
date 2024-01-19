@@ -73,7 +73,7 @@ const FeatureWrapper = styled("div")(({color, background, color2, shadow}) => ({
 
 const Feature = ({color, color2, background, title, description, shadow}) => {
   return (
-    <FeatureWrapper color={color} background={background} color2={color2} shadow={shadow}>
+    <FeatureWrapper id={title} color={color} background={background} color2={color2} shadow={shadow}>
         <div className="commentContainer">
             <img src={CommentImage} alt="Comment" />
         </div>
