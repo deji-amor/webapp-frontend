@@ -1,11 +1,11 @@
 import ForgotPasswordEmail from "../components/organisms/Password/forgotPasswordEmailInput";
 import { ForgotEmailPageWrapper } from "../components/atoms/Password/wrappers";
-import CustomLogo from "../components/atoms/Password/customLogo";
+import Logo from "../components/atoms/Login/Logo";
 
 const ForgotPassword = () => {
 	return (
 		<>
-			<CustomLogo />
+			<Logo className="absolute top-[25px] left-[50px]"/>
 			<ForgotEmailPageWrapper>
 				<ForgotPasswordEmail />
 			</ForgotEmailPageWrapper>

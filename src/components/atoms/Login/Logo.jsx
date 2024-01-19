@@ -8,8 +8,8 @@ const Logo = ({ isAbsolute, className }) => {
 	return (
 		<NavLink
 			className={twMerge(
-				`mr-2 bg-[#2B2E72] inline-block p-[0.5rem] rounded cursor-pointer  ${
-					isAbsolute && "absolute top-[25px] left-[50px] z-[10] bg-transparent"
+				`mr-2 bg-[#2B2E72] inline-block p-[0.75rem] z-[10px] rounded cursor-pointer ${
+					isAbsolute && "absolute top-[25px] left-[50px] bg-transparent"
 				} ${className}`
 			)}
 			to={"/"}
