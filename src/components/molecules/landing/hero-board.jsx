@@ -54,7 +54,7 @@ const HeroImageWrapper = styled("div")(({ query1, query2 }) => ({
 	".ticketImage": {
 		width: query2 ? "100%" : "90%",
 		position: "relative",
-		top: query2 ? "100px" : "",
+		top: query2 ? "10px" : "",
 	},
 
 	".heroImage": {

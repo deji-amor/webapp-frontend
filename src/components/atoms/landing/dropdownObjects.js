@@ -32,7 +32,24 @@ export const solutions = [
 	},
 ];
 
-export const features = ["Team Management", "Ticket Management", "Project Management", "Customer Management"]
+export const features = [
+	{
+		title: "Team Management",
+		link: "team-management"
+	},
+	{
+		title: "Ticket Management",
+		link: "ticket-management"
+	},
+	{
+		title: "Project Management",
+		link: "project-management"
+	},
+	{
+		title: "Customer Management",
+		link: "customer-management"
+	}
+]
 
 export const resources = ["Blog", "Support", "NewsLetter"]
 
@@ -40,4 +57,13 @@ export const community = ["Twitter", "Instagram", "Facebook", "Youtube"]
 
 export const support = ["My Account", "Help & Support", "Contact Us"]
 
-export const company = ["Privacy Policy", "Terms of Service"]
+export const company = [
+	{
+		title: "Privacy Policy",
+		link: "/privacy-&-policy"
+	},
+	{
+		title: "Terms of Service",
+		link: "/terms-of-service"
+	}
+]

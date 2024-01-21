@@ -20,7 +20,7 @@ const MobileLinkWrapper = styled("div")(() => ({
 		borderRadius: "8px",
 		cursor: "pointer",
 		position: "relative",
-		zIndex: "20",
+		zIndex: "200",
 	},
 
 	".but": {

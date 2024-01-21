@@ -5,6 +5,8 @@ import {
 	createBrowserRouter,
 } from "react-router-dom";
 import Home from "./pages/Home";
+import PrivacyPage from "./pages/Privacy";
+import TermsPage from "./pages/Terms";
 import LoginAdmin from "./pages/LoginAdmin";
 import LoginCustomer from "./pages/LoginCustomer";
 import ResetPasswordPageSuccess from "./pages/ResetPasswordSuccess";
@@ -43,6 +45,8 @@ function App() {
 
 	const router = createBrowserRouter([
 		{ path: "/", element: <Home />, index: true, errorElement: <ErrorPage /> },
+		{ path: "/privacy-&-policy", element: <PrivacyPage /> },
+		{ path: "/terms-of-service", element: <TermsPage /> },
 		{ path: "/login-admin", element: <LoginAdmin /> },
 		{ path: "/login-customer", element: <LoginCustomer /> },
 		{ path: "/forgot-password", element: <ForgotPassword /> },

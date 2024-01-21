@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import PropTypes from "prop-types";
 import { Link } from "react-scroll";
-import { NavLink } from "react-router-dom"
+import { Link as NLink } from "react-router-dom"
 
 const FooterItemWrapper = styled("div")(() => ({
 	display: "flex",
@@ -42,15 +42,15 @@ const FooterItem = ({ title, items, to, type }) => {
 			<h5>{title}</h5>
 			<div className="items">
 				{type !== "navigate" && items.map((item) => (
-					<Link key={item} className="link" to={to} spy={true} smooth={true} offset={-200} duration={2000} >
-						{item}
+					<Link key={item.title} className="link" to={to} spy={true} smooth={true} offset={-200} duration={2000} >
+						{item.title}
 					</Link>
 				))}
 				{
 					type === "navigate" && items.map(item => (
-						<NavLink key={item} className="link" to={item} spy={true} smooth={true} offset={-200} duration={2000} >
-							{item}
-						</NavLink>
+						<NLink key={item.title} className="link" to={item.link}>
+							{item.title}
+						</NLink>
 					))
 				}
 			</div>

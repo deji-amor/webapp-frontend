@@ -10,7 +10,7 @@ const NavWrapper = styled("div")(() => ({
 	maxWidth: "90%",
 	height: "40px",
 	position: "relative",
-	zIndex: "10",
+	zIndex: "100",
 	top: "30px",
 	display: "flex",
 	gap: "20px",
