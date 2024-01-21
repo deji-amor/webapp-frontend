@@ -31,7 +31,7 @@ const ManagementWrapper = styled("div")(({query}) => ({
 		margin: "auto 0",
 	},
 
-	".content h1": {
+	".content .simplify": {
 		fontFamily: "poppins",
 		fontWeight: "600",
 		fontSize: "48px",
@@ -40,7 +40,14 @@ const ManagementWrapper = styled("div")(({query}) => ({
 		color: "#2B2E72",
 	},
 
-	".content p": {
+	".contBut": {
+		height: "100%",
+		display: "flex",
+		flexDirection: "column",
+		gap: "45px",
+	},
+
+	".content .contBut .simp-desc": {
 		fontFamily: "poppins",
 		fontWeight: "400",
 		fontSize: "16px",
@@ -99,7 +106,7 @@ const ManagementWrapper = styled("div")(({query}) => ({
 
 
 const Management = () => {
-	let query = useMediaQuery("(max-width: 800px)");
+	const query = useMediaQuery("(max-width: 800px)");
 
 	return (
 		<>
@@ -113,9 +120,9 @@ const Management = () => {
 					filter="blur(120.32733917236328px)"
 				/>
 				<div className="content">
-					<h1>Simplify your IT operations with unified management</h1>
+					<h1 className="simplify">Simplify your IT operations with unified management</h1>
 					<div className="contBut">
-						<p>
+						<p className="simp-desc">
 						Are you tired of managing your IT operations manually? Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
 						</p>
 						<Link to="/super-admin-onboarding">

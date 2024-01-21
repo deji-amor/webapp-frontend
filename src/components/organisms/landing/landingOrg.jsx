@@ -11,6 +11,7 @@ import Footer from "../../molecules/landing/footer";
 
 const LandingOrgWrapper = styled("div")(() => ({
 	width: "100%",
+	overflow: "hidden",
 	
   ".cont": {
     marginTop: "100px",

@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import Ornament from "../../../assets/password/Ornament.png";
+import "./board.css";
 
 const NewsLetterWrapper = styled("div")(() => ({
 	maxWidth: "100%",

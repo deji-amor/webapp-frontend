@@ -8,7 +8,8 @@ body {
 
 footer {
 	width: 100%;
-	height: 400px;
+	height: auto;
+	padding-bottom: 20px;
 	background: #2B2E72;
 }
 
@@ -246,9 +247,142 @@ footer .powered .solutions {
 	}
 }
 
+@media screen and (max-width: 800px) {
+	.placeholder {
+		height: 0;
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-top: 0;
+	}
+
+	.management {
+		margin-top: -80px !important;
+	}
+
+	.management .content {
+		width: 100% !important;
+		flex-direction: column !important;
+	}
+
+	.management .content .simplify {
+		width: 100%;
+		font-size: 28px !important;
+		line-height: 45px !important;
+	}
+
+	.management .content .contBut {
+		width: 100%;
+	}
+
+	.management .content .contBut .simp-desc {
+		width: 100% !important;
+	}
+	
+	.placeholder {
+		padding: 0 !important;
+	}
+
+	.head {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start !important;
+		justify-content: flex-start !important;
+		gap: 15px;
+	}
+
+	.head h2 {
+		width: 100% !important;
+		font-size: 28px !important;
+	}
+
+	.prem .butIcon button {
+		width: 120px !important;
+		text-align: center !important;
+		font-size: 14px;
+		padding: 10px 5px !important;
+	}
+}
+
 @media screen and (max-width: 750px) {
 	.placeholder {
 		padding-top: 0px;
+	}
+
+	footer .inner {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: center !important;
+		gap: 80px !important;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.h-message {
+		width: 90% !important;
+		margin: 0 auto !important;
+	}
+
+	.h-message .h-title {
+		font-size: 30px !important;
+		padding: 0 10px;
+	}
+
+	.h-message .h-desc {
+		width: 90% !important;
+		font-size: 14px !important;
+		white-space: normal;
+		padding: 0 10px !important;
+	}
+
+	.prem .butIcon button {
+		width: 80px !important;
+		text-align: center !important;
+		font-size: 10px;
+		padding: 10px 5px !important;
+	}
+
+	footer .inner .links {
+		display: flex;
+		flex-direction: column;
+		gap: 50px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.head p, .head h2 {
+		text-align: center !important;
+		width: 100% !important;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.h-message .h-title {
+		font-size: 30px !important;
+		padding: 0 10px;
+	}
+
+	.h-message .h-desc {
+		width: 80% !important;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.management {
+		margin-top: -150px !important;
+	}
+
+	.board-wrapper {
+		height: 520px !important
+	}
+
+	.inner-container {
+		display: none !important;
+	}
+}
+
+@media screen and (max-width: 350px) {
+	.h-message .h-desc {
+		width: 70% !important;
 	}
 }
 

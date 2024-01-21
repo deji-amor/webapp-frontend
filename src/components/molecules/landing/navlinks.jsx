@@ -49,7 +49,7 @@ const NavLinks = () => {
 
 	return (
 		<NavWrapper>
-			<CustomLogo color="#ffffff" style={{ top: "0", left: `${matches ? "-20px" : "25px"}` }} />
+			<CustomLogo color="#ffffff" style={{ top: "0", left: `${matches ? "0px" : "25px"}` }} />
 			<div className="butLink">
 				{!matches ? (
 					<>

@@ -95,7 +95,7 @@ const HeroBoard = () => {
 
 	return (
 		<BoardParentWrapper>
-			<BoardWrapper query={query2}>
+			<BoardWrapper className="board-wrapper" query={query2}>
 				<NavLinks />
 				<Circle></Circle>
 				<Circle width="1600px" height="1600px" top="945px"></Circle>

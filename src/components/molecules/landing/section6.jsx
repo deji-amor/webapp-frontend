@@ -19,7 +19,7 @@ const PremiumWrapper = styled("div")(() => ({
 		top: "0",
 		left: "0",
 		zIndex: "12",
-		objectFit: "cover",
+		objectFit: "contain",
 	},
 
 	".prem": {
@@ -50,6 +50,7 @@ const PremiumWrapper = styled("div")(() => ({
         color: "#ffffff",
 		display: "flex",
 		padding: "14px 40px",
+		justifyContent: "center",
 		alignItems: "center",
 		gap: "10px",
 		borderRadius: "8px",
@@ -73,9 +74,7 @@ const Premium = () => {
 			<div className="prem">
 				<h1>Premium user and endpoint management experience</h1>
 				<div className="butIcon">
-					<Link to="/super-admin-onboarding">
-						<button type="button">Contact Us</button>
-					</Link>
+					<button type="button">Contact Us</button>
 					{/* <div className="icon">
 						<PlayCircleIcon style={{ color: "#ffffff" }} />
 						<span>See how it works</span>

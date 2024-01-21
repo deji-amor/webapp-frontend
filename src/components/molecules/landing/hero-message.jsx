@@ -13,7 +13,8 @@ const HeroMessageWrapper = styled("div")(({query, query2}) => ({
     gap: "40px",
 	margin: "0 auto",
 	position: "relative",
-	zIndex: "60",
+	top: query2 ? "-50px" : "",
+	zIndex: "10",
 
 	h1: {
 		fontSize: query2 ? "40px" : query ? "50px" : "60px",
@@ -24,6 +25,8 @@ const HeroMessageWrapper = styled("div")(({query, query2}) => ({
 	},
 
 	p: {
+		width: "100%",
+		padding: "0 10px",
 		fontSize: query2 ? "16px" : "18px",
 		fontWeight: "400",
 		lineHeight: "125%",
@@ -49,9 +52,9 @@ const HeroMessage = () => {
 	let query2 = useMediaQuery("(max-width: 850px)");
 
 	return (
-		<HeroMessageWrapper query={query} query2={query2}>
-			<h1>Streamlined IT Field Management</h1>
-			<p>
+		<HeroMessageWrapper className="h-message" query={query} query2={query2}>
+			<h1 className="h-title">Streamlined IT Field Management</h1>
+			<p className="h-desc">
 				Our robust solution is built and optimized specifically for IT teams and workflows, influenced by feedback, and centred around end-user and endpoint support.
 			</p>
 			<Link to="/super-admin-onboarding">

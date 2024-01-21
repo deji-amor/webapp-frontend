@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
 import Header from "../../atoms/landing/headings";
 import Feature from "../../atoms/landing/feature";
+import "./board.css"
 
 const FeaturesWrapper = styled("div")(() => ({
 	width: "100%",
