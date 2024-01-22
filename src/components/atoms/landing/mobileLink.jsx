@@ -33,7 +33,7 @@ const MobileLinkWrapper = styled("div")(() => ({
 	".li": {
 		textAlign: "left",
 		width: "100%",
-		padding: "0 10px",
+		padding: "10px 10px",
 		borderRadius: "8px",
 	},
 
