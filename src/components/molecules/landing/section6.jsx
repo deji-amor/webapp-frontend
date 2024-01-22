@@ -1,7 +1,9 @@
 import { styled } from "@mui/material";
-import { Link } from "react-router-dom";
 import Banner from "../../../assets/password/prem.png";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+// import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import { useContext } from "react";
+import { ThemeContext } from "../../organisms/landing/landingOrg";
+
 
 const PremiumWrapper = styled("div")(() => ({
 	width: "100%",
@@ -68,13 +70,15 @@ const PremiumWrapper = styled("div")(() => ({
 }));
 
 const Premium = () => {
+	const { setScheduleToggle } = useContext(ThemeContext);
+
 	return (
 		<PremiumWrapper>
 			<img src={Banner} alt="banner" />
 			<div className="prem">
 				<h1>Premium user and endpoint management experience</h1>
 				<div className="butIcon">
-					<button type="button">Contact Us</button>
+					<button onClick={() => setScheduleToggle(prev => !prev)} type="button">Contact Us</button>
 					{/* <div className="icon">
 						<PlayCircleIcon style={{ color: "#ffffff" }} />
 						<span>See how it works</span>

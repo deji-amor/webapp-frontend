@@ -1,7 +1,8 @@
 import { styled } from "@mui/material";
 import { NavLink } from "react-router-dom";
-// import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { useState } from "react";
+import { Link } from "react-scroll";
+import { useState, useContext } from "react";
+import { ThemeContext } from "../../organisms/landing/landingOrg";
 
 const MobileLinkWrapper = styled("div")(() => ({
 	position: "relative",
@@ -85,7 +86,6 @@ const MobileLinkWrapper = styled("div")(() => ({
 		fontWeight: "600",
 		position: "relative",
 		zIndex: "1000",
-		// border: "2px solid #2B2E72",
 	},
 
 	".login-customer:hover, .login-admin:hover": {
@@ -96,6 +96,7 @@ const MobileLinkWrapper = styled("div")(() => ({
 
 const MobileLink = () => {
 	const [toggle, setToggle] = useState(false);
+	const { setScheduleToggle } = useContext(ThemeContext)
 
 	return (
 		<MobileLinkWrapper>
@@ -118,16 +119,18 @@ const MobileLink = () => {
 					<NavLink>Contact</NavLink>
 				</li> */}
 				<li className="li">
-					<NavLink>About</NavLink>
+					<Link className="link title" spy={true} smooth={true} offset={-200} duration={2000} to="about">
+						About
+					</Link>
 				</li>
 				<li className="li">
-					<NavLink>Features</NavLink>
+					<Link className="link title" spy={true} smooth={true} offset={-250} duration={2000} to="features">
+						Features
+					</Link>
 				</li>
 				<hr />
 				<li className="but">
-					<NavLink to="/super-admin-onboarding">
-						<button className="try">Contact Us</button>
-					</NavLink>
+					<button onClick={() => setScheduleToggle(prev => !prev)} className="try">Contact Us</button>
 				</li>
 				<li className="but">
 					<div className="logins">

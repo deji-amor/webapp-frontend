@@ -1,5 +1,7 @@
 import { styled, useMediaQuery } from "@mui/material";
-import { Link } from "react-router-dom"
+import { useContext } from "react";
+import { ThemeContext } from "../../organisms/landing/landingOrg";
+
 
 const HeroMessageWrapper = styled("div")(({query, query2}) => ({
     width: query2 ? "100%" : "688.17px",
@@ -50,6 +52,7 @@ const HeroMessageWrapper = styled("div")(({query, query2}) => ({
 const HeroMessage = () => {
 	let query = useMediaQuery("(max-width: 1000px)");
 	let query2 = useMediaQuery("(max-width: 850px)");
+	const { setScheduleToggle } = useContext(ThemeContext);
 
 	return (
 		<HeroMessageWrapper className="h-message" query={query} query2={query2}>
@@ -57,9 +60,7 @@ const HeroMessage = () => {
 			<p className="h-desc">
 				Our robust solution is built and optimized specifically for IT teams and workflows, influenced by feedback, and centred around end-user and endpoint support.
 			</p>
-			<Link to="/super-admin-onboarding">
-				<button style={{cursor: "pointer", position: "relative", zIndex: "30"}} type="button">Contact Us</button>
-			</Link>
+			<button onClick={() => setScheduleToggle(prev => !prev)} style={{cursor: "pointer", position: "relative", zIndex: "30"}} type="button">Contact Us</button>
 		</HeroMessageWrapper>
 	);
 };
