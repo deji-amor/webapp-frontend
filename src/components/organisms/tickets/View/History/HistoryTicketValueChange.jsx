@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { styled } from "@mui/material";
 import { isObject } from "lodash";
 
-const ValueText = styled("span")`
+const ValueText = styled("p")`
 	color: #2b2e72;
 	font-family: Poppins;
 	font-size: 0.875rem;
@@ -67,11 +67,11 @@ const HistoryTicketValueChange = ({ prevValue, newValue }) => {
 
 	return (
 		<div className="flex gap-x-[1rem] max-w-full items-center flex-wrap">
-			<ValueText className="">
+			<ValueText className="inline-block max-w-full break-all">
 				{modPrevValue.trim() === "" ? "Nothing was provided" : modPrevValue}
 			</ValueText>
 			<ArrowIcon />
-			<ValueText className="">
+			<ValueText className="inline-block max-w-full break-all">
 				{modNewValue.trim() === "" ? "Nothing provided" : modNewValue}
 			</ValueText>
 		</div>

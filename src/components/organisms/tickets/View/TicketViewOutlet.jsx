@@ -57,7 +57,7 @@ const TicketViewOutlet = () => {
 						<LinkButton active={pathname.includes("history/")}>Ticket History</LinkButton>
 					</NavLink>
 				</div>
-				<div className="basis-[85%] py-[1rem] px-[1.25rem] self-stretch border-[0.5px] border-[#2B2E72] rounded-[0.75rem]">
+				<div className="flex-grow overflow-x-hidden py-[1rem] px-[1rem] self-stretch border-[0.5px] border-[#2B2E72] rounded-[0.75rem]">
 					<Outlet />
 				</div>
 			</div>

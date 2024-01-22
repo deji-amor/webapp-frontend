@@ -16,7 +16,6 @@ function isJSONString(str) {
 	}
 }
 
-
 function convertDate(dateString) {
 	const date = new Date(dateString);
 	const formattedDate = date.toISOString().slice(0, -5); // Remove seconds and milliseconds
@@ -74,7 +73,7 @@ const HistoryItem = ({ log }) => {
 		}
 
 	return (
-		<div>
+		<div className="w-full max-w-full">
 			<HistoryTicketMessage
 				email={email}
 				field={edit_type.replace("ticket-", " ")}

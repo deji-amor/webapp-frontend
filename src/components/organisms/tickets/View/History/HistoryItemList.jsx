@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo } from 'react'
 import HistoryItem from './HistoryItem'
 import { useSelector } from 'react-redux';
+import HistoryItemStatus from './HistoryItemStatus';
+import HistoryItemTicketEdit from './HistoryItemTicketEdit';
 
 const HistoryItemList = () => {
   const { editLogs, sortByAscending } = useSelector((state) => state.ticketHistory);
@@ -14,11 +16,15 @@ const HistoryItemList = () => {
     }
   }, [sortByAscending, editLogs])
 
+  console.log(editLogs);
+
   return (
-		<div className="space-y-[0.75rem]">
-			{orderedLogs.map((log) => (
+		<div className="space-y-[0.75rem] w-full max-w-full">
+			<HistoryItemStatus />
+			<HistoryItemTicketEdit />
+			{/* {orderedLogs.map((log) => (
 				<HistoryItem key={log.id} log={log}/>
-			))}
+			))} */}
 		</div>
 	);
 }

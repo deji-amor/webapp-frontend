@@ -18,7 +18,7 @@ const Modal = ({children, maxWidth}) => {
 		left: 50%;
 		transform: translate(-50%, -50%);
 	`;
-	return <Wrapper maxWidth={maxWidth ? maxWidth : "60"} className="">{children}</Wrapper>;
+	return <Wrapper maxWidth={maxWidth ? maxWidth : "60"} className="overflow-x-hidden">{children}</Wrapper>;
 }
 
 Modal.propTypes = {
