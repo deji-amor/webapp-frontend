@@ -81,6 +81,11 @@
     .terms-conditions .inner h1.term-title {
         width: 100%;
     }
+
+    .terms-conditions .terms {
+        position: relative;
+        height: 150px
+    }
 }
 
 @media screen and (max-width: 600px) {
