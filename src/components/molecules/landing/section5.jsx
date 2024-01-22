@@ -48,7 +48,7 @@ const Users = () => {
 					position="PM, Acers "
 				/>
                 <Hear
-					description="“The attention to details applied to the ProjectInfo IT Field Management tool is second to none, the impact the application has made to our day to day operations within our IT Service department is simply remarkable.”"
+					description="“The attention to detail applied to the ProjectInfo IT Field Management tool is second to none, the impact the application has made to our day to day operations within our IT Service department is simply remarkable.”"
 					img={CEO3}
 					name="Leslie Alexander"
 					position="Product Manager, Texcap "
