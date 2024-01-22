@@ -46,7 +46,7 @@ const Faq = () => {
 						"What is IT Field Management and how does ProjectInfo help me and my team to manage our service delivery?"
 					}
 					answer={
-						"IT Field Management is a system that organizations use to coordinate resources to deliver service outside of their company property. This includes equipment installation, maintenance, break/fix, and asset monitoring. Our app is designed to help you streamline your IT operations and make your life easier."
+						"IT Field Management tools are systems that organizations use to coordinate resources to deliver services outside of their company property. This includes equipment installation, maintenance, break/fix, and asset monitoring. Our app is designed to help you streamline your IT operations and make your life easier."
 					}
 				/>
 				<Question
