@@ -1,18 +1,19 @@
-import { styled } from "@mui/material";
+import { styled, useMediaQuery } from "@mui/material";
 import Banner from "../../../assets/password/prem.png";
 // import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import { useDispatch } from "react-redux";
 import { SET_SCHEDULE_TOGGLE } from "../../../state-manager/reducers/password/forgotpassword";
 
 
-const PremiumWrapper = styled("div")(() => ({
+const PremiumWrapper = styled("div")(({query}) => ({
 	width: "100%",
 	height: "auto",
 	position: "relative",
 	margin: "0 auto",
 	display: "flex",
-	flexDirection: "column",
-	gap: "64px",
+	flexDirection: query ? "row" : "column",
+	justifyContent: query ? "center" : "",
+	gap: query ? "0" : "64px",
 
 	img: {
 		maxWidth: "100%",
@@ -22,14 +23,15 @@ const PremiumWrapper = styled("div")(() => ({
 		left: "0",
 		zIndex: "12",
 		objectFit: "contain",
+		display: query ? "none" : "flex"
 	},
 
 	".prem": {
 		width: "50%",
-		position: "absolute",
+		position: query ? "relative" : "absolute",
 		zIndex: "13",
-		top: "50%",
-		transform: "translate(20%, -50%)",
+		top: query ? "0" : "50%",
+		transform: query ? "translate(0 0)" : "translate(20%, -50%)",
 		left: "0",
 	},
 
@@ -71,9 +73,10 @@ const PremiumWrapper = styled("div")(() => ({
 
 const Premium = () => {
 	const dispatch = useDispatch()
+	let query = useMediaQuery("(max-width: 450px)");
 
 	return (
-		<PremiumWrapper>
+		<PremiumWrapper className='section-7' query={query}>
 			<img src={Banner} alt="banner" />
 			<div className="prem">
 				<h1>Premium user and endpoint management experience</h1>

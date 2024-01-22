@@ -335,9 +335,9 @@ footer .powered .solutions {
 	}
 
 	.prem .butIcon button {
-		width: 80px !important;
+		width: 100px !important;
 		text-align: center !important;
-		font-size: 10px;
+		font-size: 12px;
 		padding: 10px 5px !important;
 	}
 
@@ -352,6 +352,40 @@ footer .powered .solutions {
 	.head p, .head h2 {
 		text-align: center !important;
 		width: 100% !important;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.section-7 {
+		width: 100% !important;
+		height: 300px !important;
+	}
+
+	.section-7 img {
+		display: none !important;
+	}
+
+	.prem {
+		width: 100% !important;
+		height: 100% !important;
+		padding: 5px !important;
+		background: linear-gradient(#2B2E72, hsl(236, 53%, 12%)) !important;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.prem h1 {
+		font-size: 24px !important;
+		text-align: center !important;
+	}
+
+	.prem .butIcon button {
+		width: 150px !important;
+		text-align: center !important;
+		font-size: 15px;
+		padding: 15px 5px !important;
 	}
 }
 
