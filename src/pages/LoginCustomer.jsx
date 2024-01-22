@@ -12,7 +12,7 @@ const LoginCustomer = () => {
 			<CustomLogo color="#ffffff" style={{left: "35px", zIndex: "60"}} />
 			<div className="flex h-full">
 				<CustomerBanner
-					title="Streamlined IT Service Management."
+					title="Streamlined IT Field Management."
 					description="Our robust solution is built and optimized specifically for IT teams and workflows,
 					influenced by feedback, and centred around end-user and endpoint support.."
 				/>
