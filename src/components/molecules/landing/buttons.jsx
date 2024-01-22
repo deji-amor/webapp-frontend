@@ -1,8 +1,9 @@
 // import CustomButton from "../../atoms/Password/customButton"
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material";
-import { useContext } from "react";
-import { ThemeContext } from "../../organisms/landing/landingOrg";
+import { useDispatch } from "react-redux";
+import { SET_SCHEDULE_TOGGLE } from "../../../state-manager/reducers/password/forgotpassword";
+
 
 
 const NavigationButtonWrapper = styled("div")(() => ({
@@ -67,11 +68,11 @@ const NavigationButtonWrapper = styled("div")(() => ({
 }));
 
 const NavigateButtons = () => {
-	const { setScheduleToggle } = useContext(ThemeContext)
+	const dispatch = useDispatch()
 
 	return (
 		<NavigationButtonWrapper>
-			<button onClick={() => setScheduleToggle(prev => !prev)} className="try" type="button">
+			<button onClick={() => dispatch(SET_SCHEDULE_TOGGLE(true))} className="try" type="button">
 				Contact Us
 			</button>
 			<div className="logins">

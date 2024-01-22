@@ -1,8 +1,10 @@
 import { styled } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
-import { useState, useContext } from "react";
-import { ThemeContext } from "../../organisms/landing/landingOrg";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { SET_SCHEDULE_TOGGLE } from "../../../state-manager/reducers/password/forgotpassword";
+
 
 const MobileLinkWrapper = styled("div")(() => ({
 	position: "relative",
@@ -96,7 +98,7 @@ const MobileLinkWrapper = styled("div")(() => ({
 
 const MobileLink = () => {
 	const [toggle, setToggle] = useState(false);
-	const { setScheduleToggle } = useContext(ThemeContext)
+	const dispatch = useDispatch()
 
 	return (
 		<MobileLinkWrapper>
@@ -130,7 +132,7 @@ const MobileLink = () => {
 				</li>
 				<hr />
 				<li className="but">
-					<button onClick={() => setScheduleToggle(prev => !prev)} className="try">Contact Us</button>
+					<button onClick={() => dispatch(SET_SCHEDULE_TOGGLE(true))} className="try">Contact Us</button>
 				</li>
 				<li className="but">
 					<div className="logins">

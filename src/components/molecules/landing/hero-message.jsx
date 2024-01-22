@@ -1,6 +1,6 @@
 import { styled, useMediaQuery } from "@mui/material";
-import { useContext } from "react";
-import { ThemeContext } from "../../organisms/landing/landingOrg";
+import { useDispatch } from "react-redux";
+import { SET_SCHEDULE_TOGGLE } from "../../../state-manager/reducers/password/forgotpassword";
 
 
 const HeroMessageWrapper = styled("div")(({query, query2}) => ({
@@ -52,7 +52,7 @@ const HeroMessageWrapper = styled("div")(({query, query2}) => ({
 const HeroMessage = () => {
 	let query = useMediaQuery("(max-width: 1000px)");
 	let query2 = useMediaQuery("(max-width: 850px)");
-	const { setScheduleToggle } = useContext(ThemeContext);
+	const dispatch = useDispatch()
 
 	return (
 		<HeroMessageWrapper className="h-message" query={query} query2={query2}>
@@ -60,7 +60,7 @@ const HeroMessage = () => {
 			<p className="h-desc">
 				Our robust solution is built and optimized specifically for IT teams and workflows, influenced by feedback, and centred around end-user and endpoint support.
 			</p>
-			<button onClick={() => setScheduleToggle(prev => !prev)} style={{cursor: "pointer", position: "relative", zIndex: "30"}} type="button">Contact Us</button>
+			<button onClick={() => dispatch(SET_SCHEDULE_TOGGLE(true))} style={{cursor: "pointer", position: "relative", zIndex: "30"}} type="button">Contact Us</button>
 		</HeroMessageWrapper>
 	);
 };

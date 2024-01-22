@@ -1,8 +1,8 @@
 import { styled, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./board.css";
-import { useContext } from "react";
-import { ThemeContext } from "../../organisms/landing/landingOrg";
+import { useDispatch } from "react-redux";
+import { SET_SCHEDULE_TOGGLE } from "../../../state-manager/reducers/password/forgotpassword";
 import DecorCircle from "../../atoms/landing/decorCircle";
 import Slide from "../../molecules/landing/slide";
 import SimplifiedImg from "../../../assets/password/simplified.webp";
@@ -109,7 +109,7 @@ const ManagementWrapper = styled("div")(({query}) => ({
 
 const Management = () => {
 	const query = useMediaQuery("(max-width: 800px)");
-	const { setScheduleToggle, scheduleToggle } = useContext(ThemeContext);
+	const dispatch = useDispatch()
 
 	return (
 		<>
@@ -128,7 +128,7 @@ const Management = () => {
 						<p className="simp-desc">
 						Are you tired of managing your IT operations manually? Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
 						</p>
-						<button onClick={() => setScheduleToggle(prev => !prev)} type="button">Contact Us</button>
+						<button onClick={() => dispatch(SET_SCHEDULE_TOGGLE(true))} type="button">Contact Us</button>
 					</div>
 				</div>
 				<div className="tableWrapper">
