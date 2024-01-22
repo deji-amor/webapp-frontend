@@ -22,8 +22,8 @@ const PrivacyPage = () => {
                     <div className="content">
                         <div className="terms-content">
                             <h4>PRIVACY POLICY</h4>
-                            <p className="terms-desc">{'At Amorserv Solutions, accessible from [Website URL], one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Amorserv Solutions and how we use it.'}</p>
-                            <p className="terms-desc">If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at info@amorserv.com.</p>
+                            <p className="terms-desc">{'At ProjectInfo, accessible from [https://projectinfo.io/], one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by ProjectInfo and how we use it.'}</p>
+                            <p className="terms-desc">If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at info@projectinfo.com.</p>
                         </div>
                     </div>
                 </div>
