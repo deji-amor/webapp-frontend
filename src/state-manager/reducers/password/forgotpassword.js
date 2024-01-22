@@ -101,7 +101,7 @@ const forgotPasswordSlice = createSlice({
             state.response = null
         },
 
-        SET_SCHEDULE_TOGGLE:    (state, {payload}) => {
+        SET_SCHEDULE_TOGGLE: (state, {payload}) => {
             if (payload === true) {
                 state.scheduleToggle = true
             }else {
