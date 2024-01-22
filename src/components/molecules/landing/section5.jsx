@@ -36,7 +36,7 @@ const Users = () => {
 
 			<div className="users">
 				<Hear
-					description="“Our IT operations have never been smoother since we started using ProjectInfo IT Service Management web app. It’s a game-changer!.”"
+					description="“Our IT operations have never been smoother since we started using ProjectInfo IT Field Management web app. It’s a game-changer!.”"
 					img={CEO1}
 					name="Guy Hawkins"
 					position="CEO, Armitage"
@@ -48,7 +48,7 @@ const Users = () => {
 					position="PM, Acers "
 				/>
                 <Hear
-					description="“The attention to detail applied to the ProjectInfo field management tool is second to none, the impact the application has made to our day to day operations within our IT Service department is simply remarkable.”"
+					description="“The attention to details applied to the ProjectInfo IT Field Management tool is second to none, the impact the application has made to our day to day operations within our IT Service department is simply remarkable.”"
 					img={CEO3}
 					name="Leslie Alexander"
 					position="Product Manager, Texcap "

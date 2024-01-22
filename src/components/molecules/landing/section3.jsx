@@ -126,7 +126,7 @@ const Management = () => {
 					<h1 className="simplify">Simplify your IT operations with unified management</h1>
 					<div className="contBut">
 						<p className="simp-desc">
-						Are you tired of managing your IT operations manually? Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
+						Are you tired of managing your IT operations manually? Our IT Field Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
 						</p>
 						<button onClick={() => dispatch(SET_SCHEDULE_TOGGLE(true))} type="button">Contact Us</button>
 					</div>

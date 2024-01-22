@@ -30,7 +30,7 @@ const Faq = () => {
 		<FaqWrapper>
 			<Header
 				title="Frequently Asked Questions"
-				description="Here are some frequently asked questions about our IT Service Management web app:"
+				description="Here are some frequently asked questions about our IT Field Management web app:"
 				width={query ? "380px" : "450px"}
 				containerWidth="80%"
 			/>
@@ -38,7 +38,7 @@ const Faq = () => {
 				<Question
 					question={"How does your app help me manage my IT operations?"}
 					answer={
-						"Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier."
+						"Our IT Field Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier."
 					}
 				/>
 				<Question
@@ -46,7 +46,7 @@ const Faq = () => {
 						"What is IT Field Management and how does ProjectInfo help me and my team to manage our service delivery?"
 					}
 					answer={
-						"IT Field service management is a system that organizations use to coordinate resources to deliver service outside of their company property. This includes equipment installation, maintenance, break/fix, and asset monitoring. Our app is designed to help you streamline your IT operations and make your life easier."
+						"IT Field Management is a system that organizations use to coordinate resources to deliver service outside of their company property. This includes equipment installation, maintenance, break/fix, and asset monitoring. Our app is designed to help you streamline your IT operations and make your life easier."
 					}
 				/>
 				<Question
