@@ -1,0 +1,113 @@
+.terms-conditions {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 300px;
+}
+
+.terms-conditions .terms {
+    position: relative;
+    height: 300px
+}
+
+.terms-conditions .terms img.banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.terms-conditions .inner {
+    width: 70%;
+    margin: 0 auto;
+    padding: 80px 0 ;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 80px;
+}
+
+.terms-conditions .inner h1.term-title {
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 56px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #2B2E72;
+}
+
+.terms-conditions .inner .content {
+    width: 100%;
+}
+
+.terms-conditions .inner .content .terms-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+
+.terms-conditions .inner .content .terms-content h4 {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 38px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #101828;
+}
+
+.terms-conditions .inner .content .terms-content p.terms-desc {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #667085;
+}
+
+.terms-conditions .inner .content .terms-content p.terms-desc.last {
+    margin-bottom: 50px;
+}
+
+@media screen and (max-width: 1145px) {
+    .terms-conditions .inner {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .terms-conditions .inner h1.term-title {
+        width: 100%;
+    }
+
+    .terms-conditions .terms {
+        position: relative;
+        height: 150px
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .terms-conditions .inner {
+        width: 90%;
+    }
+
+    .terms-conditions .inner h1.term-title {
+        font-size: 36px;
+    }
+
+    .terms-conditions .inner .content .terms-content h4 {
+        font-size: 20px;
+    }
+
+    .terms-conditions .inner .content .terms-content p.terms-desc {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .terms-conditions .inner h1.term-title {
+        font-size: 24px;
+    }
+}

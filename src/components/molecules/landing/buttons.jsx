@@ -1,7 +1,10 @@
 // import CustomButton from "../../atoms/Password/customButton"
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { SET_SCHEDULE_TOGGLE } from "../../../state-manager/reducers/password/forgotpassword";
+
+
 
 const NavigationButtonWrapper = styled("div")(() => ({
 	display: "flex",
@@ -56,7 +59,6 @@ const NavigationButtonWrapper = styled("div")(() => ({
 		fontSize: "16px",
 		textAlign: "left",
 		fontWeight: "600",
-		// border: "2px solid #2B2E72",
 	},
 
 	".login-customer:hover, .login-admin:hover": {
@@ -66,13 +68,13 @@ const NavigationButtonWrapper = styled("div")(() => ({
 }));
 
 const NavigateButtons = () => {
+	const dispatch = useDispatch()
+
 	return (
 		<NavigationButtonWrapper>
-			<Link to="/super-admin-onboarding">
-				<button className="try" type="button">
-					Try For Free
-				</button>
-			</Link>
+			<button onClick={() => dispatch(SET_SCHEDULE_TOGGLE(true))} className="try" type="button">
+				Contact Us
+			</button>
 			<div className="logins">
 				<button className="login" type="button">
 					Log In

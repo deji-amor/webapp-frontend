@@ -9,7 +9,6 @@ const HeadingWrapper = styled("div")(({width, containerWidth}) => ({
     position: "relative",
     display: "flex",
     justifyContent: "space-between",
-    // border: "1px solid orange",
 
     h2: {
         width: width ? width : "312px",
@@ -19,7 +18,8 @@ const HeadingWrapper = styled("div")(({width, containerWidth}) => ({
         fontWeight: "600",
         fontStyle: "normal",
         lineHeight: "120%",
-        letterSpacing: ".24px"
+        letterSpacing: ".24px",
+        // textAlign: 'left'
     },
 
     p: {
@@ -31,6 +31,7 @@ const HeadingWrapper = styled("div")(({width, containerWidth}) => ({
         fontStyle: "normal",
         lineHeight: "125%",
         letterSpacing: ".08px",
+        // textAlign: 'left',
         position: "relative",
         top: "30px",
     }

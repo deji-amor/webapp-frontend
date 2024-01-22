@@ -1,6 +1,8 @@
 import { styled, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./board.css";
+import { useDispatch } from "react-redux";
+import { SET_SCHEDULE_TOGGLE } from "../../../state-manager/reducers/password/forgotpassword";
 import DecorCircle from "../../atoms/landing/decorCircle";
 import Slide from "../../molecules/landing/slide";
 import SimplifiedImg from "../../../assets/password/simplified.webp";
@@ -31,7 +33,7 @@ const ManagementWrapper = styled("div")(({query}) => ({
 		margin: "auto 0",
 	},
 
-	".content h1": {
+	".content .simplify": {
 		fontFamily: "poppins",
 		fontWeight: "600",
 		fontSize: "48px",
@@ -40,7 +42,14 @@ const ManagementWrapper = styled("div")(({query}) => ({
 		color: "#2B2E72",
 	},
 
-	".content p": {
+	".contBut": {
+		height: "100%",
+		display: "flex",
+		flexDirection: "column",
+		gap: "45px",
+	},
+
+	".content .contBut .simp-desc": {
 		fontFamily: "poppins",
 		fontWeight: "400",
 		fontSize: "16px",
@@ -99,39 +108,42 @@ const ManagementWrapper = styled("div")(({query}) => ({
 
 
 const Management = () => {
-	let query = useMediaQuery("(max-width: 800px)");
+	const query = useMediaQuery("(max-width: 800px)");
+	const dispatch = useDispatch()
 
 	return (
-		<ManagementWrapper className="management" query={query}>
-			<DecorCircle
-				top="40px"
-				left="-200px"
-				color="rgba(76, 111, 255, 0.12)"
-				filter="blur(120.32733917236328px)"
-			/>
-			<div className="content">
-				<h1>Simplify your IT operations with unified management</h1>
-				<div className="contBut">
-					<p>
-					Are you tired of managing your IT operations manually? Our IT Service Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
-					</p>
-					<Link to="/super-admin-onboarding">
-						<button type="button">Try For Free</button>
-					</Link>
+		<>
+		<div className="placeholder">
+		</div>
+			<ManagementWrapper className="management" id="about" query={query}>
+				<DecorCircle
+					top="40px"
+					left="-200px"
+					color="rgba(76, 111, 255, 0.12)"
+					filter="blur(120.32733917236328px)"
+				/>
+				<div className="content">
+					<h1 className="simplify">Simplify your IT operations with unified management</h1>
+					<div className="contBut">
+						<p className="simp-desc">
+						Are you tired of managing your IT operations manually? Our IT Field Management web app is here to help! Our app is designed to help you streamline your IT operations and make your life easier.
+						</p>
+						<button onClick={() => dispatch(SET_SCHEDULE_TOGGLE(true))} type="button">Contact Us</button>
+					</div>
 				</div>
-			</div>
-			<div className="tableWrapper">
-				<div className="simplified-img">
-					<img src={SimplifiedImg} alt="simplified image" />
+				<div className="tableWrapper">
+					<div className="simplified-img">
+						<img src={SimplifiedImg} alt="simplified image" />
+					</div>
+					<Slide>
+						<img className="side-card" src={SimplifiedCardImg} alt="simplied card" />
+					</Slide>
+					<Slide position="relative">
+						<img className="bottom-card" src={SimplifiedBottomImg} alt="simplied card" />
+					</Slide>
 				</div>
-				<Slide>
-					<img className="side-card" src={SimplifiedCardImg} alt="simplied card" />
-				</Slide>
-				<Slide position="relative">
-					<img className="bottom-card" src={SimplifiedBottomImg} alt="simplied card" />
-				</Slide>
-			</div>
-		</ManagementWrapper>
+			</ManagementWrapper>
+		</>
 	);
 };
 

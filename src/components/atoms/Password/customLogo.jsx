@@ -1,4 +1,4 @@
-import logoImage from "../../../assets/login/dark.png"
+import logoImage from "../../../assets/password/ProjectInfo.png"
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { LogoWrapper } from "./wrappers"
@@ -8,7 +8,7 @@ const CustomLogo = ({color, style}) => {
     <Link to="/">
       <LogoWrapper color={color} style={style}>
           <img src={logoImage} alt="Logo" />
-          <span>CUSMITS</span>
+          {/* <span>CUSMITS</span> */}
       </LogoWrapper>
     </Link>
   )

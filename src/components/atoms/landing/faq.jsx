@@ -23,6 +23,7 @@ const QuestionWrapper = styled("div")(() => ({
 	"p.question": {
 		color: "#2B2E72",
 		width: "424px",
+		height: "auto",
 		fontFamily: "Poppins",
 		fontSize: "16px",
 		fontStyle: "normal",

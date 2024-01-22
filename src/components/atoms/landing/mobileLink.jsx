@@ -1,9 +1,15 @@
 import { styled } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { Link } from "react-scroll";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { SET_SCHEDULE_TOGGLE } from "../../../state-manager/reducers/password/forgotpassword";
+
 
 const MobileLinkWrapper = styled("div")(() => ({
+	position: "relative",
+	zIndex: "3000",
+
 	".mobileL": {
 		display: "flex",
 		flexDirection: "column",
@@ -17,7 +23,7 @@ const MobileLinkWrapper = styled("div")(() => ({
 		borderRadius: "8px",
 		cursor: "pointer",
 		position: "relative",
-		zIndex: "20",
+		zIndex: "200",
 	},
 
 	".but": {
@@ -80,7 +86,8 @@ const MobileLinkWrapper = styled("div")(() => ({
 		fontSize: "16px",
 		textAlign: "left",
 		fontWeight: "600",
-		// border: "2px solid #2B2E72",
+		position: "relative",
+		zIndex: "1000",
 	},
 
 	".login-customer:hover, .login-admin:hover": {
@@ -91,6 +98,7 @@ const MobileLinkWrapper = styled("div")(() => ({
 
 const MobileLink = () => {
 	const [toggle, setToggle] = useState(false);
+	const dispatch = useDispatch()
 
 	return (
 		<MobileLinkWrapper>
@@ -98,7 +106,7 @@ const MobileLink = () => {
 				{/* <li className="li">
 					<NavLink>Home</NavLink>
 				</li> */}
-				<li className="serv li">
+				{/* <li className="serv li">
 					<ChevronLeftIcon />
 					<NavLink>Products</NavLink>
 				</li>
@@ -111,12 +119,20 @@ const MobileLink = () => {
 				</li>
 				<li className="li">
 					<NavLink>Contact</NavLink>
+				</li> */}
+				<li className="li">
+					<Link className="link title" spy={true} smooth={true} offset={-200} duration={2000} to="about">
+						About
+					</Link>
+				</li>
+				<li className="li">
+					<Link className="link title" spy={true} smooth={true} offset={-250} duration={2000} to="features">
+						Features
+					</Link>
 				</li>
 				<hr />
 				<li className="but">
-					<NavLink to="/super-admin-onboarding">
-						<button className="try">Try For Free</button>
-					</NavLink>
+					<button onClick={() => dispatch(SET_SCHEDULE_TOGGLE(true))} className="try">Contact Us</button>
 				</li>
 				<li className="but">
 					<div className="logins">

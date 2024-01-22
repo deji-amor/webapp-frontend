@@ -1,5 +1,7 @@
 import { styled } from "@mui/material";
 import PropTypes from "prop-types";
+import { Link } from "react-scroll";
+import { Link as NLink } from "react-router-dom"
 
 const FooterItemWrapper = styled("div")(() => ({
 	display: "flex",
@@ -7,7 +9,7 @@ const FooterItemWrapper = styled("div")(() => ({
 	gap: "25px",
 
 	h5: {
-		color: "#2B2E72",
+		color: "#4C6FFF",
 		fontFamily: "Poppins",
 		fontSize: "16px",
 		fontStyle: "normal",
@@ -24,7 +26,7 @@ const FooterItemWrapper = styled("div")(() => ({
 	},
 
 	p: {
-		color: "#010101",
+		color: "#fff",
 		fontFamily: "Poppins",
 		fontSize: "16px",
 		fontStyle: "normal",
@@ -34,14 +36,23 @@ const FooterItemWrapper = styled("div")(() => ({
 	},
 }));
 
-const FooterItem = ({ title, items }) => {
+const FooterItem = ({ title, items, to, type }) => {
 	return (
 		<FooterItemWrapper>
 			<h5>{title}</h5>
 			<div className="items">
-				{items.map((item) => (
-					<p key={item}>{item}</p>
+				{type !== "navigate" && items.map((item) => (
+					<Link key={item.title} className="link" to={to} spy={true} smooth={true} offset={-200} duration={2000} >
+						{item.title}
+					</Link>
 				))}
+				{
+					type === "navigate" && items.map(item => (
+						<NLink key={item.title} className="link" to={item.link}>
+							{item.title}
+						</NLink>
+					))
+				}
 			</div>
 		</FooterItemWrapper>
 	);
@@ -50,6 +61,8 @@ const FooterItem = ({ title, items }) => {
 FooterItem.propTypes = {
 	title: PropTypes.string,
 	items: PropTypes.array,
+	to: PropTypes.string,
+	type: PropTypes.string
 };
 
 export default FooterItem;

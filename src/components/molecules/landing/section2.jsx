@@ -16,10 +16,10 @@ const OrganizationWrapper = styled("div")(({query}) => ({
     flexDirection: "column",
     gap: "40px",
 
-    ".placeholder": {
-        width: "100%",
-        height: "100px",
-    },
+    // ".placeholder": {
+    //     width: "100%",
+    //     height: "100px",
+    // },
 
 	h4: {
 		color: "#324A52",
@@ -48,9 +48,9 @@ const Organizations = () => {
 
 	return (
 		<OrganizationWrapper query={query}>
-            <div className="placeholder">
+            {/* <div className="placeholder">
                 
-            </div>
+            </div> */}
 			<h4>Used by 1000+ organizations across the world</h4>
             <div className="orgs">
                 <div>

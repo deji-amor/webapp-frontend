@@ -54,7 +54,7 @@ const HeroImageWrapper = styled("div")(({ query1, query2 }) => ({
 	".ticketImage": {
 		width: query2 ? "100%" : "90%",
 		position: "relative",
-		top: query2 ? "100px" : "",
+		top: query2 ? "10px" : "",
 	},
 
 	".heroImage": {
@@ -95,7 +95,7 @@ const HeroBoard = () => {
 
 	return (
 		<BoardParentWrapper>
-			<BoardWrapper query={query2}>
+			<BoardWrapper className="board-wrapper" query={query2}>
 				<NavLinks />
 				<Circle></Circle>
 				<Circle width="1600px" height="1600px" top="945px"></Circle>

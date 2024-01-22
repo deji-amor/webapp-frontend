@@ -10,7 +10,7 @@ const NavWrapper = styled("div")(() => ({
 	maxWidth: "90%",
 	height: "40px",
 	position: "relative",
-	zIndex: "10",
+	zIndex: "100",
 	top: "30px",
 	display: "flex",
 	gap: "20px",
@@ -38,6 +38,7 @@ const NavWrapper = styled("div")(() => ({
 		borderRadius: "10px",
 		position: "relative",
 		top: "50px",
+		zIndex: "1000",
 		background: "#ffffff",
 	},
 }));
@@ -48,7 +49,7 @@ const NavLinks = () => {
 
 	return (
 		<NavWrapper>
-			<CustomLogo color="#ffffff" style={{ top: "0", left: `${matches ? "-20px" : "25px"}` }} />
+			<CustomLogo color="#ffffff" style={{ top: "0", left: `${matches ? "0px" : "25px"}` }} />
 			<div className="butLink">
 				{!matches ? (
 					<>

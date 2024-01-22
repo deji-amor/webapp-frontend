@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
 import Header from "../../atoms/landing/headings";
 import Feature from "../../atoms/landing/feature";
+import "./board.css"
 
 const FeaturesWrapper = styled("div")(() => ({
 	width: "100%",
@@ -25,12 +26,12 @@ const Features = () => {
 		<FeaturesWrapper>
 			<Header
 				title="Core Features"
-				description="Our IT Service Management web app comes with a host of features tailored to help streamline your business processes. "
+				description="Our IT Field Management web app comes with a host of features tailored to help streamline your business processes. "
 			/>
-			<div className="features">
+			<div className="features" id="features">
 				<Feature
 					title="Ticket Management"
-					description="Fulfill service requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities."
+					description="Fulfill field requests faster than ever with features such as bulk actions. Automate approvals and how you assign responsibilities."
 					color="#ffffff"
 					color2="#EFEFEF"
 					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
@@ -49,7 +50,7 @@ const Features = () => {
 
 				<Feature
 					title="Record Keeping"
-					description="No more lost data or missing records, easily utilise our cloud based application to store and retrieve your operational data, whenever you want it, how you want it."
+					description="No more lost data or missing records, easily utilize our cloud based application to store and retrieve your operational data, whenever you want it, how you want it."
 					color="#ffffff"
 					color2="#EFEFEF"
 					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"
@@ -59,7 +60,7 @@ const Features = () => {
 
 				<Feature
 					title="Customer Transparency"
-					description="Our application also helps you provide a single source of truth view for transparency to your clients and customers on their tickets and projects."
+					description="Our application also helps you provide a dashboard view for transparency to your clients and customers on their tickets and projects."
 					color="#ffffff"
 					color2="#EFEFEF"
 					shadow="0px 32px 80px -16px rgba(76, 111, 255, 0.36)"

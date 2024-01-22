@@ -1,12 +1,12 @@
 import React from "react";
 import { Container } from "@mui/material";
 import RegisterForm from "../components/organisms/SuperAdmin/RegisterForm";
-import CustomLogo from "../components/atoms/Password/customLogo";
+import Logo from "../components/atoms/Login/Logo";
 
 const SuperAdminOnboarding = () => {
 	return (
 		<>
-			<CustomLogo />
+			<Logo className="absolute top-[1.5rem] left-[1.5rem]"/>
 			<Container maxWidth="md">
 				<RegisterForm />
 			</Container>

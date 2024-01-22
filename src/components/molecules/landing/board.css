@@ -2,71 +2,133 @@ body {
 	overflow-x: hidden;
 }
 
+.placeholder {
+	width: 100%;
+}
 
+footer {
+	width: 100%;
+	height: auto;
+	padding-bottom: 20px;
+	background: #2B2E72;
+}
+
+footer .inner {
+	width: 80%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	padding-top: 80px;
+}
+
+footer .inner .logo {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 24px;
+}
+
+footer .inner .logo p {
+	color: #fff;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 20px;
+	letter-spacing: 0.005em;
+	text-align: right;
+}
+
+footer .inner .links {
+	display: flex;
+	gap: 100px;
+}
+
+footer .inner .links .items .link {
+	color: #fff;
+	cursor: pointer;
+}
+
+footer .powered {
+	margin-top: 70px;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 20px;
+	letter-spacing: 0.005em;
+	text-align: center;
+}
+
+footer .powered .solutions {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 20px;
+	letter-spacing: 0.005em;
+	text-align: right;
+	color: #4C6FFF;
+}
 
 @media screen and (max-width: 1800px) {
 	.placeholder {
-        padding: 250px;
+        padding: 150px;
 	}
 }
 
 @media screen and (max-width: 1750px) {
 	.placeholder {
-        padding-bottom: 240px;
+        padding-bottom: 170px;
 	}
 }
 
 @media screen and (max-width: 1700px) {
 	.placeholder {
-        padding-bottom: 230px;
+        padding-bottom: 180px;
 	}
 }
 
 @media screen and (max-width: 1650px) {
 	.placeholder {
-        padding-bottom: 220px;
+        padding-bottom: 200px;
 	}
 }
 
 @media screen and (max-width: 1600px) {
 	.placeholder {
-        padding-bottom: 215px;
+        padding-bottom: 205px;
 	}
 }
 
 @media screen and (max-width: 1550px) {
 	.placeholder {
-        padding: 210px;
+        padding: 160px;
 	}
 }
 
 @media screen and (max-width: 1500px) {
 	.placeholder {
-        padding-bottom: 165px;
+        padding-bottom: 120px;
 	}
 }
 
 @media screen and (max-width: 1450px) {
 	.placeholder {
-        padding-bottom: 155px;
+        padding-bottom: 110px;
 	}
 }
 
 @media screen and (max-width: 1400px) {
 	.placeholder {
-        padding-bottom: 145px;
+        padding-bottom: 80px;
     }
 }
 
 @media screen and (max-width: 1350px) {
 	.placeholder {
-        padding-bottom: 135px;
+        padding-bottom: 50px;
     }
 }
 
 @media screen and (max-width: 1300px) {
 	.placeholder {
-		padding-bottom: 125px;
+		padding-bottom: 40px;
 	}
 }
 
@@ -95,43 +157,45 @@ body {
 
 @media screen and (max-width: 1250px) {
 	.placeholder {
-		padding-bottom: 115px;
+		padding-bottom: 0px;
 	}
 }
 
 @media screen and (max-width: 1200px) {
 	.placeholder {
-		padding-bottom: 105px;
+		padding-top: 100px;
 	}
 }
 
 @media screen and (max-width: 1160px) {
 	.placeholder {
-		padding-bottom: 50px;
+		padding-top: 70px;
 	}
 }
 
 @media screen and (max-width: 1130px) {
 	.placeholder {
-		padding-bottom: 50px;
+		padding-top: 40px;
 	}
 }
 
 @media screen and (max-width: 1090px) {
 	.placeholder {
-		padding-bottom: 40px;
+		/* padding-top: 40px;
+		border: 1px solid orange; */
 	}
 }
 
 @media screen and (max-width: 1050px) {
 	.placeholder {
-		padding-bottom: 40px;
+		/* padding-top: 20px;
+		border: 1px solid orange; */
 	}
 }
 
 @media screen and (max-width: 1000px) {
 	.placeholder {
-		padding-bottom: 30px;
+		padding-top: 20px;
 	}
 }
 
@@ -144,7 +208,7 @@ body {
 
 @media screen and (max-width: 950px) {
 	.placeholder {
-		padding: 70px;
+		/* padding: 70px; */
 	}
 }
 
@@ -179,13 +243,180 @@ body {
 
 @media screen and (max-width: 850px) {
 	.placeholder {
-		padding: 120px;
+		padding-top: 0px;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.placeholder {
+		height: 0;
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-top: 0;
+	}
+
+	.management {
+		margin-top: -80px !important;
+	}
+
+	.management .content {
+		width: 100% !important;
+		flex-direction: column !important;
+	}
+
+	.management .content .simplify {
+		width: 100%;
+		font-size: 28px !important;
+		line-height: 45px !important;
+	}
+
+	.management .content .contBut {
+		width: 100%;
+	}
+
+	.management .content .contBut .simp-desc {
+		width: 100% !important;
+	}
+	
+	.placeholder {
+		padding: 0 !important;
+	}
+
+	.head {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start !important;
+		justify-content: flex-start !important;
+		gap: 15px;
+	}
+
+	.head h2 {
+		width: 100% !important;
+		font-size: 28px !important;
+	}
+
+	.prem .butIcon button {
+		width: 120px !important;
+		text-align: center !important;
+		font-size: 14px;
+		padding: 10px 5px !important;
 	}
 }
 
 @media screen and (max-width: 750px) {
 	.placeholder {
-		padding: 80px;
+		padding-top: 0px;
+	}
+
+	footer .inner {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: center !important;
+		gap: 80px !important;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.h-message {
+		width: 90% !important;
+		margin: 0 auto !important;
+	}
+
+	.h-message .h-title {
+		font-size: 30px !important;
+		padding: 0 10px;
+	}
+
+	.h-message .h-desc {
+		width: 90% !important;
+		font-size: 14px !important;
+		white-space: normal;
+		padding: 0 10px !important;
+	}
+
+	.prem .butIcon button {
+		width: 100px !important;
+		text-align: center !important;
+		font-size: 12px;
+		padding: 10px 5px !important;
+	}
+
+	footer .inner .links {
+		display: flex;
+		flex-direction: column;
+		gap: 50px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.head p, .head h2 {
+		text-align: center !important;
+		width: 100% !important;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.section-7 {
+		width: 100% !important;
+		height: 300px !important;
+	}
+
+	.section-7 img {
+		display: none !important;
+	}
+
+	.prem {
+		width: 100% !important;
+		height: 100% !important;
+		padding: 5px !important;
+		background: linear-gradient(#2B2E72, hsl(236, 53%, 12%)) !important;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.prem h1 {
+		font-size: 24px !important;
+		text-align: center !important;
+	}
+
+	.prem .butIcon button {
+		width: 150px !important;
+		text-align: center !important;
+		font-size: 15px;
+		padding: 15px 5px !important;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.h-message .h-title {
+		font-size: 30px !important;
+		padding: 0 10px;
+	}
+
+	.h-message .h-desc {
+		width: 80% !important;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.management {
+		margin-top: -150px !important;
+	}
+
+	.board-wrapper {
+		height: 520px !important
+	}
+
+	.inner-container {
+		display: none !important;
+	}
+}
+
+@media screen and (max-width: 350px) {
+	.h-message .h-desc {
+		width: 70% !important;
 	}
 }
 

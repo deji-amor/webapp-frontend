@@ -80,7 +80,8 @@ export const forgotpasswordrecovery = createAsyncThunk("forgotpasswordrecovery",
 const initialState = {
     loading: false,
     email: null,
-    response: null
+    response: null,
+    scheduleToggle: false
 }
 
 const forgotPasswordSlice = createSlice({
@@ -98,6 +99,14 @@ const forgotPasswordSlice = createSlice({
 
         SET_ERROR_NULL: (state, {paload}) => {
             state.response = null
+        },
+
+        SET_SCHEDULE_TOGGLE:    (state, {payload}) => {
+            if (payload === true) {
+                state.scheduleToggle = true
+            }else {
+                state.scheduleToggle = false
+            }
         }
     },
     extraReducers: builder => {
@@ -154,6 +163,6 @@ const forgotPasswordSlice = createSlice({
     }
 })
 
-export const { SET_EMAIL, REMOVE_EMAIL, SET_ERROR_NULL } = forgotPasswordSlice.actions
+export const { SET_EMAIL, REMOVE_EMAIL, SET_ERROR_NULL, SET_SCHEDULE_TOGGLE } = forgotPasswordSlice.actions
 
 export default forgotPasswordSlice.reducer;

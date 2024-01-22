@@ -32,7 +32,7 @@ export const logout = createAsyncThunk("logout", async (args, {rejectWithValue})
 	}
 });
 
-const allowedTimeOfInactivityInSeconds = 6000
+const allowedTimeOfInactivityInSeconds = 1800
 
 const initialState = {
 	loading: false,
@@ -74,11 +74,11 @@ const logoutSlice = createSlice({
 				const code = payload.code;
 				if (code === 200) {
 					removeAuthToken()
-						.then(res => {
-							console.log("entered", {res});
+						.then(() => {
+							console.log("Auth token permanently removed from forage");
 						})
-						.catch(err => {
-							console.error("could not remove", {err});
+						.catch(() => {
+							console.log("Auth token removal failed from forage");
 						});
 				}
 				state.successful = true;
