@@ -22,9 +22,9 @@ const TermsPage = () => {
                     <div className="content">
                         <div className="terms-content">
                             <h4>Terms and Conditions</h4>
-                            <p className="terms-desc">Welcome to Amorserv Solutions!</p>
-                            <p className="terms-desc">These terms and conditions outline the rules and regulations for the use of Armorserv Solutions website, located at [Website URL]</p>
-                            <p className="terms-desc last">By accessing this website, we assume you accept these terms and conditions. Do not continue to use the website if you do not agree to take all of the terms and conditions stated on this page.</p>
+                            <p className="terms-desc">Welcome to ProjectInfo!</p>
+                            <p className="terms-desc">These terms and conditions outline the rules and regulations for the use of ProjectInfo product, located at [https://projectinfo.io/]</p>
+                            <p className="terms-desc last">By accessing this application, we assume you accept these terms and conditions. Do not continue to use the website if you do not agree to take all of the terms and conditions stated on this page.</p>
 
                             
                         </div>
