@@ -35,7 +35,7 @@ const ViewTicket = () => {
 	return (
 		<>
 			<Overlay onClick={goBackToTicketHandler} />
-			<div className="max-w-[75rem] w-full">
+			<div className="max-w-[75rem]">
 				<Modal>
 					<TicketViewOutlet />
 				</Modal>

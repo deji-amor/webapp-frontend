@@ -45,12 +45,13 @@ export function isPhoneNumber(value) {
 }
 
 export function isAddressEmpty(value) {
-	if (value.trim().length === 0) return [false, "Address can not be empty"];
+	console.log(value)
+	if (value?.trim().length === 0) return [false, "Address can not be empty"];
 	else return [true, ""];
 }
 
 export function isMaterialEmpty(value) {
-	if (value.trim().length === 0) return [false, "Material can not be empty"];
+	if (value?.trim().length === 0) return [false, "Material can not be empty"];
 	else return [true, ""];
 }
 

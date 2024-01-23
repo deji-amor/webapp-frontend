@@ -95,7 +95,7 @@ const TicketHistory = () => {
 	if(ticketHistoryError) return <p>An error occurred please refresh</p>
 
   return (
-		<div className="">
+		<div className="max-w-full w-full overflow-x-hidden">
 			<div className="py-[0.3rem] flex justify-between">
 				<LogText>Log</LogText>
 				<OrderText onClick={changeSortOrder} className="space-x-[0.5rem] flex cursor-pointer hover:underline">
@@ -104,7 +104,7 @@ const TicketHistory = () => {
 				</OrderText>
 			</div>
 			<HorizontalRule />
-			<div className="max-h-[12rem] overflow-y-auto max-w-full">
+			<div className="max-h-[13rem] overflow-y-auto max-w-full">
         <HistoryItemList />
       </div>
 		</div>

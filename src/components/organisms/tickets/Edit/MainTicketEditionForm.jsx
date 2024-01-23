@@ -39,8 +39,28 @@ const MainTicketEditionForm = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(requiredFields);
-		// console.log(originalTicket);
+	console.log(requiredFields);
+
+  if (requiredFields.pointOfContactAddress) {
+    requiredFields.pointOfContactAddress = requiredFields.pointOfContactAddress.replaceAll("\n", "\\n");
+  }
+  if (requiredFields.materialsDescription) {
+    requiredFields.materialsDescription = requiredFields.materialsDescription.replaceAll("\n", "\\n");
+  }
+  if (requiredFields.scopeOfWorkDescription) {
+    requiredFields.scopeOfWorkDescription = requiredFields.scopeOfWorkDescription.replaceAll("\n", "\\n");
+  }
+  if (requiredFields.locations) {
+    requiredFields.locations = requiredFields.locations?.map(loc => ({...loc, address: loc?.address?.replaceAll("\n", "\\n")}));
+  }
+  if (requiredFields.pickLocations) {
+    requiredFields.pickLocations = requiredFields.pickLocations?.map(loc => ({...loc, address: loc?.address?.replaceAll("\n", "\\n")}));
+  }
+  if (requiredFields.dropOffLocations) {
+    requiredFields.dropOffLocations = requiredFields.dropOffLocations?.map(loc => ({...loc, address: loc?.address?.replaceAll("\n", "\\n")}));
+  }
+
+	console.log(requiredFields);
 		dispatch(editTicket(requiredFields));
 	};
 

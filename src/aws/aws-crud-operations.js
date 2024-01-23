@@ -49,3 +49,11 @@ export const deleteFileByUrl = async fileUrl => {
 		console.error("Error deleting file:", error);
 	}
 };
+
+export const extractFileName = url => {
+	const urlParts = url.split("/");
+	const fileNameWithExt = urlParts.pop();
+	const fileNameParts = fileNameWithExt.split("_");
+	const fileNameAndExt = fileNameParts.pop();
+	return fileNameAndExt;
+};
