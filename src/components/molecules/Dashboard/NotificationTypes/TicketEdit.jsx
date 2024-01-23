@@ -11,8 +11,8 @@ const TicketEdit = ({ notification, readNotificationHandler }) => {
 	const { timestamp, identification_id, old_data, new_data, last_name, first_name } =
 		notification;
 	const profilePic = notification?.profile_picture;
-	const oldDataParsed = JSON.parse(old_data);
-	const newDataParsed = JSON.parse(new_data);
+	const oldDataParsed = JSON.parse(old_data?.replaceAll("\n", " "));
+	const newDataParsed = JSON.parse(new_data?.replaceAll("\n", " "));
 	const commonKeys = intersection(Object.keys(oldDataParsed), Object.keys(newDataParsed));
 	const differences = pickBy(
 		newDataParsed,

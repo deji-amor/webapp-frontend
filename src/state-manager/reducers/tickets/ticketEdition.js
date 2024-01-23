@@ -253,17 +253,17 @@ const editTicketSlice = createSlice({
 			state.allPossibleFields.pointOfContactPhoneNumber =
 				ticketToEdit.point_of_contact_phone_number;
 			state.allPossibleFields.pointOfContactPhoneNumberIsValid = true;
-			state.allPossibleFields.pointOfContactAddress = ticketToEdit.point_of_contact_address;
+			state.allPossibleFields.pointOfContactAddress = ticketToEdit.point_of_contact_address?.replaceAll("\\n", "\n");
 			state.allPossibleFields.pointOfContactAddressIsValid = true;
 			// POINT OF CONTACT SECTION ENDS HERE
 
 			//  MATERIAL PROCUREMENT SECTION STARTS HERE
-			state.allPossibleFields.materialsDescription = ticketToEdit.materials_description;
+			state.allPossibleFields.materialsDescription = ticketToEdit.materials_description?.replaceAll("\\n", "\n");
 			state.allPossibleFields.materialsDescriptionIsValid = true;
 			// MATERIAL PROCUREMENT SECTION ENDS HERE
 
 			// SCOPE OF WORK OF WORK SECTION STARTS HERE
-			state.allPossibleFields.scopeOfWorkDescription = ticketToEdit.scope_of_work_description;
+			state.allPossibleFields.scopeOfWorkDescription = ticketToEdit.scope_of_work_description?.replaceAll("\\n", "\n");
 			state.allPossibleFields.scopeOfWorkDescriptionIsValid = true;
 			state.allPossibleFields.scopeOfWorkDocumentUrl = ticketToEdit.scope_of_work_document;
 			// state.allPossibleFields.scopeOfWorkDocument = ticketToEdit.scope_of_work_document;
@@ -319,10 +319,13 @@ const editTicketSlice = createSlice({
 			// SCOPE OF WORK OF NUMBER OF vSOFTWARE INSTALLATION ENDS HERE
 
 			// SCOPE OF WORK OF NUMBER OF PICK UP LOCATION ENDS HERE
-			const pickUpLocations =
+			let pickUpLocations =
 				ticketToEdit.pick_locations === "undefined"
 					? state.allPossibleFields.pickLocations
 					: JSON.parse(ticketToEdit.pick_locations);
+			console.log(pickUpLocations)
+			pickUpLocations = pickUpLocations.map(loc => ({...loc, address: loc.address?.replaceAll("\\n", "\n")}))
+			console.log(pickUpLocations);
 			state.allPossibleFields.pickLocations = pickUpLocations;
 			state.allPossibleFields.numberOfPickLocation = pickUpLocations.length;
 			state.allPossibleFields.pickLocationsAddressIsValid = true;
@@ -332,10 +335,13 @@ const editTicketSlice = createSlice({
 			// SCOPE OF WORK OF NUMBER OF PICK UP LOCATION ENDS HERE
 
 			// SCOPE OF WORK OF NUMBER OF DROP OFF LOCATION ENDS HERE
-			const dropOffLocations =
+			let dropOffLocations =
 				ticketToEdit.drop_off_locations === "undefined"
 					? state.allPossibleFields.dropOffLocations
 					: JSON.parse(ticketToEdit.drop_off_locations);
+			console.log(dropOffLocations)
+			dropOffLocations = dropOffLocations.map(loc => ({...loc, address: loc.address?.replaceAll("\\n", "\n")}))
+			console.log(dropOffLocations);
 			state.allPossibleFields.dropOffLocations = dropOffLocations;
 			state.allPossibleFields.numberOfDropLocation = dropOffLocations.length;
 			state.allPossibleFields.dropOffLocationAddressIsValid = true;
@@ -345,10 +351,13 @@ const editTicketSlice = createSlice({
 			// SCOPE OF WORK OF NUMBER OF DROP OFF LOCATION ENDS HERE
 
 			// SCOPE OF WORK OF NUMBER OF LOCATION ENDS HERE
-			const locations =
+			let locations =
 				ticketToEdit.locations === "undefined"
 					? state.allPossibleFields.locations
 					: JSON.parse(ticketToEdit.locations);
+			console.log(locations)
+			locations = locations.map(loc => ({...loc, address: loc.address?.replaceAll("\\n", "\n")}))
+			console.log(locations);
 			state.allPossibleFields.locations = locations;
 			state.allPossibleFields.numberOfLocation = locations.length;
 			state.allPossibleFields.locationsAddressIsValid = true;
