@@ -161,6 +161,17 @@ const NotificationsDropdown = () => {
 
 	const r = notificationsList
 
+	// const replaceNewline = (str) => str.replace(/\n/g, ' ');
+
+	// const notifi = r.map(notification => ({
+	// 	...notification,
+	// 	data: replaceNewline(notification.data),
+	// 	old_data: replaceNewline(notification.old_data),
+	// 	new_data: replaceNewline(notification.new_data),
+	// }));
+
+	const notifi = r.filter(n => Date.parse(n.timestamp) > new Date().setHours(24, 0, 0, 0))
+
 		return (
 			<Wrapper>
 				<div className="flex justify-between gap-[7rem]">
@@ -185,7 +196,7 @@ const NotificationsDropdown = () => {
 						<></> :
 						<>						
 							<div className="basis-[85%] space-y-[1rem] max-h-[20rem] overflow-y-auto">
-								{r.slice().map((notification) => (
+								{notifi.slice().map((notification) => (
 									<NotificationItem notification={notification} key={v4()} />
 								))}
 							</div>
